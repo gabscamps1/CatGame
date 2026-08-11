@@ -38,4 +38,13 @@ public class PlayerController : MonoBehaviour
         transform.position = newPosition;
     }
 
+    public void ChangeBoundary(float extraWidth)
+    {
+        _leftBound = _startingLeftBound;
+        _rightBound = _startingRightBound;
+
+        _leftBound += ThrowFruitController.instance.Bounds.extents.x + extraWidth;
+        _rightBound -= ThrowFruitController.instance.Bounds.extents.x + extraWidth;
+    }
+
 }
