@@ -1,0 +1,6 @@
+:root {
+    transition-property: all, all;
+    transition-duration: 0s, 0s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+}

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Art/UI/MainUICSS.uss?fileID=7433441132597879392&amp;guid=3ff748971b9edbc40848ebaf35cf13d0&amp;type=3#MainUICSS"/>
+    <ui:ScrollView/>
+    <ui:TreeView/>
+    <ui:VisualElement style="flex-grow: 1;"/>
+    <ui:TreeView/>
+</ui:UXML>
