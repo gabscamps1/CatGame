@@ -5,10 +5,10 @@ using Logger = CatGame.Core.Logger;
 
 namespace CatGame.Capabilities.UISystem
 {
-    public class HightlightPool<T> where T : Component
+    public class HighlightPool : IHighlightPool
     {
-        private readonly Queue<T> pool = new();
-        private readonly T prefab;
+        private readonly Queue<Component> pool = new(); 
+        private readonly Component prefab;
         private readonly Transform generalParent;
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace CatGame.Capabilities.UISystem
         /// </summary>
         public int Count => pool.Count;
 
-        public HightlightPool(T prefab, Transform poolTransform)
+        public HighlightPool(Component prefab, Transform poolTransform)
         {
             this.prefab = prefab;
             this.generalParent = poolTransform;
@@ -25,7 +25,7 @@ namespace CatGame.Capabilities.UISystem
         /// <summary>
         /// Registra um <paramref name="obj"/> na fila para serem reutilizados.
         /// </summary>
-        public void Enqueue(T obj)
+        public void Enqueue(Component obj)
         {
             obj.gameObject.SetActive(false);
             obj.transform.SetParent(generalParent, false);
@@ -35,14 +35,14 @@ namespace CatGame.Capabilities.UISystem
         /// <summary>
         /// Remove e retorna um objeto da fila.
         /// </summary>
-        public T Dequeue(Transform parent)
+        public Component Dequeue(Transform parent)
         {
             if (parent == null)
                 Logger.LogWarning($"Parent da pool {prefab.name} é null. Dependendo da Main Scene que esteja ativada, as intâncias do prefab desta pool podem persistir ATIVADO entre cenas.");
 
             if (pool.Count > 0)
             {
-                T obj = pool.Dequeue();
+                Component obj = pool.Dequeue();
                 obj.transform.SetParent(parent, false);
                 obj.gameObject.SetActive(true);
 
@@ -51,23 +51,6 @@ namespace CatGame.Capabilities.UISystem
             else
             {
                 return Object.Instantiate(prefab, parent);
-            }
-        }
-
-        /// <summary>
-        /// Retorna um objeto da fila sem removê-lo.
-        /// </summary>
-        public T Get(int value)
-        {
-            if (pool.Count > 0 && pool.Count > value)
-            {
-                return pool.ElementAt(value);
-            }
-            else
-            {
-                T obj = Object.Instantiate(prefab, generalParent);
-                pool.Enqueue(obj);
-                return obj;
             }
         }
     }

@@ -1,4 +1,9 @@
-﻿namespace CatGame.Capabilities.UISystem
+﻿using CatGame.Core.Enums;
+
+namespace CatGame.Capabilities.UISystem
 {
-    public interface IHighlighVisual { }
+    public interface IHighlighVisual 
+    {
+        public void AttachTo(NavigableElement element, PlayerId playerId);
+    }
 }
