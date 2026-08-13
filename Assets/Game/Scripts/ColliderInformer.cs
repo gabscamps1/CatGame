@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ColliderInformation : MonoBehaviour
+public class ColliderInformer : MonoBehaviour
 {
     public bool WasCombinedIn { get; set; }
 

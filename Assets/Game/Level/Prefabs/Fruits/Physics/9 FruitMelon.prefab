@@ -10,11 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1577019219929085329}
   - component: {fileID: 8714547195280046690}
+  - component: {fileID: -6601951594320417363}
+  - component: {fileID: 3588287288348265223}
+  - component: {fileID: -6171855151796894085}
   - component: {fileID: 2413062233886046290}
   - component: {fileID: 7885473568988736395}
   - component: {fileID: 1671009027966679456}
-  m_Layer: 0
-  m_Name: FruitMelon
+  m_Layer: 8
+  m_Name: 9 FruitMelon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,6 +97,45 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-6601951594320417363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426259654436406577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501003e09ec46a24ab66c400a85370e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FruitInfo
+  FruitIndex: 9
+  PointsWhenAnnihilated: 55
+  FruitMass: 1
+--- !u!114 &3588287288348265223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426259654436406577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227e0faeeec8f9d4d899454c02f249dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerLoss
+--- !u!114 &-6171855151796894085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426259654436406577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503af1b709bb48144bb44169c6d03688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FruitCombiner
 --- !u!58 &2413062233886046290
 CircleCollider2D:
   m_ObjectHideFlags: 0
