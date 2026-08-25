@@ -1,9 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Body" enabled="true" style="flex-grow: 1; justify-content: center; padding-bottom: 210px;">
+        <ui:IntegerField label="" value="0" password="true" placeholder-text="" hide-placeholder-on-focus="true" focusable="true" max-length="5" usage-hints="-1" enabled="true" class="ButtonBig" style="justify-content: space-between; align-items: center; font-size: 82px; -unity-background-image-tint-color: rgb(0, 0, 0); width: 1489px; color: rgb(0, 0, 0); background-color: rgb(255, 217, 0); -unity-font-style: normal; -unity-text-align: middle-center; text-overflow: clip;"/>
+    </ui:VisualElement>
 </ui:UXML>

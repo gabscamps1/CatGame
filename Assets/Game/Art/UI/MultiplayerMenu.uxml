@@ -1,20 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="MP_Characters" src="project://database/Assets/Game/Art/UI/MP_Characters.uxml?fileID=9197481963319205126&amp;guid=fac1c7605ce5fdd49bc3e00e56ed97a0&amp;type=3#MP_Characters"/>
-    <ui:Template name="MP_CreateRoom" src="project://database/Assets/Game/Art/UI/MP_CreateRoom.uxml?fileID=9197481963319205126&amp;guid=4e3d76c9f159ac84fbd5ca863c11c710&amp;type=3#MP_CreateRoom"/>
-    <ui:Template name="MP_InsertRoomCode" src="project://database/Assets/Game/Art/UI/MP_InsertRoomCode.uxml?fileID=9197481963319205126&amp;guid=47f683d6c1a82464c9e52332da2756cd&amp;type=3#MP_InsertRoomCode"/>
-    <ui:Template name="MP_Lobby" src="project://database/Assets/Game/Art/UI/MP_Lobby.uxml?fileID=9197481963319205126&amp;guid=3abbf2d9f6b3ead4c814d211fc91f5b1&amp;type=3#MP_Lobby"/>
+    <ui:Template name="MP_Characters" src="project://database/Assets/Game/Art/UI/MulitplayerMenuSub/MP_Characters.uxml?fileID=9197481963319205126&amp;guid=fac1c7605ce5fdd49bc3e00e56ed97a0&amp;type=3#MP_Characters"/>
+    <ui:Template name="MP_CreateRoom" src="project://database/Assets/Game/Art/UI/MulitplayerMenuSub/MP_CreateRoom.uxml?fileID=9197481963319205126&amp;guid=4e3d76c9f159ac84fbd5ca863c11c710&amp;type=3#MP_CreateRoom"/>
+    <ui:Template name="MP_InsertRoomCode" src="project://database/Assets/Game/Art/UI/MulitplayerMenuSub/MP_InsertRoomCode.uxml?fileID=9197481963319205126&amp;guid=47f683d6c1a82464c9e52332da2756cd&amp;type=3#MP_InsertRoomCode"/>
+    <ui:Template name="MP_Lobby" src="project://database/Assets/Game/Art/UI/MulitplayerMenuSub/MP_Lobby.uxml?fileID=9197481963319205126&amp;guid=3abbf2d9f6b3ead4c814d211fc91f5b1&amp;type=3#MP_Lobby"/>
     <Style src="project://database/Assets/Game/Art/UI/Multiplayer.uss?fileID=7433441132597879392&amp;guid=7f52285680c4dd542ad086b85d793519&amp;type=3#Multiplayer"/>
     <ui:VisualElement name="Header" style="flex-grow: 0; background-color: rgba(255, 255, 255, 0); justify-content: space-between; margin-top: 69px;">
-        <ui:Label text="MULTIJOGADOR" name="HeaderText" class="Header"/>
-        <ui:Label text="Crie ou entre em uma sala de jogo." name="ButtonDescriptionText" style="-unity-font-definition: url(&quot;project://database/Assets/Game/Art/UI/Font/Glory-Bold.ttf?fileID=12800000&amp;guid=b636dfbde75113749a198e83c03c13cb&amp;type=3#Glory-Bold&quot;); font-size: 64px; -unity-text-align: middle-center; -unity-background-scale-mode: scale-and-crop; background-position-x: center; background-size: 100% 100px; text-overflow: clip; margin-top: 0; margin-bottom: 0; background-color: rgba(197, 197, 197, 0); padding-top: 0; margin-right: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0; color: rgb(255, 255, 255); text-shadow: -5px 5px 0 rgb(0, 0, 0);"/>
+        <ui:Label text="MULTIJOGADOR" name="HeaderText" class="Header" style="height: 106px; width: 1931px; font-size: 103px; -unity-text-align: middle-center; margin-top: -10px; margin-right: -10px; margin-bottom: 17px; margin-left: -10px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; letter-spacing: -2px; -unity-background-scale-mode: stretch-to-fill;"/>
+        <ui:Label text="Crie ou entre em uma sala de jogo." name="ButtonDescriptionText" style="-unity-font-definition: url(&quot;project://database/Assets/Game/Art/UI/Font/Glory-Bold.ttf?fileID=12800000&amp;guid=b636dfbde75113749a198e83c03c13cb&amp;type=3#Glory-Bold&quot;); font-size: 51px; -unity-text-align: middle-center; -unity-background-scale-mode: scale-and-crop; background-position-x: center; background-size: 100% 100px; text-overflow: clip; margin-top: 0; margin-bottom: 0; background-color: rgba(197, 197, 197, 0); padding-top: 0; margin-right: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-left: 0; color: rgb(255, 255, 255); text-shadow: -5px 5px 0 rgb(0, 0, 0);"/>
     </ui:VisualElement>
-    <ui:Instance template="MP_Characters" name="CharacterSelect"/>
-    <ui:Instance template="MP_CreateRoom" name="CreateRoom" style="flex-shrink: 0; flex-grow: 1; -unity-background-scale-mode: scale-to-fit;">
-        <ui:VisualElement name="Body" style="flex-grow: 1; justify-content: center; padding-bottom: 210px;">
-            <ui:Button text="Criar Sala" name="ButtonBig" parse-escape-sequences="true" class="ButtonBig"/>
-            <ui:Button text="Inserir Código" name="ButtonBig" parse-escape-sequences="true" class="ButtonBig"/>
-        </ui:VisualElement>
-    </ui:Instance>
-    <ui:Instance template="MP_InsertRoomCode" name="InsertRoom"/>
+    <ui:Instance template="MP_Characters" name="CharacterSelect" enabled="true"/>
     <ui:Instance template="MP_Lobby" name="Lobby"/>
+    <ui:Instance template="MP_CreateRoom" name="CreateRoom" enabled="true" style="flex-shrink: 0; flex-grow: 1; -unity-background-scale-mode: scale-to-fit; position: absolute; top: 366px; left: 484px;"/>
+    <ui:Instance template="MP_InsertRoomCode" name="InsertRoomCode" style="margin-top: 127px;"/>
 </ui:UXML>

@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Body" style="flex-grow: 1; justify-content: center; padding-bottom: 210px;">
+        <ui:Button text="Criar Sala" name="ButtonBig" parse-escape-sequences="true" class="ButtonBig" style="border-top-width: -29px; border-right-width: -29px; border-bottom-width: -29px; border-left-width: -29px;"/>
+        <ui:Button text="Inserir Código" name="ButtonBig" parse-escape-sequences="true" class="ButtonBig" style="border-top-width: -14px; border-right-width: -14px; border-bottom-width: -14px; border-left-width: -14px;"/>
+    </ui:VisualElement>
 </ui:UXML>
