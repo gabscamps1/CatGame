@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -7,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
-    public int CurrentScore { get; set; }
+    public static GameManager Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private float _fadeTime = 2f;
 
+    private int currentScore;
     public float TimeTillGameOver = 1.5f;
 
     private void OnEnable()
@@ -29,18 +27,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            CatGame.Core.Logger.LogWarning("[GameManager] Objeto duplicado.");
+            Destroy(this);
+            return;
         }
 
-        _scoreText.text = CurrentScore.ToString("0");
+        _scoreText.text = currentScore.ToString("0");
     }
 
     public void IncreaseScore(int amount)
     {
-        CurrentScore += amount;
-        _scoreText.text = CurrentScore.ToString("0");
+        currentScore += amount;
+        _scoreText.text = currentScore.ToString("0");
     }
 
     public void GameOver()

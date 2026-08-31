@@ -11,9 +11,9 @@ public class TriggerLoss : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             _timer += Time.deltaTime;
-            if (_timer > GameManager.instance.TimeTillGameOver)
+            if (_timer > GameManager.Instance.TimeTillGameOver)
             {
-                GameManager.instance.GameOver();
+                GameManager.Instance.GameOver();
             }
         }
     }

@@ -17,7 +17,6 @@ namespace CatGame.App
         [SerializeField] private GameStateService gameStateService;
         [SerializeField] private AudioService audioService;
         [SerializeField] private SceneLoadingService sceneLoadingService;
-        [SerializeField] private UIManager uiManager;
 
         private const string BOOTSTRAP_SCENE = "Bootstrap";
 
@@ -42,7 +41,6 @@ namespace CatGame.App
             ServiceLocator.Register<IGameStateService>(gameStateService);
             ServiceLocator.Register<IAudioService>(audioService);
             ServiceLocator.Register<ISceneLoadingService>(sceneLoadingService);
-            ServiceLocator.Register<IUIService>(uiManager);
             ServiceLocator.Register<IUINavigationService>(new UINavigationService());
 
             // Garante que todos os scripts de inicialização percorrerão o jogo todo.

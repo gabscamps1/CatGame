@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
         _leftBound = _startingLeftBound;
         _rightBound = _startingRightBound;
 
-        _leftBound += ThrowFruitController.instance.Bounds.extents.x + extraWidth;
-        _rightBound -= ThrowFruitController.instance.Bounds.extents.x + extraWidth;
+        _leftBound += ThrowFruitController.Instance.Bounds.extents.x + extraWidth;
+        _rightBound -= ThrowFruitController.Instance.Bounds.extents.x + extraWidth;
     }
 
 }

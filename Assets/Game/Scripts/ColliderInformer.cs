@@ -11,9 +11,9 @@ public class ColliderInformer : MonoBehaviour
         if (!_hasCollided && !WasCombinedIn)
         {
             _hasCollided = true;
-            ThrowFruitController.instance.CanThrow = true;
-            ThrowFruitController.instance.SpawnAFruit(FruitSelector.instance.NextFruit);
-            FruitSelector.instance.PickNextFruit();
+            ThrowFruitController.Instance.AllowThrowFruit();
+            ThrowFruitController.Instance.PickFruit(FruitSelector.Instance.NextFruit);
+            FruitSelector.Instance.PickNextFruit();
             Destroy(this);
         }
         
