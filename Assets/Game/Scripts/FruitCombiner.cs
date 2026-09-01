@@ -2,26 +2,20 @@ using UnityEngine;
 
 public class FruitCombiner : MonoBehaviour
 {
-    private int _layerIndex;
-
-    private FruitInfo _info;
+    private FruitInfo info;
 
     private void Awake()
     {
-        _info = GetComponent<FruitInfo>();
-        _layerIndex = gameObject.layer;
+        info = GetComponent<FruitInfo>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer != _layerIndex)
-            return;
-
-        if (collision.gameObject.TryGetComponent(out FruitInfo info))
+        if (!collision.gameObject.TryGetComponent(out FruitInfo info))
             return;
 
         // Somente permite a combinação de duas frutas iguais.
-        if (info.FruitIndex != _info.FruitIndex)
+        if (info.FruitIndex != this.info.FruitIndex)
             return;
 
         int thisID = gameObject.GetInstanceID();
@@ -31,18 +25,17 @@ public class FruitCombiner : MonoBehaviour
         if (thisID < otherID)
             return;
 
-        GameManager.Instance.IncreaseScore(_info.PointsWhenAnnihilated);
+        GameManager.Instance.IncreaseScore(this.info.PointsWhenAnnihilated);
 
-        if (_info.FruitIndex == FruitSelector.Instance.Fruits.Length - 1)
+        if (FruitSelector.Instance.IsLastTypeOfFruit(this.info.FruitIndex))
         {
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-
         else
         {
             Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
-            GameObject go = Instantiate(SpawnCombinedFruit(_info.FruitIndex), GameManager.Instance.transform);
+            GameObject go = Instantiate(SpawnCombinedFruit(this.info.FruitIndex), GameManager.Instance.transform);
             go.transform.position = middlePosition;
 
             ColliderInformer informer = go.GetComponent<ColliderInformer>();
@@ -58,7 +51,7 @@ public class FruitCombiner : MonoBehaviour
 
     private GameObject SpawnCombinedFruit(int index)
     {
-        GameObject go = FruitSelector.Instance.Fruits[index + 1];
+        GameObject go = FruitSelector.Instance.GetPhysicalFruit(index + 1);
         return go;
     }
 }

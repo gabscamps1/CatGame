@@ -1,19 +1,27 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FruitSelector : MonoBehaviour
 {
+    [Serializable]
+    public class FruitGroups
+    {
+        public GameObject Fruit => fruits;
+        public GameObject NoPhysicsFruit => noPhysicsFruits;
+        public Sprite FruitSprite => fruitSprites;
+
+        [SerializeField] private Sprite fruitSprites;
+        [SerializeField] private GameObject fruits;
+        [SerializeField] private GameObject noPhysicsFruits;
+    }
+
     public static FruitSelector Instance;
 
-    public GameObject[] Fruits => fruits;
-    public GameObject[] NoPhysicsFruits => noPhysicsFruits;
-
-    [SerializeField] private GameObject[] fruits;
-    [SerializeField] private GameObject[] noPhysicsFruits;
+    [SerializeField] private FruitGroups[] fruitGroups;
+    [SerializeField] private Image nextFruitImage;
+    
     private int highestStartingFruitIndex = 3;
-
-    [SerializeField] private Image _nextFruitImage;
-    [SerializeField] private Sprite[] _fruitSprites;
 
     public GameObject NextFruit { get; private set; }
 
@@ -38,11 +46,11 @@ public class FruitSelector : MonoBehaviour
 
     public GameObject PickRandomFruitForThrow()
     {
-        int randomIndex = Random.Range(0, highestStartingFruitIndex + 1);
+        int randomIndex = UnityEngine.Random.Range(0, highestStartingFruitIndex + 1);
 
-        if (randomIndex < NoPhysicsFruits.Length)
+        if (randomIndex < fruitGroups.Length)
         {
-            GameObject randomFruit = NoPhysicsFruits[randomIndex];
+            GameObject randomFruit = fruitGroups[randomIndex].NoPhysicsFruit;
             return randomFruit;
         }
 
@@ -51,14 +59,34 @@ public class FruitSelector : MonoBehaviour
 
     public void PickNextFruit()
     {
-        int randomIndex = Random.Range(0, highestStartingFruitIndex + 1);
+        int randomIndex = UnityEngine.Random.Range(0, highestStartingFruitIndex + 1);
 
-        if (randomIndex < Fruits.Length)
+        if (randomIndex < fruitGroups.Length)
         {
-            GameObject nextFruit = NoPhysicsFruits[randomIndex];
+            GameObject nextFruit = GetNoPhysicalFruit(randomIndex);
             NextFruit = nextFruit;
 
-            _nextFruitImage.sprite = _fruitSprites[randomIndex];
+            nextFruitImage.sprite = GetFruitSprite(randomIndex);
         }
+    }
+
+    public GameObject GetPhysicalFruit(int index)
+    {
+        return fruitGroups[index].Fruit;
+    }
+
+    public GameObject GetNoPhysicalFruit(int index)
+    {
+        return fruitGroups[index].NoPhysicsFruit;
+    }
+
+    public Sprite GetFruitSprite(int index)
+    {
+        return fruitGroups[index].FruitSprite;
+    }
+
+    public bool IsLastTypeOfFruit(int index)
+    {
+        return index == fruitGroups.Length - 1;
     }
 }

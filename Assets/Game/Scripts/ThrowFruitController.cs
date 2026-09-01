@@ -63,7 +63,7 @@ public class ThrowFruitController : MonoBehaviour
         SpriteIndex index = currentFruit.GetComponent<SpriteIndex>();
         Quaternion rot = currentFruit.transform.rotation;
 
-        SpawnFruit(FruitSelector.Instance.Fruits[index.Index], currentFruit.transform.position, rot);
+        SpawnFruit(FruitSelector.Instance.GetPhysicalFruit(index.Index), currentFruit.transform.position, rot);
 
         Destroy(currentFruit);
 
