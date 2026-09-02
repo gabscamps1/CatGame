@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 7455f4d6123ead441bbd83a0492b8c03
+guid: d79658f8c3a515e499a74f34e64d7d6a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3138529218168160158
-    second: PingBar_0
-  - first:
-      213: 2194672663485357854
-    second: PingBar_1
-  - first:
-      213: 7771816064423573017
-    second: PingBar_2
+      213: 1667476667342117222
+    second: sample_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -145,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PingBar_0
+      name: sample_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 13
-        height: 15
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,52 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 26007e10e44b174d0800000000000000
-      internalID: -3138529218168160158
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PingBar_1
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 0
-        width: 14
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e1f1e49d82b057e10800000000000000
-      internalID: 2194672663485357854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PingBar_2
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 0
-        width: 13
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 91634a3a8890bdb60800000000000000
-      internalID: 7771816064423573017
+      spriteID: 669dd2cb131142710800000000000000
+      internalID: 1667476667342117222
       vertices: []
       indices: 
       edges: []
@@ -214,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -224,9 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PingBar_0: -3138529218168160158
-      PingBar_1: 2194672663485357854
-      PingBar_2: 7771816064423573017
+      sample_0: 1667476667342117222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
