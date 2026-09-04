@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:Image name="ScrollingBG" style="background-image: url(&quot;project://database/Assets/Game/Art/UI/ScrollingBG_spr.png?fileID=2800000&amp;guid=fee527bd4e98ad04b891648a3b1f1081&amp;type=3#ScrollingBG_spr&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0); flex-shrink: 0; flex-grow: 1; background-repeat: repeat repeat; background-size: 400px 400px; background-position-x: left 0; background-position-y: top 0; filter: blur(3.9);"/>
+        <ui:Image name="ScrollingBG" style="background-image: url(&quot;project://database/Assets/Game/Art/UI/Assets/ScrollingBG_spr.png?fileID=2800000&amp;guid=fee527bd4e98ad04b891648a3b1f1081&amp;type=3#ScrollingBG_spr&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0); flex-shrink: 0; flex-grow: 1; background-repeat: repeat repeat; background-size: 400px 400px; background-position-x: left 0; background-position-y: top 0; filter: blur(1.5);"/>
     </ui:VisualElement>
 </ui:UXML>

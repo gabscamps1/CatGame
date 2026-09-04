@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 05b7ea901bafefb4ebb4ecbf7d7ce57c
+guid: 17c2ec3509afd3e4283278be57436f52
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6897402425688008845
-    second: startButton_0
+      213: 778546613242520283
+    second: ServerPopUpQuestionMark_0
   - first:
-      213: 3586403842335056353
-    second: startButton_1
+      213: 3444576439900821440
+    second: ServerPopUpQuestionMark_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,13 +142,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: startButton_0
+      name: ServerPopUpQuestionMark_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 134
-        height: 129
+        y: 212
+        width: 495
+        height: 515
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,20 +157,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 377d2ffa9018740a0800000000000000
-      internalID: -6897402425688008845
+      spriteID: bd267631504fdca00800000000000000
+      internalID: 778546613242520283
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: startButton_1
+      name: ServerPopUpQuestionMark_1
       rect:
         serializedVersion: 2
-        x: 110
+        x: 43
         y: 0
-        width: 589
-        height: 129
+        width: 184
+        height: 178
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1e12a730b4775c130800000000000000
-      internalID: 3586403842335056353
+      spriteID: 0c7d7fd95089dcf20800000000000000
+      internalID: 3444576439900821440
       vertices: []
       indices: 
       edges: []
@@ -199,8 +199,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      startButton_0: -6897402425688008845
-      startButton_1: 3586403842335056353
+      ServerPopUpQuestionMark_0: 778546613242520283
+      ServerPopUpQuestionMark_1: 3444576439900821440
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
