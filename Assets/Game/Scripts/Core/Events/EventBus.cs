@@ -11,7 +11,7 @@ namespace CatGame.Core.Events
         /// <summary>
         /// Método para inscrever um evento.
         /// </summary>
-        public static void Subscribe<T>(Action<T> listener) where T : IGlobalEvent, new()
+        public static void Subscribe<T>(Action<T> listener) where T : IGlobalEvent
         {
             if (events.TryGetValue(typeof(T), out var existing))
                 events[typeof(T)] = Delegate.Combine(existing, listener);
@@ -22,7 +22,7 @@ namespace CatGame.Core.Events
         /// <summary>
         /// Método para desinscrever um evento.
         /// </summary>
-        public static void Unsubscribe<T>(Action<T> listener) where T : IGlobalEvent, new()
+        public static void Unsubscribe<T>(Action<T> listener) where T : IGlobalEvent
         {
             if (!events.TryGetValue(typeof(T), out var existing))
                 return;
@@ -38,7 +38,7 @@ namespace CatGame.Core.Events
         /// <summary>
         /// Método para disparar um evento.
         /// </summary>
-        public static void Publish<T>(T action) where T : IGlobalEvent, new()
+        public static void Publish<T>(T action) where T : IGlobalEvent
         {
             if (events.TryGetValue(typeof(T), out var existing))
             {

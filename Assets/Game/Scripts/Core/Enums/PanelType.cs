@@ -15,9 +15,8 @@ namespace CatGame.Core.Enums
 
         // Menu principal
         MainMenu = 4,
-        Credits = 5,
 
         // Play
-        HUD = 6,
+        HUD = 5,
     }
 }

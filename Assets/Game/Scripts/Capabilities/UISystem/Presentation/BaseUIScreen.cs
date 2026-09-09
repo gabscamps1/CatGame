@@ -103,13 +103,13 @@ namespace CatGame.Capabilities.UISystem
         protected virtual void OnBeforeShow() { }
 
         /// <summary> Chamado depois que a transição de entrada termina. </summary>
-        protected virtual void OnAfterShow() { Debug.Log($"Abriu: {gameObject.name}"); }
+        protected virtual void OnAfterShow() { }
 
         /// <summary> Chamado antes de o painel sumir. </summary>
         protected virtual void OnBeforeHide() { }
 
         /// <summary> Chamado depois que a transição de saída termina. </summary>
-        protected virtual void OnAfterHide() { Debug.Log($"Fechou: {name}"); }
+        protected virtual void OnAfterHide() { }
 
         #endregion
     }

@@ -44,7 +44,7 @@ namespace CatGame.Services.Input
             inputControllers.Add(PlayerId.P2, playerInputManager2);
 
             AssignDeviceToNextAvailablePlayer(Keyboard.current);            
-            GetInput(PlayerId.P1).AssignDevice(Mouse.current);            
+            GetInputFromPlayer(PlayerId.P1).AssignDevice(Mouse.current);            
         }
 
 
@@ -181,7 +181,7 @@ namespace CatGame.Services.Input
             }
         }
         
-        public IPlayerInputController GetInput(PlayerId playerId)
+        public IPlayerInputController GetInputFromPlayer(PlayerId playerId)
         {
             if (inputControllers.TryGetValue(playerId, out PlayerInputController playerInputController))          
                 return playerInputController;

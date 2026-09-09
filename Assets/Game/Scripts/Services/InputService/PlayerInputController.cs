@@ -33,9 +33,11 @@ namespace CatGame.Services.Input
         public InputAction Navigation => navigateAction;
 
         public event Action OnSubmitted;
+        public event Action OnCancelled;
 
         private readonly InputAction navigateAction;
         private readonly InputAction submitAction;      
+        private readonly InputAction cancelAction;      
 
      
         private readonly InputUser inputUser;
@@ -58,8 +60,11 @@ namespace CatGame.Services.Input
             // UI Inputs.
             navigateAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Navigation");
             submitAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Submit");
+            cancelAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Cancel");
 
             submitAction.started += SubmitAction_Started;
+            cancelAction.started += CancelAction_started;
+
 
             SwitchToGame();
         }
@@ -86,7 +91,8 @@ namespace CatGame.Services.Input
 
         #region UI Inputs
 
-        private void SubmitAction_Started(InputAction.CallbackContext context) { Core.Logger.Log("Funcionaaa");  OnSubmitted?.Invoke(); }  
+        private void SubmitAction_Started(InputAction.CallbackContext context) => OnSubmitted?.Invoke();
+        private void CancelAction_started(InputAction.CallbackContext obj) => OnCancelled?.Invoke();
 
         #endregion
 
