@@ -1334,6 +1334,13 @@ MonoBehaviour:
   down: {fileID: 0}
   left: {fileID: 0}
   right: {fileID: 0}
+  highlightVisual: {fileID: 0}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
+  pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
+  onClickSound: {fileID: 0}
+  onSelectSound: {fileID: 0}
 --- !u!114 &297173673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4622,6 +4629,7 @@ GameObject:
   - component: {fileID: 1414791573}
   - component: {fileID: 1414791569}
   - component: {fileID: 1414791572}
+  - component: {fileID: 1414791574}
   m_Layer: 0
   m_Name: ButtonOpt
   m_TagString: Untagged
@@ -4774,6 +4782,30 @@ MonoBehaviour:
   animator: {fileID: 0}
   enterTrigger: MouseEnter
   exitTrigger: MouseExit
+--- !u!114 &1414791574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414791567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
+  interactable: 1
+  up: {fileID: 0}
+  down: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  highlightVisual: {fileID: 479099509297662248, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
+  pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
+  onClickSound: {fileID: 0}
+  onSelectSound: {fileID: 0}
 --- !u!1 &1420737901
 GameObject:
   m_ObjectHideFlags: 0
@@ -5063,6 +5095,7 @@ GameObject:
   - component: {fileID: 1470758232}
   - component: {fileID: 1470758236}
   - component: {fileID: 1470758235}
+  - component: {fileID: 1470758237}
   m_Layer: 0
   m_Name: ButtonOpt
   m_TagString: Untagged
@@ -5215,6 +5248,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1470758237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470758230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
+  interactable: 1
+  up: {fileID: 0}
+  down: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  highlightVisual: {fileID: 479099509297662248, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
+  pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
+  onClickSound: {fileID: 0}
+  onSelectSound: {fileID: 0}
 --- !u!1 &1483835041
 GameObject:
   m_ObjectHideFlags: 0
@@ -6956,6 +7013,7 @@ GameObject:
   - component: {fileID: 2033734060}
   - component: {fileID: 2033734064}
   - component: {fileID: 2033734063}
+  - component: {fileID: 2033734065}
   m_Layer: 0
   m_Name: ButtonOpt
   m_TagString: Untagged
@@ -7108,6 +7166,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2033734065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033734058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
+  interactable: 1
+  up: {fileID: 0}
+  down: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  highlightVisual: {fileID: 479099509297662248, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
+  pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
+  onClickSound: {fileID: 0}
+  onSelectSound: {fileID: 0}
 --- !u!1 &2042168615
 GameObject:
   m_ObjectHideFlags: 0
