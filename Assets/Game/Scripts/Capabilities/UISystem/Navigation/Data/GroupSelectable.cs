@@ -34,11 +34,11 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private int numberOfMenu;
 
         [Tooltip("MenuController que será carregado pela função ChangeMenuController")]
-        [SerializeField] private MenuPresenter newMenuController;
+        [SerializeField] private MenuController newMenuController;
 
         public NavigableElement Element => element;
         public CallFunction Function => function;
         public int NumberOfMenu => numberOfMenu;
-        public MenuPresenter NewMenuController => newMenuController;
+        public MenuController NewMenuController => newMenuController;
     }
 }

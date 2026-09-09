@@ -206,7 +206,7 @@ namespace CatGame.Services.UISystem
                     break;
 
                 case GameState.Paused:
-                    // Mantém o HUD submitEvent coloca o pause por cima.
+                    // Mantém o HUD submitEvent coloca o pauseGame por cima.
                     if (!IsVisible(PanelType.HUD))
                         Push(PanelType.HUD);
 

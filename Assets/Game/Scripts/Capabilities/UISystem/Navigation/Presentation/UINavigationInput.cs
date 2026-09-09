@@ -1,7 +1,6 @@
 ﻿using CatGame.Core;
 using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
-using CatGame.Services.Input;
 using UnityEngine;
 
 namespace CatGame.Capabilities.UISystem
@@ -19,23 +18,22 @@ namespace CatGame.Capabilities.UISystem
         private float nextRepeatTime;
 
         private IUINavigationService uiNavigationService;
-
-        private IInputService inputService;
         private IPlayerInputController playerInputController;
 
         private void Start()
         {
             uiNavigationService = ServiceLocator.Get<IUINavigationService>();
 
-            inputService = InputActionsService.Instance;
-            playerInputController = inputService.GetInput(playerId);
+            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(playerId);
 
             playerInputController.OnSubmitted += PlayerInputController_OnSubmitted;
+            playerInputController.OnCancelled += PlayerInputController_OnCancelled;
         }
 
         private void OnDestroy()
         {
             playerInputController.OnSubmitted -= PlayerInputController_OnSubmitted;
+            playerInputController.OnCancelled -= PlayerInputController_OnCancelled;
         }
 
         private void Update()
@@ -46,7 +44,12 @@ namespace CatGame.Capabilities.UISystem
         private void PlayerInputController_OnSubmitted()
         {
             uiNavigationService.Submit(playerId);
-            Core.Logger.Log("TrySubmit");
+        }
+
+        private void PlayerInputController_OnCancelled()
+        {
+            uiNavigationService.Cancel(playerId);
+            Core.Logger.Log("TryCancel");
         }
 
         private void HandleDirectionalInput()
@@ -69,6 +72,7 @@ namespace CatGame.Capabilities.UISystem
 
             if (Time.unscaledTime >= nextRepeatTime)
             {
+                Core.Logger.Log("TryNavigate");
                 nextRepeatTime = Time.unscaledTime + repeatInterval;
                 uiNavigationService.Navigate(playerId, pressedNow.Value);
             }

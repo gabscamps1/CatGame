@@ -14,6 +14,12 @@ namespace CatGame.Capabilities.UISystem
         [Tooltip("Shared: Somente um cursor que qualquer jogador conectado movê-lo. PerPlayer: Cada jogador conectado tem seu próprio cursor.")]
         [SerializeField] private NavigationMode navigationMode = NavigationMode.Shared;
 
+        [Tooltip("Quando este menu é escondido porque outro foi aberto.")]
+        [SerializeField] private bool resetOnForwardTransition = false;
+
+        [Tooltip("Quando este menu é escondido por voltar pro menu anterior.")]
+        [SerializeField] private bool resetOnBackwardTransition = true;
+
         [Header("Elementos")]
         [Tooltip("Elementos de cada menu")]
         [SerializeField] private GroupSelectable[] groupSelectable;
@@ -21,5 +27,7 @@ namespace CatGame.Capabilities.UISystem
         public BaseUIScreen Panel => panel;
         public NavigationMode NavigationMode => navigationMode;
         public GroupSelectable[] GroupSelectable => groupSelectable;
+        public bool ResetOnForwardTransition => resetOnForwardTransition;
+        public bool ResetOnBackwardTransition => resetOnBackwardTransition;
     }
 }

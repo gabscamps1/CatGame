@@ -1,6 +1,8 @@
 using UnityEngine;
 using CatGame.Core.Interfaces;
 using CatGame.Core.Enums;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CatGame.Capabilities.UISystem
 {
@@ -14,6 +16,17 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private NavigableElement down;
         [SerializeField] private NavigableElement left;
         [SerializeField] private NavigableElement right;
+
+        [Header("Visual")]
+        [SerializeField] private HighlightVisual highlightVisual;
+
+        private readonly Dictionary<PlayerId, IHighlightVisual> attachedHighlights = new();
+
+        protected readonly HashSet<PlayerId> FocusingPlayer = new();
+
+        public IReadOnlyList<PlayerId> FocusingPlayerList => FocusingPlayer.ToList();
+
+        public bool IsFocused => FocusingPlayer.Count > 0;
 
         public bool IsInteractable => interactable && isActiveAndEnabled;
 
@@ -31,25 +44,72 @@ namespace CatGame.Capabilities.UISystem
             };
         }
 
-        public void OnFocused(PlayerId player) 
+        public void OnFocused(PlayerId player, NavigationMode navigationMode = NavigationMode.Shared)
         {
-            OnFocusedByPlayer(player);
+            if (!FocusingPlayer.Add(player)) return;
+            OnFocusedByPlayer(player, navigationMode);
         }
 
-        public void OnUnfocused(PlayerId player) 
+        public void OnUnfocused(PlayerId player, NavigationMode navigationMode = NavigationMode.Shared)
         {
-            OnUnfocusedByPlayer(player);
+            if (!FocusingPlayer.Remove(player)) return;
+            OnUnfocusedByPlayer(player, navigationMode);
         }
 
-        public void OnSubmit(PlayerId player) 
+        public void OnSubmit(PlayerId player)
         {
             OnSubmitByPlayer(player);
         }
 
-        protected virtual void OnFocusedByPlayer(PlayerId player) { }
+        protected virtual void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)
+        {
+            if (highlightVisual == null) 
+                return;
 
-        protected virtual void OnUnfocusedByPlayer(PlayerId player) { }
+            switch (navigationMode)
+            {  
+                case NavigationMode.Shared:
 
-        protected virtual void OnSubmitByPlayer(PlayerId player) { }      
+                    bool isPlayerEnterBefore = FocusingPlayer.Count > 1;
+
+                    if (!isPlayerEnterBefore)
+                    {
+                        IHighlightVisual instance = HighlightManager.Instance.AssignHighlightToTarget(highlightVisual, this, player);
+                        attachedHighlights[player] = instance;
+                    }
+
+                    break;
+
+                case NavigationMode.PerPlayer:
+
+                    IHighlightVisual instancePerPlayer = HighlightManager.Instance.AssignHighlightToTarget(highlightVisual, this, player);
+                    attachedHighlights[player] = instancePerPlayer;
+                    break;
+            }
+
+            RefreshAllHighlights();
+        }
+
+        protected virtual void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
+        {
+            if (highlightVisual == null) 
+                return;
+
+            if (attachedHighlights.ContainsKey(player))
+            {
+                HighlightManager.Instance.UnassignHightlightOfTarget(highlightVisual, attachedHighlights[player], player);
+                attachedHighlights.Remove(player);
+            }       
+
+            RefreshAllHighlights();
+        }
+
+        protected virtual void OnSubmitByPlayer(PlayerId player) { }
+
+        private void RefreshAllHighlights()
+        {
+            foreach (IHighlightVisual instance in attachedHighlights.Values)
+                instance.Refresh();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CatGame.Core.Enums;
+using System;
 
 namespace CatGame.Core.Interfaces
 {
@@ -6,11 +7,15 @@ namespace CatGame.Core.Interfaces
     {
         public void Register(INavigableElement element, bool isDefault = false);
         public void SetDefaultForPlayer(PlayerId player, INavigableElement element);
-        public INavigableElement GetCurrentElement(PlayerId player);
+        
         public void Enter(PlayerId player);
         public void Exit(PlayerId player);
         public void SetElementFocus(PlayerId player, INavigableElement element);
+        public INavigableElement GetCurrentElement(PlayerId player);
         public void Navigate(PlayerId player, NavigationDirection direction);
         public void Submit(PlayerId player);
+        public void Cancel(PlayerId player);
+
+        public event EventHandler<PlayerId> OnCancelRequested;
     }
 }

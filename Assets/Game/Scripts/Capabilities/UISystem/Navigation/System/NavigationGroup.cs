@@ -1,5 +1,6 @@
 ﻿using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using Logger = CatGame.Core.Logger;
 
@@ -7,7 +8,7 @@ namespace CatGame.Capabilities.UISystem
 {
     public class NavigationGroup : INavigationGroup
     {
-        private readonly NavigationMode ownershipMode;
+        private readonly NavigationMode navigationMode;
 
         private readonly HashSet<INavigableElement> elements = new();
 
@@ -20,9 +21,11 @@ namespace CatGame.Capabilities.UISystem
         private INavigableElement defaultElement;
         private INavigableElement sharedCurrent;
 
-        public NavigationGroup(NavigationMode ownershipMode = NavigationMode.Shared)
+        public event EventHandler<PlayerId> OnCancelRequested;
+
+        public NavigationGroup(NavigationMode navigationMode = NavigationMode.Shared)
         {
-            this.ownershipMode = ownershipMode;
+            this.navigationMode = navigationMode;
         }
 
         public void Register(INavigableElement element, bool isDefault = false)
@@ -36,6 +39,9 @@ namespace CatGame.Capabilities.UISystem
                 defaultElement = element;
         }
 
+        /// <summary>
+        /// Somente funciona no NavigationMode=PerPlayer.
+        /// </summary>
         public void SetDefaultForPlayer(PlayerId player, INavigableElement element)
         {
             defaultByPlayer[player] = element;
@@ -43,33 +49,40 @@ namespace CatGame.Capabilities.UISystem
 
         public INavigableElement GetCurrentElement(PlayerId player)
         {
-            return ownershipMode == NavigationMode.Shared
+            return navigationMode == NavigationMode.Shared
                 ? sharedCurrent // Shared
                 : currentByPlayer.GetValueOrDefault(player); // PerPlayer
         }
 
+        /// <summary>
+        /// Reseta o elemento selecionado para o default.
+        /// </summary>
+        public void ResetFocusToDefault(PlayerId player)
+        {
+            INavigableElement target = navigationMode == NavigationMode.Shared
+                ? defaultElement
+                : defaultByPlayer.GetValueOrDefault(player) ?? defaultElement;
+
+            if (target == null)
+            {
+                Logger.LogWarning($"[NavigationGroup] Não foi possível resetar a seleção para default");
+                return;
+            }
+
+            SetElementFocus(player, target);
+        }
+
         public void Enter(PlayerId player)
         {
-            bool wasInactive = activePlayers.Count == 0;
-            activePlayers.Add(player);
+            if (!activePlayers.Add(player))
+                return;
 
-            switch (ownershipMode)
+            switch (navigationMode)
             {
                 case NavigationMode.Shared:
 
-                    INavigableElement startSharedElement = sharedCurrent ?? defaultElement;
-
-                    if (wasInactive)
-                    {
-                        sharedCurrent = startSharedElement;
-                        startSharedElement?.OnFocused(player);
-                    }
-                    else
-                    {
-                        if (sharedCurrent == null)
-                            SetElementFocus(player, startSharedElement);
-                    }
-
+                    sharedCurrent ??= defaultElement;
+                    sharedCurrent?.OnFocused(player, navigationMode); // Não foca através do método SetElementFocus() porque ao abrir o menu é necessário focar no elemento atual. O método impede isso.             
                     break;
 
                 case NavigationMode.PerPlayer:
@@ -78,7 +91,8 @@ namespace CatGame.Capabilities.UISystem
                     ?? defaultByPlayer.GetValueOrDefault(player)
                     ?? defaultElement;
 
-                    SetElementFocus(player, startPerPlayerElement);
+                    currentByPlayer[player] = startPerPlayerElement;
+                    startPerPlayerElement?.OnFocused(player, navigationMode);  // Não foca através do método SetElementFocus() porque ao abrir o menu é necessário focar no elemento atual. O método impede isso.
                     break;
 
                 default:
@@ -91,19 +105,19 @@ namespace CatGame.Capabilities.UISystem
         {
             activePlayers.Remove(player);
 
-            switch (ownershipMode)
+            switch (navigationMode)
             {
                 case NavigationMode.Shared:
 
                     // Só desfoca quando o último jogador sai do grupo compartilhado.
-                    if (activePlayers.Count == 0)
-                        sharedCurrent?.OnUnfocused(player);
+                    sharedCurrent?.OnUnfocused(player, navigationMode);
 
                     break;
+
                 case NavigationMode.PerPlayer:
 
                     if (currentByPlayer.TryGetValue(player, out INavigableElement element))
-                        element?.OnUnfocused(player);
+                        element?.OnUnfocused(player, navigationMode);
 
                     break;
 
@@ -111,23 +125,27 @@ namespace CatGame.Capabilities.UISystem
                     Logger.LogWarning("[NavigationGroup] Enum não foi adicionado");
                     break;
             }
-
-            // TODO: Opção de perder ou não a seleção atual quando o menu for fechado. Isso tanto para shared e perPlayer.
         }
 
         public void SetElementFocus(PlayerId player, INavigableElement element)
         {
             if (element == null) return;
 
-            switch (ownershipMode)
+            switch (navigationMode)
             {
                 case NavigationMode.Shared:
-                    if (element == sharedCurrent)
-                        return;
 
-                    sharedCurrent?.OnUnfocused(player);
+                    if (element == sharedCurrent) return;
+
+                    INavigableElement previousSharedCurrent = sharedCurrent;
                     sharedCurrent = element;
-                    sharedCurrent.OnFocused(player);
+
+                    foreach (PlayerId activePlayer in activePlayers)
+                    {
+                        previousSharedCurrent?.OnUnfocused(activePlayer, navigationMode);
+                        sharedCurrent.OnFocused(activePlayer, navigationMode);
+                    }
+
                     break;
 
                 case NavigationMode.PerPlayer:
@@ -135,10 +153,9 @@ namespace CatGame.Capabilities.UISystem
                     if (currentByPlayer.TryGetValue(player, out INavigableElement current) && current == element)
                         return;
 
-                    current?.OnUnfocused(player);
+                    current?.OnUnfocused(player, navigationMode);
                     currentByPlayer[player] = element;
-                    element.OnFocused(player);
-
+                    element.OnFocused(player, navigationMode);
                     break;
 
                 default:
@@ -158,19 +175,24 @@ namespace CatGame.Capabilities.UISystem
                 return;
             }
 
-            INavigableElement candidate = currentPlayerElement;
+            INavigableElement candidateElement = currentPlayerElement;
             var visited = new HashSet<INavigableElement>();
+            Core.Logger.Log("TryNavigate3");
 
             while (true)
             {
-                candidate = candidate.GetNeightbor(direction);
+                candidateElement = candidateElement.GetNeightbor(direction);
 
-                if (candidate == null || !visited.Add(candidate))
+                if (candidateElement == null || !visited.Add(candidateElement))
                     return;
 
-                if (candidate.IsInteractable)
+                Core.Logger.Log("TryNavigate4");
+
+                if (candidateElement.IsInteractable)
                 {
-                    SetElementFocus(player, candidate);
+                    Core.Logger.Log("TryNavigate5");
+
+                    SetElementFocus(player, candidateElement);
                     return;
                 }
             }
@@ -179,6 +201,11 @@ namespace CatGame.Capabilities.UISystem
         public void Submit(PlayerId player)
         {
             GetCurrentElement(player)?.OnSubmit(player);
+        }
+
+        public void Cancel(PlayerId player)
+        {
+            OnCancelRequested?.Invoke(this, player);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace CatGame.Core.Interfaces
         // UI Inputs.
         public InputAction Navigation { get;}
         public event Action OnSubmitted;
+        public event Action OnCancelled;
 
         public InputDevice CurrentDevice { get; }
         public void Update();
