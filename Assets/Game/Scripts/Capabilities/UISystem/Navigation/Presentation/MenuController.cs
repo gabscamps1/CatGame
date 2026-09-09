@@ -48,6 +48,7 @@ namespace CatGame.Capabilities.UISystem
         private void Start()
         {
             navigationService = ServiceLocator.Get<IUINavigationService>();
+            AttachPlayer(PlayerId.P1);
         }
 
         private void OnDestroy()

@@ -13,7 +13,7 @@ namespace CatGame.Services.Input
 
         public InputDevice CurrentDevice { get; private set; }
 
-        private const string PLAYER_MAP = "Gameplay";
+        private const string PLAYER_MAP = "Player";
         private const string UI_MAP = "UI";
 
         // Action Maps.
@@ -22,12 +22,10 @@ namespace CatGame.Services.Input
 
         // Game Inputs.
         public InputAction Move => move;
-        public InputAction Acceleration => acceleration;
-        public event Action OnAttacked;
+        public event Action OnThrow;
 
         private readonly InputAction move;
-        private readonly InputAction acceleration;
-        private readonly InputAction attack;
+        private readonly InputAction throwFruit;
 
         // UI Inputs.
         public InputAction Navigation => navigateAction;
@@ -51,11 +49,10 @@ namespace CatGame.Services.Input
             uiMap = inputActionsAsset.FindActionMap(UI_MAP);
 
             // Game Inputs.
-            move = inputActionsAsset.FindActionMap(PLAYER_MAP).FindAction("Movement");
-            acceleration = inputActionsAsset.FindActionMap(PLAYER_MAP).FindAction("Acceleration");
-            attack = inputActionsAsset.FindActionMap(PLAYER_MAP).FindAction("Attack");
+            move = inputActionsAsset.FindActionMap(PLAYER_MAP).FindAction("Move");
+            throwFruit = inputActionsAsset.FindActionMap(PLAYER_MAP).FindAction("Throw");
 
-            attack.started += Attack_Started;
+            throwFruit.started += Attack_Started;
 
             // UI Inputs.
             navigateAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Navigation");
@@ -72,7 +69,7 @@ namespace CatGame.Services.Input
         ~PlayerInputController()
         {
             // Game Inputs.
-            attack.started -= Attack_Started;
+            throwFruit.started -= Attack_Started;
 
             // UI Inputs.
             submitAction.started -= SubmitAction_Started;
@@ -85,7 +82,7 @@ namespace CatGame.Services.Input
 
         #region Game Inputs
 
-        private void Attack_Started(InputAction.CallbackContext context) => OnAttacked?.Invoke();
+        private void Attack_Started(InputAction.CallbackContext context) => OnThrow?.Invoke();
 
         #endregion
 

@@ -5,6 +5,7 @@ using CatGame.Core;
 using CatGame.Core.Enums; // Usado fora do UnityEditor.
 using CatGame.Services.UISystem;
 using CatGame.Core.Interfaces;
+using CatGame.Services.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace CatGame.App
         [SerializeField] private GameStateService gameStateService;
         [SerializeField] private AudioService audioService;
         [SerializeField] private SceneLoadingService sceneLoadingService;
+        [SerializeField] private InputActionsService inputActionsService;
 
         private const string BOOTSTRAP_SCENE = "Bootstrap";
 
@@ -41,6 +43,7 @@ namespace CatGame.App
             ServiceLocator.Register<IGameStateService>(gameStateService);
             ServiceLocator.Register<IAudioService>(audioService);
             ServiceLocator.Register<ISceneLoadingService>(sceneLoadingService);
+            ServiceLocator.Register<IInputService>(inputActionsService);
             ServiceLocator.Register<IUINavigationService>(new UINavigationService());
 
             // Garante que todos os scripts de inicialização percorrerão o jogo todo.

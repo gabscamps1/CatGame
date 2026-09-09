@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6743879204247763016}
   - component: {fileID: 2550775126061289729}
   - component: {fileID: 1092177979468942592}
-  - component: {fileID: 479099509297662248}
+  - component: {fileID: 7467663919649671148}
   m_Layer: 0
   m_Name: ButtonOptFill
   m_TagString: Untagged
@@ -34,9 +34,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -31}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -500, y: 221}
   m_SizeDelta: {x: 1920, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6743879204247763016
@@ -99,7 +99,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &479099509297662248
+--- !u!114 &7467663919649671148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,6 +108,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 457855059560398395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a98f78efb8c0540aed909a30078405, type: 3}
+  m_Script: {fileID: 11500000, guid: e3dffe35a56f1df49b4f45267f759488, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.HighlightVisual
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.UI.OptionsVisual
+  selectedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  unselectedColor: {r: 1, g: 1, b: 1, a: 1}

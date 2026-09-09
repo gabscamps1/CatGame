@@ -6,11 +6,10 @@ namespace CatGame.Core.Interfaces
 {
     public interface IPlayerInputController
     {
-        public event Action OnAttacked;
+        public event Action OnThrow;
 
         // Game Inputs.
         public InputAction Move { get; }
-        public InputAction Acceleration { get; }
 
 
         // UI Inputs.

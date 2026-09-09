@@ -15,6 +15,7 @@ namespace CatGame.Capabilities.UISystem
             RectTransform rectTransform = (RectTransform)transform;
             rectTransform.SetParent(elementRectTransform, false);
             rectTransform.anchoredPosition = Vector2.zero;         
+            transform.SetSiblingIndex(0);
             
             gameObject.SetActive(true);
         }

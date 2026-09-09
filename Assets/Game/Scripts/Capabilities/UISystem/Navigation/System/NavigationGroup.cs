@@ -2,6 +2,7 @@
 using CatGame.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Logger = CatGame.Core.Logger;
 
 namespace CatGame.Capabilities.UISystem
@@ -145,7 +146,7 @@ namespace CatGame.Capabilities.UISystem
                         previousSharedCurrent?.OnUnfocused(activePlayer, navigationMode);
                         sharedCurrent.OnFocused(activePlayer, navigationMode);
                     }
-
+                    Core.Logger.Log(sharedCurrent.ToString());
                     break;
 
                 case NavigationMode.PerPlayer:
