@@ -2,16 +2,21 @@ using System.Collections.Generic;
 
 namespace CatGame.Capabilities.UISystem
 {
-    public class NavigationSystem
+    public class NavigationMenuSystem
     {
         public int CurrentMenu { get; private set; }
 
         private readonly int menuCount;
         private readonly List<int> menuHistory = new();
 
-        public NavigationSystem(int menuCount) 
+        private NavigationTabSystem navigationTabSystem;
+
+        #region Menus      
+
+        public NavigationMenuSystem(int menuCount, int tabCount = 0) 
         {
             this.menuCount = menuCount;
+            navigationTabSystem = new NavigationTabSystem(tabCount);
         }
 
         public bool TryChangeMenu(int menuIndex, out int previousMenu)
@@ -44,5 +49,16 @@ namespace CatGame.Capabilities.UISystem
             menuHistory.Clear();
             CurrentMenu = 0;
         }
+
+        #endregion
+
+        #region Tabs
+
+        public bool TryChangeTab(int tabIndex, out int previousTab)
+        {
+            return navigationTabSystem.TryChangeTab(tabIndex, out previousTab);
+        }
+
+        #endregion
     }
 }

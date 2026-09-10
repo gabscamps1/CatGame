@@ -2,7 +2,6 @@ using System;
 using UnityEngine.InputSystem;
 using CatGame.Core.Interfaces;
 using UnityEngine.InputSystem.Users;
-using UnityEngine;
 
 namespace CatGame.Services.Input
 {
@@ -29,13 +28,14 @@ namespace CatGame.Services.Input
 
         // UI Inputs.
         public InputAction Navigation => navigateAction;
-
+        public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
         public event Action OnCancelled;
 
         private readonly InputAction navigateAction;
         private readonly InputAction submitAction;      
         private readonly InputAction cancelAction;      
+        private readonly InputAction tabNavigationAction;      
 
      
         private readonly InputUser inputUser;
@@ -58,10 +58,11 @@ namespace CatGame.Services.Input
             navigateAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Navigation");
             submitAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Submit");
             cancelAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Cancel");
+            tabNavigationAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("TabNavigation");
 
             submitAction.started += SubmitAction_Started;
-            cancelAction.started += CancelAction_started;
-
+            cancelAction.started += CancelAction_Started;
+            tabNavigationAction.started += TabNavigationAction_Started;
 
             SwitchToGame();
         }
@@ -89,7 +90,8 @@ namespace CatGame.Services.Input
         #region UI Inputs
 
         private void SubmitAction_Started(InputAction.CallbackContext context) => OnSubmitted?.Invoke();
-        private void CancelAction_started(InputAction.CallbackContext obj) => OnCancelled?.Invoke();
+        private void CancelAction_Started(InputAction.CallbackContext context) => OnCancelled?.Invoke();
+        private void TabNavigationAction_Started(InputAction.CallbackContext context) => OnTabNavigation?.Invoke((int)context.ReadValue<float>());
 
         #endregion
 

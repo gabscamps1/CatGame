@@ -21,18 +21,18 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private GroupMenu[] menus;    
 
         private NavigationGroup[] navigationGroups;
-        private NavigationSystem navigationSystem;
+        private NavigationMenuSystem navigationSystem;
         private readonly HashSet<PlayerId> activePlayers = new();
-
-        private IUINavigationService navigationService;
 
         public IReadOnlyList<PlayerId> ActivePlayers => activePlayers.ToList();
         public NavigationGroup CurrentMenu => navigationGroups[navigationSystem.CurrentMenu];
 
+        private IUINavigationService navigationService;
+        private IInputService inputService;
 
         private void Awake()
         {
-            navigationSystem = new NavigationSystem(menus.Length);
+            navigationSystem = new NavigationMenuSystem(menus.Length);
             navigationGroups = new NavigationGroup[menus.Length];
 
             for (int i = 0; i < menus.Length; i++)
@@ -48,7 +48,28 @@ namespace CatGame.Capabilities.UISystem
         private void Start()
         {
             navigationService = ServiceLocator.Get<IUINavigationService>();
-            AttachPlayer(PlayerId.P1);
+            inputService = ServiceLocator.Get<IInputService>();
+
+            AttachPlayer(PlayerId.P1); // REMOVER DEPOIS - ME LEMBRA PFV SALLES
+        }
+
+        private void ConfigInputs(params PlayerId[] playersToRemove)
+        {
+            foreach (PlayerId playerToRemove in playersToRemove)
+            {
+                inputService.GetInputFromPlayer(playerToRemove).OnTabNavigation -= MenuController_OnTabNavigation;
+            }
+
+            foreach (PlayerId player in activePlayers)
+            {
+                inputService.GetInputFromPlayer(player).OnTabNavigation -= MenuController_OnTabNavigation;
+                inputService.GetInputFromPlayer(player).OnTabNavigation += MenuController_OnTabNavigation;
+            }
+        }
+
+        private void MenuController_OnTabNavigation(int tabIncreasement)
+        {
+            //navigationSystem.TryChangeTab(navigationSystem.CurrentMenu + tabIncreasement, out int previousMenu);
         }
 
         private void OnDestroy()
@@ -66,12 +87,16 @@ namespace CatGame.Capabilities.UISystem
             if (!activePlayers.Add(player)) return;
             Debug.Log("Testando" + player);
             navigationService.PushGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+
+            ConfigInputs();
         }
 
         public void DetachPlayer(PlayerId player)
         {
             if (!activePlayers.Remove(player)) return;
             navigationService.PopGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+
+            ConfigInputs(player);
         }
 
         public void DetachAllPlayers()

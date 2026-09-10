@@ -1252,6 +1252,7 @@ MonoBehaviour:
     navigationMode: 0
     resetOnForwardTransition: 0
     resetOnBackwardTransition: 0
+    groupTab: []
     groupSelectable:
     - element: {fileID: 1414791574}
       function: 0
@@ -1269,6 +1270,7 @@ MonoBehaviour:
     navigationMode: 0
     resetOnForwardTransition: 0
     resetOnBackwardTransition: 0
+    groupTab: []
     groupSelectable: []
 --- !u!1 &297173667
 GameObject:
@@ -3107,6 +3109,7 @@ GameObject:
   - component: {fileID: 910668842}
   - component: {fileID: 910668841}
   - component: {fileID: 910668840}
+  - component: {fileID: 910668843}
   m_Layer: 0
   m_Name: MainMenu_Canvas
   m_TagString: Untagged
@@ -3197,6 +3200,41 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &910668843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910668838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f55f61943b7ca240b9ec05ea78620b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.MenuController
+  isCloseableMenu: 0
+  isSubMenu: 0
+  parentMenuController: {fileID: 0}
+  menus:
+  - panel: {fileID: 0}
+    navigationMode: 0
+    resetOnForwardTransition: 0
+    resetOnBackwardTransition: 0
+    groupTab:
+    - groupSelectable:
+      - element: {fileID: 0}
+        function: 0
+        numberOfMenu: 0
+        newMenuController: {fileID: 0}
+      - element: {fileID: 0}
+        function: 0
+        numberOfMenu: 0
+        newMenuController: {fileID: 0}
+      - element: {fileID: 0}
+        function: 0
+        numberOfMenu: 0
+        newMenuController: {fileID: 0}
+    groupSelectable: []
 --- !u!1 &911590939
 GameObject:
   m_ObjectHideFlags: 0

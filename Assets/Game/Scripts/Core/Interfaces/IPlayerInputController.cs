@@ -1,6 +1,5 @@
 using System;
 using UnityEngine.InputSystem;
-using UnityEngine;
 
 namespace CatGame.Core.Interfaces
 {
@@ -14,9 +13,9 @@ namespace CatGame.Core.Interfaces
 
         // UI Inputs.
         public InputAction Navigation { get;}
+        public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
         public event Action OnCancelled;
-
         public InputDevice CurrentDevice { get; }
         public void Update();
         public void AssignDevice(InputDevice device);

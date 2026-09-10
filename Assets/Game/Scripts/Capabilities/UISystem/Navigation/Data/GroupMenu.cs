@@ -21,6 +21,10 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private bool resetOnBackwardTransition = true;
 
         [Header("Elementos")]
+
+        [Tooltip("abas de cada menu")]
+        [SerializeField] private GroupTab[] groupTab;
+
         [Tooltip("Elementos de cada menu")]
         [SerializeField] private GroupSelectable[] groupSelectable;
 
