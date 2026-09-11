@@ -10,6 +10,12 @@ namespace CatGame.Capabilities.UISystem
 {
     public class MenuController : MonoBehaviour
     {
+        public IReadOnlyList<PlayerId> ActivePlayers => activePlayers.ToList();
+        public NavigationGroup CurrentNavigationGroup => navigationGroups[CurrentMenu];
+        public NavigationTabSystem CurrentNavigationTabSystem => navigationTabSystems[CurrentMenu];
+        public int CurrentTab => navigationTabSystems[CurrentMenu].CurrentTab;
+        public int CurrentMenu => navigationMenuSystem.CurrentMenu;
+
         [Header("Menu Settings")]
         [SerializeField] private bool isCloseableMenu;
 
@@ -21,18 +27,18 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private GroupMenu[] menus;    
 
         private NavigationGroup[] navigationGroups;
-        private NavigationMenuSystem navigationSystem;
-        private readonly HashSet<PlayerId> activePlayers = new();
+        private NavigationTabSystem[] navigationTabSystems;
+        private NavigationMenuSystem navigationMenuSystem;
 
-        public IReadOnlyList<PlayerId> ActivePlayers => activePlayers.ToList();
-        public NavigationGroup CurrentMenu => navigationGroups[navigationSystem.CurrentMenu];
+        private readonly HashSet<PlayerId> activePlayers = new();
 
         private IUINavigationService navigationService;
         private IInputService inputService;
 
         private void Awake()
         {
-            navigationSystem = new NavigationMenuSystem(menus.Length);
+            navigationMenuSystem = new NavigationMenuSystem(menus.Length);
+            navigationTabSystems = new NavigationTabSystem[menus.Length];
             navigationGroups = new NavigationGroup[menus.Length];
 
             for (int i = 0; i < menus.Length; i++)
@@ -40,6 +46,9 @@ namespace CatGame.Capabilities.UISystem
                 NavigationMode navigationMode = menus[i].NavigationMode;
                 navigationGroups[i] = new NavigationGroup(navigationMode);
                 navigationGroups[i].OnCancelRequested += NavigationGroup_OnCancelRequested;
+
+                int tabCount = menus[i].GroupTab.Length;
+                navigationTabSystems[i] = new NavigationTabSystem(tabCount);
 
                 SetupElements(i);
             }
@@ -69,7 +78,8 @@ namespace CatGame.Capabilities.UISystem
 
         private void MenuController_OnTabNavigation(int tabIncreasement)
         {
-            //navigationSystem.TryChangeTab(navigationSystem.CurrentMenu + tabIncreasement, out int previousMenu);
+            Debug.Log(tabIncreasement.ToString());
+            ChangeTab(tabIncreasement);
         }
 
         private void OnDestroy()
@@ -78,7 +88,7 @@ namespace CatGame.Capabilities.UISystem
                 navigationGroups[i].OnCancelRequested -= NavigationGroup_OnCancelRequested;
 
             foreach (PlayerId player in activePlayers)
-                navigationService.ForceRemoveGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+                navigationService.ForceRemoveGroup(player, navigationGroups[navigationMenuSystem.CurrentMenu]);
         }   
         
 
@@ -86,7 +96,7 @@ namespace CatGame.Capabilities.UISystem
         {
             if (!activePlayers.Add(player)) return;
             Debug.Log("Testando" + player);
-            navigationService.PushGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+            navigationService.PushGroup(player, navigationGroups[navigationMenuSystem.CurrentMenu]);
 
             ConfigInputs();
         }
@@ -94,7 +104,7 @@ namespace CatGame.Capabilities.UISystem
         public void DetachPlayer(PlayerId player)
         {
             if (!activePlayers.Remove(player)) return;
-            navigationService.PopGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+            navigationService.PopGroup(player, navigationGroups[navigationMenuSystem.CurrentMenu]);
 
             ConfigInputs(player);
         }
@@ -104,7 +114,7 @@ namespace CatGame.Capabilities.UISystem
             foreach (PlayerId player in activePlayers)
             {
                 if (!activePlayers.Remove(player)) continue;
-                navigationService.PopGroup(player, navigationGroups[navigationSystem.CurrentMenu]);
+                navigationService.PopGroup(player, navigationGroups[navigationMenuSystem.CurrentMenu]);
             }
         }
 
@@ -124,12 +134,45 @@ namespace CatGame.Capabilities.UISystem
             await menu.Hide();
         }
 
+        private async Task ShowTab(int tabIndex)
+        {
+            BaseUIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
+            await tab.Show();
+
+            SetInteractionElements(CurrentMenu, true);
+        }
+
+        private async Task HideTab(int tabIndex)
+        {
+            SetInteractionElements(CurrentMenu, false);
+
+            BaseUIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
+            await tab.Show();
+        }
+
+        private async void ChangeTab(int tabIncreasement)
+        {
+            int previousTab = default;
+
+            bool isTabChanged = tabIncreasement switch
+            {
+                -1 => CurrentNavigationTabSystem.TryPreviousTab(out previousTab),
+                1 => CurrentNavigationTabSystem.TryNextTab(out previousTab),
+                _ => false
+            };
+
+            if (!isTabChanged)
+                return;
+            Debug.Log(CurrentTab.ToString());
+            await HideTab(previousTab);
+            await ShowTab(CurrentTab);
+        }
 
         #region Functions
 
         private async void ChangeMenu(int menuIndex)
         {
-            if (!navigationSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
+            if (!navigationMenuSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
                 return;
 
             bool shouldReset = menus[previousMenuIndex].ResetOnForwardTransition;
@@ -172,22 +215,22 @@ namespace CatGame.Capabilities.UISystem
 
         private async void ReturnMenu()
         {
-            if (isSubMenu && navigationSystem.CurrentMenu == 0)
+            if (isSubMenu && navigationMenuSystem.CurrentMenu == 0)
             {
                 // Voltar pro menuPresenter principal.
                 ChangeMenuController(parentMenuController);
                 return;
             }
-            else if (isCloseableMenu && navigationSystem.CurrentMenu == 0)
+            else if (isCloseableMenu && navigationMenuSystem.CurrentMenu == 0)
             {
                 CloseMenu();
                 return;
             }
 
-            int currentMenu = navigationSystem.CurrentMenu;
+            int currentMenu = navigationMenuSystem.CurrentMenu;
             bool shouldReset = menus[currentMenu].ResetOnBackwardTransition;
 
-            if (!navigationSystem.TryGoBack(out int newMenu))
+            if (!navigationMenuSystem.TryGoBack(out int newMenu))
                 return;
 
             foreach (PlayerId player in activePlayers)
@@ -207,7 +250,7 @@ namespace CatGame.Capabilities.UISystem
 
         private async void CloseMenu()
         {
-            int currentMenu = navigationSystem.CurrentMenu;
+            int currentMenu = navigationMenuSystem.CurrentMenu;
             bool shouldReset = menus[currentMenu].ResetOnBackwardTransition;
 
             foreach (PlayerId player in activePlayers)
@@ -224,7 +267,7 @@ namespace CatGame.Capabilities.UISystem
             BaseUIScreen menu = menus[currentMenu].Panel;
             await menu.Hide();
 
-            navigationSystem.Reset();
+            navigationMenuSystem.Reset();
         }
 
         #endregion

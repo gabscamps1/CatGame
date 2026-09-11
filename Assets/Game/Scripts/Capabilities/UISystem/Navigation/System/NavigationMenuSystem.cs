@@ -9,14 +9,9 @@ namespace CatGame.Capabilities.UISystem
         private readonly int menuCount;
         private readonly List<int> menuHistory = new();
 
-        private NavigationTabSystem navigationTabSystem;
-
-        #region Menus      
-
-        public NavigationMenuSystem(int menuCount, int tabCount = 0) 
+        public NavigationMenuSystem(int menuCount) 
         {
             this.menuCount = menuCount;
-            navigationTabSystem = new NavigationTabSystem(tabCount);
         }
 
         public bool TryChangeMenu(int menuIndex, out int previousMenu)
@@ -49,16 +44,5 @@ namespace CatGame.Capabilities.UISystem
             menuHistory.Clear();
             CurrentMenu = 0;
         }
-
-        #endregion
-
-        #region Tabs
-
-        public bool TryChangeTab(int tabIndex, out int previousTab)
-        {
-            return navigationTabSystem.TryChangeTab(tabIndex, out previousTab);
-        }
-
-        #endregion
     }
 }

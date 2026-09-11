@@ -1,6 +1,8 @@
-﻿namespace CatGame.Capabilities.UISystem
+﻿using CatGame.Core;
+
+namespace CatGame.Capabilities.UISystem
 {
-    internal class NavigationTabSystem
+    public class NavigationTabSystem
     {
         public int CurrentTab { get; private set; }
 
@@ -11,7 +13,22 @@
             this.tabCount = tabCount;
         }
 
-        public bool TryChangeTab(int tabIndex, out int previousTab)
+        public bool TryNextTab(out int previousTab)
+        {
+            int goingTab = CurrentTab + 1 % tabCount;
+            return TryChangeTab(goingTab, out previousTab);
+        }
+
+        public bool TryPreviousTab(out int previousTab)
+        {
+            int goingTab = CurrentTab - 1 == 0 
+                ? tabCount - 1 
+                : CurrentTab - 1;
+
+            return TryChangeTab(goingTab, out previousTab);
+        }
+
+        private bool TryChangeTab(int tabIndex, out int previousTab)
         {       
             previousTab = CurrentTab;
 
@@ -26,7 +43,8 @@
 
         public void Reset()
         {
-            CurrentTab = 0;
+            if (!TryChangeTab(0, out int previousTab))
+                Logger.LogError("Não foi possível de retornar a aba");
         }
     }
 }

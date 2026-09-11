@@ -30,6 +30,7 @@ namespace CatGame.Capabilities.UISystem
 
         public BaseUIScreen Panel => panel;
         public NavigationMode NavigationMode => navigationMode;
+        public GroupTab[] GroupTab => groupTab;
         public GroupSelectable[] GroupSelectable => groupSelectable;
         public bool ResetOnForwardTransition => resetOnForwardTransition;
         public bool ResetOnBackwardTransition => resetOnBackwardTransition;
