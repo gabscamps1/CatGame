@@ -1,13 +1,34 @@
-using UnityEngine;
-using CatGame.Core.Interfaces;
 using CatGame.Core.Enums;
+using CatGame.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace CatGame.Capabilities.UISystem
 {
     public abstract class NavigableElement : MonoBehaviour, INavigableElement
     {
+        public class SubmittedEvent : EventArgs
+        {
+            public readonly PlayerId PlayerId;
+
+            public SubmittedEvent(PlayerId playerId)
+            {
+                PlayerId = playerId;
+            }
+        }
+
+        public class FocussedEvent : EventArgs
+        {
+            public readonly PlayerId PlayerId;
+
+            public FocussedEvent(PlayerId playerId)
+            {
+                PlayerId = playerId;
+            }
+        }
+
         [Header("Settings")]
         [SerializeField] private bool interactable = true;
 
@@ -32,6 +53,9 @@ namespace CatGame.Capabilities.UISystem
 
         public void SetInteractable(bool value) => interactable = value;
 
+        public event EventHandler<SubmittedEvent> OnSubmittedEvent;
+        public event EventHandler<FocussedEvent> OnFocusedEvent;
+
         public INavigableElement GetNeightbor(NavigationDirection direction)
         {
             return direction switch
@@ -48,6 +72,7 @@ namespace CatGame.Capabilities.UISystem
         {
             if (!FocusingPlayer.Add(player)) return;
             OnFocusedByPlayer(player, navigationMode);
+            OnFocusedEvent?.Invoke(this, new FocussedEvent(player));
         }
 
         public void OnUnfocused(PlayerId player, NavigationMode navigationMode = NavigationMode.Shared)
@@ -59,6 +84,7 @@ namespace CatGame.Capabilities.UISystem
         public void OnSubmit(PlayerId player)
         {
             OnSubmitByPlayer(player);
+            OnSubmittedEvent?.Invoke(this, new SubmittedEvent(player));
         }
 
         protected virtual void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)

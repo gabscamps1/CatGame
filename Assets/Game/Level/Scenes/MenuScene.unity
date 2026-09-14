@@ -1248,7 +1248,7 @@ MonoBehaviour:
   isSubMenu: 0
   parentMenuController: {fileID: 0}
   menus:
-  - panel: {fileID: 1326414678}
+  - panel: {fileID: 1326414679}
     navigationMode: 0
     resetOnForwardTransition: 0
     resetOnBackwardTransition: 0
@@ -1610,9 +1610,9 @@ RectTransform:
   - {fileID: 1993908599}
   m_Father: {fileID: 1550277677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -192.4}
   m_SizeDelta: {x: 454, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &497700786
@@ -3115,7 +3115,6 @@ GameObject:
   - component: {fileID: 910668842}
   - component: {fileID: 910668841}
   - component: {fileID: 910668840}
-  - component: {fileID: 910668843}
   m_Layer: 0
   m_Name: MainMenu_Canvas
   m_TagString: Untagged
@@ -3206,42 +3205,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &910668843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910668838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f55f61943b7ca240b9ec05ea78620b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.MenuController
-  isCloseableMenu: 0
-  isSubMenu: 0
-  parentMenuController: {fileID: 0}
-  menus:
-  - panel: {fileID: 0}
-    navigationMode: 0
-    resetOnForwardTransition: 0
-    resetOnBackwardTransition: 0
-    groupTab:
-    - tabScreen: {fileID: 0}
-      groupSelectable:
-      - element: {fileID: 0}
-        function: 0
-        numberOfMenu: 0
-        newMenuController: {fileID: 0}
-      - element: {fileID: 0}
-        function: 0
-        numberOfMenu: 0
-        newMenuController: {fileID: 0}
-      - element: {fileID: 0}
-        function: 0
-        numberOfMenu: 0
-        newMenuController: {fileID: 0}
-    groupSelectable: []
 --- !u!1 &911590939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3664,9 +3627,9 @@ RectTransform:
   - {fileID: 2095296882}
   m_Father: {fileID: 1550277677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -276.09998}
   m_SizeDelta: {x: 454, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1050877597
@@ -3802,9 +3765,9 @@ RectTransform:
   - {fileID: 13085286}
   m_Father: {fileID: 1550277677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -25}
   m_SizeDelta: {x: 454, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102899734
@@ -4517,7 +4480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1326414677}
-  - component: {fileID: 1326414678}
+  - component: {fileID: 1326414679}
   m_Layer: 0
   m_Name: MAIN
   m_TagString: Untagged
@@ -4548,7 +4511,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1326414678
+--- !u!114 &1326414679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4557,11 +4520,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1326414676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02524de971594fd458590d12e1e728db, type: 3}
+  m_Script: {fileID: 11500000, guid: 32778dc1b46432c46b5e2625910d963e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UIScreen
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
   animationStepsToShow: []
   animationStepsToHide: []
+  panelType: 4
+  versusStartButton: {fileID: 0}
+  quitGameButton: {fileID: 1470758237}
 --- !u!1 &1409210478
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,7 +4679,7 @@ GameObject:
   - component: {fileID: 1414791570}
   - component: {fileID: 1414791574}
   m_Layer: 0
-  m_Name: ButtonOpt
+  m_Name: StartGame_Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4951,7 +4917,7 @@ GameObject:
   - component: {fileID: 1462461189}
   - component: {fileID: 1462461188}
   m_Layer: 0
-  m_Name: ButtonText_TMP
+  m_Name: StartGame_TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5089,7 +5055,7 @@ GameObject:
   - component: {fileID: 1470758233}
   - component: {fileID: 1470758237}
   m_Layer: 0
-  m_Name: ButtonOpt
+  m_Name: QuitGame_Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5793,7 +5759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1569829128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5841,7 +5807,7 @@ GameObject:
   - component: {fileID: 1626814066}
   - component: {fileID: 1626814065}
   m_Layer: 0
-  m_Name: ButtonText_TMP
+  m_Name: Options_TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6115,7 +6081,7 @@ GameObject:
   - component: {fileID: 1676937327}
   - component: {fileID: 1676937326}
   m_Layer: 0
-  m_Name: ButtonText_TMP
+  m_Name: QuitGame_TMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6947,7 +6913,7 @@ GameObject:
   - component: {fileID: 2033734061}
   - component: {fileID: 2033734065}
   m_Layer: 0
-  m_Name: ButtonOpt
+  m_Name: Options_Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7343,9 +7309,9 @@ RectTransform:
   - {fileID: 1563998311}
   m_Father: {fileID: 1550277677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -108.7}
   m_SizeDelta: {x: 454, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2100002925

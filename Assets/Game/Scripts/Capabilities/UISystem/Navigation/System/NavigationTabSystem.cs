@@ -15,13 +15,25 @@ namespace CatGame.Capabilities.UISystem
 
         public bool TryNextTab(out int previousTab)
         {
-            int goingTab = CurrentTab + 1 % tabCount;
+            if (tabCount == 0)
+            {
+                previousTab = default;
+                return false;
+            }
+
+            int goingTab = (CurrentTab + 1) % tabCount;
             return TryChangeTab(goingTab, out previousTab);
         }
 
         public bool TryPreviousTab(out int previousTab)
         {
-            int goingTab = CurrentTab - 1 == 0 
+            if (tabCount == 0)
+            {
+                previousTab = default;
+                return false;
+            }
+
+            int goingTab = CurrentTab - 1 == -1 
                 ? tabCount - 1 
                 : CurrentTab - 1;
 

@@ -10,7 +10,6 @@ namespace CatGame.Core.Enums
 
         // Globais    
         Pause = 1,
-        Settings = 2,
         Loading = 3,
 
         // Menu principal

@@ -12,8 +12,8 @@ namespace CatGame.Capabilities.UISystem
     {
         public IReadOnlyList<PlayerId> ActivePlayers => activePlayers.ToList();
         public NavigationGroup CurrentNavigationGroup => navigationGroups[CurrentMenu];
-        public NavigationTabSystem CurrentNavigationTabSystem => navigationTabSystems[CurrentMenu];
-        public int CurrentTab => navigationTabSystems[CurrentMenu].CurrentTab;
+        public NavigationTabSystem CurrentNavigationTabSystem => navigationTabSystem[CurrentMenu];
+        public int CurrentTab => navigationTabSystem[CurrentMenu].CurrentTab;
         public int CurrentMenu => navigationMenuSystem.CurrentMenu;
 
         [Header("Menu Settings")]
@@ -27,7 +27,7 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private GroupMenu[] menus;    
 
         private NavigationGroup[] navigationGroups;
-        private NavigationTabSystem[] navigationTabSystems;
+        private NavigationTabSystem[] navigationTabSystem;
         private NavigationMenuSystem navigationMenuSystem;
 
         private readonly HashSet<PlayerId> activePlayers = new();
@@ -38,7 +38,7 @@ namespace CatGame.Capabilities.UISystem
         private void Awake()
         {
             navigationMenuSystem = new NavigationMenuSystem(menus.Length);
-            navigationTabSystems = new NavigationTabSystem[menus.Length];
+            navigationTabSystem = new NavigationTabSystem[menus.Length];
             navigationGroups = new NavigationGroup[menus.Length];
 
             for (int i = 0; i < menus.Length; i++)
@@ -48,7 +48,7 @@ namespace CatGame.Capabilities.UISystem
                 navigationGroups[i].OnCancelRequested += NavigationGroup_OnCancelRequested;
 
                 int tabCount = menus[i].GroupTab.Length;
-                navigationTabSystems[i] = new NavigationTabSystem(tabCount);
+                navigationTabSystem[i] = new NavigationTabSystem(tabCount);
 
                 SetupElements(i);
             }
@@ -136,18 +136,24 @@ namespace CatGame.Capabilities.UISystem
 
         private async Task ShowTab(int tabIndex)
         {
+            if (menus[CurrentMenu].GroupTab == null || menus[CurrentMenu].GroupTab.Length == 0)
+                return;
+
             BaseUIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
             await tab.Show();
 
             SetInteractionElements(CurrentMenu, true);
         }
 
-        private async Task HideTab(int tabIndex)
+        private async Task HideTab(int menuIndex, int tabIndex)
         {
-            SetInteractionElements(CurrentMenu, false);
+            if (menus[menuIndex].GroupTab == null || menus[menuIndex].GroupTab.Length == 0) 
+                return;
 
-            BaseUIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
-            await tab.Show();
+            SetInteractionElements(menuIndex, false);
+
+            BaseUIScreen tab = menus[menuIndex].GroupTab[tabIndex].TabScreen;
+            await tab.Hide();
         }
 
         private async void ChangeTab(int tabIncreasement)
@@ -164,7 +170,7 @@ namespace CatGame.Capabilities.UISystem
             if (!isTabChanged)
                 return;
             Debug.Log(CurrentTab.ToString());
-            await HideTab(previousTab);
+            await HideTab(CurrentMenu, previousTab);
             await ShowTab(CurrentTab);
         }
 
@@ -185,8 +191,11 @@ namespace CatGame.Capabilities.UISystem
                 navigationService.PopGroup(player, navigationGroups[previousMenuIndex]);
             }
 
+            await HideTab(previousMenuIndex, navigationTabSystem[previousMenuIndex].CurrentTab);
+
             await HideGroup(previousMenuIndex);
             await ShowGroup(menuIndex);
+            await ShowTab(CurrentTab);
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[menuIndex]);
@@ -241,8 +250,12 @@ namespace CatGame.Capabilities.UISystem
                 navigationService.PopGroup(player, navigationGroups[currentMenu]);
             }
 
+            await HideTab(currentMenu, navigationTabSystem[currentMenu].CurrentTab);
+            navigationTabSystem[currentMenu].Reset();
+
             await HideGroup(currentMenu);
             await ShowGroup(newMenu);
+            await ShowTab(newMenu);
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[newMenu]);
@@ -262,6 +275,9 @@ namespace CatGame.Capabilities.UISystem
             }
 
             activePlayers.Clear();
+
+            await HideTab(currentMenu, navigationTabSystem[currentMenu].CurrentTab);
+            navigationTabSystem[currentMenu].Reset();
 
             // Não seta a interação do menu principal para false ao fechar o menu.
             BaseUIScreen menu = menus[currentMenu].Panel;

@@ -245,6 +245,7 @@ Transform:
   - {fileID: 1779136527}
   - {fileID: 1820911295}
   - {fileID: 665186648}
+  - {fileID: 888619397}
   m_Father: {fileID: 1542714749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &665186647
@@ -278,6 +279,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 481446454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &888619396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 888619397}
+  - component: {fileID: 888619398}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &888619397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888619396}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 962.5105, y: 474.58505, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 481446454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &888619398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888619396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed440ec1ffc19f046a35d6799b1ebc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Services.UISystem.UIManager
 --- !u!1 &1002556417
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +858,7 @@ MonoBehaviour:
   audioService: {fileID: 1820911294}
   sceneLoadingService: {fileID: 1487940515}
   inputActionsService: {fileID: 1217733162}
+  uiManager: {fileID: 888619398}
 --- !u!1 &1779136525
 GameObject:
   m_ObjectHideFlags: 0

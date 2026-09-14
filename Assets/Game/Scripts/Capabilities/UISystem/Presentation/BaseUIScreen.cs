@@ -15,7 +15,10 @@ namespace CatGame.Capabilities.UISystem
         public async Task Show(Action onComplete = null)
         {
             if (IsVisible)
+            {
+                Core.Logger.LogWarning($"[{nameof(BaseUIScreen)}: {name}] Tentou ativar o menu enquanto já estava ativado");
                 return;
+            }
 
             IsVisible = true;
 
@@ -35,7 +38,10 @@ namespace CatGame.Capabilities.UISystem
         public async Task Hide(Action onComplete = null)
         {
             if (!IsVisible)
+            {
+                Core.Logger.LogWarning($"[{nameof(BaseUIScreen)}: {name}] Tentou desativar o menu enquanto já estava desativado");
                 return;
+            }
 
             IsVisible = false;
 
