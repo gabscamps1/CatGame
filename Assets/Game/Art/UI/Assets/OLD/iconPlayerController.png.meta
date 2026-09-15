@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6a742cd5f19bf25428b6b97dc7c1c4b1
+guid: cc618c8c3f7bc4249ae61f338c9296fa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3694308664520170235
-    second: iconAdmin_0
+      213: 4734243661472483276
+    second: iconPlayerController_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +109,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: iconAdmin_0
+      name: iconPlayerController_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 49
-        height: 33
+        y: 9
+        width: 65
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 505a0a8c7dd2bbcc0800000000000000
-      internalID: -3694308664520170235
+      spriteID: cc7463ae68963b140800000000000000
+      internalID: 4734243661472483276
       vertices: []
       indices: 
       edges: []
@@ -148,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      iconAdmin_0: -3694308664520170235
+      iconPlayerController_0: 4734243661472483276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
