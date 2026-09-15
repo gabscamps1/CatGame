@@ -1,32 +1,61 @@
 ﻿using CatGame.Core.Enums;
+using System;
+using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CatGame.Capabilities.UISystem
 {
     public class ToggleElement : NavigableElement
     {
-        [SerializeField] private bool isActive;
+        public class ValueChangedEvent : EventArgs
+        {
+            public readonly bool IsOn;
 
-        public bool IsActive { get; private set; }
+            public ValueChangedEvent(bool isOn)
+            {
+                IsOn = isOn;
+            }
+        }
+        public bool IsOn => isOn;
+        public event EventHandler<ValueChangedEvent> OnValueChanged;
+
+        [Header("Toggle Settings")]
+        [SerializeField] private bool isOn;
+        
+        [Header("Toggle UI")]
+        [SerializeField] private Image graphic;
 
         private void Awake()
         {
-            IsActive = isActive;
+            UpdateUI();
         }
 
-        public void SetActive(bool active)
+        public void SetActivate(bool active)
         {
-            IsActive = active;
+            isOn = active;
+            OnValueChanged?.Invoke(this, new ValueChangedEvent(isOn));
+            
+            UpdateUI();
         }
 
-        public void ChangeState()
+        public void SwitchState()
         {
-            IsActive = !IsActive;
+            isOn = !IsOn;
+            OnValueChanged?.Invoke(this, new ValueChangedEvent(isOn));
+
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if (graphic) graphic.enabled = isOn;
         }
 
         protected override void OnSubmitByPlayer(PlayerId player)
         {
-            ChangeState();
+            SwitchState();
         }
     }
 }
