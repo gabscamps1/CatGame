@@ -296,49 +296,54 @@ namespace CatGame.Capabilities.UISystem
             GroupMenu currentMenu = menus[menu];
             NavigationGroup group = navigationGroups[menu];
 
-            for (int i = 0; i < currentMenu.GroupSelectable.Length; i++)
+            for (int i = 0; i < currentMenu.GroupTab.Length; i++)
             {
-                GroupSelectable currentGroupSelectable = currentMenu.GroupSelectable[i];
-                NavigableElement element = currentGroupSelectable.Element;
+                GroupTab currentTab = currentMenu.GroupTab[i];
 
-                if (element == null) 
-                    continue;
-
-                group.Register(element);
-
-                switch (element)
+                for (int j = 0; j < currentTab.GroupSelectable.Length; j++)
                 {
-                    case ButtonElement button:
+                    GroupSelectable currentGroupSelectable = currentTab.GroupSelectable[j];
+                    NavigableElement element = currentGroupSelectable.Element;
 
-                        switch (currentGroupSelectable.Function)
-                        {
-                            // Chama a funlçao de trocar menu.
-                            case GroupSelectable.CallFunction.ChangeMenu:
-                                int numberOfMenu = currentGroupSelectable.NumberOfMenu;
-                                button.OnSubmittedEvent += (_, _) => ChangeMenu(numberOfMenu);
-                                break;
+                    if (element == null)
+                        continue;
 
-                            // Chama a função de voltar ao menu anterior.
-                            case GroupSelectable.CallFunction.BackToMenu:
-                                button.OnSubmittedEvent += (_, _) => ReturnMenu();
-                                break;
+                    group.Register(element);
 
-                            case GroupSelectable.CallFunction.ChangeMenuController:
-                                MenuController newMenuController = currentGroupSelectable.NewMenuController;
-                                button.OnSubmittedEvent += (_, _) => ChangeMenuController(newMenuController);
-                                break;
+                    switch (element)
+                    {
+                        case ButtonElement button:
 
-                            case GroupSelectable.CallFunction.CloseMenu:
-                                button.OnSubmittedEvent += (_, _) => CloseMenu();
-                                break;
-                        }
+                            switch (currentGroupSelectable.Function)
+                            {
+                                // Chama a funlçao de trocar menu.
+                                case GroupSelectable.CallFunction.ChangeMenu:
+                                    int numberOfMenu = currentGroupSelectable.NumberOfMenu;
+                                    button.OnSubmittedEvent += (_, _) => ChangeMenu(numberOfMenu);
+                                    break;
 
-                        break;
+                                // Chama a função de voltar ao menu anterior.
+                                case GroupSelectable.CallFunction.BackToMenu:
+                                    button.OnSubmittedEvent += (_, _) => ReturnMenu();
+                                    break;
 
-                    default:
-                        Core.Logger.LogWarning("[MenuPresenter] Classe que herda de NavigableElement não foi registrada no menu.");
-                        break;
-                }
+                                case GroupSelectable.CallFunction.ChangeMenuController:
+                                    MenuController newMenuController = currentGroupSelectable.NewMenuController;
+                                    button.OnSubmittedEvent += (_, _) => ChangeMenuController(newMenuController);
+                                    break;
+
+                                case GroupSelectable.CallFunction.CloseMenu:
+                                    button.OnSubmittedEvent += (_, _) => CloseMenu();
+                                    break;
+                            }
+
+                            break;
+
+                        default:
+                            Core.Logger.LogWarning("[MenuPresenter] Classe que herda de NavigableElement não foi registrada no menu.");
+                            break;
+                    }
+                }      
             }
         }
 
@@ -346,8 +351,9 @@ namespace CatGame.Capabilities.UISystem
         {
             GroupMenu currentMenu = menus[menu];
 
-            foreach (var group in currentMenu.GroupSelectable)
-                group.Element?.SetInteractable(isToActive);
+            foreach (var tab in currentMenu.GroupTab)
+                foreach (var groupSelectable in tab.GroupSelectable)
+                    groupSelectable.Element?.SetInteractable(isToActive);
         }
 
         #endregion            

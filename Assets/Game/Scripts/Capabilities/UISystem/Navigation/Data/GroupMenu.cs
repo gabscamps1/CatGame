@@ -25,13 +25,9 @@ namespace CatGame.Capabilities.UISystem
         [Tooltip("abas de cada menu")]
         [SerializeField] private GroupTab[] groupTab;
 
-        [Tooltip("Elementos de cada menu")]
-        [SerializeField] private GroupSelectable[] groupSelectable;
-
         public BaseUIScreen Panel => panel;
         public NavigationMode NavigationMode => navigationMode;
         public GroupTab[] GroupTab => groupTab;
-        public GroupSelectable[] GroupSelectable => groupSelectable;
         public bool ResetOnForwardTransition => resetOnForwardTransition;
         public bool ResetOnBackwardTransition => resetOnBackwardTransition;
     }

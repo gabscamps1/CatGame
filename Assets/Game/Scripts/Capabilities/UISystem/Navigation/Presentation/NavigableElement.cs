@@ -9,21 +9,21 @@ namespace CatGame.Capabilities.UISystem
 {
     public abstract class NavigableElement : MonoBehaviour, INavigableElement
     {
-        public class SubmittedEvent : EventArgs
-        {
-            public readonly PlayerId PlayerId;
-
-            public SubmittedEvent(PlayerId playerId)
-            {
-                PlayerId = playerId;
-            }
-        }
-
         public class FocussedEvent : EventArgs
         {
             public readonly PlayerId PlayerId;
 
             public FocussedEvent(PlayerId playerId)
+            {
+                PlayerId = playerId;
+            }
+        }
+
+        public class SubmittedEvent : EventArgs
+        {
+            public readonly PlayerId PlayerId;
+
+            public SubmittedEvent(PlayerId playerId)
             {
                 PlayerId = playerId;
             }
