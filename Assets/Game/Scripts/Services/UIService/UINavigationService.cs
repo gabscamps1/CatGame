@@ -97,7 +97,6 @@ namespace CatGame.Services.UISystem
             INavigationGroup currentGroup = groups.Peek();
             INavigableElement previousElement = currentGroup.GetCurrentElement(player);
 
-            Logger.Log("TryNavigate2");
             currentGroup.Navigate(player, direction);
 
             INavigableElement currentElement = currentGroup.GetCurrentElement(player);

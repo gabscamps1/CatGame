@@ -78,7 +78,6 @@ namespace CatGame.Capabilities.UISystem
 
         private void MenuController_OnTabNavigation(int tabIncreasement)
         {
-            Debug.Log(tabIncreasement.ToString());
             ChangeTab(tabIncreasement);
         }
 
@@ -139,8 +138,10 @@ namespace CatGame.Capabilities.UISystem
             if (menus[CurrentMenu].GroupTab == null || menus[CurrentMenu].GroupTab.Length == 0)
                 return;
 
-            BaseUIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
-            await tab.Show();
+            UIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
+
+            if (tab != null)
+                await tab.Show();
 
             SetInteractionElements(CurrentMenu, true);
         }
@@ -152,8 +153,10 @@ namespace CatGame.Capabilities.UISystem
 
             SetInteractionElements(menuIndex, false);
 
-            BaseUIScreen tab = menus[menuIndex].GroupTab[tabIndex].TabScreen;
-            await tab.Hide();
+            UIScreen tab = menus[menuIndex].GroupTab[tabIndex].TabScreen;
+
+            if (tab != null)
+                await tab.Hide();
         }
 
         private async void ChangeTab(int tabIncreasement)
@@ -169,7 +172,7 @@ namespace CatGame.Capabilities.UISystem
 
             if (!isTabChanged)
                 return;
-            Debug.Log(CurrentTab.ToString());
+
             await HideTab(CurrentMenu, previousTab);
             await ShowTab(CurrentTab);
         }

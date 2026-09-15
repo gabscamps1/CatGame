@@ -178,7 +178,6 @@ namespace CatGame.Capabilities.UISystem
 
             INavigableElement candidateElement = currentPlayerElement;
             var visited = new HashSet<INavigableElement>();
-            Core.Logger.Log("TryNavigate3");
 
             while (true)
             {
@@ -187,12 +186,8 @@ namespace CatGame.Capabilities.UISystem
                 if (candidateElement == null || !visited.Add(candidateElement))
                     return;
 
-                Core.Logger.Log("TryNavigate4");
-
                 if (candidateElement.IsInteractable)
                 {
-                    Core.Logger.Log("TryNavigate5");
-
                     SetElementFocus(player, candidateElement);
                     return;
                 }
