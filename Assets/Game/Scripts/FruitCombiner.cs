@@ -1,3 +1,4 @@
+using CatGame.Core;
 using UnityEngine;
 
 public class FruitCombiner : MonoBehaviour
@@ -43,6 +44,9 @@ public class FruitCombiner : MonoBehaviour
             {
                 informer.WasCombinedIn = true;
             }
+
+            /////////Instantiate(TextAlignment, middlePosition);
+            ///////////Debug.Log(middlePosition); <---- SPAWNAR O TEXTO COM OS PONTOS NA COORDENADA (GABRIEL)
 
             Destroy(collision.gameObject);
             Destroy(gameObject);

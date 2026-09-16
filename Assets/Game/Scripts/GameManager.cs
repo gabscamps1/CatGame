@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseScore(int amount)
     {
+           //CRIA PREFAB DE PONTO
         currentScore += amount;
         _scoreText.text = currentScore.ToString("0");
     }

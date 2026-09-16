@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7540d0d885ae25446b7af807a773517a
+guid: 0d73bf8a002f579438cbac1467b0bcb1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1860355966906807062
-    second: TimerBG_spr_0
+      213: 2201880370055945770
+    second: TimeBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,23 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TimerBG_spr_0
+      name: TimeBG_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 187
-        height: 75
+        y: 29
+        width: 468
+        height: 178
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 24, y: 15, z: 21, w: 18}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 613324335ef41d910800000000000000
-      internalID: 1860355966906807062
+      spriteID: a2e171fc786ae8e10800000000000000
+      internalID: 2201880370055945770
       vertices: []
       indices: 
       edges: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5c8f51baf90d22a41a30304731f7b501
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TimerBG_spr_0: 1860355966906807062
+      TimeBG_0: 2201880370055945770
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
