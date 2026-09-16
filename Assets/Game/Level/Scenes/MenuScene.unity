@@ -2667,10 +2667,12 @@ MonoBehaviour:
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
   minValue: 0
-  maxValue: 1
-  value: 1
-  changeValue: 0.1
+  maxValue: 100
+  value: 100
+  changeValue: 1
   valueText: {fileID: 1538648883}
+  initialDelay: 0.4
+  repeatInterval: 0.03
 --- !u!1 &690431650
 GameObject:
   m_ObjectHideFlags: 0
@@ -3533,10 +3535,12 @@ MonoBehaviour:
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
   minValue: 0
-  maxValue: 1
-  value: 1
-  changeValue: 0.1
+  maxValue: 100
+  value: 100
+  changeValue: 1
   valueText: {fileID: 1437301155}
+  initialDelay: 0.4
+  repeatInterval: 0.03
 --- !u!1 &910668838
 GameObject:
   m_ObjectHideFlags: 0
@@ -3990,10 +3994,12 @@ MonoBehaviour:
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
   minValue: 0
-  maxValue: 1
-  value: 1
-  changeValue: 0.1
+  maxValue: 100
+  value: 100
+  changeValue: 1
   valueText: {fileID: 1363343582}
+  initialDelay: 0.4
+  repeatInterval: 0.03
 --- !u!1 &1015765284
 GameObject:
   m_ObjectHideFlags: 0
@@ -4393,10 +4399,12 @@ MonoBehaviour:
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
   minValue: 0
-  maxValue: 1
-  value: 1
-  changeValue: 0.1
+  maxValue: 100
+  value: 100
+  changeValue: 1
   valueText: {fileID: 1338879404}
+  initialDelay: 0.4
+  repeatInterval: 0.03
 --- !u!224 &1092989536
 RectTransform:
   m_ObjectHideFlags: 0

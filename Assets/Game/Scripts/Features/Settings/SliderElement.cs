@@ -1,6 +1,8 @@
 using CatGame.Core;
 using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
+using CatGame.Services.Input;
+using CatGame.Services.UISystem;
 using System;
 using TMPro;
 using UnityEngine;
@@ -31,50 +33,111 @@ namespace CatGame.Capabilities.UISystem
         [Header("Slider UI")]
         [SerializeField] private TextMeshProUGUI valueText;
 
+        [Header("Repeat OnHold Settings")]
+        [SerializeField] private float initialDelay = 0.4f;
+        [SerializeField] private float repeatInterval = 0.12f;
+
+        private NavigationDirection? heldDirection;
+        private float nextRepeatTime;
+
+        private IInputService inputService;
+
+        private void Awake()
+        {
+            UpdateUI();
+        }
+
+        private void Start()
+        {
+            inputService = ServiceLocator.Get<IInputService>();
+        }
+
+        private void Update()
+        {
+            HandleDirectionalInput();           
+        }
+
+        private void HandleDirectionalInput()
+        {
+            foreach (PlayerId playerId in FocusingPlayerList)
+            {
+                if (!inputService.GetInputFromPlayer(playerId).Navigation.IsPressed())
+                    continue;
+
+                NavigationDirection? direction = ReadDirection(playerId);
+
+                if (direction.HasValue && (direction.Value == NavigationDirection.Up || direction.Value == NavigationDirection.Down))
+                    return;
+
+                if (direction.HasValue && direction != heldDirection)
+                {
+                    heldDirection = direction;
+                    nextRepeatTime = Time.unscaledTime + initialDelay;
+                    Navigation(direction.Value);
+                    return;
+                }
+
+                if (!direction.HasValue)
+                {
+                    heldDirection = null;
+                    return;
+                }
+
+                if (Time.unscaledTime >= nextRepeatTime)
+                {
+                    nextRepeatTime = Time.unscaledTime + repeatInterval;
+                    Navigation(direction.Value);
+                }
+
+                return; // Somente um player mexe por frame.
+            }
+
+            heldDirection = null;
+        }
+
+        private NavigationDirection? ReadDirection(PlayerId playerId)
+        {
+            Vector2 navigateDirection = inputService.GetInputFromPlayer(playerId).Navigation.ReadValue<Vector2>();
+
+            float horizontal = navigateDirection.x;
+            float vertical = navigateDirection.y;
+
+            if (vertical > 0.5f) return NavigationDirection.Up;
+            if (vertical < -0.5f) return NavigationDirection.Down;
+            if (horizontal < -0.5f) return NavigationDirection.Left;
+            if (horizontal > 0.5f) return NavigationDirection.Right;
+
+            return null;
+        }
+
         private void IncressValue()
         {
             value += changeValue;
-            value = Mathf.Clamp(minValue, maxValue, value);
+            value = Mathf.Clamp(value, minValue, maxValue);
             OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
+            UpdateUI();
         }
 
         private void DecreaseValue()
         {
             value -= changeValue;
-            value = Mathf.Clamp(minValue, maxValue, value);
+            value = Mathf.Clamp(value, minValue, maxValue);
             OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
+            UpdateUI();
         }
 
-        protected override void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)
+        private void Navigation(NavigationDirection direction)
         {
-            base.OnFocusedByPlayer(player, navigationMode);
-
-            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
-            inputController.Navigation.performed += Navigation_performed;
-        }
-
-        protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
-        {
-            base.OnUnfocusedByPlayer(player, navigationMode);
-
-            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
-            inputController.Navigation.performed -= Navigation_performed;
-        }
-
-        private void Navigation_performed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-        {
-            Vector2 navigationValue = context.ReadValue<Vector2>();
-
-            switch (navigationValue.x)
+            switch (direction)
             {
-                case 1: IncressValue(); break;
-                case -1: DecreaseValue(); break;
+                case NavigationDirection.Right: IncressValue(); break;
+                case NavigationDirection.Left: DecreaseValue(); break;
             }
         }
 
         private void UpdateUI()
         {
-            valueText.text = value.ToString();
+            valueText.text = $"<{value}>";
         }
     }
 }

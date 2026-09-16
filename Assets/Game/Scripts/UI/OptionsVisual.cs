@@ -2,6 +2,7 @@
 using CatGame.Core.Enums;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace CatGame.UI
 {
@@ -10,23 +11,27 @@ namespace CatGame.UI
         [SerializeField] private Color selectedColor;
         [SerializeField] private Color unselectedColor;
 
-        private TextMeshProUGUI currentTmp;
+        private List<TextMeshProUGUI> tmpList = new();
 
         public override void AttachTo(NavigableElement element, PlayerId playerId)
         {
-            currentTmp = element.GetComponentInChildren<TextMeshProUGUI>();
-            currentTmp.color = selectedColor;
+            foreach (TextMeshProUGUI tmp in element.GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                tmp.color = selectedColor;
+                tmpList.Add(tmp);
+            }
 
             base.AttachTo(element, playerId);
         }
 
         public override void Disattach(PlayerId playerId)
         {
-            if (currentTmp != null)
+            if (tmpList != null && tmpList.Count > 0)
             {
-                TextMeshProUGUI text = currentTmp.GetComponentInChildren<TextMeshProUGUI>();
-                text.color = unselectedColor;
-                currentTmp = null;
+                foreach (TextMeshProUGUI tmp in tmpList)              
+                    tmp.color = unselectedColor;
+                
+                tmpList.Clear();
             }
            
             base.Disattach(playerId);

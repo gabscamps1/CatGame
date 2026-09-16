@@ -203,5 +203,35 @@ namespace CatGame.Capabilities.UISystem
         {
             OnCancelRequested?.Invoke(this, player);
         }
+
+        /// <summary>
+        /// Vai para o 1° elemento que esteja em uma condição para ser selecionado.
+        /// </summary>
+        public void ResetElement()
+        {
+            foreach (PlayerId player in activePlayers)
+            {
+                INavigableElement currentPlayerElement = GetCurrentElement(player);
+
+                if (currentPlayerElement == null)
+                {
+                    Enter(player);
+                    Logger.LogWarning("[NavigationGroup] Nenhum elemento estava em foco ao tentar navegar");
+                    continue;
+                }
+
+                if (currentPlayerElement.IsInteractable)
+                    continue;
+
+                foreach (NavigableElement element in elements)
+                {
+                    if (!element.IsInteractable)
+                        continue;
+
+                    SetElementFocus(player, element);
+                    break;
+                }
+            }      
+        }
     }
 }

@@ -11,10 +11,12 @@ namespace CatGame.Capabilities.UISystem
     public class MenuController : MonoBehaviour
     {
         public IReadOnlyList<PlayerId> ActivePlayers => activePlayers.ToList();
-        public NavigationGroup CurrentNavigationGroup => navigationGroups[CurrentMenu];
-        public NavigationTabSystem CurrentNavigationTabSystem => navigationTabSystem[CurrentMenu];
-        public int CurrentTab => navigationTabSystem[CurrentMenu].CurrentTab;
-        public int CurrentMenu => navigationMenuSystem.CurrentMenu;
+        public int CurrentMenuIndex => navigationMenuSystem.CurrentMenu;
+        public GroupMenu CurrentGroupMenu => menus[CurrentMenuIndex];
+        public NavigationTabSystem CurrentNavigationTabSystem => navigationTabSystem[CurrentMenuIndex];
+        public int CurrentTabIndex => CurrentNavigationTabSystem.CurrentTab;
+        public NavigationGroup CurrentNavigationGroup => navigationGroups[CurrentMenuIndex];
+
 
         [Header("Menu Settings")]
         [SerializeField] private bool isCloseableMenu;
@@ -94,7 +96,6 @@ namespace CatGame.Capabilities.UISystem
         public void AttachPlayer(PlayerId player)
         {
             if (!activePlayers.Add(player)) return;
-            Debug.Log("Testando" + player);
             navigationService.PushGroup(player, navigationGroups[navigationMenuSystem.CurrentMenu]);
 
             ConfigInputs();
@@ -135,15 +136,15 @@ namespace CatGame.Capabilities.UISystem
 
         private async Task ShowTab(int tabIndex)
         {
-            if (menus[CurrentMenu].GroupTab == null || menus[CurrentMenu].GroupTab.Length == 0)
+            if (menus[CurrentMenuIndex].GroupTab == null || menus[CurrentMenuIndex].GroupTab.Length == 0)
                 return;
 
-            UIScreen tab = menus[CurrentMenu].GroupTab[tabIndex].TabScreen;
+            UIScreen tab = menus[CurrentMenuIndex].GroupTab[tabIndex].TabScreen;
 
             if (tab != null)
                 await tab.Show();
 
-            SetInteractionElements(CurrentMenu, true);
+            SetInteractionElements(CurrentMenuIndex, true);
         }
 
         private async Task HideTab(int menuIndex, int tabIndex)
@@ -173,8 +174,9 @@ namespace CatGame.Capabilities.UISystem
             if (!isTabChanged)
                 return;
 
-            await HideTab(CurrentMenu, previousTab);
-            await ShowTab(CurrentTab);
+            await HideTab(CurrentMenuIndex, previousTab);
+            await ShowTab(CurrentTabIndex);
+            CurrentNavigationGroup.ResetElement();
         }
 
         #region Functions
@@ -198,7 +200,7 @@ namespace CatGame.Capabilities.UISystem
 
             await HideGroup(previousMenuIndex);
             await ShowGroup(menuIndex);
-            await ShowTab(CurrentTab);
+            await ShowTab(CurrentTabIndex);
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[menuIndex]);
