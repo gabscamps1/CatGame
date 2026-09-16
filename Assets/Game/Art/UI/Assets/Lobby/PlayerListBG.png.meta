@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 00e991d7c212cb94eaee65e79d27146c
+guid: 1dc5170bad30f3b418d3d016c80029f8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2625171154269013678
-    second: OptionHighight_0
+      213: -2710326727588387348
+    second: PlayerListBG_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,23 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OptionHighight_0
+      name: PlayerListBG_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1838
-        height: 99
+        width: 1712
+        height: 990
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 74, y: 0, z: 91, w: 0}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ea68ecc814b7e6420800000000000000
-      internalID: 2625171154269013678
+      spriteID: ce5e8d0833cf26ad0800000000000000
+      internalID: -2710326727588387348
       vertices: []
       indices: 
       edges: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      OptionHighight_0: 2625171154269013678
+      PlayerListBG_0: -2710326727588387348
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

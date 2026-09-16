@@ -76,7 +76,7 @@ namespace CatGame.SettingsManagement
 
             // Adiciona as resoluções no dropdown.
             foreach (Resolution res in resolutions)           
-                resolutionDropdown.AddOptions($"{res.width} x {res.height}");
+                resolutionDropdown.AddOptions($"< {res.width} x {res.height} >");
             
         }
 
