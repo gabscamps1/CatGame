@@ -11424,6 +11424,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1228830380}
     - target: {fileID: 3857370782398570059, guid: 91d215df901e46341a3a3b01d6913879, type: 3}
+      propertyPath: boundaries
+      value: 
+      objectReference: {fileID: 1192553304}
+    - target: {fileID: 3857370782398570059, guid: 91d215df901e46341a3a3b01d6913879, type: 3}
       propertyPath: _boundaries
       value: 
       objectReference: {fileID: 1192553304}
