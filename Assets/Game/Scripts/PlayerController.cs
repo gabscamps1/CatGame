@@ -1,50 +1,85 @@
-using Unity.VisualScripting;
+using CatGame.Core;
+using CatGame.Core.Enums;
+using CatGame.Core.Interfaces;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private BoxCollider2D _boundaries;
-    [SerializeField] private Transform _fruitThrowTransform;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private BoxCollider2D boundaries;
+    [SerializeField] private Transform fruitThrowTransform;
+    [SerializeField] private ThrowFruitController throwFruitController;
 
-    private Bounds _bounds;
+    private Bounds bounds;
 
-    private float _leftBound;
-    private float _rightBound;
+    private float leftBound;
+    private float rightBound;
 
-    private float _startingLeftBound;
-    private float _startingRightBound;
+    private float startingLeftBound;
+    private float startingRightBound;
 
-    private float _offset;
+    private float offset;
+
+    private IInputService inputService;
+    private IPlayerInputController playerInputController;
+    private PlayerId playerId;
 
     private void Awake()
     {
-        _bounds = _boundaries.bounds;
+        bounds = boundaries.bounds;
 
-        _offset = transform.position.x - _fruitThrowTransform.position.x;
+        offset = transform.position.x - fruitThrowTransform.position.x;
 
-        _leftBound = _bounds.min.x + _offset;
-        _rightBound = _bounds.max.x + _offset;
+        leftBound = bounds.min.x + offset;
+        rightBound = bounds.max.x + offset;
 
-        _startingLeftBound = _leftBound;
-        _startingRightBound = _rightBound;
+        startingLeftBound = leftBound;
+        startingRightBound = rightBound;
+    }
+
+    private void Start()
+    {
+        inputService = ServiceLocator.Get<IInputService>();
+        playerInputController = inputService.GetInputFromPlayer(playerId);
+
+        playerInputController.OnThrow += PlayerInputController_OnThrow;
+    }
+
+    private void OnDisable()
+    {
+        playerInputController.OnThrow -= PlayerInputController_OnThrow;
+    }
+
+    private void PlayerInputController_OnThrow()
+    {
+        throwFruitController.ThrowFruit();
     }
 
     private void Update()
     {
-        Vector3 newPosition = transform.position + new Vector3(UserInput.MoveInput.x * _moveSpeed * Time.deltaTime, 0f, 0f);
-        newPosition.x = Mathf.Clamp(newPosition.x, _leftBound, _rightBound);
-
-        transform.position = newPosition;
+        UpdateMovement();
     }
 
+    private void UpdateMovement()
+    {
+        Vector2 move = playerInputController.Move.ReadValue<Vector2>();
+
+        float newPositionX = transform.position.x + (move.x * moveSpeed * Time.deltaTime);
+        newPositionX = Mathf.Clamp(newPositionX, leftBound, rightBound);
+
+        transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
+    }
+
+    /// <summary>
+    /// Altera o quanto o jogador pode se locomover para os lados.
+    /// </summary>
     public void ChangeBoundary(float extraWidth)
     {
-        _leftBound = _startingLeftBound;
-        _rightBound = _startingRightBound;
+        leftBound = startingLeftBound;
+        rightBound = startingRightBound;
 
-        _leftBound += ThrowFruitController.Instance.Bounds.extents.x + extraWidth;
-        _rightBound -= ThrowFruitController.Instance.Bounds.extents.x + extraWidth;
+        leftBound += throwFruitController.Bounds.extents.x + extraWidth;
+        rightBound -= throwFruitController.Bounds.extents.x + extraWidth;
     }
 
 }

@@ -1,19 +1,22 @@
+using System;
 using UnityEngine;
 
 public class ColliderInformer : MonoBehaviour
 {
     public bool WasCombinedIn { get; set; }
 
-    private bool _hasCollided;
+    private bool hasCollided;
+
+    public event EventHandler OnCollidedWithBase;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!_hasCollided && !WasCombinedIn)
+        // PROBLEMA ATUAL - ao colidir na parede buga a lógica.
+        if (!hasCollided && !WasCombinedIn)
         {
-            _hasCollided = true;
-            ThrowFruitController.Instance.AllowThrowFruit();
-            ThrowFruitController.Instance.PickFruit(FruitSelector.Instance.NextFruit);
+            hasCollided = true;
             FruitSelector.Instance.PickNextFruit();
+            OnCollidedWithBase?.Invoke(this, EventArgs.Empty);
             Destroy(this);
         }
         

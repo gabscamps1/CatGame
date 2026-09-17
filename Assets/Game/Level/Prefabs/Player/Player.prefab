@@ -740,14 +740,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4862043868688485828}
-  - component: {fileID: 7861864825726025822}
+  - component: {fileID: 3857370782398570059}
   - component: {fileID: 4170717152178311922}
+  - component: {fileID: 1841354754644045592}
+  - component: {fileID: 7861864825726025822}
   - component: {fileID: 3509683033932323687}
   - component: {fileID: 9005844507348800178}
   - component: {fileID: 6772853011596730965}
-  - component: {fileID: 3857370782398570059}
   - component: {fileID: 4470628221836274672}
-  - component: {fileID: 1841354754644045592}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -775,6 +775,50 @@ Transform:
   - {fileID: 7539249220003311426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3857370782398570059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452811411989202556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b76383ed6d7c71459cb3a572921dd2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
+  boundaries: {fileID: 0}
+  fruitThrowTransform: {fileID: 3713799488612486688}
+  throwFruitController: {fileID: 1841354754644045592}
+--- !u!114 &4170717152178311922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452811411989202556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12dd2a2ba3083446a48f9bab88c6a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AimLineController
+  _fruitThrowTransform: {fileID: 3713799488612486688}
+  _bottomTransform: {fileID: 7539249220003311426}
+--- !u!114 &1841354754644045592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452811411989202556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f095fe68045b4b14c97d7e3e3b93af7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThrowFruitController
+  _fruitTransform: {fileID: 3713799488612486688}
+  _parentAfterThrow: {fileID: 0}
 --- !u!212 &7861864825726025822
 SpriteRenderer:
   serializedVersion: 2
@@ -834,20 +878,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4170717152178311922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8452811411989202556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12dd2a2ba3083446a48f9bab88c6a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AimLineController
-  _fruitThrowTransform: {fileID: 3713799488612486688}
-  _bottomTransform: {fileID: 7539249220003311426}
 --- !u!114 &3509683033932323687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,21 +956,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3857370782398570059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8452811411989202556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b76383ed6d7c71459cb3a572921dd2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  _moveSpeed: 5
-  _boundaries: {fileID: 0}
-  _fruitThrowTransform: {fileID: 3713799488612486688}
 --- !u!120 &4470628221836274672
 LineRenderer:
   serializedVersion: 3
@@ -1051,20 +1066,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1841354754644045592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8452811411989202556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f095fe68045b4b14c97d7e3e3b93af7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ThrowFruitController
-  _fruitTransform: {fileID: 3713799488612486688}
-  _parentAfterThrow: {fileID: 0}
 --- !u!1 &8575349968225663106
 GameObject:
   m_ObjectHideFlags: 0

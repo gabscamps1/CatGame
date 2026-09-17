@@ -6,12 +6,11 @@ public class FruitInfo : MonoBehaviour
     public int PointsWhenAnnihilated = 1;
     public float FruitMass = 1f;
 
-    private Rigidbody2D _rb;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-
-        _rb.mass = FruitMass;
+        rb = GetComponent<Rigidbody2D>();
+        rb.mass = FruitMass;
     }
 }

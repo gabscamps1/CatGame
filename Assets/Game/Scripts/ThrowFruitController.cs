@@ -5,14 +5,12 @@ public class ThrowFruitController : MonoBehaviour
 {
     private const float EXTRA_WIDTH = 0.02f;
 
-    public static ThrowFruitController Instance { get; private set; }
-
     public Bounds Bounds { get; private set; }
 
     [SerializeField] private Transform _fruitTransform;
     [SerializeField] private Transform _parentAfterThrow;
 
-    private PlayerController _playerController;
+    private PlayerController playerController;
     private CircleCollider2D _circleCollider;
 
     private GameObject currentFruit;
@@ -20,63 +18,65 @@ public class ThrowFruitController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            CatGame.Core.Logger.LogWarning("[ThrowFruitController] Objeto duplicado.");
-            Destroy(this);
-            return;
-        }
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Start()
     {
-         _playerController = GetComponent<PlayerController>();
-
-         PickFruit(FruitSelector.Instance.PickRandomFruitForThrow());
+        PickFruit(FruitSelector.Instance.PickRandomFruitForThrow());
     }
 
-    private void Update()
-    {
-        if (UserInput.IsThrowPressed && canThrow)
-        {
-            ThrowFruit();
-        }
-    }
-
-    public void PickFruit(GameObject fruit)
+    private void PickFruit(GameObject fruit)
     {
         GameObject fruitInstance = SpawnFruit(fruit, _fruitTransform.position, _fruitTransform.rotation, _fruitTransform);
+
         currentFruit = fruitInstance;
 
         _circleCollider = currentFruit.GetComponent<CircleCollider2D>();
         Bounds = _circleCollider.bounds;
 
-        _playerController.ChangeBoundary(EXTRA_WIDTH);
+        playerController.ChangeBoundary(EXTRA_WIDTH);
     }
 
-    public void ThrowFruit()
+    private void ColliderInformer_OnCollidedWithBase(object sender, EventArgs e)
     {
-        SpriteIndex index = currentFruit.GetComponent<SpriteIndex>();
-        Quaternion rot = currentFruit.transform.rotation;
+        AllowThrowFruit();
+        PickFruit(FruitSelector.Instance.NextFruit);
 
-        SpawnFruit(FruitSelector.Instance.GetPhysicalFruit(index.Index), currentFruit.transform.position, rot);
-
-        Destroy(currentFruit);
-
-        canThrow = false;
+        ColliderInformer informer = (ColliderInformer)sender;
+        informer.OnCollidedWithBase -= ColliderInformer_OnCollidedWithBase;
     }
+
 
     private GameObject SpawnFruit(GameObject fruit, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         return Instantiate(fruit, position, rotation, parent);
     }
 
-    public void AllowThrowFruit()
+    private void AllowThrowFruit()
     {
         canThrow = true;
+    }
+
+    public void ThrowFruit()
+    {
+        if (!canThrow)
+            return;
+
+        SpriteIndex index = currentFruit.GetComponent<SpriteIndex>();
+        Quaternion rot = currentFruit.transform.rotation;
+
+        GameObject fruitInstance = SpawnFruit(FruitSelector.Instance.GetPhysicalFruit(index.Index), currentFruit.transform.position, rot);
+
+        if (!fruitInstance.TryGetComponent(out ColliderInformer informer))
+        {
+            CatGame.Core.Logger.LogError($"[{nameof(ThrowFruitController)}] Não foi encontrado {nameof(ColliderInformer)} da fruta {fruitInstance}");
+        }
+
+        informer.OnCollidedWithBase += ColliderInformer_OnCollidedWithBase;
+
+        Destroy(currentFruit);
+
+        canThrow = false;
     }
 }

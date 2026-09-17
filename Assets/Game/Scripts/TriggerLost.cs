@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TriggerLoss : MonoBehaviour
 {
-    private float _timer = 0f;
+    private float timer = 0f;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 7)
         {
-            _timer += Time.deltaTime;
-            if (_timer > GameManager.Instance.TimeTillGameOver)
+            timer += Time.deltaTime;
+            if (timer > GameManager.Instance.TimeTillGameOver)
             {
                 GameManager.Instance.GameOver();
             }
@@ -22,7 +20,7 @@ public class TriggerLoss : MonoBehaviour
     {
         if (collision.gameObject.layer == 7)
         {
-            _timer = 0f;
+            timer = 0f;
         }
     }
 }

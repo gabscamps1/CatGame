@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += FadeGame;
+        //SceneManager.sceneLoaded += FadeGame;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= FadeGame;
+        //SceneManager.sceneLoaded -= FadeGame;
     }
 
     private void Awake()
