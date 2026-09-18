@@ -4,3 +4,12 @@
     transition-timing-function: ease, ease;
     transition-delay: 0s, 0s;
 }
+
+.header {
+}
+
+.button {
+}
+
+.image {
+}
