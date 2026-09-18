@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private float _fadeTime = 2f;
 
+    public GameObject ScoreWhenCombined;
+
     private int currentScore;
     public float TimeTillGameOver = 1.5f;
 
@@ -38,14 +40,27 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        _scoreText.text = currentScore.ToString("0");
+        _scoreText.text = currentScore.ToString("D8");
     }
 
     public void IncreaseScore(int amount)
     {
            //CRIA PREFAB DE PONTO
         currentScore += amount;
-        _scoreText.text = currentScore.ToString("0");
+        _scoreText.text = currentScore.ToString("D8");
+    }
+    public void ShowScore(Vector3 position, int score)
+    {
+        Debug.Log(position + " " + score);
+
+        GameObject scoreText = Instantiate(
+            ScoreWhenCombined,
+            position,
+            Quaternion.identity
+        );
+
+        TextMeshPro text = scoreText.GetComponent<TextMeshPro>();
+        text.text = score.ToString();
     }
 
     public void GameOver()

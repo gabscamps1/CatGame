@@ -27,15 +27,25 @@ public class FruitCombiner : MonoBehaviour
             return;
 
         GameManager.Instance.IncreaseScore(this.info.PointsWhenAnnihilated);
+        
+        Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
+
+        GameManager.Instance.ShowScore(middlePosition, this.info.PointsWhenAnnihilated);
+
+        /////////Instantiate(TextAlignment, middlePosition);
+        Debug.Log(middlePosition);
+        Debug.Log(this.info.PointsWhenAnnihilated);// <---- SPAWNAR O TEXTO COM OS PONTOS NA COORDENADA (GABRIEL)
 
         if (FruitSelector.Instance.IsLastTypeOfFruit(this.info.FruitIndex))
         {
+            
+
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
         else
         {
-            Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
+            //Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
             GameObject go = Instantiate(SpawnCombinedFruit(this.info.FruitIndex), GameManager.Instance.transform);
             go.transform.position = middlePosition;
 
@@ -45,8 +55,7 @@ public class FruitCombiner : MonoBehaviour
                 informer.WasCombinedIn = true;
             }
 
-            /////////Instantiate(TextAlignment, middlePosition);
-            ///////////Debug.Log(middlePosition); <---- SPAWNAR O TEXTO COM OS PONTOS NA COORDENADA (GABRIEL)
+            
 
             Destroy(collision.gameObject);
             Destroy(gameObject);
