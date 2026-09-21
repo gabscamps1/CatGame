@@ -817,8 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f095fe68045b4b14c97d7e3e3b93af7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowFruitController
-  _fruitTransform: {fileID: 3713799488612486688}
-  _parentAfterThrow: {fileID: 0}
+  fruitTransform: {fileID: 3713799488612486688}
 --- !u!212 &7861864825726025822
 SpriteRenderer:
   serializedVersion: 2

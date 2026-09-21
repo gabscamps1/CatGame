@@ -43,12 +43,22 @@ public class GameManager : MonoBehaviour
         _scoreText.text = currentScore.ToString("D8");
     }
 
+    #region Gameplay
+
+    public void AssignPlayerInGameArea()
+    {
+
+    }
+
+    #endregion
+
     public void IncreaseScore(int amount)
     {
            //CRIA PREFAB DE PONTO
         currentScore += amount;
         _scoreText.text = currentScore.ToString("D8");
     }
+
     public void ShowScore(Vector3 position, int score)
     {
         Debug.Log(position + " " + score);

@@ -7,11 +7,10 @@ public class ThrowFruitController : MonoBehaviour
 
     public Bounds Bounds { get; private set; }
 
-    [SerializeField] private Transform _fruitTransform;
-    [SerializeField] private Transform _parentAfterThrow;
+    [SerializeField] private Transform fruitTransform;
 
     private PlayerController playerController;
-    private CircleCollider2D _circleCollider;
+    private CircleCollider2D circleCollider;
 
     private GameObject currentFruit;
     private bool canThrow = true;
@@ -28,12 +27,18 @@ public class ThrowFruitController : MonoBehaviour
 
     private void PickFruit(GameObject fruit)
     {
-        GameObject fruitInstance = SpawnFruit(fruit, _fruitTransform.position, _fruitTransform.rotation, _fruitTransform);
+        GameObject fruitInstance = SpawnFruit(fruit, fruitTransform.position, fruitTransform.rotation, fruitTransform);
 
         currentFruit = fruitInstance;
 
-        _circleCollider = currentFruit.GetComponent<CircleCollider2D>();
-        Bounds = _circleCollider.bounds;
+        if (!currentFruit.TryGetComponent(out CircleCollider2D circleCollider2D))
+        {
+            CatGame.Core.Logger.LogError($"{currentFruit} não possui {nameof(CircleCollider2D)}");
+            return;
+        }
+
+        circleCollider = circleCollider2D;
+        Bounds = circleCollider.bounds;
 
         playerController.ChangeBoundary(EXTRA_WIDTH);
     }
