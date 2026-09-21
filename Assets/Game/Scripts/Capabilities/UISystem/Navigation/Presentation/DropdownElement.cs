@@ -1,5 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbb6ae051aa73d4a8b1ed575c1a444f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UINavigationInput
-  playerId: 0
+  playerIndex: 0
   initialDelay: 0.4
   repeatInterval: 0.12
 --- !u!1 &481446453
@@ -682,7 +682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbb6ae051aa73d4a8b1ed575c1a444f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UINavigationInput
-  playerId: 1
+  playerIndex: 1
   initialDelay: 0.4
   repeatInterval: 0.12
 --- !u!1 &1228830379
@@ -744,9 +744,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e90ba3eab59ea49ac193611ae7ac35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  ShowTopMostFoldoutHeaderGroup: 1
   _scoreText: {fileID: 0}
   _gameOverPanel: {fileID: 0}
   _fadeTime: 2
+  ScoreWhenCombined: {fileID: 0}
   TimeTillGameOver: 1.5
 --- !u!1 &1487940513
 GameObject:

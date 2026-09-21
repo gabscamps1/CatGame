@@ -1,5 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,11 +41,11 @@ namespace CatGame.Services.Input
             PlayerInputController playerInputManager1 = new PlayerInputController(playerOneInputAsset);
             PlayerInputController playerInputManager2 = new PlayerInputController(playerTwoInputAsset);
 
-            inputControllers.Add(PlayerId.P1, playerInputManager1);
-            inputControllers.Add(PlayerId.P2, playerInputManager2);
+            inputControllers.Add(new PlayerId(0), playerInputManager1);
+            inputControllers.Add(new PlayerId(1), playerInputManager2);
 
             AssignDeviceToNextAvailablePlayer(Keyboard.current);            
-            GetInputFromPlayer(PlayerId.P1).AssignDevice(Mouse.current);            
+            GetInputFromPlayer(new PlayerId(0)).AssignDevice(Mouse.current);            
         }
 
 

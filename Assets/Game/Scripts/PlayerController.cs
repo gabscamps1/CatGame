@@ -1,5 +1,5 @@
 using CatGame.Core;
-using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using UnityEngine;
 
@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     private IInputService inputService;
     private IPlayerInputController playerInputController;
+
+    [SerializeField] private int playerIndex;
     private PlayerId playerId;
 
     private void Awake()

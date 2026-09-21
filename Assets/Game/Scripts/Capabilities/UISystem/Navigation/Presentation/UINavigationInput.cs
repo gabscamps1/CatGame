@@ -1,5 +1,6 @@
 ﻿using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ namespace CatGame.Capabilities.UISystem
     public class UINavigationInput : MonoBehaviour
     {
         [Header("Player")]
-        [SerializeField] private PlayerId playerId;
+        [SerializeField] private int playerIndex;
+        private PlayerId playerId;
 
         [Header("Repeat OnHold Settings")]
         [SerializeField] private float initialDelay = 0.4f;
@@ -19,6 +21,11 @@ namespace CatGame.Capabilities.UISystem
 
         private IUINavigationService uiNavigationService;
         private IPlayerInputController playerInputController;
+
+        private void Awake()
+        {
+            playerId = new PlayerId(playerIndex);
+        }
 
         private void Start()
         {

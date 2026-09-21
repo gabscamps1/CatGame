@@ -1,4 +1,5 @@
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Events;
 using System;
 

@@ -1,7 +1,5 @@
-﻿using CatGame.Core.Enums;
+﻿using CatGame.Core.Data;
 using System;
-using Unity.Android.Gradle.Manifest;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
