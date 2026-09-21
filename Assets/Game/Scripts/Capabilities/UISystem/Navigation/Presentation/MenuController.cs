@@ -1,5 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace CatGame.Capabilities.UISystem
             navigationService = ServiceLocator.Get<IUINavigationService>();
             inputService = ServiceLocator.Get<IInputService>();
 
-            AttachPlayer(PlayerId.P1); // REMOVER DEPOIS - ME LEMBRA PFV SALLES
+            AttachPlayer(new PlayerId(0)); // REMOVER DEPOIS - ME LEMBRA PFV SALLES
         }
 
         private void ConfigInputs(params PlayerId[] playersToRemove)
@@ -260,7 +261,7 @@ namespace CatGame.Capabilities.UISystem
 
             await HideGroup(currentMenu);
             await ShowGroup(newMenu);
-            await ShowTab(newMenu);
+            await ShowTab(navigationTabSystem[newMenu].CurrentTab);
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[newMenu]);

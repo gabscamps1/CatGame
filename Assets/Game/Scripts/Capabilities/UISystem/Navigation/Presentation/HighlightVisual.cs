@@ -1,4 +1,4 @@
-﻿using CatGame.Core.Enums;
+﻿using CatGame.Core.Data;
 using UnityEngine;
 
 namespace CatGame.Capabilities.UISystem

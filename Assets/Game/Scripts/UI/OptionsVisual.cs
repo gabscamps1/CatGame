@@ -1,5 +1,6 @@
 ﻿using CatGame.Capabilities.UISystem;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;

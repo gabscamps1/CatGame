@@ -3,8 +3,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using CatGame.Core.Data;
+using CatGame.Services.Register;
+using Unity.Netcode;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
@@ -43,11 +46,20 @@ public class GameManager : MonoBehaviour
         _scoreText.text = currentScore.ToString("D8");
     }
 
+    private void Start()
+    {
+        foreach (PlayerId playerId in PlayerIdRegister.PlayerRegistereds.Keys)
+        {
+            AssignPlayerInGameArea(playerId);
+        }
+    }
+
     #region Gameplay
 
-    public void AssignPlayerInGameArea()
+    public void AssignPlayerInGameArea(PlayerId playerId)
     {
-
+        if (!IsServer)
+            return;
     }
 
     #endregion

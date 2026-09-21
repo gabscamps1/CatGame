@@ -1,8 +1,7 @@
 using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
-using CatGame.Services.Input;
-using CatGame.Services.UISystem;
 using System;
 using TMPro;
 using UnityEngine;

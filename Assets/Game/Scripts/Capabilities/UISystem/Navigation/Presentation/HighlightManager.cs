@@ -1,4 +1,4 @@
-using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,7 +26,7 @@ namespace CatGame.Capabilities.UISystem
             }
         }
 
-        public IHighlightVisual AssignHighlightToTarget(IHighlightVisual prefab, NavigableElement element, PlayerId player = PlayerId.P1)
+        public IHighlightVisual AssignHighlightToTarget(IHighlightVisual prefab, NavigableElement element, PlayerId player)
         {
             IHighlightPool pool = GetOrCreatePool(player, prefab);
 
@@ -40,7 +40,7 @@ namespace CatGame.Capabilities.UISystem
             return visual;
         }
 
-        public void UnassignHightlightOfTarget(IHighlightVisual prefab, IHighlightVisual instance, PlayerId player = PlayerId.P1)
+        public void UnassignHightlightOfTarget(IHighlightVisual prefab, IHighlightVisual instance, PlayerId player)
         {
             if (prefab == null || instance == null)
                 return;

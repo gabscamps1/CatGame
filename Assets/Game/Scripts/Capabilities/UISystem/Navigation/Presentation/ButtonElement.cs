@@ -1,5 +1,6 @@
 ﻿using CatGame.Core;
 using CatGame.Core.Enums;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +17,8 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private Color pressedColor = Color.gray;
         [SerializeField] private Color disableColor = Color.darkGray;
 
-        [SerializeField] private Core.Data.AudioData onClickSound;
-        [SerializeField] private Core.Data.AudioData onSelectSound;
+        [SerializeField] private AudioData onClickSound;
+        [SerializeField] private AudioData onSelectSound;
 
         private Image image;
 
