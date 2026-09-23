@@ -5,11 +5,13 @@
     transition-delay: 0s, 0s;
 }
 
-.header {
-}
+
 
 .button {
 }
 
 .image {
+}
+
+.text {
 }
