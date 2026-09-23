@@ -182,7 +182,7 @@ namespace CatGame.Capabilities.UISystem
 
         #region Functions
 
-        private async void ChangeMenu(int menuIndex)
+        public async void ChangeMenu(int menuIndex)
         {
             if (!navigationMenuSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
                 return;

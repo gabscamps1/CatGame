@@ -1,5 +1,7 @@
-﻿using CatGame.Core.Data;
+﻿using CatGame.Core;
+using CatGame.Core.Data;
 using CatGame.Core.Enums;
+using CatGame.Core.Interfaces;
 using System;
 using TMPro;
 using UnityEngine;
@@ -109,10 +111,18 @@ namespace CatGame.Capabilities.UISystem
 
         private void OnTextInput(char character)
         {
-            if (!IsFocused)
+            if (!IsFocused || !isEditing)
+                return;
+
+            if (!CanText())
                 return;
 
             InsertText(character.ToString());
+        }
+
+        private bool CanText()
+        {
+            return !(Keyboard.current.backspaceKey.isPressed || Keyboard.current.deleteKey.isPressed);
         }
 
 
@@ -124,20 +134,43 @@ namespace CatGame.Capabilities.UISystem
         {
             base.OnFocusedByPlayer(player, navigationMode);
             Debug.Log("Estou sendo focadooo");
-            BeginEditing();
+            ConfigNavigation(); // Garante que se um novo player foi adicionado e estiver focando no element, ele terá sua navegação bloqueada/liberada.
         }
 
         protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
         {
             base.OnUnfocusedByPlayer(player, navigationMode);
             Debug.Log("AAAAAAA");
-
-            EndEditing();
+            ConfigNavigation();
+            ServiceLocator.Get<IUINavigationService>().SetNavigationLocked(player, false);
         }
 
         protected override void OnSubmitByPlayer(PlayerId player)
         {
-            EndEditing();
+            if (isEditing)
+            {
+                EndEditing();
+            }
+            else
+            {
+                BeginEditing();
+            }
+
+            ConfigNavigation();
+        }
+
+        private void ConfigNavigation()
+        {
+            if (isEditing)
+            {
+                foreach (var playerId in FocusingPlayerList)
+                    ServiceLocator.Get<IUINavigationService>().SetNavigationLocked(playerId, true);
+            }
+            else
+            {
+                foreach (var playerId in FocusingPlayerList)
+                    ServiceLocator.Get<IUINavigationService>().SetNavigationLocked(playerId, false);
+            }
         }
 
         // ============================================================
@@ -229,13 +262,18 @@ namespace CatGame.Capabilities.UISystem
         {
             if (HasSelection)
             {
+                Debug.Log("Tava com seleção");
                 RemoveSelection();
                 TextChanged();
                 return;
             }
 
             if (caretPosition <= 0)
+            {
+                Debug.Log("Menor que 0");
                 return;
+            }
+            Debug.Log("Apagou");
 
             text = text.Remove(caretPosition - 1, 1);
 
@@ -334,17 +372,17 @@ namespace CatGame.Capabilities.UISystem
 
         private void HandleInput()
         {
-            bool shift = false
-                /*Input.GetKey(KeyCode.LeftShift) ||
-                Input.GetKey(KeyCode.RightShift)*/;
+            bool shift =
+                Keyboard.current.leftShiftKey.isPressed ||
+                Keyboard.current.rightShiftKey.isPressed;
 
-            bool control =false
-                /*Input.GetKey(KeyCode.LeftControl) ||
-                Input.GetKey(KeyCode.RightControl)*/;
+            bool control =
+                Keyboard.current.leftCtrlKey.isPressed ||
+                Keyboard.current.rightCtrlKey.isPressed;
 
-            bool command = false
-                /*Input.GetKey(KeyCode.LeftCommand) ||
-                Input.GetKey(KeyCode.RightCommand)*/;
+            bool command =
+                Keyboard.current.leftCommandKey.isPressed ||
+                Keyboard.current.rightCommandKey.isPressed;
 
             bool modifier = control || command;
 
@@ -384,34 +422,36 @@ namespace CatGame.Capabilities.UISystem
 
         private void HandleSpecialKeys(bool shift, bool modifier)
         {
-            /*if (Input.GetKeyDown(KeyCode.LeftArrow))
+            Debug.Log("Conrerindo");
+            if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
             {
                 MoveLeft(shift);
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
             {
                 MoveRight(shift);
             }
-            else if (Input.GetKeyDown(KeyCode.Home))
+            else if (Keyboard.current.homeKey.wasPressedThisFrame)
             {
                 MoveStart(shift);
             }
-            else if (Input.GetKeyDown(KeyCode.End))
+            else if (Keyboard.current.endKey.wasPressedThisFrame)
             {
                 MoveEnd(shift);
             }
-            else if (Input.GetKeyDown(KeyCode.Backspace))
+            else if (Keyboard.current.backspaceKey.wasPressedThisFrame)
             {
+                Debug.Log("Backspace");
                 Backspace();
             }
-            else if (Input.GetKeyDown(KeyCode.Delete))
+            else if (Keyboard.current.deleteKey.wasPressedThisFrame)
             {
                 Delete();
             }
-            else if (modifier && Input.GetKeyDown(KeyCode.A))
+            else if (modifier && Keyboard.current.aKey.wasPressedThisFrame)
             {
                 SelectAll();
-            }*/
+            }
         }
 
         private void HandleTextInput(string input)
@@ -441,15 +481,15 @@ namespace CatGame.Capabilities.UISystem
             if (!modifier)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Keyboard.current.cKey.wasPressedThisFrame)
             {
                 CopySelection();
             }
-            else if (Input.GetKeyDown(KeyCode.X))
+            else if (Keyboard.current.xKey.wasPressedThisFrame)
             {
                 CutSelection();
             }
-            else if (Input.GetKeyDown(KeyCode.V))
+            else if (Keyboard.current.vKey.wasPressedThisFrame)
             {
                 Paste();
             }
@@ -521,8 +561,7 @@ namespace CatGame.Capabilities.UISystem
             if (caret == null || textComponent == null)
                 return;
 
-            TMP_TextInfo textInfo =
-                textComponent.textInfo;
+            TMP_TextInfo textInfo = textComponent.textInfo;
 
             textComponent.ForceMeshUpdate();
 
@@ -530,7 +569,7 @@ namespace CatGame.Capabilities.UISystem
 
             if (textInfo.characterCount == 0)
             {
-                caret.anchoredPosition = Vector2.zero;
+                caret.anchoredPosition = new Vector2(0, caret.anchoredPosition.y);
                 caret.sizeDelta = new Vector2(
                     caret.sizeDelta.x,
                     textComponent.fontSize);
@@ -548,12 +587,11 @@ namespace CatGame.Capabilities.UISystem
 
             if (position == 0)
             {
-                TMP_CharacterInfo character =
-                    textInfo.characterInfo[0];
+                TMP_CharacterInfo character = textInfo.characterInfo[0];
 
                 localPosition = new Vector3(
                     character.bottomLeft.x,
-                    character.bottomLeft.y,
+                    caret.localPosition.y/*character.bottomLeft.y*/,
                     0);
             }
             else if (position >= textInfo.characterCount)
@@ -564,7 +602,7 @@ namespace CatGame.Capabilities.UISystem
 
                 localPosition = new Vector3(
                     character.topRight.x,
-                    character.bottomLeft.y,
+                    caret.localPosition.y/*character.bottomLeft.y*/,
                     0);
             }
             else
@@ -574,7 +612,7 @@ namespace CatGame.Capabilities.UISystem
 
                 localPosition = new Vector3(
                     character.bottomLeft.x,
-                    character.bottomLeft.y,
+                    caret.localPosition.y/*character.bottomLeft.y*/,
                     0);
             }
 

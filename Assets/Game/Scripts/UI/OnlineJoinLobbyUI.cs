@@ -1,12 +1,11 @@
 ﻿using CatGame.Capabilities.UISystem;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 namespace CatGame.UI
 {
-    public class OnlineLobbyUI : MonoBehaviour
+    public class OnlineJoinLobbyUI : BaseUIScreen
     {
         [SerializeField] private InputFieldElement inputFieldElement;
         [SerializeField] private ButtonElement buttonElement;
@@ -14,17 +13,16 @@ namespace CatGame.UI
 
         private void Awake()
         {
+            inputFieldElement.OnValueChanged += InputFieldElement_OnValueChanged;
             buttonElement.OnSubmittedEvent += ButtonElement_OnSubmittedEvent;
         }
 
+
         private void OnDestroy()
         {
+            inputFieldElement.OnValueChanged -= InputFieldElement_OnValueChanged;
             buttonElement.OnSubmittedEvent -= ButtonElement_OnSubmittedEvent;
-        }
 
-        private void ButtonElement_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
-        {
-            JoinInLobby();
         }
 
         private void Start()
@@ -34,24 +32,33 @@ namespace CatGame.UI
                 Core.Logger.LogError($"Não foi encontrado o {nameof(NetworkTransport)} do {nameof(NetworkManager)}");
                 return;
             }
-
         }
 
-        public void SetHostConnectionToEnter()
+        protected override void OnAfterShow()
         {
-
-            
-
+            SetJoinButtonInteractable();
         }
 
-        public void SetHostPortToEnter(string port)
+        #region Join
+
+        private void InputFieldElement_OnValueChanged(object sender, InputFieldElement.ValueChangedEvent e)
         {
-
+            SetJoinButtonInteractable();
         }
 
-        private void CreateLobby()
+        private void SetJoinButtonInteractable()
         {
+            buttonElement.SetInteractable(!string.IsNullOrEmpty(inputFieldElement.Text));
         }
+
+        private void ButtonElement_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        {
+            JoinInLobby();
+        }
+
+        #endregion
+
+        #region Client
 
         private void JoinInLobby()
         {
@@ -67,7 +74,7 @@ namespace CatGame.UI
             string ip = splitSocket[0].Trim();
             string port = splitSocket[1].Trim();
 
-            unityTransport.SetConnectionData(ip, ushort.Parse(port), "0.0.0.0");
+            unityTransport.SetConnectionData(ip, ushort.Parse(port));
             NetworkManager.Singleton.StartClient();
 
             Invoke("Teste", 5f);
@@ -77,6 +84,9 @@ namespace CatGame.UI
         {
             Debug.Log(NetworkManager.Singleton.IsConnectedClient);
         }
+
+        #endregion
+  
 
         private void SavePreferences()
         {
