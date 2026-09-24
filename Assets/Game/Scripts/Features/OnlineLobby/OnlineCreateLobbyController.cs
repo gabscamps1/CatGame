@@ -1,4 +1,4 @@
-Ôªøusing CatGame.Capabilities.UISystem;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -6,42 +6,35 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
-namespace CatGame.UI
+namespace CatGame.Features.OnlineLobby
 {
-    public class OnlineCreateLobbyUI : BaseUIScreen
+    public class OnlineCreateLobbyPresenter : NetworkBehaviour
     {
-        [SerializeField] private ButtonElement buttonElement;
+        [SerializeField] private OnlineCreateLobbyUI OnlineCreateLobbyUI;
 
-        protected override void OnAfterShow()
+        private void Awake()
         {
-            CreateLobby();
+            OnlineCreateLobbyUI.OnEnabledMenu += OnlineCreateLobbyUI_OnEnabledMenu;
+            OnlineCreateLobbyUI.OnDisabledMenu += OnlineCreateLobbyUI_OnDisabledMenu;
         }
 
-        protected override void OnBeforeHide()
+        public override void OnDestroy()
+        {
+            OnlineCreateLobbyUI.OnEnabledMenu -= OnlineCreateLobbyUI_OnEnabledMenu;
+            OnlineCreateLobbyUI.OnDisabledMenu -= OnlineCreateLobbyUI_OnDisabledMenu;
+        }
+
+        private void OnlineCreateLobbyUI_OnEnabledMenu()
+        {
+            CreateLobby();
+
+        }
+
+
+        private void OnlineCreateLobbyUI_OnDisabledMenu()
         {
             CloseLobby();
         }
-
-        #region Join
-
-        private void InputFieldElement_OnValueChanged(object sender, InputFieldElement.ValueChangedEvent e)
-        {
-            SetJoinButtonInteractable();
-        }
-
-        private void SetJoinButtonInteractable()
-        {
-            // TODO
-            // buttonElement.SetInteractable();
-        }
-
-        private void ButtonElement_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
-        {
-            // TODO
-        }
-
-        #endregion
-
 
         #region Host
 
@@ -55,26 +48,29 @@ namespace CatGame.UI
 
             if (!NetworkManager.Singleton.TryGetComponent(out UnityTransport unityTransport))
             {
-                Core.Logger.LogError($"N√£o foi encontrado o {nameof(NetworkTransport)} do {nameof(NetworkManager)}");
+                Core.Logger.LogError($"N„o foi encontrado o {nameof(NetworkTransport)} do {nameof(NetworkManager)}");
                 return;
             }
 
             unityTransport.SetConnectionData(ip, (ushort)port);
 
             NetworkManager.Singleton.StartHost();
+            NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
         }
 
         private void CloseLobby()
         {
             if (NetworkManager.Singleton.IsServer)
                 NetworkManager.Singleton.Shutdown();
+
+            NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
         }
 
         private string GetLocalIpAddress()
         {
             string localIPAddress = "127.0.0.1";
 
-            // Pega todos os endere√ßos de IPs presentes no PC.
+            // Pega todos os endereÁos de IPs presentes no PC.
             IPAddress[] ipsAddress = Dns.GetHostAddresses(Dns.GetHostName());
 
             if (ipsAddress == null || ipsAddress.Length == 0)
@@ -82,7 +78,7 @@ namespace CatGame.UI
 
             foreach (IPAddress ip in ipsAddress)
             {
-                // Procura pelo IPV4 dentre esses endere√ßos.
+                // Procura pelo IPV4 dentre esses endereÁos.
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
                     localIPAddress = ip.ToString();
@@ -97,10 +93,10 @@ namespace CatGame.UI
         {
             IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
 
-            // Lista todas as portas UDP que est√£o ativas no PC neste momento
+            // Lista todas as portas UDP que est„o ativas no PC neste momento
             IPEndPoint[] udpListeners = ipGlobalProperties.GetActiveUdpListeners();
 
-            // Procura se a nossa porta est√° nessa lista do Windows
+            // Procura se a nossa porta est· nessa lista do Windows
             foreach (IPEndPoint endPoint in udpListeners)
             {
                 if (endPoint.Port == port)
@@ -114,5 +110,18 @@ namespace CatGame.UI
 
 
         #endregion
+
+        private void Singleton_OnClientConnectedCallback(ulong clientID)
+        {
+            if (clientID == NetworkManager.Singleton.LocalClientId)
+                return;
+
+
+        }
+
+        private void UpdateUIWithClient()
+        {
+
+        }
     }
 }
