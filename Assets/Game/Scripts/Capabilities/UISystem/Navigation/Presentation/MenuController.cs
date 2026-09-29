@@ -230,20 +230,25 @@ namespace CatGame.Capabilities.UISystem
 
         private async void ReturnMenu()
         {
-            if (isSubMenu && navigationMenuSystem.CurrentMenu == 0)
+            GroupMenu currentMenu = CurrentGroupMenu;
+            int currentMenuIndex = CurrentMenuIndex;
+
+            if (isSubMenu && currentMenuIndex == 0 && currentMenu.CanReturnMenu)
             {
                 // Voltar pro menuPresenter principal.
                 ChangeMenuController(parentMenuController);
                 return;
             }
-            else if (isCloseableMenu && navigationMenuSystem.CurrentMenu == 0)
+            else if (isCloseableMenu && currentMenuIndex == 0)
             {
                 CloseMenu();
                 return;
             }
 
-            int currentMenu = navigationMenuSystem.CurrentMenu;
-            bool shouldReset = menus[currentMenu].ResetOnBackwardTransition;
+            if (!currentMenu.CanReturnMenu)
+                return;
+
+            bool shouldReset = currentMenu.ResetOnBackwardTransition;
 
             if (!navigationMenuSystem.TryGoBack(out int newMenu))
                 return;
@@ -251,15 +256,15 @@ namespace CatGame.Capabilities.UISystem
             foreach (PlayerId player in activePlayers)
             {
                 if (shouldReset)
-                    navigationGroups[currentMenu].ResetFocusToDefault(player);
+                    navigationGroups[currentMenuIndex].ResetFocusToDefault(player);
 
-                navigationService.PopGroup(player, navigationGroups[currentMenu]);
+                navigationService.PopGroup(player, navigationGroups[currentMenuIndex]);
             }
 
-            await HideTab(currentMenu, navigationTabSystem[currentMenu].CurrentTab);
-            navigationTabSystem[currentMenu].Reset();
+            await HideTab(currentMenuIndex, navigationTabSystem[currentMenuIndex].CurrentTab);
+            navigationTabSystem[currentMenuIndex].Reset();
 
-            await HideGroup(currentMenu);
+            await HideGroup(currentMenuIndex);
             await ShowGroup(newMenu);
             await ShowTab(navigationTabSystem[newMenu].CurrentTab);
 
@@ -330,7 +335,7 @@ namespace CatGame.Capabilities.UISystem
 
                                 // Chama a função de voltar ao menu anterior.
                                 case GroupSelectable.CallFunction.BackToMenu:
-                                    button.OnSubmittedEvent += (_, _) => ReturnMenu();
+                                    button.OnSubmittedEvent += (_, _) => { if (!CurrentGroupMenu.CanReturnMenu) Core.Logger.LogWarning($"Botão para retornar de menu não irá funcionar pois o menu atual está com a opção {nameof(CurrentGroupMenu.CanReturnMenu)} desativada"); ReturnMenu(); };
                                     break;
 
                                 case GroupSelectable.CallFunction.ChangeMenuController:

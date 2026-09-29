@@ -17,5 +17,8 @@ namespace CatGame.Core.Enums
 
         // Play
         HUD = 5,
+
+        // Popups
+        QuitLobbyPopup = 6
     }
 }

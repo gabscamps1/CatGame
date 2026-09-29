@@ -9,6 +9,9 @@ namespace CatGame.UI
     {
         [SerializeField] private InputFieldElement inputFieldElement;
         [SerializeField] private ButtonElement buttonElement;
+        [SerializeField] private MenuController menuController;
+        [SerializeField] private int menuIndexWhenConnectLobby;
+
         private UnityTransport unityTransport;
 
         private void Awake()
@@ -75,9 +78,26 @@ namespace CatGame.UI
             string port = splitSocket[1].Trim();
 
             unityTransport.SetConnectionData(ip, ushort.Parse(port));
+            NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback; ;
             NetworkManager.Singleton.StartClient();
-
             Invoke("Teste", 5f);
+        }
+
+        private void Singleton_OnClientConnectedCallback(ulong obj)
+        {
+            if (NetworkManager.Singleton.LocalClientId == obj)
+            {
+                menuController.ChangeMenu(menuIndexWhenConnectLobby);
+            }
+        }
+
+        private void Singleton_OnClientDisconnectCallback(ulong obj)
+        {
+            if (NetworkManager.Singleton.LocalClientId == obj)
+            {
+                Debug.Log("Nao funfo");
+            }           
         }
 
         private void Teste()
@@ -97,5 +117,7 @@ namespace CatGame.UI
         {
 
         }
+
+        
     }
 }

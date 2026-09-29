@@ -20,6 +20,9 @@ namespace CatGame.Capabilities.UISystem
         [Tooltip("Quando este menu é escondido por voltar pro menu anterior.")]
         [SerializeField] private bool resetOnBackwardTransition = true;
 
+        [Tooltip("Confere se pode retornar ao menu anterior.")]
+        [SerializeField] private bool canReturnMenu = true;
+
         [Header("Elementos")]
 
         [Tooltip("abas de cada menu")]
@@ -30,5 +33,6 @@ namespace CatGame.Capabilities.UISystem
         public GroupTab[] GroupTab => groupTab;
         public bool ResetOnForwardTransition => resetOnForwardTransition;
         public bool ResetOnBackwardTransition => resetOnBackwardTransition;
+        public bool CanReturnMenu => canReturnMenu;
     }
 }

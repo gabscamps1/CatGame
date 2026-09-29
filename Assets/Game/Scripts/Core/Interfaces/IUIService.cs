@@ -16,6 +16,7 @@ namespace CatGame.Core.Interfaces
         public void CloseAll();
         public void Close(PanelType type);
         public bool IsVisible(PanelType type);
-        public PanelType? CurrentPanel { get; }
+        public PanelType? CurrentPanelType { get; }
+        public IBasePanel CurrentPanel { get; }
     }
 }

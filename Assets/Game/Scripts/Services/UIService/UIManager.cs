@@ -179,7 +179,10 @@ namespace CatGame.Services.UISystem
         public bool IsVisible(PanelType type) => panelStack.Contains(type);
 
         /// <summary> Retorna o painel do topo (foco atual) ou null se vazio. </summary>
-        public PanelType? CurrentPanel => panelStack.Count > 0 ? panelStack.Peek() : null;
+        public PanelType? CurrentPanelType => panelStack.Count > 0 ? panelStack.Peek() : null;
+
+        /// <summary> Retorna o painel do topo (foco atual) ou null se vazio. </summary>
+        public IBasePanel CurrentPanel => CurrentPanelType.HasValue ? panels[CurrentPanelType.Value] : null;
 
         #endregion
 
