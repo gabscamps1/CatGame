@@ -17,14 +17,14 @@ namespace CatGame.Services.UISystem
         private readonly HashSet<PlayerId> navigationLockedPlayers = new();
         private readonly HashSet<PlayerId> cancelLockedPlayers = new();
 
-        public void PushGroup(PlayerId player, INavigationGroup group)
+        public void PushGroup(PlayerId player, INavigationGroup group, bool clearOthersGroup = true)
         {
             if (group == null) 
                 return;
 
             Stack<INavigationGroup> groups = GetOrCreateStack(player);
 
-            if (groups.Count > 0)
+            if (groups.Count > 0 && clearOthersGroup)
                 groups.Peek().Exit(player);
 
             groups.Push(group);

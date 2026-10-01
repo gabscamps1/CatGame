@@ -43,6 +43,12 @@ namespace CatGame.Capabilities.UISystem
                 return;
             }
 
+            if (!CanHide())
+            {
+                Core.Logger.LogWarning($"[{nameof(BaseUIScreen)}: {name}] Tentou desativar o menu mesmo não podendo");
+                return;
+            }
+
             IsVisible = false;
 
             OnBeforeHide();
@@ -104,6 +110,9 @@ namespace CatGame.Capabilities.UISystem
         #endregion
 
         #region Subclass Override
+
+        /// <summary> Confere antes de fechar a tela se ela realmente pode ser fechada. </summary>
+        public virtual bool CanHide() => true;
 
         /// <summary> Chamado antes de o painel aparecer. </summary>
         protected virtual void OnBeforeShow() { }

@@ -2267,8 +2267,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291492095
-  m_fontColor: {r: 1, g: 0.972549, b: 0.7921569, a: 1}
+    rgba: 4279044971
+  m_fontColor: {r: 0.41960785, g: 0.043137256, b: 0.050980393, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4995,7 +4995,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642679281}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5043,7 +5043,7 @@ MonoBehaviour:
   down: {fileID: 0}
   left: {fileID: 0}
   right: {fileID: 0}
-  highlightVisual: {fileID: 0}
+  highlightVisual: {fileID: 7467663919649671148, guid: 1b183cce51fef3244b5c2706c51631f9, type: 3}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -14478,7 +14478,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873499633}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -14526,7 +14526,7 @@ MonoBehaviour:
   down: {fileID: 642679286}
   left: {fileID: 0}
   right: {fileID: 0}
-  highlightVisual: {fileID: 0}
+  highlightVisual: {fileID: 7467663919649671148, guid: 1b183cce51fef3244b5c2706c51631f9, type: 3}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -15029,7 +15029,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1933902851}
   - component: {fileID: 1933902852}
-  - component: {fileID: 1933902853}
   m_Layer: 0
   m_Name: ServerPopUpQuestion
   m_TagString: Untagged
@@ -15074,28 +15073,6 @@ MonoBehaviour:
   panelType: 6
   confirmButton: {fileID: 1873499638}
   cancelButton: {fileID: 642679286}
---- !u!114 &1933902853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933902850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f55f61943b7ca240b9ec05ea78620b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.MenuController
-  isCloseableMenu: 1
-  isSubMenu: 0
-  parentMenuController: {fileID: 0}
-  menus:
-  - panel: {fileID: 1933902852}
-    navigationMode: 0
-    resetOnForwardTransition: 0
-    resetOnBackwardTransition: 1
-    canReturnMenu: 1
-    groupTab: []
 --- !u!1 &1934840607
 GameObject:
   m_ObjectHideFlags: 0
