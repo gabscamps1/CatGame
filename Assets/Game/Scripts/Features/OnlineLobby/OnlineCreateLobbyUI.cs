@@ -1,6 +1,7 @@
 ﻿using CatGame.Capabilities.UISystem;
 using System;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace CatGame.Features.OnlineLobby
 {
@@ -10,6 +11,7 @@ namespace CatGame.Features.OnlineLobby
 
         public event Action OnEnabledMenu;
         public event Action OnDisabledMenu;
+        public event Action OnTriedHideMenu;
 
         protected override void OnAfterShow()
         {   
@@ -19,6 +21,12 @@ namespace CatGame.Features.OnlineLobby
         protected override void OnBeforeHide()
         {
             OnDisabledMenu?.Invoke();
+        }
+
+        public override bool CanHide()
+        {
+            OnTriedHideMenu?.Invoke();
+            return false;
         }
 
         #region Join

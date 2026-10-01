@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Buffers.Text;
 
 namespace CatGame.Capabilities.UISystem
 {
@@ -184,6 +185,13 @@ namespace CatGame.Capabilities.UISystem
 
         public async void ChangeMenu(int menuIndex)
         {
+            BaseUIScreen mainCurrentScreen = CurrentGroupMenu.Panel;
+            BaseUIScreen mainCurrentTab = CurrentGroupMenu.GroupTab[CurrentTabIndex].TabScreen;
+
+            // Confere se pode fechar o menu atual
+            if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
+                return;
+
             if (!navigationMenuSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
                 return;
 
@@ -233,8 +241,15 @@ namespace CatGame.Capabilities.UISystem
             GroupMenu currentMenu = CurrentGroupMenu;
             int currentMenuIndex = CurrentMenuIndex;
 
-            if (isSubMenu && currentMenuIndex == 0 && currentMenu.CanReturnMenu)
+            BaseUIScreen mainCurrentScreen = CurrentGroupMenu.Panel;
+            BaseUIScreen mainCurrentTab = CurrentGroupMenu.GroupTab[CurrentTabIndex].TabScreen;
+
+            if (isSubMenu && currentMenuIndex == 0)
             {
+                // Confere se pode fechar o menu atual
+                if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
+                    return;
+
                 // Voltar pro menuPresenter principal.
                 ChangeMenuController(parentMenuController);
                 return;
@@ -245,7 +260,8 @@ namespace CatGame.Capabilities.UISystem
                 return;
             }
 
-            if (!currentMenu.CanReturnMenu)
+            // Confere se pode fechar o menu atual
+            if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
                 return;
 
             bool shouldReset = currentMenu.ResetOnBackwardTransition;
@@ -270,6 +286,7 @@ namespace CatGame.Capabilities.UISystem
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[newMenu]);
+
         }
 
         private async void CloseMenu()

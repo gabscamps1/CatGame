@@ -32,7 +32,10 @@ namespace CatGame.Features.OnlineLobby
 
             OnlineCreateLobbyUI.OnEnabledMenu += OnlineCreateLobbyUI_OnEnabledMenu;
             OnlineCreateLobbyUI.OnDisabledMenu += OnlineCreateLobbyUI_OnDisabledMenu;
+            OnlineCreateLobbyUI.OnTriedHideMenu += OnlineCreateLobbyUI_OnTriedHideMenu;
         }
+
+        
 
         private void Start()
         {
@@ -53,6 +56,8 @@ namespace CatGame.Features.OnlineLobby
         {
             OnlineCreateLobbyUI.OnEnabledMenu -= OnlineCreateLobbyUI_OnEnabledMenu;
             OnlineCreateLobbyUI.OnDisabledMenu -= OnlineCreateLobbyUI_OnDisabledMenu;
+            OnlineCreateLobbyUI.OnTriedHideMenu -= OnlineCreateLobbyUI_OnTriedHideMenu;
+
             uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
 
             if (popUp != null)
@@ -65,13 +70,36 @@ namespace CatGame.Features.OnlineLobby
         private void OnlineCreateLobbyUI_OnEnabledMenu()
         {
             CreateLobby();
-            playerInputController.OnCancelled += PlayerInputController_OnCancelled;
+            //playerInputController.OnCancelled += PlayerInputController_OnCancelled;
         }
 
         private void OnlineCreateLobbyUI_OnDisabledMenu()
         {
             CloseLobby();
-            playerInputController.OnCancelled -= PlayerInputController_OnCancelled;
+            //playerInputController.OnCancelled -= PlayerInputController_OnCancelled;
+        }
+
+        private void OnlineCreateLobbyUI_OnTriedHideMenu()
+        {
+            // Popup já está aberta, então ignora o código.
+            if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
+                return;
+
+            uiService.Push(PanelType.QuitLobbyPopup);
+            IBasePanel panel = uiService.CurrentPanel;
+            popUp = panel as CloseQuitLobbyPopUp;
+
+            //uINavigationService.PushGroup();
+
+            if (popUp == null)
+            {
+                Core.Logger.LogError($"Não foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
+                return;
+            }
+
+            // Quando a popup é aberta, se inscreve nos eventos da popup
+            popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
+            popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
         }
 
         private void PlayerInputController_OnCancelled()
