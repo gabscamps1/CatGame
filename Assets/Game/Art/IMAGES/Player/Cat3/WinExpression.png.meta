@@ -1,31 +1,22 @@
 fileFormatVersion: 2
-guid: e599aa90d54f178419e06c25a3aa234d
+guid: ae68a02356520a746bf809f76a4766cf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3790012441557770742
-    second: CAT_TEMPLATE_0
+      213: 5505725775564215146
+    second: WinExpression_0
   - first:
-      213: -5437537710009609185
-    second: CAT_TEMPLATE_1
+      213: 1412204706820495938
+    second: WinExpression_1
   - first:
-      213: 7686748209998989005
-    second: CAT_TEMPLATE_2
+      213: 8448921137831225792
+    second: WinExpression_2
   - first:
-      213: -2957311993730171725
-    second: CAT_TEMPLATE_3
+      213: 6569516945265930759
+    second: WinExpression_3
   - first:
-      213: -9133710111905585300
-    second: CAT_TEMPLATE_4
-  - first:
-      213: -7261333092202213421
-    second: CAT_TEMPLATE_5
-  - first:
-      213: 8714647703801336640
-    second: CAT_TEMPLATE_6
-  - first:
-      213: -5600316180519566370
-    second: CAT_TEMPLATE_7
+      213: -4501763071850262957
+    second: WinExpression_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -67,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -105,7 +96,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Standalone
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -130,83 +121,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CAT_TEMPLATE_0
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 200
-        width: 302
-        height: 210
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a0e53a6c3cb276bc0800000000000000
-      internalID: -3790012441557770742
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CAT_TEMPLATE_1
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 353
-        width: 71
-        height: 83
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f141616134cf984b0800000000000000
-      internalID: -5437537710009609185
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CAT_TEMPLATE_2
-      rect:
-        serializedVersion: 2
-        x: 271
-        y: 345
-        width: 74
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dc60cd655c0dcaa60800000000000000
-      internalID: 7686748209998989005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CAT_TEMPLATE_3
+      name: WinExpression_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 141
-        width: 85
-        height: 46
+        y: 95
+        width: 300
+        height: 111
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3bcf5b3096485f6d0800000000000000
-      internalID: -2957311993730171725
+      spriteID: a63973b1c64486c40800000000000000
+      internalID: 5505725775564215146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CAT_TEMPLATE_4
+      name: WinExpression_1
       rect:
         serializedVersion: 2
-        x: 94
-        y: 58
-        width: 191
-        height: 131
+        x: 138
+        y: 90
+        width: 7
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +188,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c676972bb0b8e3180800000000000000
-      internalID: -9133710111905585300
+      spriteID: 24a9b2cd2b8299310800000000000000
+      internalID: 1412204706820495938
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CAT_TEMPLATE_5
+      name: WinExpression_2
       rect:
         serializedVersion: 2
-        x: 291
-        y: 144
-        width: 85
-        height: 46
+        x: 129
+        y: 71
+        width: 13
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -259,20 +210,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3df8f7b56009a3b90800000000000000
-      internalID: -7261333092202213421
+      spriteID: 0c928b3b209904570800000000000000
+      internalID: 8448921137831225792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CAT_TEMPLATE_6
+      name: WinExpression_3
       rect:
         serializedVersion: 2
-        x: 108
-        y: 0
-        width: 64
-        height: 56
+        x: 141
+        y: 73
+        width: 6
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,20 +232,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 04390c71ae5a0f870800000000000000
-      internalID: 8714647703801336640
+      spriteID: 7023c7cdadc9b2b50800000000000000
+      internalID: 6569516945265930759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CAT_TEMPLATE_7
+      name: WinExpression_4
       rect:
         serializedVersion: 2
-        x: 205
-        y: 0
-        width: 62
-        height: 51
+        x: 147
+        y: 72
+        width: 10
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,8 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed342460b1ea742b0800000000000000
-      internalID: -5600316180519566370
+      spriteID: 35ec46766568681c0800000000000000
+      internalID: -4501763071850262957
       vertices: []
       indices: 
       edges: []
@@ -313,7 +264,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -323,14 +274,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CAT_TEMPLATE_0: -3790012441557770742
-      CAT_TEMPLATE_1: -5437537710009609185
-      CAT_TEMPLATE_2: 7686748209998989005
-      CAT_TEMPLATE_3: -2957311993730171725
-      CAT_TEMPLATE_4: -9133710111905585300
-      CAT_TEMPLATE_5: -7261333092202213421
-      CAT_TEMPLATE_6: 8714647703801336640
-      CAT_TEMPLATE_7: -5600316180519566370
+      WinExpression_0: 5505725775564215146
+      WinExpression_1: 1412204706820495938
+      WinExpression_2: 8448921137831225792
+      WinExpression_3: 6569516945265930759
+      WinExpression_4: -4501763071850262957
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

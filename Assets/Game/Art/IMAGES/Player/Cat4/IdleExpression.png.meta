@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f72251ce818d7e847aa33a07c5dc76dc
+guid: 126d73cceccfe2d4580c7b67de41122a
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -11,9 +11,6 @@ TextureImporter:
   - first:
       213: 1874511817491316007
     second: IdleExpression_2
-  - first:
-      213: -1570494442504837866
-    second: IdleExpression_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,10 +148,10 @@ TextureImporter:
       name: IdleExpression_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 119
-        width: 212
-        height: 88
+        x: 40
+        y: 126
+        width: 21
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +170,10 @@ TextureImporter:
       name: IdleExpression_1
       rect:
         serializedVersion: 2
-        x: 73
-        y: 200
-        width: 51
-        height: 20
+        x: 44
+        y: 130
+        width: 202
+        height: 114
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,10 +192,10 @@ TextureImporter:
       name: IdleExpression_2
       rect:
         serializedVersion: 2
-        x: 176
-        y: 205
-        width: 48
-        height: 29
+        x: 81
+        y: 67
+        width: 119
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,28 +206,6 @@ TextureImporter:
       bones: []
       spriteID: 72d77d0019a930a10800000000000000
       internalID: 1874511817491316007
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleExpression_3
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 84
-        width: 36
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 61526c810ab743ae0800000000000000
-      internalID: -1570494442504837866
       vertices: []
       indices: 
       edges: []
@@ -252,7 +227,6 @@ TextureImporter:
       IdleExpression_0: -2660087869758320594
       IdleExpression_1: -6762805383969704921
       IdleExpression_2: 1874511817491316007
-      IdleExpression_3: -1570494442504837866
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

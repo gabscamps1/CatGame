@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f72251ce818d7e847aa33a07c5dc76dc
+guid: 32cda8462e282254ba4e7b6d6adfc8d4
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -151,10 +151,10 @@ TextureImporter:
       name: IdleExpression_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 119
-        width: 212
-        height: 88
+        x: 0
+        y: 101
+        width: 300
+        height: 106
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +173,10 @@ TextureImporter:
       name: IdleExpression_1
       rect:
         serializedVersion: 2
-        x: 73
-        y: 200
-        width: 51
-        height: 20
+        x: 130
+        y: 72
+        width: 13
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,10 +195,10 @@ TextureImporter:
       name: IdleExpression_2
       rect:
         serializedVersion: 2
-        x: 176
-        y: 205
-        width: 48
-        height: 29
+        x: 142
+        y: 74
+        width: 6
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,10 +217,10 @@ TextureImporter:
       name: IdleExpression_3
       rect:
         serializedVersion: 2
-        x: 135
-        y: 84
-        width: 36
-        height: 57
+        x: 148
+        y: 73
+        width: 10
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
