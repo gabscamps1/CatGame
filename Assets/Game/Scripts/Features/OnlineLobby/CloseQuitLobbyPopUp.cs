@@ -49,5 +49,11 @@ namespace CatGame.Features.OnlineLobby
             IUINavigationService uiNavigationService = ServiceLocator.Get<IUINavigationService>();
             uiNavigationService.PushGroup(new PlayerId(0), navigationGroup, false); // Somente o jogador 1 navega.
         }
+
+        protected override void OnAfterHide()
+        {
+            IUINavigationService uiNavigationService = ServiceLocator.Get<IUINavigationService>();
+            uiNavigationService.PopGroup(new PlayerId(0), navigationGroup); // Somente o jogador 1 navega.
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace CatGame.Core.Interfaces
     {
         public event EventHandler<FocusChangedEvent> OnFocusChanged;
         public void PushGroup(PlayerId player, INavigationGroup group, bool clearOthersGroup = true);
-        public void PopGroup(PlayerId player, INavigationGroup group);
+        public void PopGroup(PlayerId player, INavigationGroup group = null);
         public void ForceRemoveGroup(PlayerId player, INavigationGroup group);
         public INavigationGroup GetActiveGroup(PlayerId player);
 

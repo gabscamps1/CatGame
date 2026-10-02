@@ -43,12 +43,6 @@ namespace CatGame.Capabilities.UISystem
                 return;
             }
 
-            if (!CanHide())
-            {
-                Core.Logger.LogWarning($"[{nameof(BaseUIScreen)}: {name}] Tentou desativar o menu mesmo não podendo");
-                return;
-            }
-
             IsVisible = false;
 
             OnBeforeHide();

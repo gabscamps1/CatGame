@@ -79,7 +79,7 @@ namespace CatGame.UI
 
             unityTransport.SetConnectionData(ip, ushort.Parse(port));
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
-            NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback; ;
+            NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
             NetworkManager.Singleton.StartClient();
             Invoke("Teste", 5f);
         }
@@ -89,6 +89,8 @@ namespace CatGame.UI
             if (NetworkManager.Singleton.LocalClientId == obj)
             {
                 menuController.ChangeMenu(menuIndexWhenConnectLobby);
+                NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+                NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }
         }
 
@@ -97,6 +99,8 @@ namespace CatGame.UI
             if (NetworkManager.Singleton.LocalClientId == obj)
             {
                 Debug.Log("Nao funfo");
+                NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+                NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }           
         }
 

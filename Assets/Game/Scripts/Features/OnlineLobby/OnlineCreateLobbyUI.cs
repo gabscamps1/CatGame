@@ -1,32 +1,34 @@
 ﻿using CatGame.Capabilities.UISystem;
 using System;
 using UnityEngine;
-using UnityEngine.VFX;
 
 namespace CatGame.Features.OnlineLobby
 {
     public class OnlineCreateLobbyUI : BaseUIScreen
     {
-        [SerializeField] private ButtonElement buttonElement;
+        [SerializeField] private ButtonElement createLobbyButton;
+        [SerializeField] private MenuController menuController;
+        [SerializeField] private int menuToGoWhenCloseLobby;
 
-        public event Action OnEnabledMenu;
-        public event Action OnDisabledMenu;
+
         public event Action OnTriedHideMenu;
 
-        protected override void OnAfterShow()
-        {   
-            OnEnabledMenu?.Invoke();
-        }
-
-        protected override void OnBeforeHide()
-        {
-            OnDisabledMenu?.Invoke();
-        }
-
+       
         public override bool CanHide()
         {
             OnTriedHideMenu?.Invoke();
             return false;
+        }
+
+        public void CloseLobbyUI()
+        {
+            menuController.ChangeMenu(menuToGoWhenCloseLobby, true);
+            Debug.Log("Mudou");
+        }
+
+        public void UpdateUI()
+        {
+
         }
 
         #region Join

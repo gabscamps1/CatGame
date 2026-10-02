@@ -33,12 +33,12 @@ namespace CatGame.Services.UISystem
             FocusChanged(player, null, group.GetCurrentElement(player));
         }
 
-        public void PopGroup(PlayerId player, INavigationGroup group)
+        public void PopGroup(PlayerId player, INavigationGroup group = null)
         {
             if (!groupsByPlayer.TryGetValue(player, out Stack<INavigationGroup> groups) || groups.Count == 0)
                 return;
 
-            if (groups.Peek() != group)
+            if (group != null && groups.Peek() != group)
             {
                 Logger.LogWarning("[UINavigationService] Tentativa de PopGroup de um grupo que não está no topo da pilha.");
                 return;

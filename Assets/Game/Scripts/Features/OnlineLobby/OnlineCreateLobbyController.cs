@@ -2,9 +2,11 @@ using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
+using System;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -13,50 +15,53 @@ namespace CatGame.Features.OnlineLobby
 {
     public class OnlineCreateLobbyPresenter : MonoBehaviour
     {
-        [SerializeField] private OnlineCreateLobbyUI OnlineCreateLobbyUI;
-        private IPlayerInputController playerInputController;
+        public struct PlayerEntered : INetworkSerializeByMemcpy, IEquatable<PlayerEntered>
+        {
+            public PlayerId PlayerId;
+            public FixedString32Bytes PlayerName;
 
-        private IUINavigationService uINavigationService;
+            public bool Equals(PlayerEntered other)
+            {
+                return this.PlayerId == other.PlayerId;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is PlayerEntered other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return PlayerId.Id;
+            }
+        }
+
+        [SerializeField] private OnlineCreateLobbyUI onlineCreateLobbyUI;
+
+
+        private NetworkList<PlayerEntered> playerIds = new(); 
+
         private IUIService uiService;
         private CloseQuitLobbyPopUp popUp;
 
         private void Awake()
         {
-            uINavigationService = ServiceLocator.Get<IUINavigationService>();
             uiService = ServiceLocator.Get<IUIService>();
             uiService.OnCurrentUIChanged += UiService_OnCurrentUIChanged;
 
-            // Somente permite a navegação do player 1 no menu.
-            PlayerId playerOne = new PlayerId(0);
-            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(playerOne);
+            onlineCreateLobbyUI.OnTriedHideMenu += OnlineCreateLobbyUI_OnTriedHideMenu;
 
-            OnlineCreateLobbyUI.OnEnabledMenu += OnlineCreateLobbyUI_OnEnabledMenu;
-            OnlineCreateLobbyUI.OnDisabledMenu += OnlineCreateLobbyUI_OnDisabledMenu;
-            OnlineCreateLobbyUI.OnTriedHideMenu += OnlineCreateLobbyUI_OnTriedHideMenu;
+            playerIds.OnListChanged += PlayerIds_OnListChanged;
         }
 
-        
-
-        private void Start()
+        private void PlayerIds_OnListChanged(NetworkListEvent<PlayerEntered> changeEvent)
         {
-            
-        }
-
-        private void UiService_OnCurrentUIChanged(PanelType? obj)
-        {
-            // Garante que quando a popup for fechada, os eventos são desinscrevidos.
-            if (!uiService.IsVisible(PanelType.QuitLobbyPopup))
-            {
-                popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
-                popUp.OnCancelled -= CloseQuitLobbyPopUp_OnCancelled;
-            }
+            onlineCreateLobbyUI.UpdateUI();
         }
 
         private void OnDestroy()
         {
-            OnlineCreateLobbyUI.OnEnabledMenu -= OnlineCreateLobbyUI_OnEnabledMenu;
-            OnlineCreateLobbyUI.OnDisabledMenu -= OnlineCreateLobbyUI_OnDisabledMenu;
-            OnlineCreateLobbyUI.OnTriedHideMenu -= OnlineCreateLobbyUI_OnTriedHideMenu;
+            onlineCreateLobbyUI.OnTriedHideMenu -= OnlineCreateLobbyUI_OnTriedHideMenu;
 
             uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
 
@@ -64,81 +69,15 @@ namespace CatGame.Features.OnlineLobby
             {
                 popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
                 popUp.OnCancelled -= CloseQuitLobbyPopUp_OnCancelled;
-            }       
-        }
-
-        private void OnlineCreateLobbyUI_OnEnabledMenu()
-        {
-            CreateLobby();
-            //playerInputController.OnCancelled += PlayerInputController_OnCancelled;
-        }
-
-        private void OnlineCreateLobbyUI_OnDisabledMenu()
-        {
-            CloseLobby();
-            //playerInputController.OnCancelled -= PlayerInputController_OnCancelled;
-        }
-
-        private void OnlineCreateLobbyUI_OnTriedHideMenu()
-        {
-            // Popup já está aberta, então ignora o código.
-            if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
-                return;
-
-            uiService.Push(PanelType.QuitLobbyPopup);
-            IBasePanel panel = uiService.CurrentPanel;
-            popUp = panel as CloseQuitLobbyPopUp;
-
-            //uINavigationService.PushGroup();
-
-            if (popUp == null)
-            {
-                Core.Logger.LogError($"Não foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
-                return;
             }
-
-            // Quando a popup é aberta, se inscreve nos eventos da popup
-            popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
-            popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
         }
 
-        private void PlayerInputController_OnCancelled()
+        #region LobbyCreation
+
+        public void CreateLobby()
         {
-            // Popup já está aberta, então ignora o código.
-            if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
-                return;
+            Debug.Log("Server criado");
 
-            uiService.Push(PanelType.QuitLobbyPopup);
-            IBasePanel panel = uiService.CurrentPanel;
-            popUp = panel as CloseQuitLobbyPopUp;
-
-            //uINavigationService.PushGroup();
-
-            if (popUp == null)
-            {
-                Core.Logger.LogError($"Não foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
-                return;
-            }
-
-            // Quando a popup é aberta, se inscreve nos eventos da popup
-            popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
-            popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
-        }
-
-        private void CloseQuitLobbyPopUp_OnConfirmed()
-        {
-            CloseLobby();
-        }
-
-        private void CloseQuitLobbyPopUp_OnCancelled()
-        {
-            uiService.Pop();
-        }
-
-        #region Host
-
-        private void CreateLobby()
-        {
             string ip = GetLocalIpAddress();
             int port = 1000;
 
@@ -155,15 +94,15 @@ namespace CatGame.Features.OnlineLobby
 
             NetworkManager.Singleton.StartHost();
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
+
+            PlayerEntered playerEntered = new PlayerEntered();
+            playerEntered.PlayerId = new PlayerId(0);
+            playerEntered.PlayerName = "Casa";
+            playerIds.Add(playerEntered);
+
         }
 
-        private void CloseLobby()
-        {
-            if (NetworkManager.Singleton.IsServer)
-                NetworkManager.Singleton.Shutdown();
-
-            NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
-        }
 
         private string GetLocalIpAddress()
         {
@@ -207,15 +146,88 @@ namespace CatGame.Features.OnlineLobby
             return true;
         }
 
+        #endregion
+
+        #region CloseLobby
+
+        private void OnlineCreateLobbyUI_OnTriedHideMenu()
+        {
+            // Popup já está aberta, então ignora o código.
+            if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
+                return;
+
+            uiService.Push(PanelType.QuitLobbyPopup);
+            IBasePanel panel = uiService.CurrentPanel;
+            popUp = panel as CloseQuitLobbyPopUp;
+
+            if (popUp == null)
+            {
+                Core.Logger.LogError($"Não foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
+                return;
+            }
+
+            // Quando a popup é aberta, se inscreve nos eventos da popup
+            popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
+            popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
+        }
+
+        private void CloseQuitLobbyPopUp_OnConfirmed()
+        {
+            CloseLobby();
+            uiService.Pop();
+        }
+
+        private void CloseQuitLobbyPopUp_OnCancelled()
+        {
+            uiService.Pop();
+        }
+
+        private void CloseLobby()
+        {
+            playerIds.Clear();
+            NetworkManager.Singleton.Shutdown(true);
+            NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+        }
 
         #endregion
+
+        private void UiService_OnCurrentUIChanged(PanelType? obj)
+        {
+            // Garante que quando a popup for fechada, os eventos são desinscrevidos.
+            // Não faz isso diretamente no proprio método para evitar problemas caso a popup for fechada de outras maneiras.
+            if (!uiService.IsVisible(PanelType.QuitLobbyPopup))
+            {
+                popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
+                popUp.OnCancelled -= CloseQuitLobbyPopUp_OnCancelled;
+            }
+        }
+
 
         private void Singleton_OnClientConnectedCallback(ulong clientID)
         {
             if (clientID == NetworkManager.Singleton.LocalClientId)
                 return;
 
+            PlayerEntered playerEntered = new PlayerEntered();
+            playerEntered.PlayerId = new PlayerId(1);
+            playerEntered.PlayerName = "Casa";
 
+            playerIds.Add(playerEntered);
+
+            // TODO - atualiar os jogadores quando alguem entrar.
+        }
+
+        private void Singleton_OnClientDisconnectCallback(ulong clientID)
+        {
+            // Volta pro menu anterior quando o próprio Owner é desconectado.
+            if (clientID == NetworkManager.Singleton.LocalClientId)
+            {
+                onlineCreateLobbyUI.CloseLobbyUI();
+                NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
+                return;
+            }
+
+            // TODO - atualiar os jogadores quando alguem sair.
         }
 
         private void UpdateUIWithClient()

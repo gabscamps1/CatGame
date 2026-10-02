@@ -183,13 +183,13 @@ namespace CatGame.Capabilities.UISystem
 
         #region Functions
 
-        public async void ChangeMenu(int menuIndex)
+        public async void ChangeMenu(int menuIndex, bool forceChange = false)
         {
             BaseUIScreen mainCurrentScreen = CurrentGroupMenu.Panel;
             BaseUIScreen mainCurrentTab = CurrentGroupMenu.GroupTab[CurrentTabIndex].TabScreen;
 
             // Confere se pode fechar o menu atual
-            if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
+            if (!forceChange && (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide())))
                 return;
 
             if (!navigationMenuSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
