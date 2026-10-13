@@ -5429,6 +5429,7 @@ MonoBehaviour:
   buttonElement: {fileID: 1006305950}
   menuController: {fileID: 296721682}
   menuIndexWhenConnectLobby: 3
+  lobbyRoot: {fileID: 0}
 --- !u!1 &730282216
 GameObject:
   m_ObjectHideFlags: 0
@@ -16761,6 +16762,10 @@ PrefabInstance:
     - target: {fileID: 2570453309886361496, guid: 29ad5b2f440e6b74e82ab7d43fbd2ec1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238501341636465361, guid: 29ad5b2f440e6b74e82ab7d43fbd2ec1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8066894479641538478, guid: 29ad5b2f440e6b74e82ab7d43fbd2ec1, type: 3}
       propertyPath: m_Name
