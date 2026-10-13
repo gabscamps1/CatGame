@@ -390,7 +390,8 @@ MonoBehaviour:
     NetworkTransport: {fileID: 1002556418}
     PlayerPrefab: {fileID: 0}
     Prefabs:
-      NetworkPrefabsLists: []
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: 40c0c0a2f9d26984b84a0a7bbf7c9a0c, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -801,7 +802,7 @@ MonoBehaviour:
     gameState: 0
   - sceneID: 1
     sceneSettings:
-    - scene: SampleScene
+    - scene: MenuSceneTeste
       isToReloadScene: 0
     gameState: 1
   - sceneID: 2

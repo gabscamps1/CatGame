@@ -748,6 +748,7 @@ GameObject:
   - component: {fileID: 9005844507348800178}
   - component: {fileID: 6772853011596730965}
   - component: {fileID: 4470628221836274672}
+  - component: {fileID: 540485754993951030}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -765,7 +766,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.28058004, y: 3.01505, z: 0}
-  m_LocalScale: {x: 0.33, y: 0.33, z: 0.33}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6002790617426523933}
@@ -791,6 +792,7 @@ MonoBehaviour:
   boundaries: {fileID: 0}
   fruitThrowTransform: {fileID: 3713799488612486688}
   throwFruitController: {fileID: 1841354754644045592}
+  playerIndex: 0
 --- !u!114 &4170717152178311922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,6 +1067,32 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &540485754993951030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452811411989202556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3520417513
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &8575349968225663106
 GameObject:
   m_ObjectHideFlags: 0

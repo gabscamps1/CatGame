@@ -1,5 +1,6 @@
 ﻿using CatGame.Capabilities.UISystem;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace CatGame.Features.OnlineLobby
@@ -9,10 +10,9 @@ namespace CatGame.Features.OnlineLobby
         [SerializeField] private ButtonElement createLobbyButton;
         [SerializeField] private MenuController menuController;
         [SerializeField] private int menuToGoWhenCloseLobby;
-
+        [SerializeField] private TextMeshProUGUI[] playerTexts;
 
         public event Action OnTriedHideMenu;
-
        
         public override bool CanHide()
         {
@@ -24,6 +24,16 @@ namespace CatGame.Features.OnlineLobby
         {
             menuController.ChangeMenu(menuToGoWhenCloseLobby, true);
             Debug.Log("Mudou");
+        }
+
+        public void UpdatePlayerText(int playerId, string clientId, bool isHost)
+        {
+            if (playerId >= playerTexts.Length)
+                return;
+
+            playerTexts[playerId].text = isHost == true
+                ? $"Host | {clientId}"
+                : clientId;
         }
 
         public void UpdateUI()

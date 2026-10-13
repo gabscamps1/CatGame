@@ -1,4 +1,5 @@
 ﻿using CatGame.Capabilities.UISystem;
+using CatGame.Features.CharacterSelection;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -11,7 +12,8 @@ namespace CatGame.UI
         [SerializeField] private ButtonElement buttonElement;
         [SerializeField] private MenuController menuController;
         [SerializeField] private int menuIndexWhenConnectLobby;
-
+        [SerializeField] private LobbyRoot lobbyRoot;
+            
         private UnityTransport unityTransport;
 
         private void Awake()
@@ -19,7 +21,6 @@ namespace CatGame.UI
             inputFieldElement.OnValueChanged += InputFieldElement_OnValueChanged;
             buttonElement.OnSubmittedEvent += ButtonElement_OnSubmittedEvent;
         }
-
 
         private void OnDestroy()
         {
@@ -89,6 +90,8 @@ namespace CatGame.UI
             if (NetworkManager.Singleton.LocalClientId == obj)
             {
                 menuController.ChangeMenu(menuIndexWhenConnectLobby);
+                lobbyRoot.OpenOnlineClient();
+
                 NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
                 NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }
@@ -104,24 +107,6 @@ namespace CatGame.UI
             }           
         }
 
-        private void Teste()
-        {
-            Debug.Log(NetworkManager.Singleton.IsConnectedClient);
-        }
-
-        #endregion
-  
-
-        private void SavePreferences()
-        {
-
-        }
-
-        private void GetPreferences()
-        {
-
-        }
-
-        
+        #endregion        
     }
 }

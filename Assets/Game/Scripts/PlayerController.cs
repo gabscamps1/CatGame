@@ -6,9 +6,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private BoxCollider2D boundaries;
     [SerializeField] private Transform fruitThrowTransform;
     [SerializeField] private ThrowFruitController throwFruitController;
+    private BoxCollider2D boundaries;
 
     private Bounds bounds;
 
@@ -25,19 +25,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int playerIndex;
     private PlayerId playerId;
-
-    private void Awake()
-    {
-        bounds = boundaries.bounds;
-
-        offset = transform.position.x - fruitThrowTransform.position.x;
-
-        leftBound = bounds.min.x + offset;
-        rightBound = bounds.max.x + offset;
-
-        startingLeftBound = leftBound;
-        startingRightBound = rightBound;
-    }
 
     private void Start()
     {
@@ -84,4 +71,18 @@ public class PlayerController : MonoBehaviour
         rightBound -= throwFruitController.Bounds.extents.x + extraWidth;
     }
 
+    public void Init(BoxCollider2D newBoundary)
+    {
+        boundaries = newBoundary;
+
+        bounds = boundaries.bounds;
+
+        offset = transform.position.x - fruitThrowTransform.position.x;
+
+        leftBound = bounds.min.x + offset;
+        rightBound = bounds.max.x + offset;
+
+        startingLeftBound = leftBound;
+        startingRightBound = rightBound;
+    }
 }

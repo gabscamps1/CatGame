@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 namespace CatGame.Services.SceneManagement
 {
@@ -45,6 +46,24 @@ namespace CatGame.Services.SceneManagement
                     StartCoroutine(LoadSceneGroup(currentSceneGroup));
                 }
             }   
+        }
+
+        public void LoadOnlineAsyncScene(Scenes sceneID)
+        {
+            for (int i = 0; i < scenesGroup.Length; i++)
+            {
+                ScenesGroup currentSceneGroup = scenesGroup[i];
+
+                if (currentSceneGroup.sceneSettings == null || currentSceneGroup.sceneSettings.Length <= 0)
+                    return;
+
+                if (currentSceneGroup.sceneID == sceneID)
+                {
+                    // Chama coroutine de carregar cena.
+                    StartCoroutine(LoadSceneGroup(currentSceneGroup));
+                }
+            }
+            
         }
 
         private IEnumerator LoadSceneGroup(ScenesGroup sceneGroup)
@@ -129,7 +148,7 @@ namespace CatGame.Services.SceneManagement
         }
 
         private IEnumerator LoadScene(string scene, float progressPerOperation, float previousOperationsProgress)
-        {
+        {            
             AsyncOperation operation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
             operation.allowSceneActivation = false;
 
@@ -173,6 +192,20 @@ namespace CatGame.Services.SceneManagement
             while (!unloadOperation.isDone)
                 yield return null;
         }
+
+
+        #region Online
+
+        [Rpc(SendTo.Server)]
+        private void LoadSceneRPC(RpcParams rpc = default)
+        {
+            if (NetworkManager.Singleton.LocalClientId != rpc.Receive.SenderClientId)
+                return;
+
+
+        }
+
+        #endregion
     }
 }
 

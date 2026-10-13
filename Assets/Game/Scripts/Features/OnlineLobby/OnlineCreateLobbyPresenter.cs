@@ -1,4 +1,4 @@
-using CatGame.Core;
+Ôªøusing CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
@@ -15,31 +15,25 @@ namespace CatGame.Features.OnlineLobby
 {
     public class OnlineCreateLobbyPresenter : MonoBehaviour
     {
-        public struct PlayerEntered : INetworkSerializeByMemcpy, IEquatable<PlayerEntered>
+        public struct PlayerLobbyData : IEquatable<PlayerLobbyData>, INetworkSerializeByMemcpy
         {
-            public PlayerId PlayerId;
-            public FixedString32Bytes PlayerName;
+            public ulong ClientId;
+            public FixedString32Bytes Name;
+            public bool IsHost;
 
-            public bool Equals(PlayerEntered other)
+            public PlayerLobbyData(ulong clientId, string name, bool isHost)
             {
-                return this.PlayerId == other.PlayerId;
+                ClientId = clientId;
+                Name = name;
+                IsHost = isHost;
             }
 
-            public override bool Equals(object obj)
-            {
-                return obj is PlayerEntered other && Equals(other);
-            }
-
-            public override int GetHashCode()
-            {
-                return PlayerId.Id;
-            }
+            public bool Equals(PlayerLobbyData other) => ClientId == other.ClientId;
         }
 
         [SerializeField] private OnlineCreateLobbyUI onlineCreateLobbyUI;
 
-
-        private NetworkList<PlayerEntered> playerIds = new(); 
+        private NetworkList<PlayerLobbyData> playerLobbyDatas = new(); 
 
         private IUIService uiService;
         private CloseQuitLobbyPopUp popUp;
@@ -51,19 +45,16 @@ namespace CatGame.Features.OnlineLobby
 
             onlineCreateLobbyUI.OnTriedHideMenu += OnlineCreateLobbyUI_OnTriedHideMenu;
 
-            playerIds.OnListChanged += PlayerIds_OnListChanged;
-        }
-
-        private void PlayerIds_OnListChanged(NetworkListEvent<PlayerEntered> changeEvent)
-        {
-            onlineCreateLobbyUI.UpdateUI();
+            playerLobbyDatas.OnListChanged += PlayerLobbyDatas_OnListChanged;
         }
 
         private void OnDestroy()
         {
+            uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
+
             onlineCreateLobbyUI.OnTriedHideMenu -= OnlineCreateLobbyUI_OnTriedHideMenu;
 
-            uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
+            playerLobbyDatas.OnListChanged -= PlayerLobbyDatas_OnListChanged;
 
             if (popUp != null)
             {
@@ -76,7 +67,11 @@ namespace CatGame.Features.OnlineLobby
 
         public void CreateLobby()
         {
-            Debug.Log("Server criado");
+            if (NetworkManager.Singleton.IsListening)
+            {
+                Debug.Log("Server j√° estava criado");
+                return;
+            }
 
             string ip = GetLocalIpAddress();
             int port = 1000;
@@ -86,21 +81,19 @@ namespace CatGame.Features.OnlineLobby
 
             if (!NetworkManager.Singleton.TryGetComponent(out UnityTransport unityTransport))
             {
-                Core.Logger.LogError($"N„o foi encontrado o {nameof(NetworkTransport)} do {nameof(NetworkManager)}");
+                Core.Logger.LogError($"N√£o foi encontrado o {nameof(NetworkTransport)} do {nameof(NetworkManager)}");
                 return;
             }
 
             unityTransport.SetConnectionData(ip, (ushort)port);
 
             NetworkManager.Singleton.StartHost();
+
+            // O Host se adiciona manualmente, j√° que o callback de conex√£o ignora o prÔøΩprio LocalClientId
+            playerLobbyDatas.Add(new PlayerLobbyData(NetworkManager.Singleton.LocalClientId, "Host", true));
+
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
-
-            PlayerEntered playerEntered = new PlayerEntered();
-            playerEntered.PlayerId = new PlayerId(0);
-            playerEntered.PlayerName = "Casa";
-            playerIds.Add(playerEntered);
-
         }
 
 
@@ -108,7 +101,7 @@ namespace CatGame.Features.OnlineLobby
         {
             string localIPAddress = "127.0.0.1";
 
-            // Pega todos os endereÁos de IPs presentes no PC.
+            // Pega todos os endere√ßos de IPs presentes no PC.
             IPAddress[] ipsAddress = Dns.GetHostAddresses(Dns.GetHostName());
 
             if (ipsAddress == null || ipsAddress.Length == 0)
@@ -116,7 +109,7 @@ namespace CatGame.Features.OnlineLobby
 
             foreach (IPAddress ip in ipsAddress)
             {
-                // Procura pelo IPV4 dentre esses endereÁos.
+                // Procura pelo IPV4 dentre esses endere√ßos.
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
                     localIPAddress = ip.ToString();
@@ -131,10 +124,10 @@ namespace CatGame.Features.OnlineLobby
         {
             IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
 
-            // Lista todas as portas UDP que est„o ativas no PC neste momento
+            // Lista todas as portas UDP que est√£o ativas no PC neste momento
             IPEndPoint[] udpListeners = ipGlobalProperties.GetActiveUdpListeners();
 
-            // Procura se a nossa porta est· nessa lista do Windows
+            // Procura se a nossa porta est√° nessa lista do Windows
             foreach (IPEndPoint endPoint in udpListeners)
             {
                 if (endPoint.Port == port)
@@ -152,7 +145,7 @@ namespace CatGame.Features.OnlineLobby
 
         private void OnlineCreateLobbyUI_OnTriedHideMenu()
         {
-            // Popup j· est· aberta, ent„o ignora o cÛdigo.
+            // Popup j√° est√° aberta, ent√£o ignora o c√≥digo.
             if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
                 return;
 
@@ -162,17 +155,23 @@ namespace CatGame.Features.OnlineLobby
 
             if (popUp == null)
             {
-                Core.Logger.LogError($"N„o foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
+                Core.Logger.LogError($"N√£o foi encontrado o panel {nameof(CloseQuitLobbyPopUp)}");
                 return;
             }
 
-            // Quando a popup È aberta, se inscreve nos eventos da popup
+            // Quando a popup √© aberta, se inscreve nos eventos da popup
             popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
             popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
         }
 
         private void CloseQuitLobbyPopUp_OnConfirmed()
         {
+            if (!NetworkManager.Singleton.IsListening)
+            {
+                Core.Logger.LogWarning("Server j√° estava fechado");
+                return;
+            }
+
             CloseLobby();
             uiService.Pop();
         }
@@ -182,19 +181,23 @@ namespace CatGame.Features.OnlineLobby
             uiService.Pop();
         }
 
+        /// <summary>
+        /// Fechar/Sair do lobby
+        /// </summary>
         private void CloseLobby()
         {
-            playerIds.Clear();
             NetworkManager.Singleton.Shutdown(true);
             NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
+
+            playerLobbyDatas.Clear();
         }
 
         #endregion
 
         private void UiService_OnCurrentUIChanged(PanelType? obj)
         {
-            // Garante que quando a popup for fechada, os eventos s„o desinscrevidos.
-            // N„o faz isso diretamente no proprio mÈtodo para evitar problemas caso a popup for fechada de outras maneiras.
+            // Garante que quando a popup for fechada, os eventos s√£o desinscrevidos.
+            // N√£o faz isso diretamente no proprio m√©todo para evitar problemas caso a popup for fechada de outras maneiras.
             if (!uiService.IsVisible(PanelType.QuitLobbyPopup))
             {
                 popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
@@ -206,20 +209,14 @@ namespace CatGame.Features.OnlineLobby
         private void Singleton_OnClientConnectedCallback(ulong clientID)
         {
             if (clientID == NetworkManager.Singleton.LocalClientId)
-                return;
+                return; // j√° foi adicionado em CreateLobby
 
-            PlayerEntered playerEntered = new PlayerEntered();
-            playerEntered.PlayerId = new PlayerId(1);
-            playerEntered.PlayerName = "Casa";
-
-            playerIds.Add(playerEntered);
-
-            // TODO - atualiar os jogadores quando alguem entrar.
+            playerLobbyDatas.Add(new PlayerLobbyData(clientID, clientID.ToString(), false));
         }
 
         private void Singleton_OnClientDisconnectCallback(ulong clientID)
         {
-            // Volta pro menu anterior quando o prÛprio Owner È desconectado.
+            // Volta pro menu anterior quando o pr√≥prio Owner √© desconectado.
             if (clientID == NetworkManager.Singleton.LocalClientId)
             {
                 onlineCreateLobbyUI.CloseLobbyUI();
@@ -227,13 +224,27 @@ namespace CatGame.Features.OnlineLobby
                 return;
             }
 
-            // TODO - atualiar os jogadores quando alguem sair.
+            for (int i = 0; i < playerLobbyDatas.Count; i++)
+            {
+                if (playerLobbyDatas[i].ClientId == clientID)
+                {
+                    playerLobbyDatas.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+        private void PlayerLobbyDatas_OnListChanged(NetworkListEvent<PlayerLobbyData> changeEvent)
+        {
+            UpdateUIWithClient();
         }
 
         private void UpdateUIWithClient()
         {
-
+            for (int i = 0; i < playerLobbyDatas.Count; i++)
+            {
+                onlineCreateLobbyUI.UpdatePlayerText(i, playerLobbyDatas[i].Name.ToString(), playerLobbyDatas[i].IsHost);
+            }
         }
-
     }
 }
