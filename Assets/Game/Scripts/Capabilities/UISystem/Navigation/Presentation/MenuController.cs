@@ -56,6 +56,7 @@ namespace CatGame.Capabilities.UISystem
 
                 SetupElements(i);
             }
+
         }
 
         private void Start()

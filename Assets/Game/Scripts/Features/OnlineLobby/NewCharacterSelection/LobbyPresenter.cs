@@ -23,9 +23,6 @@ namespace CatGame.Features.CharacterSelection
             lobbyView.OnCloseLobbyPressed += LobbyView_OnTriedHideMenu;
 
             LobbyModel_Changed();
-
-            for (int i = 0; i < lobbyView.SlotCount; i++)
-                LobbyView_CyclePressed(i, 1);
         }
 
         public void Dispose()

@@ -66,11 +66,11 @@ namespace CatGame.Features.CharacterSelection
 
             if (IsServer)
             {
-                Debug.Log("Call please");
                 NetworkManager.OnClientConnectedCallback += AddSlotFor;
                 NetworkManager.OnClientDisconnectCallback += RemoveSlotFor;
                 foreach (var id in NetworkManager.ConnectedClientsIds) AddSlotFor(id);
             }
+
             Changed?.Invoke();
             OnNetworkSpawned?.Invoke();
         }
@@ -89,10 +89,15 @@ namespace CatGame.Features.CharacterSelection
         private void AddSlotFor(ulong clientId)
         {
             if (FindSlot(clientId) >= 0) return;
+
+            ushort currentSlotNumber = (ushort)(slots.Count + 1); // Pega o slot que está sendo adicionado. Exemplo: Vai entrar um segundo player agora, ou seja, o slot ainda é igual a 1. slot[1] 
+            ushort characterId = catalog.TryGet(currentSlotNumber, out var entry) ? entry.Id : (ushort)0;
+
             slots.Add(new LobbySlot
             {
                 OwnerId = clientId,
                 PlayerName = new FixedString32Bytes($"Jogador {clientId}"),
+                CharacterId = characterId,
             });
         }
 
@@ -138,7 +143,6 @@ namespace CatGame.Features.CharacterSelection
             if (clientPhase != LobbyPhase.Selecting) return;
             if (!CanControl(slotIndex)) return;
             if (direction != -1 && direction != 1) return;
-            CycleCharacterRpc((sbyte)direction);
         }
 
         public void SetReady(int slotIndex, bool ready)
