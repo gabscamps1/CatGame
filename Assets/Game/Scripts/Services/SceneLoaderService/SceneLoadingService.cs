@@ -1,13 +1,13 @@
-using CatGame.Core.Enums;
-using CatGame.Core.Interfaces;
-using CatGame.Core.Events;
 using CatGame.Core;
+using CatGame.Core.Enums;
+using CatGame.Core.Events;
+using CatGame.Core.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.Netcode;
 
 namespace CatGame.Services.SceneManagement
 {
@@ -43,7 +43,7 @@ namespace CatGame.Services.SceneManagement
                 if (currentSceneGroup.sceneID == sceneID)
                 {
                     // Chama coroutine de carregar cena.
-                    StartCoroutine(LoadSceneGroup(currentSceneGroup));
+                    StartCoroutine(LoadSceneGroup(currentSceneGroup, false));
                 }
             }   
         }
@@ -60,13 +60,13 @@ namespace CatGame.Services.SceneManagement
                 if (currentSceneGroup.sceneID == sceneID)
                 {
                     // Chama coroutine de carregar cena.
-                    StartCoroutine(LoadSceneGroup(currentSceneGroup));
+                    StartCoroutine(LoadSceneGroup(currentSceneGroup, true));
                 }
             }
             
         }
 
-        private IEnumerator LoadSceneGroup(ScenesGroup sceneGroup)
+        private IEnumerator LoadSceneGroup(ScenesGroup sceneGroup, bool isOnline)
         {
             ServiceLocator.Get<IGameStateService>().SetState(GameState.Loading);
             
@@ -118,7 +118,10 @@ namespace CatGame.Services.SceneManagement
                 if (scenesToKeepActivated.Contains(sceneSettings.scene) || scenesToLoadAfter.Contains(sceneSettings.scene))
                     continue;
 
-                yield return StartCoroutine(LoadScene(sceneSettings.scene, progressPerOperation, completedOperationsProgress));
+                if (!isOnline)
+                    yield return StartCoroutine(LoadScene(sceneSettings.scene, progressPerOperation, completedOperationsProgress));
+                else
+                    LoadOnlineScene(sceneSettings.scene);
 
                 completedLoadOperations++;
             }
@@ -129,7 +132,22 @@ namespace CatGame.Services.SceneManagement
             foreach (var sceneToUnload in scenesToUnload)
             {
                 // Descarrega a cena.
-                yield return UnloadScene(sceneToUnload, progressPerOperation, completedOperationsProgress);
+                if (!isOnline)
+                {
+                    yield return UnloadScene(sceneToUnload, progressPerOperation, completedOperationsProgress);
+                }
+                else
+                {
+                    List<Scene> synchronizedScenes = NetworkManager.Singleton.SceneManager.GetSynchronizedScenes();
+
+                    if (synchronizedScenes == null || synchronizedScenes.Count == 0)
+                        continue;
+
+                    Scene veriftScene = synchronizedScenes.Find(x => x.name == sceneToUnload);
+
+                    if (veriftScene != null)
+                        UnloadOnlineScene(veriftScene);
+                }
 
                 completedLoadOperations++;
             }
@@ -139,7 +157,10 @@ namespace CatGame.Services.SceneManagement
             // Recarrega as cenas somente depois de descarregar as cenas desnecessárias.
             foreach (var sceneToLoadAfter in scenesToLoadAfter)
             {
-                yield return StartCoroutine(LoadScene(sceneToLoadAfter, progressPerOperation, completedOperationsProgress));
+                if (!isOnline)
+                    yield return StartCoroutine(LoadScene(sceneToLoadAfter, progressPerOperation, completedOperationsProgress));
+                else
+                    LoadOnlineScene(sceneToLoadAfter);
 
                 completedLoadOperations++;
             }
@@ -195,6 +216,39 @@ namespace CatGame.Services.SceneManagement
 
 
         #region Online
+    
+        private void LoadOnlineScene(string scene)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
+            NetworkManager.Singleton.SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+
+            EventBus.Publish(new LoadingBarChangedEvent()
+            {
+                IsLoading = true
+            });
+
+        }
+
+        private void UnloadOnlineScene(Scene scene)
+        {
+            NetworkManager.Singleton.SceneManager.OnUnloadEventCompleted += NetworkManager_OnUnloadEventCompleted;
+            NetworkManager.Singleton.SceneManager.UnloadScene(scene);
+
+            EventBus.Publish(new LoadingBarChangedEvent()
+            {
+                IsLoading = true
+            });
+        }
+
+        private void NetworkManager_OnUnloadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+        {
+            NetworkManager.Singleton.SceneManager.OnUnloadEventCompleted -= NetworkManager_OnUnloadEventCompleted;
+        }
+
+        private void NetworkManager_OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= NetworkManager_OnLoadEventCompleted;
+        }
 
         [Rpc(SendTo.Server)]
         private void LoadSceneRPC(RpcParams rpc = default)
