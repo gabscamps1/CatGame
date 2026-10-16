@@ -5,9 +5,10 @@ using UnityEngine.Networking;
 
 public class LanguageDownloaderEditor : EditorWindow
 {
-    private readonly string url = "https://script.google.com/macros/s/AKfycbzCa1Rc3akK-bWReppJh-A1s_8LEz3PiBrbPILj2VlwSSUWIRCNhNxqpxre4t8EHXo-Sg/exec?sheet=";
+    private readonly string url = "https://script.google.com/macros/s/AKfycbxc8B2rmEbq5JkyLz-9U7Ptq1b0BhyJJg8O9DuzSLcLK_ssbHT5HHqOqoN6Z0nTvK0/exec?sheet=";
     private readonly string pt = "Portuguese";
     private readonly string en = "English";
+    private readonly string es = "Spanish";
 
     [MenuItem("Tools/Language Downloader")]
     public static void ShowWindow()

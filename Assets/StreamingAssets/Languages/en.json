@@ -1,0 +1,113 @@
+{
+  "text": [
+    {
+      "key": "Teste",
+      "value": "Continue"
+    },
+    {
+      "key": "",
+      "value": "Exit"
+    },
+    {
+      "key": "",
+      "value": "YOU DIED"
+    },
+    {
+      "key": "",
+      "value": "Go back in time"
+    },
+    {
+      "key": "",
+      "value": "Do you want to return to the main menu?"
+    },
+    {
+      "key": "",
+      "value": "Yes"
+    },
+    {
+      "key": "",
+      "value": "No"
+    },
+    {
+      "key": "",
+      "value": "Back"
+    },
+    {
+      "key": "",
+      "value": "Pause"
+    },
+    {
+      "key": "",
+      "value": "Options"
+    },
+    {
+      "key": "",
+      "value": "Video"
+    },
+    {
+      "key": "",
+      "value": "Graphics"
+    },
+    {
+      "key": "",
+      "value": "Gameplay"
+    },
+    {
+      "key": "",
+      "value": "Audio"
+    },
+    {
+      "key": "",
+      "value": "Master Volume"
+    },
+    {
+      "key": "",
+      "value": "Music"
+    },
+    {
+      "key": "",
+      "value": "Sound Effects"
+    },
+    {
+      "key": "",
+      "value": "Controls"
+    },
+    {
+      "key": "",
+      "value": "Language"
+    },
+    {
+      "key": "",
+      "value": "Play"
+    },
+    {
+      "key": "",
+      "value": "Credits"
+    },
+    {
+      "key": "",
+      "value": "Exit"
+    },
+    {
+      "key": "",
+      "value": "Shoot"
+    },
+    {
+      "key": "",
+      "value": "Reload"
+    },
+    {
+      "key": "",
+      "value": "Pick up Items"
+    },
+    {
+      "key": "",
+      "value": "Dodge"
+    },
+    {
+      "key": "",
+      "value": "Interact"
+    }
+  ],
+  "dialogues": []
+}

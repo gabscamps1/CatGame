@@ -1040,6 +1040,7 @@ GameObject:
   - component: {fileID: 120125881}
   - component: {fileID: 120125880}
   - component: {fileID: 120125879}
+  - component: {fileID: 120125882}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1180,6 +1181,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120125877}
   m_CullTransparentMesh: 1
+--- !u!114 &120125882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120125877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd74065490490dc4e80c5bb5fea4fee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizedText
+  id: INPUT_RELEASE
+  text: {fileID: 120125880}
 --- !u!1 &165709236
 GameObject:
   m_ObjectHideFlags: 0
@@ -3039,6 +3054,7 @@ GameObject:
   - component: {fileID: 472868507}
   - component: {fileID: 472868506}
   - component: {fileID: 472868505}
+  - component: {fileID: 472868508}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3179,6 +3195,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472868503}
   m_CullTransparentMesh: 1
+--- !u!114 &472868508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472868503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd74065490490dc4e80c5bb5fea4fee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizedText
+  id: INPUT_MOVE
+  text: {fileID: 472868506}
 --- !u!1 &478406430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,7 +4241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.9889069, y: 0}
+  m_AnchoredPosition: {x: 2.9888916, y: 0}
   m_SizeDelta: {x: 51.7779, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &609191482
@@ -9253,6 +9283,7 @@ GameObject:
   - component: {fileID: 1490751834}
   - component: {fileID: 1490751837}
   - component: {fileID: 1490751836}
+  - component: {fileID: 1490751838}
   m_Layer: 0
   m_Name: ServerMGS_TMP
   m_TagString: Untagged
@@ -9420,6 +9451,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1490751838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490751832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd74065490490dc4e80c5bb5fea4fee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizedText
+  id: SERVER_MSG
+  text: {fileID: 1490751834}
 --- !u!1 &1526957732
 GameObject:
   m_ObjectHideFlags: 0
@@ -10801,6 +10846,7 @@ GameObject:
   - component: {fileID: 1731349788}
   - component: {fileID: 1731349790}
   - component: {fileID: 1731349789}
+  - component: {fileID: 1731349791}
   m_Layer: 5
   m_Name: NextFruit_TMP
   m_TagString: Untagged
@@ -10927,6 +10973,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731349787}
   m_CullTransparentMesh: 1
+--- !u!114 &1731349791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731349787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd74065490490dc4e80c5bb5fea4fee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizedText
+  id: NEXT_ITEM
+  text: {fileID: 1731349789}
 --- !u!1 &1732730266
 GameObject:
   m_ObjectHideFlags: 0
