@@ -16,16 +16,16 @@ MonoBehaviour:
   - id: 1
     displayName: Pedro
     portrait: {fileID: 21300000, guid: 05f8971375cdca042811e46cb112eb14, type: 3}
-    prefab: {fileID: 6160046282897369062, guid: cc2ca1ff8c28f1a48b369fd2de6d40a5, type: 3}
+    prefab: {fileID: 5092842203103847002, guid: 1792c775d7e26dc48a734d559bc2124d, type: 3}
   - id: 2
     displayName: Carlos
     portrait: {fileID: 21300000, guid: bd7187cce0d526e49b5a0527f94cbdc8, type: 3}
-    prefab: {fileID: 6160046282897369062, guid: 72f619ed0d7e1d742980d99233ca6e6b, type: 3}
+    prefab: {fileID: 5092842203103847002, guid: b798531e2b9f56748bfc0019ebd0f58b, type: 3}
   - id: 3
     displayName: Luca
     portrait: {fileID: 21300000, guid: b3f0f9493433f2640b24d17ed17632f3, type: 3}
-    prefab: {fileID: 6160046282897369062, guid: eed878c659deae74ba7ebd348a0ed3ed, type: 3}
+    prefab: {fileID: 5092842203103847002, guid: 8f627b7d4664e404aab525023df5db23, type: 3}
   - id: 4
     displayName: Matheus
     portrait: {fileID: 21300000, guid: 28d9c0d84b44988479f88e26551b8f68, type: 3}
-    prefab: {fileID: 6160046282897369062, guid: cc2ca1ff8c28f1a48b369fd2de6d40a5, type: 3}
+    prefab: {fileID: 5092842203103847002, guid: 0ac5ce4689304ba46b952d8aa33bdddc, type: 3}

@@ -1,22 +1,39 @@
 using CatGame.Core;
+using CatGame.Core.Events;
+using CatGame.Features.CharacterSelection;
+using Unity.Netcode;
 using UnityEngine;
 
-public class FruitCombiner : MonoBehaviour
+public class FruitCombiner : NetworkBehaviour
 {
-    private FruitInfo info;
+    private FruitInfo fruitInfo;
 
     private void Awake()
     {
-        info = GetComponent<FruitInfo>();
+        fruitInfo = GetComponent<FruitInfo>();
+
+        if (!IsSpawned)
+        {
+            CatGame.Core.Logger.Log("Não foi iniciado ainda");
+            gameObject.SetActive(false);
+        }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        gameObject.SetActive(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.TryGetComponent(out FruitInfo info))
+        if (!IsServer)
             return;
 
+        if (!collision.gameObject.TryGetComponent(out FruitInfo otherFruitInfo))
+            return;
+        Debug.Log("Testeeeee");
         // Somente permite a combinação de duas frutas iguais.
-        if (info.FruitIndex != this.info.FruitIndex)
+        if (otherFruitInfo.FruitIndex != fruitInfo.FruitIndex)
             return;
 
         int thisID = gameObject.GetInstanceID();
@@ -25,28 +42,27 @@ public class FruitCombiner : MonoBehaviour
         // Garante que somente uma das frutas que sofreu a colisão prossiga com esse método.
         if (thisID < otherID)
             return;
+        Debug.Log("Testeeeee2");
 
-        GameManager.Instance.IncreaseScore(this.info.PointsWhenAnnihilated);
+        GameManager.Instance.IncreaseScore(fruitInfo.PointsWhenAnnihilated);
         
         Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
 
-        GameManager.Instance.ShowScore(middlePosition, this.info.PointsWhenAnnihilated);
+        GameManager.Instance.ShowScore(middlePosition, fruitInfo.PointsWhenAnnihilated);
 
         /////////Instantiate(TextAlignment, middlePosition);
         Debug.Log(middlePosition);
-        Debug.Log(this.info.PointsWhenAnnihilated);// <---- SPAWNAR O TEXTO COM OS PONTOS NA COORDENADA (GABRIEL)
+        Debug.Log(this.fruitInfo.PointsWhenAnnihilated); // <---- SPAWNAR O TEXTO COM OS PONTOS NA COORDENADA (GABRIEL)
 
-        if (FruitSelector.Instance.IsLastTypeOfFruit(this.info.FruitIndex))
+        if (FruitSelector.Instance.IsLastTypeOfFruit(fruitInfo.FruitIndex))
         {
-            
-
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
         else
         {
             //Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
-            GameObject go = Instantiate(SpawnCombinedFruit(this.info.FruitIndex), GameManager.Instance.transform);
+            GameObject go = Instantiate(SpawnCombinedFruit(this.fruitInfo.FruitIndex), GameManager.Instance.transform);
             go.transform.position = middlePosition;
 
             ColliderInformer informer = go.GetComponent<ColliderInformer>();
@@ -55,11 +71,29 @@ public class FruitCombiner : MonoBehaviour
                 informer.WasCombinedIn = true;
             }
 
-            
-
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
+
+        UpdateScoreInClientRpc(this.fruitInfo.PointsWhenAnnihilated);
+    }
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+    private void UpdateScoreInClientRpc(int score)
+    {
+        for (int i = 0; i < MatchSetup.Players.Count; i++)
+        {
+            if (MatchSetup.Players[i].OwnerId != NetworkManager.LocalClientId)
+                continue;
+            
+            int playerIndex = i;
+
+            EventBus.Publish(new ScoreChangedEvent() 
+            { 
+                PlayerIndex = playerIndex, 
+                ScoreAmount = score 
+            });
+        }      
     }
 
     private GameObject SpawnCombinedFruit(int index)

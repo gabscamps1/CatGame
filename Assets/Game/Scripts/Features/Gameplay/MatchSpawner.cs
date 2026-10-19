@@ -21,7 +21,7 @@ namespace CatGame.Features.Gameplay
         private void OnSceneLoaded(string scene, LoadSceneMode mode, List<ulong> completed, List<ulong> timedOut)
         {
             NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
-
+            
             for (int i = 0; i < MatchSetup.Players.Count; i++)
             {
                 LobbySlot slot = MatchSetup.Players[i];
@@ -32,8 +32,20 @@ namespace CatGame.Features.Gameplay
                 
                 obj.SpawnAsPlayerObject(slot.OwnerId);   // o dono é quem escolheu o personagem.
 
-                BindPlayerInBoundary(obj, i);
+                //SendBindRpc(new NetworkObjectReference(obj), i);
             }
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        private void SendBindRpc(NetworkObjectReference objReference, int playerId, RpcParams rpc = default)
+        {
+            if (rpc.Receive.SenderClientId != NetworkManager.ServerClientId) return; // Somente o server pode chamar esse método.
+            if (!objReference.TryGet(out NetworkObject obj)) return;
+            if (obj.OwnerClientId != NetworkManager.LocalClientId) return;
+
+            Debug.Log("I am client: " + OwnerClientId + " & " + obj.gameObject.name);
+
+            BindPlayerInBoundary(obj, playerId);
         }
 
         private void BindPlayerInBoundary(NetworkObject obj, int playerId)
@@ -47,7 +59,7 @@ namespace CatGame.Features.Gameplay
                 return;
 
             Core.Logger.Log("Deu Init 3");
-            player.Init(glassBoudaries[playerId]);
+            //player.Init(glassBoudaries[playerId]);
         }
     }
 }

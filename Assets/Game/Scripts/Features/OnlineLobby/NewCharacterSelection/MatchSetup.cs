@@ -1,3 +1,4 @@
+using CatGame.Core.Data;
 using System.Collections.Generic;
 
 namespace CatGame.Features.CharacterSelection
@@ -10,6 +11,22 @@ namespace CatGame.Features.CharacterSelection
         {
             Players.Clear();
             Players.AddRange(slots);
+        }
+
+        public static PlayerId? FindPlayerId(ulong clientId)
+        {
+            for (int i = 0; i < MatchSetup.Players.Count; i++)
+            {
+                LobbySlot slot = MatchSetup.Players[i];
+
+                if (slot.OwnerId != clientId)
+                    continue;
+
+                // Encontrou o playerId referente ao client.
+                return new PlayerId(i);
+            }
+
+            return null;
         }
     }
 }

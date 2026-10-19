@@ -1,13 +1,17 @@
+using CatGame.Core.Data;
 using System;
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FruitSelector : MonoBehaviour
 {
+    public static FruitSelector Instance;
+
     [Serializable]
     public class FruitGroups
     {
-        public GameObject Fruit => fruits;
+        public GameObject PhysicalFruit => fruits;
         public GameObject NoPhysicsFruit => noPhysicsFruits;
         public Sprite FruitSprite => fruitSprites;
 
@@ -16,14 +20,16 @@ public class FruitSelector : MonoBehaviour
         [SerializeField] private GameObject noPhysicsFruits;
     }
 
-    public static FruitSelector Instance;
+    private readonly Dictionary<PlayerId, FruitGroups> nextClientFruitGroup = new();
 
     [SerializeField] private FruitGroups[] fruitGroups;
-    [SerializeField] private Image nextFruitImage;
     
     private int highestStartingFruitIndex = 3;
 
-    public GameObject NextFruit { get; private set; }
+    public FruitGroups NextFruit { get; private set; }
+
+    
+    
 
     private void Awake()
     {
@@ -63,16 +69,15 @@ public class FruitSelector : MonoBehaviour
 
         if (randomIndex < fruitGroups.Length)
         {
-            GameObject nextFruit = GetNoPhysicalFruit(randomIndex);
-            NextFruit = nextFruit;
-
-            nextFruitImage.sprite = GetFruitSprite(randomIndex);
+            NextFruit = fruitGroups[randomIndex];
         }
     }
+    
+    
 
     public GameObject GetPhysicalFruit(int index)
     {
-        return fruitGroups[index].Fruit;
+        return fruitGroups[index].PhysicalFruit;
     }
 
     public GameObject GetNoPhysicalFruit(int index)
@@ -88,5 +93,31 @@ public class FruitSelector : MonoBehaviour
     public bool IsLastTypeOfFruit(int index)
     {
         return index == fruitGroups.Length - 1;
+    }
+
+
+    // ONLINE
+
+    /// <summary>
+    /// Seleciona a próxima fruta do jogador.
+    /// </summary>
+    /// <param name="playerId"></param>
+    public void PickPlayerNextFruit(PlayerId playerId)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, highestStartingFruitIndex + 1);
+
+        if (randomIndex >= fruitGroups.Length)
+            return;
+
+        // Seleciona a próxima fruta pro client.
+        if (nextClientFruitGroup.ContainsKey(playerId))
+            nextClientFruitGroup[playerId] = fruitGroups[randomIndex];
+        else
+            nextClientFruitGroup.Add(playerId, fruitGroups[randomIndex]);
+    }
+
+    public FruitGroups GetPlayerNextFruit(PlayerId playerId)
+    {
+        return nextClientFruitGroup.TryGetValue(playerId, out FruitGroups fruitGroup) ? fruitGroup : null;
     }
 }

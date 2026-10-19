@@ -143,6 +143,7 @@ namespace CatGame.Features.CharacterSelection
             if (clientPhase != LobbyPhase.Selecting) return;
             if (!CanControl(slotIndex)) return;
             if (direction != -1 && direction != 1) return;
+            CycleCharacterRpc((sbyte)direction);
         }
 
         public void SetReady(int slotIndex, bool ready)
@@ -211,7 +212,14 @@ namespace CatGame.Features.CharacterSelection
 
             MatchSetup.Capture(Snapshot());
             phase.Value = LobbyPhase.Starting;
+            ChangeStateRpc();
             NetworkManager.SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
+        }
+
+        [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+        private void ChangeStateRpc()
+        {
+            Debug.Log("Alterando o estado");
             ServiceLocator.Get<IGameStateService>().SetState(GameState.Playing);
         }
 

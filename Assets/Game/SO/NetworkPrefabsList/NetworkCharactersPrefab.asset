@@ -10,22 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e651dbb3fbac04af2b8f5abf007ddc23, type: 3}
-  m_Name: CharacterPrefabs
+  m_Name: NetworkCharactersPrefab
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkPrefabsList
   IsDefault: 0
   List:
   - Override: 0
-    Prefab: {fileID: 2860553958957441196, guid: 72f619ed0d7e1d742980d99233ca6e6b, type: 3}
+    Prefab: {fileID: 3774916848868500752, guid: 1792c775d7e26dc48a734d559bc2124d, type: 3}
     SourcePrefabToOverride: {fileID: 0}
     SourceHashToOverride: 0
     OverridingTargetPrefab: {fileID: 0}
   - Override: 0
-    Prefab: {fileID: 2860553958957441196, guid: eed878c659deae74ba7ebd348a0ed3ed, type: 3}
+    Prefab: {fileID: 3774916848868500752, guid: b798531e2b9f56748bfc0019ebd0f58b, type: 3}
     SourcePrefabToOverride: {fileID: 0}
     SourceHashToOverride: 0
     OverridingTargetPrefab: {fileID: 0}
   - Override: 0
-    Prefab: {fileID: 2860553958957441196, guid: cc2ca1ff8c28f1a48b369fd2de6d40a5, type: 3}
+    Prefab: {fileID: 3774916848868500752, guid: 8f627b7d4664e404aab525023df5db23, type: 3}
+    SourcePrefabToOverride: {fileID: 0}
+    SourceHashToOverride: 0
+    OverridingTargetPrefab: {fileID: 0}
+  - Override: 0
+    Prefab: {fileID: 3774916848868500752, guid: 0ac5ce4689304ba46b952d8aa33bdddc, type: 3}
     SourcePrefabToOverride: {fileID: 0}
     SourceHashToOverride: 0
     OverridingTargetPrefab: {fileID: 0}

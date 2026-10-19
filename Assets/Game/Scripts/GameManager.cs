@@ -15,6 +15,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private float _fadeTime = 2f;
 
+    [Header("ToPlayer")]
+    public BoxCollider2D[] Boundaries => boundaries;
+    [SerializeField] private BoxCollider2D[] boundaries; // Na ordem. Boundary Player 1, Player2, ...
+
     public GameObject ScoreWhenCombined;
 
     private int currentScore;
@@ -92,6 +96,9 @@ public class GameManager : NetworkBehaviour
 
     private IEnumerator ResetGame()
     {
+        if (_gameOverPanel)
+            yield break;
+
         _gameOverPanel.gameObject.SetActive(true);
 
         Color startColor = _gameOverPanel.color;

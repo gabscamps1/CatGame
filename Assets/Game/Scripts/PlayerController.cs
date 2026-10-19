@@ -1,14 +1,17 @@
 using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
+using CatGame.Features.CharacterSelection;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform fruitThrowTransform;
     [SerializeField] private ThrowFruitController throwFruitController;
-    private BoxCollider2D boundaries;
+    [SerializeField] private BoxCollider2D teste;
+    private BoxCollider2D boundary;
 
     private Bounds bounds;
 
@@ -28,10 +31,32 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        //Init(teste);
+
         inputService = ServiceLocator.Get<IInputService>();
         playerInputController = inputService.GetInputFromPlayer(playerId);
 
         playerInputController.OnThrow += PlayerInputController_OnThrow;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            return;
+
+        for (int i = 0; i < MatchSetup.Players.Count; i++)
+        {
+            if (MatchSetup.Players[i].OwnerId != NetworkManager.LocalClientId)
+                continue;
+
+            int playerIndex = i;
+
+            if (GameManager.Instance.Boundaries.Length == 0 || playerIndex >= GameManager.Instance.Boundaries.Length)
+                return;
+
+            BoxCollider2D boundary = GameManager.Instance.Boundaries[playerIndex];
+            Init(boundary);
+        }
     }
 
     private void OnDisable()
@@ -71,11 +96,14 @@ public class PlayerController : MonoBehaviour
         rightBound -= throwFruitController.Bounds.extents.x + extraWidth;
     }
 
-    public void Init(BoxCollider2D newBoundary)
+    private void Init(BoxCollider2D newBoundary)
     {
-        boundaries = newBoundary;
+        if (newBoundary == null)
+            return;
 
-        bounds = boundaries.bounds;
+        boundary = newBoundary;
+
+        bounds = boundary.bounds;
 
         offset = transform.position.x - fruitThrowTransform.position.x;
 
@@ -85,4 +113,9 @@ public class PlayerController : MonoBehaviour
         startingLeftBound = leftBound;
         startingRightBound = rightBound;
     }
+
+    /*protected override bool OnIsServerAuthoritative()
+    {
+        return false;
+    }*/
 }
