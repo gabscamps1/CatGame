@@ -619,9 +619,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2300286170603322247}
   - component: {fileID: 1864905484675193876}
-  - component: {fileID: 7907947089808159002}
-  - component: {fileID: 4767506090776090743}
-  - component: {fileID: 6842652136487235128}
   - component: {fileID: 475954528084965583}
   - component: {fileID: 8706664257661909190}
   m_Layer: 0
@@ -708,84 +705,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &7907947089808159002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6976783565064505167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteSkin
-  m_RootBone: {fileID: 6002790617426523933}
-  m_BoneTransforms:
-  - {fileID: 6002790617426523933}
-  - {fileID: 4516381203518167441}
-  - {fileID: 1666477502624348177}
-  - {fileID: 5061691090954813670}
-  - {fileID: 875023298737179743}
-  - {fileID: 4818905655321958945}
-  - {fileID: 8842120883820420221}
-  - {fileID: 8018721575229312873}
-  - {fileID: 5036826736614624873}
-  - {fileID: 6815649455004903724}
-  - {fileID: 4862941660870561126}
-  - {fileID: 2408599123481459076}
-  - {fileID: 283090128507426008}
-  - {fileID: 7710514712479196651}
-  - {fileID: 7103364260974696492}
-  m_Bounds:
-    m_Center: {x: 0.00017488003, y: -0.0013449192, z: 0}
-    m_Extent: {x: 1.8769257, y: 2.1786554, z: 0}
-  m_AlwaysUpdate: 1
-  m_AutoRebind: 0
---- !u!114 &4767506090776090743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6976783565064505167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097b551f2844b054290f18a39bf892e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.2D.IK.Runtime::UnityEngine.U2D.IK.IKManager2D
-  m_Solvers:
-  - {fileID: 6117557848340758011}
-  - {fileID: 7222953023920664357}
-  m_Weight: 1
-  m_AlwaysUpdate: 1
-  m_SolverEditorData:
-  - color: {r: 0, g: 1, b: 0, a: 1}
-    showGizmo: 1
-  - color: {r: 0, g: 1, b: 0, a: 1}
-    showGizmo: 1
---- !u!95 &6842652136487235128
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6976783565064505167}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 26797c1bbcf41cb4781eae219bd71cde, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!120 &475954528084965583
 LineRenderer:
   serializedVersion: 3
@@ -1108,6 +1027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b76383ed6d7c71459cb3a572921dd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
   fruitThrowTransform: {fileID: 3713799488612486688}
   throwFruitController: {fileID: 1841354754644045592}

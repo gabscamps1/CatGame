@@ -8,7 +8,7 @@ public class LanguageDownloaderEditor : EditorWindow
     private readonly string url = "https://script.google.com/macros/s/AKfycbxc8B2rmEbq5JkyLz-9U7Ptq1b0BhyJJg8O9DuzSLcLK_ssbHT5HHqOqoN6Z0nTvK0/exec?sheet=";
     private readonly string pt = "Portuguese";
     private readonly string en = "English";
-    private readonly string es = "Spanish";
+    private readonly string jp = "Japanese";
 
     [MenuItem("Tools/Language Downloader")]
     public static void ShowWindow()
@@ -28,6 +28,11 @@ public class LanguageDownloaderEditor : EditorWindow
         if (GUILayout.Button("Download JSON to English"))
         {
             DownloadJson(en, "en.json");
+        }
+
+        if (GUILayout.Button("Download JSON to Japanese"))
+        {
+            DownloadJson(jp, "jp.json");
         }
     }
 

@@ -1,0 +1,313 @@
+{
+  "text": [
+    {
+      "key": "Teste",
+      "value": "テスト3"
+    },
+    {
+      "key": "MENU_PLAY",
+      "value": "プレイ"
+    },
+    {
+      "key": "MENU_OPTIONS",
+      "value": "オプション"
+    },
+    {
+      "key": "MENU_QUIT",
+      "value": "終了"
+    },
+    {
+      "key": "MENU_CREATE_ROOM",
+      "value": "ロビーを作成"
+    },
+    {
+      "key": "MENU_SEARCH_ROOM",
+      "value": "ロビーを検索"
+    },
+    {
+      "key": "MENU_BACK",
+      "value": "戻る"
+    },
+    {
+      "key": "OPTIONS_BUTTON_VIDEO",
+      "value": "映像"
+    },
+    {
+      "key": "OPTIONS_BUTTON_SOUND",
+      "value": "サウンド"
+    },
+    {
+      "key": "OPTIONS_BUTTON_CREDITS",
+      "value": "クレジット"
+    },
+    {
+      "key": "HEADER_OPTIONS",
+      "value": "オプション"
+    },
+    {
+      "key": "OPTIONS_VIDEO_RESOLUTION",
+      "value": "解像度"
+    },
+    {
+      "key": "OPTIONS_VIDEO_WINDOW_MODE",
+      "value": "画面モード"
+    },
+    {
+      "key": "WINDOW_TYPE",
+      "value": "ウィンドウの種類"
+    },
+    {
+      "key": "WINDOW_TYPE_FULLSCREEN",
+      "value": "ボーダーレスウィンドウ"
+    },
+    {
+      "key": "WINDOW_TYPE_EX_FULLSCREEN",
+      "value": "排他的フルスクリーン"
+    },
+    {
+      "key": "WINDOW_TYPE_WINDOW",
+      "value": "ウィンドウ"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC",
+      "value": "垂直同期"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_ON",
+      "value": "オン"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_OFF",
+      "value": "オフ"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS",
+      "value": "視覚効果"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_ON",
+      "value": "オン"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_OFF",
+      "value": "オフ"
+    },
+    {
+      "key": "OPTIONS_SOUND_GENERAL",
+      "value": "一般"
+    },
+    {
+      "key": "OPTIONS_SOUND_MUSIC",
+      "value": "音楽"
+    },
+    {
+      "key": "OPTIONS_SOUND_SFX",
+      "value": "効果音"
+    },
+    {
+      "key": "OPTIONS_SOUND_VOICE",
+      "value": "ボイス"
+    },
+    {
+      "key": "CREDITS_ALEXANDRE",
+      "value": "サウンドトラック"
+    },
+    {
+      "key": "CREDITS_ANDREY",
+      "value": "プログラミング"
+    },
+    {
+      "key": "CREDITS_ELLEN",
+      "value": "アニメーション"
+    },
+    {
+      "key": "CREDITS_GABRIEL",
+      "value": "UI/UX | オープニング | アート"
+    },
+    {
+      "key": "CREDITS_LUCAS",
+      "value": "効果音 | ボイス"
+    },
+    {
+      "key": "CREDITS_RODRIGO",
+      "value": "ゲームデザイン | 視覚効果"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_INSERT",
+      "value": "ロビーのパスワードを入力してください。"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_WAITING",
+      "value": "プレイヤーを待っています（currentPlayers/maxPlayers）。ロビーのパスワード：roomCode"
+    },
+    {
+      "key": "MULTIPLAYER_HEADER",
+      "value": "マルチプレイ"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT",
+      "value": "次へ"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_HOST",
+      "value": "ホストを待っています…"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
+      "value": "プレイヤーを待っています…"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_READY",
+      "value": "準備完了"
+    },
+    {
+      "key": "INPUT_BACK",
+      "value": "戻る"
+    },
+    {
+      "key": "INPUT_MOVE",
+      "value": "移動"
+    },
+    {
+      "key": "INPUT_RELEASE",
+      "value": "離す"
+    },
+    {
+      "key": "POPUP_HEADER",
+      "value": "ヘッダー"
+    },
+    {
+      "key": "POPUP_HEADER_ALERT",
+      "value": "警告"
+    },
+    {
+      "key": "POPUP_HEADER_ERROR",
+      "value": "エラー"
+    },
+    {
+      "key": "POPUP_HEADER_WAIT",
+      "value": "お待ちください"
+    },
+    {
+      "key": "POPUP_HEADER_EXIT",
+      "value": "終了"
+    },
+    {
+      "key": "POPUP_TEXT",
+      "value": "NEKOPAN Mixを終了しますか？"
+    },
+    {
+      "key": "POPUP_TEXT_EXIT",
+      "value": "ネットワークエラー"
+    },
+    {
+      "key": "POPUP_TEXT_ERROR",
+      "value": "マッチを終了しますか？"
+    },
+    {
+      "key": "POPUP_TEXT_LEAVE_MATCH",
+      "value": "メインメニューに戻りますか？"
+    },
+    {
+      "key": "POPUP_TEXT_MAIN_MENU",
+      "value": "接続中…"
+    },
+    {
+      "key": "POPUP_TEXT_WAITING",
+      "value": "ホストによってBANされました。"
+    },
+    {
+      "key": "NEXT_ITEM",
+      "value": "次へ"
+    },
+    {
+      "key": "SERVER_MSG",
+      "value": "サーバーメッセージ"
+    },
+    {
+      "key": "SERVER_MSG_DOMINATING",
+      "value": "playerNameが大活躍中！"
+    },
+    {
+      "key": "SERVER_MSG_ELIMINATED",
+      "value": "playerNamが脱落しました！"
+    },
+    {
+      "key": "SERVER_MSG_TIMES_UP",
+      "value": "時間切れが迫っています！"
+    },
+    {
+      "key": "SERVER_MSG_TOO_LONG",
+      "value": "時間がかかりすぎています！"
+    },
+    {
+      "key": "SERVER_MSG_REMAINS",
+      "value": "残りプレイヤー数：X人！"
+    },
+    {
+      "key": "SERVER_MSG_EVENT_INCOMING",
+      "value": "イベント発生！"
+    },
+    {
+      "key": "CAT_NAME",
+      "value": "ネコの名前"
+    },
+    {
+      "key": "CAT_NAME_BARISTA",
+      "value": "ジョジョ"
+    },
+    {
+      "key": "CAT_NAME_BAKER",
+      "value": "ラミ"
+    },
+    {
+      "key": "CAT_NAME_FARMER",
+      "value": "レミー"
+    },
+    {
+      "key": "CAT_NAME_PASTRY",
+      "value": "キャップ"
+    },
+    {
+      "key": "PLAYER_VICTORY",
+      "value": "playerIDの勝利！"
+    },
+    {
+      "key": "PLAYER_DEFEAT",
+      "value": "あなたの負け…"
+    },
+    {
+      "key": "EVENT_NAME",
+      "value": "イベント名"
+    },
+    {
+      "key": "EVENT_NAME_LIGHTS_OUT",
+      "value": "停電"
+    },
+    {
+      "key": "EVENT_NAME_LOW_GRAVITY",
+      "value": "低重力"
+    },
+    {
+      "key": "EVENT_NAME_FOG",
+      "value": "霧"
+    },
+    {
+      "key": "EVENT_NAME_SALES",
+      "value": "飛ぶように売れる！"
+    },
+    {
+      "key": "EVENT_NAME_CONFUSION",
+      "value": "キッチンの悪夢"
+    },
+    {
+      "key": "MATCH_START",
+      "value": "準備はいい？"
+    },
+    {
+      "key": "MATCH_START_COOK",
+      "value": "調理開始！"
+    }
+  ],
+  "dialogues": []
+}

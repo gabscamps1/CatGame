@@ -2,111 +2,311 @@
   "text": [
     {
       "key": "Teste",
-      "value": "Continue"
+      "value": "Test3"
     },
     {
-      "key": "",
-      "value": "Exit"
+      "key": "MENU_PLAY",
+      "value": "PLAY"
     },
     {
-      "key": "",
-      "value": "YOU DIED"
+      "key": "MENU_OPTIONS",
+      "value": "OPTIONS"
     },
     {
-      "key": "",
-      "value": "Go back in time"
+      "key": "MENU_QUIT",
+      "value": "QUIT"
     },
     {
-      "key": "",
-      "value": "Do you want to return to the main menu?"
+      "key": "MENU_CREATE_ROOM",
+      "value": "CREATE LOBBY"
     },
     {
-      "key": "",
-      "value": "Yes"
+      "key": "MENU_SEARCH_ROOM",
+      "value": "SEARCH LOBBY"
     },
     {
-      "key": "",
-      "value": "No"
+      "key": "MENU_BACK",
+      "value": "BACK"
     },
     {
-      "key": "",
-      "value": "Back"
-    },
-    {
-      "key": "",
-      "value": "Pause"
-    },
-    {
-      "key": "",
-      "value": "Options"
-    },
-    {
-      "key": "",
+      "key": "OPTIONS_BUTTON_VIDEO",
       "value": "Video"
     },
     {
-      "key": "",
-      "value": "Graphics"
+      "key": "OPTIONS_BUTTON_SOUND",
+      "value": "Sound"
     },
     {
-      "key": "",
-      "value": "Gameplay"
-    },
-    {
-      "key": "",
-      "value": "Audio"
-    },
-    {
-      "key": "",
-      "value": "Master Volume"
-    },
-    {
-      "key": "",
-      "value": "Music"
-    },
-    {
-      "key": "",
-      "value": "Sound Effects"
-    },
-    {
-      "key": "",
-      "value": "Controls"
-    },
-    {
-      "key": "",
-      "value": "Language"
-    },
-    {
-      "key": "",
-      "value": "Play"
-    },
-    {
-      "key": "",
+      "key": "OPTIONS_BUTTON_CREDITS",
       "value": "Credits"
     },
     {
-      "key": "",
-      "value": "Exit"
+      "key": "HEADER_OPTIONS",
+      "value": "OPTIONS"
     },
     {
-      "key": "",
-      "value": "Shoot"
+      "key": "OPTIONS_VIDEO_RESOLUTION",
+      "value": "Resolution"
     },
     {
-      "key": "",
-      "value": "Reload"
+      "key": "OPTIONS_VIDEO_WINDOW_MODE",
+      "value": "Window Mode"
     },
     {
-      "key": "",
-      "value": "Pick up Items"
+      "key": "WINDOW_TYPE",
+      "value": "WINDOW TYPE"
     },
     {
-      "key": "",
-      "value": "Dodge"
+      "key": "WINDOW_TYPE_FULLSCREEN",
+      "value": "Windowed Fullscreen"
     },
     {
-      "key": "",
-      "value": "Interact"
+      "key": "WINDOW_TYPE_EX_FULLSCREEN",
+      "value": "Exclusive Fullscreen"
+    },
+    {
+      "key": "WINDOW_TYPE_WINDOW",
+      "value": "Window"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC",
+      "value": "V-Sync"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_ON",
+      "value": "On"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_OFF",
+      "value": "Off"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS",
+      "value": "Visual Effects"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_ON",
+      "value": "On"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_OFF",
+      "value": "Off"
+    },
+    {
+      "key": "OPTIONS_SOUND_GENERAL",
+      "value": "General"
+    },
+    {
+      "key": "OPTIONS_SOUND_MUSIC",
+      "value": "Music"
+    },
+    {
+      "key": "OPTIONS_SOUND_SFX",
+      "value": "Sound Effects"
+    },
+    {
+      "key": "OPTIONS_SOUND_VOICE",
+      "value": "Voice Clips"
+    },
+    {
+      "key": "CREDITS_ALEXANDRE",
+      "value": "Soundtrack"
+    },
+    {
+      "key": "CREDITS_ANDREY",
+      "value": "Programming"
+    },
+    {
+      "key": "CREDITS_ELLEN",
+      "value": "Animation"
+    },
+    {
+      "key": "CREDITS_GABRIEL",
+      "value": "UI/UX | Opening | Art"
+    },
+    {
+      "key": "CREDITS_LUCAS",
+      "value": "SFX | Voice Clips"
+    },
+    {
+      "key": "CREDITS_RODRIGO",
+      "value": "Game Design | VFX"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_INSERT",
+      "value": "Enter lobby password."
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_WAITING",
+      "value": "Awaiting players (currentPlayers/maxPlayers). Lobby password: roomCode"
+    },
+    {
+      "key": "MULTIPLAYER_HEADER",
+      "value": "MULTIPLAYER"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT",
+      "value": "NEXT"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_HOST",
+      "value": "Awaiting Host..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
+      "value": "Awaiting Players..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_READY",
+      "value": "READY"
+    },
+    {
+      "key": "INPUT_BACK",
+      "value": "Back"
+    },
+    {
+      "key": "INPUT_MOVE",
+      "value": "Move"
+    },
+    {
+      "key": "INPUT_RELEASE",
+      "value": "Release"
+    },
+    {
+      "key": "POPUP_HEADER",
+      "value": "HEADER"
+    },
+    {
+      "key": "POPUP_HEADER_ALERT",
+      "value": "Warning"
+    },
+    {
+      "key": "POPUP_HEADER_ERROR",
+      "value": "Error"
+    },
+    {
+      "key": "POPUP_HEADER_WAIT",
+      "value": "Please wait"
+    },
+    {
+      "key": "POPUP_HEADER_EXIT",
+      "value": "Quit"
+    },
+    {
+      "key": "POPUP_TEXT",
+      "value": "Do you wish to quit NEKOPAN Mix!?"
+    },
+    {
+      "key": "POPUP_TEXT_EXIT",
+      "value": "Network Error"
+    },
+    {
+      "key": "POPUP_TEXT_ERROR",
+      "value": "Do you wish to quit de match?"
+    },
+    {
+      "key": "POPUP_TEXT_LEAVE_MATCH",
+      "value": "Do you wish to return to the main menu?"
+    },
+    {
+      "key": "POPUP_TEXT_MAIN_MENU",
+      "value": "Conecting..."
+    },
+    {
+      "key": "POPUP_TEXT_WAITING",
+      "value": "You were banned by the host."
+    },
+    {
+      "key": "NEXT_ITEM",
+      "value": "Next"
+    },
+    {
+      "key": "SERVER_MSG",
+      "value": "SERVER MESSAGE"
+    },
+    {
+      "key": "SERVER_MSG_DOMINATING",
+      "value": "playerName is dominating!"
+    },
+    {
+      "key": "SERVER_MSG_ELIMINATED",
+      "value": "playerNam was eliminated!"
+    },
+    {
+      "key": "SERVER_MSG_TIMES_UP",
+      "value": "Time is running up!"
+    },
+    {
+      "key": "SERVER_MSG_TOO_LONG",
+      "value": "You are taking too long!"
+    },
+    {
+      "key": "SERVER_MSG_REMAINS",
+      "value": "There are X players remaining!"
+    },
+    {
+      "key": "SERVER_MSG_EVENT_INCOMING",
+      "value": "Event incoming! "
+    },
+    {
+      "key": "CAT_NAME",
+      "value": " CAT NAME"
+    },
+    {
+      "key": "CAT_NAME_BARISTA",
+      "value": "Jojo"
+    },
+    {
+      "key": "CAT_NAME_BAKER",
+      "value": "Rami"
+    },
+    {
+      "key": "CAT_NAME_FARMER",
+      "value": "Remy"
+    },
+    {
+      "key": "CAT_NAME_PASTRY",
+      "value": "Cap"
+    },
+    {
+      "key": "PLAYER_VICTORY",
+      "value": "playerID WINS!"
+    },
+    {
+      "key": "PLAYER_DEFEAT",
+      "value": "You lose..."
+    },
+    {
+      "key": "EVENT_NAME",
+      "value": "EVENT NAME"
+    },
+    {
+      "key": "EVENT_NAME_LIGHTS_OUT",
+      "value": "Lights out"
+    },
+    {
+      "key": "EVENT_NAME_LOW_GRAVITY",
+      "value": "Low gravity"
+    },
+    {
+      "key": "EVENT_NAME_FOG",
+      "value": "Fog"
+    },
+    {
+      "key": "EVENT_NAME_SALES",
+      "value": "Selling like hotcakes"
+    },
+    {
+      "key": "EVENT_NAME_CONFUSION",
+      "value": "Nightmare in the kitchen"
+    },
+    {
+      "key": "MATCH_START",
+      "value": "Ready?"
+    },
+    {
+      "key": "MATCH_START_COOK",
+      "value": "COOK!"
     }
   ],
   "dialogues": []

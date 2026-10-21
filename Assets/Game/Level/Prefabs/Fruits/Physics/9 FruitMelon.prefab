@@ -22,12 +22,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6295810406795563352, guid: 7184d5908224815489ef2c7add6dca4f, type: 3}
       propertyPath: m_Name
-      value: FruitMelon_9
+      value: 9 FruitMelon
       objectReference: {fileID: 0}
     - target: {fileID: 6641539542437903562, guid: 7184d5908224815489ef2c7add6dca4f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a576dded398351744912795f4a358238, type: 3}
+      objectReference: {fileID: 21300000, guid: 81e66161699acd548ab06a4203d690ab, type: 3}
     - target: {fileID: 6641539542437903562, guid: 7184d5908224815489ef2c7add6dca4f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
