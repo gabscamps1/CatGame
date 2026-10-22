@@ -64,7 +64,7 @@ namespace CatGame.Features.Localization
             string langCode = currentLanguage switch
             {
                 "Portuguese" => "pt.json",
-                _ => "en.json" //<--- TROQUEI PRA JAPONES MAS QUEBRA A FONTE
+                _ => "jp.json" //<--- TROQUEI PRA JAPONES MAS QUEBRA A FONTE
 
             };
 
