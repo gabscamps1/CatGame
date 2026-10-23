@@ -62,7 +62,8 @@ namespace CatGame.SettingsManagement
             {
                 0 => "English",
                 1 => "Portuguese",
-                _ => "English",
+                2 => "Japanese",
+                _ => "English"
             };
 
             return language;
@@ -74,6 +75,7 @@ namespace CatGame.SettingsManagement
             {
                 "English" => 0,
                 "Portuguese"  => 1,
+                "Japanese" => 2,
                 _ => 0,
             };
 

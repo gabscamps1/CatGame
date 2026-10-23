@@ -274,7 +274,7 @@
     },
     {
       "key": "PLAYER_DEFEAT",
-      "value": "You lose..."
+      "value": "It's gone bad!"
     },
     {
       "key": "EVENT_NAME",
@@ -307,6 +307,50 @@
     {
       "key": "MATCH_START_COOK",
       "value": "COOK!"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "Preparing..."
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "Ready!"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "Language"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "Portuguese"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "English"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "Japanese"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "RESUME"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "OPTIONS"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "LEAVE MATCH"
     }
   ],
   "dialogues": []

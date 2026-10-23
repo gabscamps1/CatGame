@@ -274,7 +274,7 @@
     },
     {
       "key": "PLAYER_DEFEAT",
-      "value": "Você foi derrotado..."
+      "value": "AZEDOU..."
     },
     {
       "key": "EVENT_NAME",
@@ -307,6 +307,50 @@
     {
       "key": "MATCH_START_COOK",
       "value": "COZINHEM!"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "Preparando..."
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "Pronto!"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "Língua"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "Português"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "Inglês"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "Japonês"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "RETOMAR"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "OPÇÕES"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "SAIR DA PARTIDA"
     }
   ],
   "dialogues": []

@@ -1024,8 +1024,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Pr\xF3ximo"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cc0b446285eb6664aadb2ffe2a184b07, type: 2}
-  m_sharedMaterial: {fileID: -9145536197955162420, guid: cc0b446285eb6664aadb2ffe2a184b07, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e35847b88f821db4c8a4388019bb0b80, type: 2}
+  m_sharedMaterial: {fileID: -7103499035769038923, guid: e35847b88f821db4c8a4388019bb0b80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1049,8 +1049,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.23
-  m_fontSizeBase: 31.23
+  m_fontSize: 23.74
+  m_fontSizeBase: 23.74
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

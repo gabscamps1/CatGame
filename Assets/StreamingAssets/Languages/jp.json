@@ -274,7 +274,7 @@
     },
     {
       "key": "PLAYER_DEFEAT",
-      "value": "あなたの負け…"
+      "value": "酸っぱくなった！"
     },
     {
       "key": "EVENT_NAME",
@@ -307,6 +307,50 @@
     {
       "key": "MATCH_START_COOK",
       "value": "調理開始！"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "準備中…"
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "準備完了！"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "言語"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "ポルトガル語"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "英語"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "日本語"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "再開"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "オプション"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "マッチを退出"
     }
   ],
   "dialogues": []
