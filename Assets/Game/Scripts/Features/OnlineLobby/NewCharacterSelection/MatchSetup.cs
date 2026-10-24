@@ -15,9 +15,9 @@ namespace CatGame.Features.CharacterSelection
 
         public static PlayerId? FindPlayerId(ulong clientId)
         {
-            for (int i = 0; i < MatchSetup.Players.Count; i++)
+            for (int i = 0; i < Players.Count; i++)
             {
-                LobbySlot slot = MatchSetup.Players[i];
+                LobbySlot slot = Players[i];
 
                 if (slot.OwnerId != clientId)
                     continue;

@@ -1,13 +1,16 @@
+using CatGame.Core.Data;
+using CatGame.Core.Events;
+using CatGame.Features.CharacterSelection;
 using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public sealed class FruitWorld : NetworkBehaviour
+public class FruitWorld : NetworkBehaviour
 {
     /// <summary>
     /// Informações do merge entre as frutas.
     /// </summary>
-    public class ServerMergedArgs : EventArgs
+    /*public class ServerMergedArgs : EventArgs
     {
         public ulong PlayerId { get; private set; }
         public byte FruitTier { get; private set; }
@@ -19,7 +22,7 @@ public sealed class FruitWorld : NetworkBehaviour
             FruitTier = fruitTier;
             MergePosition = mergePosition;
         }
-    }
+    }*/
 
     public const ulong NoPlayer = ulong.MaxValue;
 
@@ -38,7 +41,7 @@ public sealed class FruitWorld : NetworkBehaviour
     private bool isMerging; // Evita que ocorra um merge com 3 ou mais frutas.
     private float spawnTime;
 
-    public static event EventHandler<ServerMergedArgs> OnFruitMergedServer;    
+    //public static event EventHandler<ServerMergedArgs> OnFruitMergedServer;    
 
     public void ServerInit(byte newTier, ulong droppedBy, uint drop)
     {
@@ -115,7 +118,14 @@ public sealed class FruitWorld : NetworkBehaviour
         NetworkObject.Despawn();
 
         FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, 0);
-        OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
+        //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
+
+        // Score ao dar merge.
+        PlayerId? playerId = MatchSetup.FindPlayerId(credited);
+        int score = catalog.Get(newTier).score;
+
+        if (playerId.HasValue)
+            ScoreManager.Instance.IncreaseScore(playerId.Value, score);
     }
 
     /// <summary>
@@ -137,4 +147,6 @@ public sealed class FruitWorld : NetworkBehaviour
         NetworkObject playerObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(droppedByClientId.Value);
         return playerObject != null ? playerObject.GetComponent<PlayerFruitHand>() : null;
     }
+
+    
 }

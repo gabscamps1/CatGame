@@ -16,7 +16,7 @@ public struct HandState : INetworkSerializable, IEquatable<HandState>
     public bool Equals(HandState other) => tier == other.tier && dropCount == other.dropCount;
 }
 
-public sealed class PlayerFruitHand : NetworkBehaviour
+public class PlayerFruitHand : NetworkBehaviour
 {
     [SerializeField] private FruitCatalog catalog;
     [SerializeField] private SpriteRenderer heldRenderer; // Visual da fruta. 

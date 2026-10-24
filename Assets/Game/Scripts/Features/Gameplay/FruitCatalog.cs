@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Fruit Catalog")]
-public sealed class FruitCatalog : ScriptableObject
+public class FruitCatalog : ScriptableObject
 {
     [Serializable]
     public struct TierData

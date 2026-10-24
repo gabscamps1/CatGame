@@ -88,11 +88,11 @@ public class FruitCombiner : NetworkBehaviour
             
             int playerIndex = i;
 
-            EventBus.Publish(new ScoreChangedEvent() 
+            /*EventBus.Publish(new ScoreChangedEvent() 
             { 
                 PlayerIndex = playerIndex, 
                 ScoreAmount = score 
-            });
+            });*/
         }      
     }
 

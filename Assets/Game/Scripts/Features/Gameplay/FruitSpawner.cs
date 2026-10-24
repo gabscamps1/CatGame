@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class FruitSpawner : MonoBehaviour
+public class FruitSpawner : MonoBehaviour
 {
     public static FruitSpawner Instance { get; private set; }
 

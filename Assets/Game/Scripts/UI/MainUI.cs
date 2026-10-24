@@ -22,6 +22,10 @@ namespace CatGame.UI
             EventBus.Subscribe<NextFruitChangedEvent>(EventBus_UpdateNextFruit);
             EventBus.Subscribe<ScoreChangedEvent>(EventBus_UpdateScore);
             EventBus.Subscribe<ClientPingChangedEvent>(EventBus_UpdatePing);
+
+            score.text = "0";
+            ping.text = "";
+            crowObject.SetActive(false);
         }
 
         private void OnDestroy()
@@ -50,8 +54,10 @@ namespace CatGame.UI
 
         private void EventBus_UpdateScore(ScoreChangedEvent e)
         {
+            Core.Logger.Log($"Recebeu a informação pelo eventbus");
             if (e.PlayerIndex != playerIndex)
                 return;
+            Core.Logger.Log($"Atualizou a informação do eventbus");
 
             score.text = e.ScoreAmount.ToString();
         }
