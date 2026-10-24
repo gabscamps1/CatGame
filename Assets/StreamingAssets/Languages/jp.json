@@ -355,6 +355,10 @@
     {
       "key": "INTRO_SKIP",
       "value": "[skipButton] を押してスキップ。"
+    },
+    {
+      "key": "SERVER_MSG_BIG",
+      "value": "MSG BIG"
     }
   ],
   "dialogues": []

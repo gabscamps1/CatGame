@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MatEventFog
+  m_Shader: {fileID: 4800000, guid: 023a2f39c2beeac45b6c2d0d1bae9dfe, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLURQ_MEDIUM
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Aspect: 1.7778
+    - _Blur: 0.745
+    - _BlurQ: 1
+    - _CloudCount: 10
+    - _CloudLife: 7.55
+    - _CloudSize: 0.41
+    - _CloudSizeVariation: 0.8
+    - _CloudSoftness: 0.74
+    - _CloudSpeed: 0.161
+    - _ColorMask: 15
+    - _CustomTime: 0
+    - _DropClear: 0.9
+    - _DropRim: 0.5
+    - _DropSpecular: 1
+    - _FogBlur: 0.6
+    - _FogOpacity: 1
+    - _FogShade: 0
+    - _Haze: 0.277
+    - _Intensity: 1
+    - _LightAngle: 135
+    - _MistAmount: 0.51
+    - _MistDensity: 24
+    - _MistSize: 0.7
+    - _NoiseScale: 4.84
+    - _RainAmount: 0.486
+    - _Refraction: 2.2
+    - _Seed: 0
+    - _SlideAmount: 0.765
+    - _SlideColumns: 12
+    - _SlideLength: 1.2
+    - _SlideSize: 0.012
+    - _SlideSpeed: 0.12
+    - _StaticAmount: 0.5
+    - _StaticDensity: 8.9
+    - _StaticLife: 0.97
+    - _StaticSize: 0.709
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TrailStrength: 0.7
+    - _UseBackground: 0
+    - _UseCustomTime: 0
+    - _UseUIAlphaClip: 0
+    - _WindAngle: -7
+    - _Wispiness: 0.98
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _FogColor: {r: 0.8399999, g: 0.87, b: 0.9, a: 1}
+    - _HazeColor: {r: 0.8, g: 0.85, b: 0.9, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -355,6 +355,10 @@
     {
       "key": "INTRO_SKIP",
       "value": "Pressione [skipButton] para pular."
+    },
+    {
+      "key": "SERVER_MSG_BIG",
+      "value": "MSG BIG"
     }
   ],
   "dialogues": []
