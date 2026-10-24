@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: ErrorConnection
+  m_Name: Start Game
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: 9bbcd486f3b83ab4095794cd5b73ba5a, type: 3}
+  clip: {fileID: 8300000, guid: ab0e2d46f6c4a0c4d9bd3a69f13a2d70, type: 3}
   volume: 1
   pitchMin: 1
   pitchMax: 1

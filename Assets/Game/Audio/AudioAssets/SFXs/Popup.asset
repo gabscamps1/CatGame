@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
   m_Name: Popup
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: ff22661a8be476248af2129a4aaa54e9, type: 3}
+  clip: {fileID: 8300000, guid: 01e6e6e577a52df438f32a13361c6bde, type: 3}
   volume: 1
   pitchMin: 1
   pitchMax: 1
