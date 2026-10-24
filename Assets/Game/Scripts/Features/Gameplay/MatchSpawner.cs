@@ -59,7 +59,7 @@ namespace CatGame.Features.Gameplay
                 return;
 
             Core.Logger.Log("Deu Init 3");
-            //player.Init(glassBoudaries[playerId]);
+            //player.Init(glassBoudaries[PlayerId]);
         }
     }
 }

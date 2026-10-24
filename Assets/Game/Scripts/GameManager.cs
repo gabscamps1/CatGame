@@ -47,7 +47,7 @@ public class GameManager : NetworkBehaviour
             return;
         }
 
-        _scoreText.text = currentScore.ToString("D8");
+        //_scoreText.text = currentScore.ToString("D8");
     }
 
     private void Start()
@@ -72,7 +72,7 @@ public class GameManager : NetworkBehaviour
     {
            //CRIA PREFAB DE PONTO
         currentScore += amount;
-        _scoreText.text = currentScore.ToString("D8");
+        //_scoreText.text = currentScore.ToString("D8");
     }
 
     public void ShowScore(Vector3 position, int score)

@@ -10,7 +10,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform fruitThrowTransform;
     [SerializeField] private ThrowFruitController throwFruitController;
-    [SerializeField] private BoxCollider2D teste;
+    [SerializeField] private PlayerFruitHand playerFruitHand;
     private BoxCollider2D boundary;
 
     private Bounds bounds;
@@ -29,10 +29,13 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private int playerIndex;
     private PlayerId playerId;
 
+    private void Awake()
+    {
+        playerFruitHand = GetComponent<PlayerFruitHand>();
+    }
+
     private void Start()
     {
-        //Init(teste);
-
         inputService = ServiceLocator.Get<IInputService>();
         playerInputController = inputService.GetInputFromPlayer(playerId);
 
@@ -41,12 +44,12 @@ public class PlayerController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner)
+        if (!IsServer)
             return;
-
+        
         for (int i = 0; i < MatchSetup.Players.Count; i++)
         {
-            if (MatchSetup.Players[i].OwnerId != NetworkManager.LocalClientId)
+            if (MatchSetup.Players[i].OwnerId != OwnerClientId)
                 continue;
 
             int playerIndex = i;
@@ -54,8 +57,7 @@ public class PlayerController : NetworkBehaviour
             if (GameManager.Instance.Boundaries.Length == 0 || playerIndex >= GameManager.Instance.Boundaries.Length)
                 return;
 
-            BoxCollider2D boundary = GameManager.Instance.Boundaries[playerIndex];
-            Init(boundary);
+            SetAreaToMoveRpc((byte)playerIndex);
         }
     }
 
@@ -66,7 +68,7 @@ public class PlayerController : NetworkBehaviour
 
     private void PlayerInputController_OnThrow()
     {
-        throwFruitController.ThrowFruit();
+        playerFruitHand.RequestDrop();
     }
 
     private void Update()
@@ -89,6 +91,7 @@ public class PlayerController : NetworkBehaviour
     /// </summary>
     public void ChangeBoundary(float extraWidth)
     {
+        return;
         leftBound = startingLeftBound;
         rightBound = startingRightBound;
 
@@ -96,8 +99,12 @@ public class PlayerController : NetworkBehaviour
         rightBound -= throwFruitController.Bounds.extents.x + extraWidth;
     }
 
-    private void Init(BoxCollider2D newBoundary)
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+    private void SetAreaToMoveRpc(byte playerId)
     {
+        BoxCollider2D newBoundary = GameManager.Instance.Boundaries[playerId];
+        
         if (newBoundary == null)
             return;
 
@@ -113,9 +120,4 @@ public class PlayerController : NetworkBehaviour
         startingLeftBound = leftBound;
         startingRightBound = rightBound;
     }
-
-    /*protected override bool OnIsServerAuthoritative()
-    {
-        return false;
-    }*/
 }

@@ -110,7 +110,7 @@ public class ThrowFruitController : MonoBehaviour
             if (slot.OwnerId != clientId)
                 continue;
 
-            // Encontrou o playerId referente ao client.
+            // Encontrou o PlayerId referente ao client.
             playerId = new PlayerId(i);
         }
 
@@ -155,7 +155,7 @@ public class ThrowFruitController : MonoBehaviour
             if (slot.OwnerId != clientId)
                 continue;
 
-            // Encontrou o playerId referente ao client.
+            // Encontrou o PlayerId referente ao client.
             playerId = new PlayerId(i);
         }
 

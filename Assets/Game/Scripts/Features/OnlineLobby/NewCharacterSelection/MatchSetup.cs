@@ -22,7 +22,7 @@ namespace CatGame.Features.CharacterSelection
                 if (slot.OwnerId != clientId)
                     continue;
 
-                // Encontrou o playerId referente ao client.
+                // Encontrou o PlayerId referente ao client.
                 return new PlayerId(i);
             }
 
