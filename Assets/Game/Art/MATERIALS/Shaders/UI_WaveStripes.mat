@@ -12,7 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USECUSTOMTIME_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,22 +30,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Aspect: 1.7778
+    - _Aspect: 1.7777778
     - _ColorMask: 15
-    - _CustomTime: 0
-    - _Rotation: 0
+    - _CustomTime: 585.15283
+    - _Rotation: -4
     - _Shade: 0.25
-    - _Softness: 0.03
+    - _Softness: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _StripeAngle: 35
-    - _StripeCount: 14
+    - _StripeCount: 12.4
     - _StripeDuty: 0.5
     - _StripeSpeed: 0.1
-    - _UseCustomTime: 0
+    - _UseCustomTime: 1
     - _UseUIAlphaClip: 0
     - _WaveAmplitude: 0.8
     - _WaveAngle: 0
@@ -53,7 +54,7 @@ Material:
     - _WaveSpeed: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.10999996, g: 0.11999995, b: 0.12999997, a: 1}
-    - _ColorB: {r: 0.02, g: 0.025, b: 0.03, a: 1}
+    - _ColorA: {r: 0.3018868, g: 0.1723033, b: 0.20911354, a: 1}
+    - _ColorB: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

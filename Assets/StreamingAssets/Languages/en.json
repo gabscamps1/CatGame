@@ -351,6 +351,10 @@
     {
       "key": "PAUSE_LEAVE",
       "value": "LEAVE MATCH"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "Press [skipButton] to skip."
     }
   ],
   "dialogues": []

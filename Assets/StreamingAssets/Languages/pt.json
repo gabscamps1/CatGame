@@ -351,6 +351,10 @@
     {
       "key": "PAUSE_LEAVE",
       "value": "SAIR DA PARTIDA"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "Pressione [skipButton] para pular."
     }
   ],
   "dialogues": []

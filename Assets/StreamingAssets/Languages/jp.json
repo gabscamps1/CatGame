@@ -351,6 +351,10 @@
     {
       "key": "PAUSE_LEAVE",
       "value": "マッチを退出"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "[skipButton] を押してスキップ。"
     }
   ],
   "dialogues": []
