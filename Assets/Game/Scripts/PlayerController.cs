@@ -2,10 +2,11 @@ using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using CatGame.Features.CharacterSelection;
+using CatGame.Services.Register;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform fruitThrowTransform;
@@ -24,10 +25,11 @@ public class PlayerController : NetworkBehaviour
     private float offset;
 
     private IInputService inputService;
+    private IPlayerRegistry playerRegistry;
     private IPlayerInputController playerInputController;
 
-    [SerializeField] private int playerIndex;
-    private PlayerId playerId;
+    private NetworkVariable<PlayerId> playerId = new();
+    private PlayerId previewPlayerId = PlayerId.None;
 
     private void Awake()
     {
@@ -37,17 +39,37 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         inputService = ServiceLocator.Get<IInputService>();
-        playerInputController = inputService.GetInputFromPlayer(playerId);
+        playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
+
+        if (playerRegistry.TryGetPlayerInfo(playerId.Value, out PlayerInfo playerInfo))
+        {
+            PlayerId playerInputId = new PlayerId(playerInfo.localIndex);
+            playerInputController = inputService.GetInputFromPlayer(playerInputId);
+        }
 
         playerInputController.OnThrow += PlayerInputController_OnThrow;
     }
 
     public override void OnNetworkSpawn()
     {
-        if (!IsServer)
-            return;
-        
-        for (int i = 0; i < MatchSetup.Players.Count; i++)
+        playerId.OnValueChanged += Init;
+
+        if (IsServer)
+        {
+            playerId.Value = previewPlayerId;
+
+            if (GameManager.Instance.Boundaries.Length == 0 || playerId.Value.Id >= GameManager.Instance.Boundaries.Length)
+                return;
+
+            SetAreaToMoveRpc((byte)playerId.Value.Id);
+        }
+
+        if (IsClient)
+        {
+            SetPlayerId(playerId.Value);
+        }      
+
+        /*for (int i = 0; i < MatchSetup.Players.Count; i++)
         {
             if (MatchSetup.Players[i].OwnerId != OwnerClientId)
                 continue;
@@ -58,7 +80,18 @@ public class PlayerController : NetworkBehaviour
                 return;
 
             SetAreaToMoveRpc((byte)playerIndex);
-        }
+        }*/
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        playerId.OnValueChanged -= Init;
+    }
+
+    private void Init(PlayerId previous, PlayerId current)
+    {
+        if (previous == current) return;
+        playerFruitHand.SetPlayerId(current);
     }
 
     private void OnDisable()
@@ -86,20 +119,6 @@ public class PlayerController : NetworkBehaviour
         transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
     }
 
-    /// <summary>
-    /// Altera o quanto o jogador pode se locomover para os lados.
-    /// </summary>
-    public void ChangeBoundary(float extraWidth)
-    {
-        return;
-        leftBound = startingLeftBound;
-        rightBound = startingRightBound;
-
-        leftBound += throwFruitController.Bounds.extents.x + extraWidth;
-        rightBound -= throwFruitController.Bounds.extents.x + extraWidth;
-    }
-
-
     [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
     private void SetAreaToMoveRpc(byte playerId)
     {
@@ -119,5 +138,11 @@ public class PlayerController : NetworkBehaviour
 
         startingLeftBound = leftBound;
         startingRightBound = rightBound;
+    }
+
+    public void SetPlayerId(PlayerId playerId)
+    {
+        previewPlayerId = playerId;
+        playerFruitHand.SetPlayerId(playerId);
     }
 }

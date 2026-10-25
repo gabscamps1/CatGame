@@ -1,3 +1,7 @@
+using CatGame.Core.Data;
+using CatGame.Core.Events;
+using CatGame.Core.Interfaces;
+using CatGame.Features.CharacterSelection;
 using System;
 using Unity.Netcode;
 using UnityEngine;
@@ -5,18 +9,20 @@ using UnityEngine;
 public struct HandState : INetworkSerializable, IEquatable<HandState>
 {
     public byte tier; // Tier da fruta atual que está na mão do jogador. 0 = mão vazia
+    public byte nextFruitTier; // Tier da próxima fruta que vai para a mão do jogador. 0 = mão vazia
     public uint dropCount; // Quantas frutas já saíram desta mão.
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref tier);
+        serializer.SerializeValue(ref nextFruitTier);
         serializer.SerializeValue(ref dropCount);
     }
 
-    public bool Equals(HandState other) => tier == other.tier && dropCount == other.dropCount;
+    public bool Equals(HandState other) => tier == other.tier && nextFruitTier == other.nextFruitTier &&  dropCount == other.dropCount;
 }
 
-public class PlayerFruitHand : NetworkBehaviour
+public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
 {
     [SerializeField] private FruitCatalog catalog;
     [SerializeField] private SpriteRenderer heldRenderer; // Visual da fruta. 
@@ -33,12 +39,20 @@ public class PlayerFruitHand : NetworkBehaviour
     private byte lastShownTier;
     private float lastDropTime;
 
+    private PlayerId playerId = PlayerId.None;
     public override void OnNetworkSpawn()
     {
         state.OnValueChanged += OnStateChanged;
 
         if (IsServer)
-            state.Value = new HandState { tier = catalog.RandomStartTier(), dropCount = 0 };
+        {
+            state.Value = new HandState
+            {
+                tier = catalog.RandomStartTier(),
+                nextFruitTier = catalog.RandomStartTier(),
+                dropCount = 0
+            };            
+        }          
 
         Refresh();
     }
@@ -67,6 +81,15 @@ public class PlayerFruitHand : NetworkBehaviour
         HandState currentHandState = state.Value;
         bool show;
         byte tierToShow = 0;
+
+        if (playerId.IsValid)
+        {
+            EventBus.Publish(new NextFruitChangedEvent()
+            {
+                PlayerIndex = playerId.Id,
+                Sprite = catalog.Get(currentHandState.nextFruitTier).sprite,
+            });
+        }     
 
         if (spawnedDropCount > currentHandState.dropCount)
         {
@@ -126,7 +149,12 @@ public class PlayerFruitHand : NetworkBehaviour
         uint drop = handState.dropCount + 1;
         FruitSpawner.Instance.ServerSpawn(handState.tier, new Vector2(x, dropPoint.position.y), Vector2.zero, OwnerClientId, drop);
 
-        state.Value = new HandState { tier = 0, dropCount = drop };
+        state.Value = new HandState 
+        { 
+            tier = 0, 
+            nextFruitTier = state.Value.nextFruitTier, 
+            dropCount = drop 
+        };
     }
 
     /// <summary>
@@ -139,6 +167,16 @@ public class PlayerFruitHand : NetworkBehaviour
         HandState current = state.Value;
         if (current.tier != 0 || current.dropCount != sourceDrop) return;   // refil duplicado ou atrasado
 
-        state.Value = new HandState { tier = catalog.RandomStartTier(), dropCount = sourceDrop };
+        state.Value = new HandState 
+        { 
+            tier = state.Value.nextFruitTier,
+            nextFruitTier = catalog.RandomStartTier(),
+            dropCount = sourceDrop 
+        };
+    }
+
+    public void SetPlayerId(PlayerId playerId)
+    {
+        this.playerId = playerId;
     }
 }

@@ -50,24 +50,6 @@ public class GameManager : NetworkBehaviour
         //_scoreText.text = currentScore.ToString("D8");
     }
 
-    private void Start()
-    {
-        foreach (PlayerId playerId in PlayerIdRegister.PlayerRegistereds.Keys)
-        {
-            AssignPlayerInGameArea(playerId);
-        }
-    }
-
-    #region Gameplay
-
-    public void AssignPlayerInGameArea(PlayerId playerId)
-    {
-        if (!IsServer)
-            return;
-    }
-
-    #endregion
-
     public void IncreaseScore(int amount)
     {
            //CRIA PREFAB DE PONTO

@@ -71,7 +71,7 @@ public class ThrowFruitController : MonoBehaviour
         circleCollider = circleCollider2D;
         Bounds = circleCollider.bounds;
 
-        playerController.ChangeBoundary(EXTRA_WIDTH);
+        //playerController.ChangeBoundary(EXTRA_WIDTH);
     }
 
     public void ThrowFruit()
@@ -136,7 +136,7 @@ public class ThrowFruitController : MonoBehaviour
         circleCollider = circleCollider2D;
         Bounds = circleCollider.bounds;
 
-        playerController.ChangeBoundary(EXTRA_WIDTH);
+        //playerController.ChangeBoundary(EXTRA_WIDTH);
 
         ThrowFruitManager.PreventPlayerHoldFruit(playerId);
     }

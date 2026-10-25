@@ -1,12 +1,12 @@
 ﻿using CatGame.Core.Data;
 using CatGame.Core.Events;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using Unity.Netcode;
 
 public class ScoreManager : NetworkBehaviour
 {
-    public struct Score : INetworkSerializable, IEquatable<Score>
+    public struct ScoreEntry : INetworkSerializable, IEquatable<ScoreEntry>
     {
         public PlayerId playerId;
         public uint score; 
@@ -16,12 +16,12 @@ public class ScoreManager : NetworkBehaviour
             serializer.SerializeValue(ref score);
         }
 
-        public bool Equals(Score other) => playerId == other.playerId && score == other.score;
+        public bool Equals(ScoreEntry other) => playerId == other.playerId && score == other.score;
     }
 
     public static ScoreManager Instance;
 
-    private readonly NetworkList<Score> scores = new();
+    private readonly NetworkList<ScoreEntry> scoreEntrys = new();
 
     private void Awake()
     {
@@ -38,12 +38,12 @@ public class ScoreManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        scores.OnListChanged += Scores_OnListChanged;
+        scoreEntrys.OnListChanged += Scores_OnListChanged;
     }
 
     public override void OnNetworkDespawn()
     {
-        scores.OnListChanged -= Scores_OnListChanged;
+        scoreEntrys.OnListChanged -= Scores_OnListChanged;
     }
 
     public void IncreaseScore(PlayerId playerId, int score)
@@ -53,9 +53,9 @@ public class ScoreManager : NetworkBehaviour
 
         int index = -1;
 
-        for (int i = 0; i < scores.Count; i++)
+        for (int i = 0; i < scoreEntrys.Count; i++)
         {
-            if (scores[i].playerId == playerId)
+            if (scoreEntrys[i].playerId == playerId)
             {
                 index = i;
             }
@@ -63,7 +63,7 @@ public class ScoreManager : NetworkBehaviour
 
         if (index < 0)
         {
-            scores.Add(new Score
+            scoreEntrys.Add(new ScoreEntry
             {
                 playerId = playerId,
                 score = (uint)score
@@ -72,18 +72,46 @@ public class ScoreManager : NetworkBehaviour
             return;
         }
 
-        Score newScore = scores[index];
+        ScoreEntry newScore = scoreEntrys[index];
         newScore.score += (uint)score;
-        scores[index] = newScore;
+        scoreEntrys[index] = newScore;
     }
 
-    private void Scores_OnListChanged(NetworkListEvent<Score> changeEvent)
+    private void Scores_OnListChanged(NetworkListEvent<ScoreEntry> changeEvent)
     {
-        CatGame.Core.Logger.Log($"Enviou a informação pelo eventbus");
+        // Envia o scoreEntry.
         EventBus.Publish(new ScoreChangedEvent()
         {
             PlayerIndex = changeEvent.Value.playerId.Id,
             ScoreAmount = changeEvent.Value.score,
         });
+
+        List<int> bestPlayer = new();
+        uint bestScore = 0;
+
+        // Calcula quem está vencendo
+        foreach (var score in scoreEntrys)
+        {      
+            if (score.score > bestScore)
+            {
+                bestScore = score.score;
+                bestPlayer.Clear();
+                bestPlayer.Add(score.playerId.Id);
+            }
+            else if (score.score == bestScore)
+            {
+                bestPlayer.Add(score.playerId.Id);
+            }
+        }
+
+        // Avisa à todos quem está vencendo
+        foreach (ScoreEntry scoreEntry in scoreEntrys)
+        {
+            EventBus.Publish(new LeaderChangedEvent()
+            {
+                PlayerIndex = scoreEntry.playerId.Id,
+                IsLeader = bestPlayer.Contains(scoreEntry.playerId.Id),
+            });
+        }
     }
 }

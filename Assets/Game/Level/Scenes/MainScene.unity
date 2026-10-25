@@ -10518,6 +10518,7 @@ GameObject:
   - component: {fileID: 1931435054}
   - component: {fileID: 1931435056}
   - component: {fileID: 1931435055}
+  - component: {fileID: 1931435057}
   m_Layer: 0
   m_Name: MatchSpawner
   m_TagString: Untagged
@@ -10559,11 +10560,7 @@ MonoBehaviour:
   - {fileID: 424519751}
   - {fileID: 1150676371}
   - {fileID: 1483015016}
-  glassBoudaries:
-  - {fileID: 1192553304}
-  - {fileID: 423947609}
-  - {fileID: 1150676370}
-  - {fileID: 1483015015}
+  roaster: {fileID: 1931435057}
 --- !u!114 &1931435056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10590,6 +10587,19 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1931435057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931435053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb68fe38ebc158349b5b03a847ce6b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Services.Register.PlayerRosterSync
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &1952344445
 GameObject:
   m_ObjectHideFlags: 0

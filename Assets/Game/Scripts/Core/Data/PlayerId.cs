@@ -8,14 +8,16 @@ namespace CatGame.Core.Data
     /// </summary>
     public struct PlayerId : INetworkSerializable, IEquatable<PlayerId>
     {
-        private int id;
+        public static PlayerId None => new(-1);
+        public readonly bool IsValid => id >= 0;
+        public readonly int Id => id;
 
-        public int Id => id;
+        private int id;
 
         public PlayerId(int id)
         {
             this.id = id;
-        }
+        }     
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer)
             where T : IReaderWriter

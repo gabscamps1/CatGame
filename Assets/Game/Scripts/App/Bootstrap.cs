@@ -9,6 +9,7 @@ using CatGame.Services.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using CatGame.Services.Register;
 
 namespace CatGame.App
 {
@@ -47,6 +48,7 @@ namespace CatGame.App
             ServiceLocator.Register<IInputService>(inputActionsService);
             ServiceLocator.Register<IUIService>(uiManager);
             ServiceLocator.Register<IUINavigationService>(new UINavigationService());
+            ServiceLocator.Register<IPlayerRegistry>(new PlayerRegistry());
 
             // Garante que todos os scripts de inicialização percorrerão o jogo todo.
             DontDestroyOnLoad(gameObject);

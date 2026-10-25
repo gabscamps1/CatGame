@@ -54,10 +54,8 @@ namespace CatGame.UI
 
         private void EventBus_UpdateScore(ScoreChangedEvent e)
         {
-            Core.Logger.Log($"Recebeu a informação pelo eventbus");
             if (e.PlayerIndex != playerIndex)
                 return;
-            Core.Logger.Log($"Atualizou a informação do eventbus");
 
             score.text = e.ScoreAmount.ToString();
         }
