@@ -1,68 +1,44 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
 using CatGame.Core;
+using CatGame.Capabilities.UISystem;
 
-namespace CatGame.SettingsManagement
+namespace CatGame.Features.Settings
 {
-    public class SettingsController : MonoBehaviour
+    public class SettingsController : BaseUIScreen
     {
+        [Header("References")]
         [SerializeField] private VideoSettings videoSettings;
-        [SerializeField] private GraphicsSettings graphicsSettings;
         [SerializeField] private GameplaySettings gameplaySettings;
         [SerializeField] private AudioSettings audioSettings;
-        [SerializeField] private InputActionAsset actions;
-        private string inputs;
 
-        private bool canMakeSave;
-        private ISettingsService settingsService;
+        private ISaveSettingsService settingsService;
 
         private void Awake()
         {
-            //settingsService = ServiceLocator.Get<ISettingsService>();
+            settingsService = ServiceLocator.Get<ISaveSettingsService>();
         }
 
-        private void Start()
+        protected override void OnBeforeHide()
         {
-            /*string inputsData = settingsService.Load().Inputs;
-            if (!string.IsNullOrEmpty(inputsData))
-                actions.LoadBindingOverridesFromJson(inputsData);*/
-        }
-
-        private void OnDisable()
-        {
-            if (canMakeSave == false)
-            {
-                canMakeSave = true;
-                return;
-            }
-
-            //inputs = actions.SaveBindingOverridesAsJson();
             SettingsData settingsData = new()
             {
+                WindowMode = videoSettings.WindowModeIndex,
                 Resolution = videoSettings.ResolutionIndex,
-                //AspectRatio = videoSettings.AspectRationIndex,
-                //WindowMode = videoSettings.WindowModeIndex,
-                //Vsync = videoSettings.VSyncIndex,
+                Vsync = videoSettings.VSyncIndex,
+                VFX = videoSettings.VFXIndex,
 
-                //Texture = graphicsSettings.TextureQualityIndex,
-                //Shadown = graphicsSettings.ShadowQualityIndex,
-                //Model = graphicsSettings.ModelQualityIndex,
-                //MotionBlur = graphicsSettings.MotionBlurIndex,
-                //Preset = graphicsSettings.PresetIndex,
+                Language = gameplaySettings.SelectedLanguage,
 
-                //Language = gameplaySettings.SelectedLanguage,
-
-                //MasterVolume = audioSettings.MasterVolumeValue,
-                //MusicVolume = audioSettings.MusicVolumeValue,
-                //SFXVolume = audioSettings.SFXVolumeValue,
-
-                //Inputs = inputs,
+                MasterVolume = audioSettings.MasterVolumePercentage,
+                MusicVolume = audioSettings.MusicVolumePercentage,
+                SFXVolume = audioSettings.SFXVolumePercentage,
+                VoiceVolume = audioSettings.VoiceVolumePercentage,
             };
 
             // Faz o save das configurações ao desativar o menu de opções.
-            //settingsService.Save(settingsData);
+            settingsService.Save(settingsData);
         }
     }
 }

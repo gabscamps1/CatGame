@@ -147,7 +147,7 @@ namespace CatGame.Capabilities.UISystem
                         previousSharedCurrent?.OnUnfocused(activePlayer, navigationMode);
                         sharedCurrent.OnFocused(activePlayer, navigationMode);
                     }
-                    Core.Logger.Log(sharedCurrent.ToString());
+
                     break;
 
                 case NavigationMode.PerPlayer:

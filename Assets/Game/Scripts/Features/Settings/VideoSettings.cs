@@ -1,45 +1,62 @@
+using CatGame.Capabilities.UISystem;
+using CatGame.Core;
+using CatGame.Core.Data;
+using CatGame.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using CatGame.Core.Interfaces;
-using CatGame.Core.Data;
-using CatGame.Core;
-using CatGame.Capabilities.UISystem;
 
-namespace CatGame.SettingsManagement
+namespace CatGame.Features.Settings
 {
     public class VideoSettings : MonoBehaviour
     {
-        public int ResolutionIndex => resolutionDropdown.Value;
+        public int ResolutionIndex => selectedResolutionIndex;
         public int WindowModeIndex => windowModeDropdown.Value;
         public int VSyncIndex => vSyncToggle.IsOn ? 1 : 0;
+        public int VFXIndex => vfxToggle.IsOn ? 1 : 0;
 
         [Header("UI")]
         [SerializeField] private DropdownElement resolutionDropdown;
         [SerializeField] private DropdownElement windowModeDropdown;
         [SerializeField] private ToggleElement vSyncToggle;
+        [SerializeField] private ToggleElement vfxToggle;
+
+        // Mesma ordem das opções do dropdown de modo de janela.
+        private static readonly FullScreenMode[] windowModes =
+        {
+            FullScreenMode.ExclusiveFullScreen, // 0 - Exclusive FullScreen
+            FullScreenMode.FullScreenWindow,    // 1 - Fullscreen Window
+            FullScreenMode.Windowed             // 2 - Window
+        };
 
         private Resolution[] resolutions;
+        private FullScreenMode currentWindowMode;
+        private int selectedResolutionIndex;
+
         private Resolution lastResolution;
         private int lastSystemWidth;
         private int lastSystemHeight;
 
-        private ISettingsService settingsService;
+        private ISaveSettingsService settingsService;
 
         private void Awake()
         {
-            //settingsService = ServiceLocator.Get<ISettingsService>();
+            settingsService = ServiceLocator.Get<ISaveSettingsService>();
+
+            currentWindowMode = Screen.fullScreenMode;
 
             // Resoluções.
             GetResolutions();
 
-            windowModeDropdown.ClearOptions();
-            windowModeDropdown.AddOptions("Exclusive FullScreen", "Fullscreen Window", "Window");
+            // Índice da resolução escolhida pelo jogador.
+            selectedResolutionIndex = Mathf.Max(0, Array.FindIndex(resolutions, r => r.width == Screen.width && r.height == Screen.height));
 
-            // Carrega o save.
-            //LoadSettings();
+            windowModeDropdown.ClearOptions();
+            windowModeDropdown.AddOptions("< Exclusive FullScreen >", "< Fullscreen Window >", "< Window >");
+
+            LoadSettings();
         }
 
         private void Start()
@@ -50,9 +67,16 @@ namespace CatGame.SettingsManagement
             vSyncToggle.OnValueChanged += VSyncToggle_OnValueChanged;
 
             lastResolution = Screen.currentResolution;
-            lastSystemWidth = Display.main.systemWidth;
-            lastSystemHeight = Display.main.systemHeight;
-        }       
+            lastSystemWidth = Screen.mainWindowDisplayInfo.width;
+            lastSystemHeight = Screen.mainWindowDisplayInfo.height;
+        }
+
+        private void OnDestroy()
+        {
+            resolutionDropdown.OnValueChanged -= ResolutionDropdown_OnValueChanged;
+            windowModeDropdown.OnValueChanged -= WindowModeDropdown_OnValueChanged;
+            vSyncToggle.OnValueChanged -= VSyncToggle_OnValueChanged;
+        }
 
         private void GetResolutions()
         {
@@ -63,25 +87,33 @@ namespace CatGame.SettingsManagement
             Dictionary<string, Resolution> bestResolutions = new();
             foreach (var resolution in allResolutions)
             {
-                string key = resolution.width + "x" + resolution.height; // Chave única para cada resolução (ex: 1920x1080).
+                string key = resolution.width + "x" + resolution.height; // Chave única (ex: 1920x1080).
 
                 if (!bestResolutions.ContainsKey(key) || bestResolutions[key].refreshRateRatio.value < resolution.refreshRateRatio.value)
                 {
-                    bestResolutions[key] = resolution;  // Atualiza para a resolução com maior taxa de atualização.
+                    bestResolutions[key] = resolution; // Atualiza para a resolução com maior taxa de atualização.
                 }
             }
 
             // Posiciona as resoluções da maior para a menor.
-            resolutions = bestResolutions.Values.OrderBy(x => x.width).ToArray();
+            resolutions = bestResolutions.Values
+                .OrderBy(x => x.width)
+                .ThenBy(x => x.height)
+                .ToArray();
 
             // Adiciona as resoluções no dropdown.
-            foreach (Resolution res in resolutions)           
+            resolutionDropdown.ClearOptions();
+            foreach (Resolution res in resolutions)
                 resolutionDropdown.AddOptions($"< {res.width} x {res.height} >");
-            
         }
 
         private void ResolutionDropdown_OnValueChanged(object sender, DropdownElement.ValueChangedEvent e)
         {
+            // Em Fullscreen Window a resolução é fixa.
+            if (currentWindowMode == FullScreenMode.FullScreenWindow)
+                return;
+
+            selectedResolutionIndex = e.Index;
             SetResolution(e.Index);
         }
 
@@ -95,58 +127,45 @@ namespace CatGame.SettingsManagement
             SetVSync(e.IsOn);
         }
 
-        
-
-        private (int, int) AdjustToAspect(int width, int height, int aspectIndex)
-        {
-            float targetRatio = 16f / 9f; // default
-            switch (aspectIndex)
-            {
-                case 0: targetRatio = 16f / 9f; break;   // 16:9
-                case 1: targetRatio = 21f / 9f; break;   // 21:9
-                case 2: targetRatio = 4f / 3f; break;    // 4:3
-                case 3: targetRatio = 16f / 10f; break;  // 16:10
-            }
-
-            int newWidth = width;
-            int newHeight = Mathf.RoundToInt(newWidth / targetRatio);
-
-            if (newHeight > height)
-            {
-                newHeight = height;
-                newWidth = Mathf.RoundToInt(newHeight * targetRatio);
-            }
-
-            return (newWidth, newHeight);
-        }
-
         private void SetResolution(int index)
         {
-            //int aspectIndex = aspectRatioDropdown.value;
-            int aspectIndex = 0;
+            // Em Fullscreen Window a resolução é sempre a nativa do monitor.
+            if (currentWindowMode == FullScreenMode.FullScreenWindow)
+                return;
 
-            Resolution baseRes = resolutions[index];
-            (int width, int height) = AdjustToAspect(baseRes.width, baseRes.height, aspectIndex);
+            if (index < 0 || index >= resolutions.Length)
+                return;
 
-            Screen.SetResolution(width, height, Screen.fullScreenMode, baseRes.refreshRateRatio);
-        }
-
-        private void SetAspectRatio(int index)
-        {
-            Resolution current = Screen.currentResolution;
-            (int width, int height) = AdjustToAspect(current.width, current.height, index);
-
-            Screen.SetResolution(width, height, Screen.fullScreenMode, current.refreshRateRatio);
+            Resolution resolution = resolutions[index];
+            Screen.SetResolution(resolution.width, resolution.height, currentWindowMode, resolution.refreshRateRatio);
         }
 
         private void SetWindowMode(int index)
         {
-            switch (index)
+            if (index < 0 || index >= windowModes.Length)
+                return;
+
+            currentWindowMode = windowModes[index];
+
+            if (currentWindowMode == FullScreenMode.FullScreenWindow)
             {
-                case 0: Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen; break;
-                case 1: Screen.fullScreenMode = FullScreenMode.Windowed; break;
-                case 2: Screen.fullScreenMode = FullScreenMode.FullScreenWindow; break;
+                // Usa a resolução nativa do monitor.
+                Screen.SetResolution(Screen.mainWindowDisplayInfo.width, Screen.mainWindowDisplayInfo.height, currentWindowMode, Screen.currentResolution.refreshRateRatio);
+
+                int nativeIndex = Array.FindIndex(resolutions, r => r.width == Screen.mainWindowDisplayInfo.width && r.height == Screen.mainWindowDisplayInfo.height);
+                
+                if (nativeIndex >= 0)
+                    resolutionDropdown.SetValue(nativeIndex);
             }
+            else
+            {
+                // Restaura a resolução escolhida pelo jogador.
+                resolutionDropdown.SetValue(selectedResolutionIndex);
+                resolutionDropdown.SetInteractable(true);
+                SetResolution(selectedResolutionIndex);
+            }
+
+            resolutionDropdown.SetOptionInteractable(currentWindowMode != FullScreenMode.FullScreenWindow);
         }
 
         private void SetVSync(bool enabled)
@@ -154,6 +173,33 @@ namespace CatGame.SettingsManagement
             QualitySettings.vSyncCount = enabled ? 1 : 0;
         }
 
+        private void SetVFX(bool enabled)
+        {
+            // Todo - Aplicar.
+        }
+
+        private void LoadSettings()
+        {
+            // Pegar valores salvos ou defaults.
+            SettingsData settingsData = settingsService.Load();
+
+            if (settingsService.HasSave())
+            {
+                // Guarda a resolução escolhida.
+                selectedResolutionIndex = Mathf.Clamp(settingsData.Resolution, 0, resolutions.Length - 1);  
+            }
+
+            // Atualiza a UI.
+            resolutionDropdown.SetValue(selectedResolutionIndex);
+            windowModeDropdown.SetValue(settingsData.WindowMode);
+            vSyncToggle.SetActivate(settingsData.Vsync == 1);
+            vfxToggle.SetActivate(settingsData.VFX == 1);
+
+            // Aplica as configs. SetWindowMode já aplica a resolução quando o modo permite.
+            SetWindowMode(settingsData.WindowMode);
+            SetVSync(settingsData.Vsync == 1);
+            SetVFX(settingsData.Vsync == 1);
+        }
 
         #region NotImplementedYet
 
@@ -198,23 +244,7 @@ namespace CatGame.SettingsManagement
             }
         }*/
 
-        private void LoadSettings()
-        {
-            // Pegar valores salvos ou defaults.
-            SettingsData settingsData = settingsService.Load();
 
-            // Atualiza a UI.
-            resolutionDropdown.SetValue(settingsData.Resolution);
-            //aspectRatioDropdown.value = settingsData.AspectRatio;
-            windowModeDropdown.SetValue(settingsData.WindowMode);
-            //vSyncToggle.isOn = settingsData.Vsync == 1;
-
-            // Aplica as configs.
-            SetResolution(settingsData.Resolution);
-            SetAspectRatio(settingsData.AspectRatio);
-            SetWindowMode(settingsData.WindowMode);
-            SetVSync(settingsData.Vsync == 1);
-        }
 
         #endregion
     }

@@ -21,6 +21,8 @@ namespace CatGame.Capabilities.UISystem
         }
 
         public event EventHandler<ValueChangedEvent> OnValueChanged;
+        public float MaxValue => maxValue;
+        public float MinValue => minValue;
         public float Value => value;
 
         [Header("Slider Settings")]
@@ -120,6 +122,14 @@ namespace CatGame.Capabilities.UISystem
         private void DecreaseValue()
         {
             value -= changeValue;
+            value = Mathf.Clamp(value, minValue, maxValue);
+            OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
+            UpdateUI();
+        }
+
+        public void SetValue(float amount)
+        {
+            value = amount;
             value = Mathf.Clamp(value, minValue, maxValue);
             OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
             UpdateUI();

@@ -26,6 +26,8 @@ namespace CatGame.Capabilities.UISystem
 
         [Header("Dropdown Settings")]
         [SerializeField] private TextMeshProUGUI valueText;
+        [SerializeField] private Color normalColor = Color.white;
+        [SerializeField] private Color disableColor = Color.white;
 
         private readonly List<string> valueList = new();
         private int selectedValue;
@@ -35,15 +37,20 @@ namespace CatGame.Capabilities.UISystem
             TryChangeValue(selectedValue);
         }
 
-        public void AddOptions(params string[] value)
+        public void AddOptions(params string[] options)
         {
-            foreach (var item in value)
+            foreach (var item in options)
                 valueList.Add(item);
         }
 
-        public void RemoveOptions(string value)
+        public void RemoveOptions(string option)
         {
-            valueList.Remove(value);
+            valueList.Remove(option);
+        }
+
+        public string GetOption(int value)
+        {
+            return valueList[value];
         }
 
         public void ClearOptions()
@@ -53,6 +60,12 @@ namespace CatGame.Capabilities.UISystem
 
         public void NextOption()
         {
+            if (valueList.Count == 0)
+            {
+                Core.Logger.LogWarning("Zero elementos na lista");
+                return;
+            }
+
             RemoveNullValues();
 
             int goingValue = (selectedValue + 1) % valueList.Count;
@@ -114,6 +127,12 @@ namespace CatGame.Capabilities.UISystem
 
             IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
             inputController.Navigation.performed -= Navigation_performed;
+        }
+
+        public void SetOptionInteractable(bool value)
+        {
+            heirInteractable = value;
+            valueText.color = value ? normalColor : disableColor;
         }
 
         private void Navigation_performed(UnityEngine.InputSystem.InputAction.CallbackContext context)

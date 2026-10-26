@@ -13,14 +13,19 @@ namespace CatGame.Services.AudioManagement
         [Header("Audio Settings")]
         [SerializeField] private AudioMixer audioMixer;
 
-        [Header("SFX Settings")]
-        [SerializeField] private int initialSFXObjects;
+        [Header("General Settings")]
+        [SerializeField] private AudioSource audioSourcePrefab;
+        [SerializeField] private int initialAudioSourceObjects;
         [SerializeField] private float minDistance = 1f;
         [SerializeField] private float maxDistance = 20f;
         [SerializeField] private AudioRolloffMode rolloffMode = AudioRolloffMode.Linear;
-        [SerializeField] private AudioSource sfxObject;
+        private readonly Queue<AudioSource> audioSourceQueue = new();
+
+        [Header("SFX Settings")]
         [SerializeField] private AudioMixerGroup sfxMixerGroup;
-        private Queue<AudioSource> sfxQueue = new Queue<AudioSource>();
+
+        [Header("Voice Settings")]
+        [SerializeField] private AudioMixerGroup voiceMixerGroup;
 
         [Header("Music Settings")]
         [SerializeField] private float fadeOutDuration = 5f;
@@ -41,14 +46,14 @@ namespace CatGame.Services.AudioManagement
                 musicSource.outputAudioMixerGroup = musicMixerGroup;
 
             // Inicializa alguns audio sources.
-            for (int i = 0; i < initialSFXObjects; i++)
+            for (int i = 0; i < initialAudioSourceObjects; i++)
             {
                 // Cria um audio source.
                 AudioSource audioSource = CreateAudioSource();
 
                 // Coloca o audio source na fila.
                 audioSource.gameObject.SetActive(false);
-                sfxQueue.Enqueue(audioSource);
+                audioSourceQueue.Enqueue(audioSource);
             }
         }
 
@@ -155,7 +160,7 @@ namespace CatGame.Services.AudioManagement
 
         #endregion
 
-        #region SFX
+        #region General
 
         /// <summary>
         /// Cria um audio source configurado.
@@ -164,13 +169,12 @@ namespace CatGame.Services.AudioManagement
         private AudioSource CreateAudioSource()
         {
             // Instancia um novo audio source.
-                AudioSource audioSource = Instantiate(sfxObject, transform.position, Quaternion.identity, transform.parent);
+            AudioSource audioSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity, transform.parent);
 
             // Configura o audio source.
             audioSource.minDistance = minDistance;
             audioSource.maxDistance = maxDistance;
             audioSource.rolloffMode = rolloffMode;
-            audioSource.outputAudioMixerGroup = sfxMixerGroup;
             audioSource.loop = false;
 
             return audioSource;
@@ -182,9 +186,9 @@ namespace CatGame.Services.AudioManagement
         /// <returns></returns>
         private AudioSource GetAudioSource()
         {
-            if (sfxQueue.Count > 0)
+            if (audioSourceQueue.Count > 0)
             {
-                AudioSource audioSource = sfxQueue.Dequeue();
+                AudioSource audioSource = audioSourceQueue.Dequeue();
                 audioSource.gameObject.SetActive(true);
                 return audioSource;
             }
@@ -193,6 +197,18 @@ namespace CatGame.Services.AudioManagement
                 return CreateAudioSource();
             }
         }
+
+        private IEnumerator EnqueueAudioSource(AudioSource audioSource, float delay)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+
+            audioSource.gameObject.SetActive(false);
+            audioSourceQueue.Enqueue(audioSource);
+        }
+
+        #endregion
+
+        #region SFX
 
         public void PlaySFXClip(AudioData audio, bool loop = false)
         {
@@ -205,6 +221,10 @@ namespace CatGame.Services.AudioManagement
             {
                 AudioSource currentSFX = GetAudioSource();
 
+                // Aplica as configurações do SFXGroup.
+                currentSFX.outputAudioMixerGroup = sfxMixerGroup;
+
+                // Aplica as configurações do audio.
                 currentSFX.clip = audio.Clip;
                 currentSFX.volume = audio.Volume;
                 currentSFX.spatialBlend = position.HasValue ? 1 : 0;
@@ -214,7 +234,7 @@ namespace CatGame.Services.AudioManagement
                 currentSFX.Play();
 
                 float delay = audio.Clip.length;
-                StartCoroutine(EnqueueSFX(currentSFX, delay));
+                StartCoroutine(EnqueueAudioSource(currentSFX, delay));
             }
             else
             {
@@ -238,19 +258,64 @@ namespace CatGame.Services.AudioManagement
                     }
                 #endif
             }
+        }        
+
+        #endregion
+
+        #region Voice
+
+        public void PlayVoiceClip(AudioData audio, bool loop = false)
+        {
+            PlayVoiceClip(audio, transform.position, loop);
         }
 
-        private IEnumerator EnqueueSFX(AudioSource audioSource, float delay)
+        public void PlayVoiceClip(AudioData audio, Vector3? position, bool loop = false)
         {
-            yield return new WaitForSecondsRealtime(delay);
+            if (audio != null && audio.Clip != null)
+            {
+                AudioSource currentVoice = GetAudioSource();
 
-            audioSource.gameObject.SetActive(false);
-            sfxQueue.Enqueue(audioSource);
+                // Aplica as configurações do VoiceGroup.
+                currentVoice.outputAudioMixerGroup = voiceMixerGroup;
+
+                // Aplica as configurações do audio.
+                currentVoice.clip = audio.Clip;
+                currentVoice.volume = audio.Volume;
+                currentVoice.spatialBlend = position.HasValue ? 1 : 0;
+                currentVoice.transform.position = position ?? new();
+                currentVoice.pitch = Random.Range(audio.PitchMin, audio.PitchMax);
+                currentVoice.loop = loop;
+                currentVoice.Play();
+                float delay = audio.Clip.length;
+                StartCoroutine(EnqueueAudioSource(currentVoice, delay));
+            }
+            else
+            {
+#if UNITY_EDITOR
+                if (audio == null)
+                {
+                    try
+                    {
+                        System.Diagnostics.StackTrace stack = new();
+                        Logger.LogWarning($"Sem referência de AudioData no script do GameObject: {stack.GetFrame(2).GetMethod().DeclaringType}");
+                    }
+                    catch
+                    {
+                        System.Diagnostics.StackTrace stack = new();
+                        Logger.LogWarning($"Sem referência de AudioData no script do GameObject: {stack.GetFrame(1).GetMethod().DeclaringType}");
+                    }
+                }
+                else
+                {
+                    Logger.LogWarning($"Sem referência de AudioClip no SO: {audio.name}.asset");
+                }
+#endif
+            }
         }
 
         #endregion
 
-        #region Controle de Volume
+        #region Volume Control
 
         public void SetMasterVolume(float value)
         {
@@ -266,6 +331,11 @@ namespace CatGame.Services.AudioManagement
         {
             audioMixer.SetFloat("SFXVol", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f);
         }
+
+        public void SetVoiceVolume(float value)
+        {
+            audioMixer.SetFloat("VoiceVol", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f);
+        }   
 
         #endregion
     }

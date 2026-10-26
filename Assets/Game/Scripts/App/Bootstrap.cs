@@ -1,15 +1,17 @@
 using CatGame.Services.GameStateManagement;
 using CatGame.Services.SceneManagement;
 using CatGame.Services.AudioManagement;
-using CatGame.Core;
-using CatGame.Core.Enums; // Usado fora do UnityEditor.
+using CatGame.Services.Input;
+using CatGame.Services.Register;
+using CatGame.Services.Settings;
+using CatGame.Services.Localization;
 using CatGame.Services.UISystem;
 using CatGame.Core.Interfaces;
-using CatGame.Services.Input;
+using CatGame.Core.Enums; // Usado fora do UnityEditor.
+using CatGame.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using CatGame.Services.Register;
 
 namespace CatGame.App
 {
@@ -49,6 +51,8 @@ namespace CatGame.App
             ServiceLocator.Register<IUIService>(uiManager);
             ServiceLocator.Register<IUINavigationService>(new UINavigationService());
             ServiceLocator.Register<IPlayerRegistry>(new PlayerRegistry());
+            ServiceLocator.Register<ISaveSettingsService>(new SaveSettingsService());
+            ServiceLocator.Register<ILocalizationService>(new LocalizationService());
 
             // Garante que todos os scripts de inicialização percorrerão o jogo todo.
             DontDestroyOnLoad(gameObject);

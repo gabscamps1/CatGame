@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707c5ac1d86a4374d8981ceedf4202bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizationManager
+  currentLanguage: 
 --- !u!1 &888619396
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,12 +884,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Services.AudioManagement.AudioService
   audioMixer: {fileID: 24100000, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}
-  initialSFXObjects: 1
+  audioSourcePrefab: {fileID: -7505497078402772451, guid: c2ecd454d35c9c24083c5d7683dc8599, type: 3}
+  initialAudioSourceObjects: 5
   minDistance: 1
   maxDistance: 20
   rolloffMode: 1
-  sfxObject: {fileID: -7505497078402772451, guid: c2ecd454d35c9c24083c5d7683dc8599, type: 3}
   sfxMixerGroup: {fileID: 4869373756424710013, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}
+  voiceMixerGroup: {fileID: -3095656911299989734, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}
   fadeOutDuration: 5
   musicVolume: 0.6
   musicSource: {fileID: 1223549523}

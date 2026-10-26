@@ -31,7 +31,7 @@ namespace CatGame.Capabilities.UISystem
         }
 
         [Header("Settings")]
-        [SerializeField] private bool interactable = true;
+        [SerializeField] private bool ownInteractable = true;
 
         [Header("Directions")]
         [SerializeField] private NavigableElement up;
@@ -46,13 +46,15 @@ namespace CatGame.Capabilities.UISystem
 
         protected readonly HashSet<PlayerId> FocusingPlayer = new();
 
+        protected bool heirInteractable = true;
+
         public IReadOnlyList<PlayerId> FocusingPlayerList => FocusingPlayer.ToList();
 
         public bool IsFocused => FocusingPlayer.Count > 0;
 
-        public bool IsInteractable => interactable && isActiveAndEnabled;
+        public bool IsInteractable => ownInteractable && heirInteractable && isActiveAndEnabled;
 
-        public void SetInteractable(bool value) => interactable = value;
+        public void SetInteractable(bool value) => ownInteractable = value;
 
         public event EventHandler<SubmittedEvent> OnSubmittedEvent;
         public event EventHandler<FocussedEvent> OnFocusedEvent;

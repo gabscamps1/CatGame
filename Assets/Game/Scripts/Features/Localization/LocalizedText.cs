@@ -1,3 +1,5 @@
+using CatGame.Core;
+using CatGame.Core.Interfaces;
 using TMPro;
 using UnityEngine;
 
@@ -8,21 +10,25 @@ namespace CatGame.Features.Localization
         [SerializeField] private string id;
         [SerializeField] TextMeshProUGUI text;
 
+        private ILocalizationService localizationService;
+
         private void Awake()
         {
+            localizationService = ServiceLocator.Get<ILocalizationService>();
+
             if (text != null)
-                LocalizationManager.Instance.OnLocalizationChanged += LocalizationManager_OnLocalizationChanged;
+                localizationService.OnLocalizationChanged += LocalizationManager_OnLocalizationChanged;
         }
 
 #if UNITY_EDITOR
         private void OnEnable()
         {
-            LocalizationManager.Instance.OnLocalizationChanged += LocalizationManager_OnLocalizationChanged;
+            localizationService.OnLocalizationChanged += LocalizationManager_OnLocalizationChanged;
         }
 #endif
         private void OnDestroy()
         {
-            LocalizationManager.Instance.OnLocalizationChanged -= LocalizationManager_OnLocalizationChanged;
+            localizationService.OnLocalizationChanged -= LocalizationManager_OnLocalizationChanged;
         }
 
         private void Start()
@@ -33,7 +39,7 @@ namespace CatGame.Features.Localization
 
         private void LocalizationManager_OnLocalizationChanged()
         {
-            text.text = LocalizationManager.Instance.GetTextByID(id);
+            text.text = localizationService.GetTextByID(id);
         }
     }
 }

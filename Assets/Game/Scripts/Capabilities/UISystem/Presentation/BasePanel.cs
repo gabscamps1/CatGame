@@ -8,6 +8,7 @@ namespace CatGame.Capabilities.UISystem
     /// <summary>
     /// Classe base para todos os painéis.
     /// </summary>
+    [DisallowMultipleComponent]
     public abstract class BasePanel : BaseUIScreen, IBasePanel
     {
         [Header("Painel")]

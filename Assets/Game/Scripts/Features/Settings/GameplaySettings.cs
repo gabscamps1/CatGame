@@ -1,28 +1,33 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
 using CatGame.Core;
-using CatGame.Core.Events;
+using CatGame.Capabilities.UISystem;
 
-namespace CatGame.SettingsManagement
+namespace CatGame.Features.Settings
 {
     public class GameplaySettings : MonoBehaviour
     {
-        public string SelectedLanguage { get; private set; }
+        public string SelectedLanguage => GetLanguageOfValue(languageDropdown.Value);
 
         [Header("UI")]
-        [SerializeField] private TMP_Dropdown languageDropdown;
+        [SerializeField] private DropdownElement languageDropdown;
 
-        private ISettingsService settingsService;
+        private ISaveSettingsService settingsService;
+        private ILocalizationService localizationService;
 
         private void Awake()
         {
-            settingsService = ServiceLocator.Get<ISettingsService>();
+            settingsService = ServiceLocator.Get<ISaveSettingsService>();
+            localizationService = ServiceLocator.Get<ILocalizationService>();
 
             languageDropdown.ClearOptions();
-            languageDropdown.AddOptions(new List<string> { "English", "Português (BR)" });
+            languageDropdown.AddOptions(
+                "< English >", 
+                "< Português (BR) >", 
+                "< Spanish (ES) >", 
+                "< Japanese >"
+                );
 
             // Carrega o save.
             LoadSettings();
@@ -30,30 +35,34 @@ namespace CatGame.SettingsManagement
 
         private void Start()
         {
-            // Ao mudar os valores das configurações, a função correspondente é chamada.
-            languageDropdown.onValueChanged.AddListener(SetLanguage);
+            languageDropdown.OnValueChanged += LanguageDropdown_OnValueChanged;
+        }
+
+        private void OnDestroy()
+        {
+            languageDropdown.OnValueChanged -= LanguageDropdown_OnValueChanged;
+        }
+
+        private void LanguageDropdown_OnValueChanged(object sender, DropdownElement.ValueChangedEvent e)
+        {
+            SetLanguage(e.Index);
         }
 
         #region Language
+
         private void SetLanguage(int value)
         {
-            string language = GetLanguageOfValue(languageDropdown.value);
+            string language = GetLanguageOfValue(value);
 
-            // Dispara o evento de troca de idioma.
-            //EventBus.Publish(new LanguageChangedEvent()
-            //{
-            //    Language = language,
-            //});
-
-            SelectedLanguage = language;
-
-            //Core.Logger.Log(SelectedLanguage);
-
-            /*if (LocalizationManager.Instance.AllLanguages.Length > value)
+            if (string.IsNullOrEmpty(language))
             {
-                LocalizationManager.Instance.ChangeLanguage(value);
-                
-            }*/
+                Core.Logger.LogError("Não foi possível selecionar o idioma");
+                return;
+            }
+
+            Core.Logger.Log(SelectedLanguage);
+
+            localizationService.ChangeLanguage(language);
         }
 
         private string GetLanguageOfValue(int value)
@@ -62,7 +71,8 @@ namespace CatGame.SettingsManagement
             {
                 0 => "English",
                 1 => "Portuguese",
-                2 => "Japanese",
+                2 => "Spanish",
+                3 => "Japanese",
                 _ => "English"
             };
 
@@ -75,9 +85,10 @@ namespace CatGame.SettingsManagement
             {
                 "English" => 0,
                 "Portuguese"  => 1,
-                "Japanese" => 2,
+                "Spanish"  => 2,
+                "Japanese" => 3,
                 _ => 0,
-            };
+            };    
 
             return value;
         }
@@ -90,7 +101,8 @@ namespace CatGame.SettingsManagement
             SettingsData settingsData = settingsService.Load();
 
             // Atualiza a UI.
-            languageDropdown.value = GetValueOfLanguage(settingsData.Language);
+            int value = GetValueOfLanguage(settingsData.Language);
+            languageDropdown.SetValue(value);
         }
     }
 }

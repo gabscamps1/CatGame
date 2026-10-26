@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CatGame.Capabilities.UISystem
 {
+    [DisallowMultipleComponent]
     public abstract class BaseUIScreen : MonoBehaviour
     {
         [Header("Animation")]

@@ -1,28 +1,30 @@
-using UnityEngine;
-using UnityEngine.UI;
-using CatGame.Core.Interfaces;
-using CatGame.Core.Data;
+using CatGame.Capabilities.UISystem;
 using CatGame.Core;
+using CatGame.Core.Data;
+using CatGame.Core.Interfaces;
+using UnityEngine;
 
-namespace CatGame.SettingsManagement
+namespace CatGame.Features.Settings
 {
     public class AudioSettings : MonoBehaviour
     {
-        public float MasterVolumeValue => masterVolumeSlider.value;
-        public float MusicVolumeValue => musicVolumeSlider.value;
-        public float SFXVolumeValue => sfxVolumeSlider.value;
+        public float MasterVolumePercentage => masterVolumeSlider.Value / masterVolumeSlider.MaxValue;
+        public float MusicVolumePercentage => musicVolumeSlider.Value / musicVolumeSlider.MaxValue;
+        public float SFXVolumePercentage => sfxVolumeSlider.Value / sfxVolumeSlider.MaxValue;
+        public float VoiceVolumePercentage => voiceVolumeSlider.Value / voiceVolumeSlider.MaxValue;
 
-        [SerializeField] private Slider masterVolumeSlider;
-        [SerializeField] private Slider musicVolumeSlider;
-        [SerializeField] private Slider sfxVolumeSlider;
+        [SerializeField] private SliderElement masterVolumeSlider;
+        [SerializeField] private SliderElement musicVolumeSlider;
+        [SerializeField] private SliderElement sfxVolumeSlider;
+        [SerializeField] private SliderElement voiceVolumeSlider;
 
         private IAudioService audioService;
-        private ISettingsService settingsService;
+        private ISaveSettingsService settingsService;
 
         private void Awake()
         {
             audioService = ServiceLocator.Get<IAudioService>();
-            settingsService = ServiceLocator.Get<ISettingsService>();
+            settingsService = ServiceLocator.Get<ISaveSettingsService>();
         }
 
         private void Start()
@@ -30,23 +32,60 @@ namespace CatGame.SettingsManagement
             // Carrega o save.
             LoadSettings();
 
-            masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
-            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
-            sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
+            masterVolumeSlider.OnValueChanged += MasterVolumeSlider_OnValueChanged;
+            musicVolumeSlider.OnValueChanged += MusicVolumeSlider_OnValueChanged;
+            sfxVolumeSlider.OnValueChanged += SfxVolumeSlider_OnValueChanged;
+            voiceVolumeSlider.OnValueChanged += VoiceVolumeSlider_OnValueChanged;
+        }
+
+        private void OnDestroy()
+        {
+            masterVolumeSlider.OnValueChanged -= MasterVolumeSlider_OnValueChanged;
+            musicVolumeSlider.OnValueChanged -= MusicVolumeSlider_OnValueChanged;
+            sfxVolumeSlider.OnValueChanged -= SfxVolumeSlider_OnValueChanged;
+            voiceVolumeSlider.OnValueChanged -= VoiceVolumeSlider_OnValueChanged;
+        }
+
+        private void MasterVolumeSlider_OnValueChanged(object sender, SliderElement.ValueChangedEvent e)
+        {
+            SetMasterVolume(e.Value);
+        }
+        private void MusicVolumeSlider_OnValueChanged(object sender, SliderElement.ValueChangedEvent e)
+        {
+            SetMusicVolume(e.Value);
+        }
+
+        private void SfxVolumeSlider_OnValueChanged(object sender, SliderElement.ValueChangedEvent e)
+        {
+            SetSFXVolume(e.Value);
+        }
+
+        private void VoiceVolumeSlider_OnValueChanged(object sender, SliderElement.ValueChangedEvent e)
+        {
+            SetVoiceVolume(e.Value);
         }
 
         private void SetMasterVolume(float value)
         {
-            audioService.SetMasterVolume(value);
+            float porcentage = value / masterVolumeSlider.MaxValue;
+            audioService.SetMasterVolume(porcentage);
         }
         private void SetMusicVolume(float value)
         {
-            audioService.SetMusicVolume(value);
+            float porcentage = value / musicVolumeSlider.MaxValue;
+            audioService.SetMusicVolume(porcentage);
         }
 
         private void SetSFXVolume(float value)
         {
-            audioService.SetSFXVolume(value);
+            float porcentage = value / sfxVolumeSlider.MaxValue;
+            audioService.SetSFXVolume(porcentage);
+        }
+
+        private void SetVoiceVolume(float value)
+        {
+            float porcentage = value / voiceVolumeSlider.MaxValue;
+            audioService.SetVoiceVolume(porcentage);
         }
 
         private void LoadSettings()
@@ -54,15 +93,22 @@ namespace CatGame.SettingsManagement
             // Pegar valores salvos ou defaults.
             SettingsData settingsData = settingsService.Load();
 
+            float masterValue = settingsData.MasterVolume * masterVolumeSlider.MaxValue;
+            float musicValue = settingsData.MusicVolume * musicVolumeSlider.MaxValue;
+            float sfxValue = settingsData.SFXVolume * sfxVolumeSlider.MaxValue;
+            float voiceValue = settingsData.VoiceVolume * voiceVolumeSlider.MaxValue;
+
             // Atualiza a UI.
-            masterVolumeSlider.value = settingsData.MasterVolume;
-            musicVolumeSlider.value = settingsData.MusicVolume;
-            sfxVolumeSlider.value = settingsData.SFXVolume;
+            masterVolumeSlider.SetValue(masterValue);
+            musicVolumeSlider.SetValue(musicValue);
+            sfxVolumeSlider.SetValue(sfxValue);
+            voiceVolumeSlider.SetValue(voiceValue);
 
             // Aplica as configs.
-            SetMasterVolume(settingsData.MasterVolume);
-            SetMusicVolume(settingsData.MusicVolume);
-            SetSFXVolume(settingsData.SFXVolume);
+            SetMasterVolume(masterValue);
+            SetMusicVolume(musicValue);
+            SetSFXVolume(sfxValue);
+            SetVoiceVolume(voiceValue);
         }
     }
 }
