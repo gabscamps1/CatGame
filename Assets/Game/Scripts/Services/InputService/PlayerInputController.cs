@@ -28,6 +28,7 @@ namespace CatGame.Services.Input
 
         // UI Inputs.
         public InputAction Navigation => navigateAction;
+        public InputAction SkipCutscene => skipCutsceneAction;
         public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
         public event Action OnCancelled;
@@ -36,6 +37,7 @@ namespace CatGame.Services.Input
         private readonly InputAction submitAction;      
         private readonly InputAction cancelAction;      
         private readonly InputAction tabNavigationAction;      
+        private readonly InputAction skipCutsceneAction;      
 
      
         private readonly InputUser inputUser;
@@ -59,6 +61,7 @@ namespace CatGame.Services.Input
             submitAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Submit");
             cancelAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Cancel");
             tabNavigationAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("TabNavigation");
+            skipCutsceneAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("SkipCutscene");
 
             submitAction.started += SubmitAction_Started;
             cancelAction.started += CancelAction_Started;

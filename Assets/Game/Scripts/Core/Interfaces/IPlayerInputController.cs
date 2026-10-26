@@ -13,6 +13,7 @@ namespace CatGame.Core.Interfaces
 
         // UI Inputs.
         public InputAction Navigation { get;}
+        public InputAction SkipCutscene { get; }
         public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
         public event Action OnCancelled;

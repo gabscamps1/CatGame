@@ -308,7 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707c5ac1d86a4374d8981ceedf4202bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizationManager
-  currentLanguage: 
 --- !u!1 &888619396
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,14 +765,19 @@ MonoBehaviour:
     - scene: Bootstrap
       isToReloadScene: 0
     gameState: 0
-  - sceneID: 1
+  - sceneID: 2
+    sceneSettings:
+    - scene: Cutscene
+      isToReloadScene: 0
+    gameState: 5
+  - sceneID: 3
     sceneSettings:
     - scene: MenuSceneTeste
       isToReloadScene: 0
     gameState: 1
-  - sceneID: 2
+  - sceneID: 4
     sceneSettings:
-    - scene: MainScene
+    - scene: MenuScene
       isToReloadScene: 0
     gameState: 3
 --- !u!114 &1542714750

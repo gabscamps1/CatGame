@@ -10,5 +10,6 @@ namespace CatGame.Core.Enums
         Loading,
         Playing,
         Paused,
+        Cutscene
     }
 }

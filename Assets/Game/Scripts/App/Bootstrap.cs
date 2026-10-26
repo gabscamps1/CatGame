@@ -60,12 +60,12 @@ namespace CatGame.App
 
         private void Start()
         {
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
             // Recarrega as cenas depois de carregar o Bootstrap para evitar que faltem referências necessárias.
             if (!IsActiveScene(BOOTSTRAP_SCENE))
                 ReloadScenes();
 #else
-            sceneLoadingService.LoadAsyncScene(Scenes.MainMenu);
+            sceneLoadingService.LoadAsyncScene(Scenes.Cutscene);
 #endif
         }
 

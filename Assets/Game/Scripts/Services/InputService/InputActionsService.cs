@@ -82,6 +82,7 @@ namespace CatGame.Services.Input
                     SwitchToGame();
                     break;
 
+                case GameState.Cutscene:
                 case GameState.MainMenu:
                 case GameState.Paused:
                     SwitchToUI();

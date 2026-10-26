@@ -7,7 +7,9 @@ namespace CatGame.Core.Enums
     public enum Scenes
     {
         Bootstrap = 0,
-        MainMenu = 1,
-        Playing =2,
+        Splashs = 1,
+        Cutscene = 2,
+        MainMenu = 3,
+        Playing = 4,
     }
 }
