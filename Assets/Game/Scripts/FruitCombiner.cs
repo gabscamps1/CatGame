@@ -43,8 +43,6 @@ public class FruitCombiner : NetworkBehaviour
         if (thisID < otherID)
             return;
         Debug.Log("Testeeeee2");
-
-        GameManager.Instance.IncreaseScore(fruitInfo.PointsWhenAnnihilated);
         
         Vector3 middlePosition = (transform.position + collision.transform.position) / 2f;
 

@@ -777,7 +777,7 @@ MonoBehaviour:
     gameState: 1
   - sceneID: 4
     sceneSettings:
-    - scene: MenuScene
+    - scene: MainScene
       isToReloadScene: 0
     gameState: 3
 --- !u!114 &1542714750

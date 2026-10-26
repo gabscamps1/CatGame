@@ -2072,7 +2072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
-  interactable: 1
+  ownInteractable: 1
   up: {fileID: 594755798}
   down: {fileID: 443614096}
   left: {fileID: 0}
@@ -2583,7 +2583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
-  interactable: 1
+  ownInteractable: 1
   up: {fileID: 385530950}
   down: {fileID: 385530950}
   left: {fileID: 0}
@@ -3363,7 +3363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526fed58dcb922345a11ab78ac029b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.ButtonElement
-  interactable: 1
+  ownInteractable: 1
   up: {fileID: 443614096}
   down: {fileID: 385530950}
   left: {fileID: 0}
@@ -5481,6 +5481,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1130637093}
+  - component: {fileID: 1130637094}
   m_Layer: 0
   m_Name: Server
   m_TagString: Untagged
@@ -5512,6 +5513,20 @@ RectTransform:
   m_AnchoredPosition: {x: 432, y: -603}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1130637094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130637092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa860548114b4fe489c2f1ce4d7208f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ServerMessageManager
+  serverMessageGameObject: {fileID: 1139150791}
+  serverMessageText: {fileID: 1925980023}
 --- !u!1 &1135980507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5597,7 +5612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1139150792}
   m_Layer: 0
-  m_Name: ServerMSG_Big_TMP
+  m_Name: ServerMSG_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6419,7 +6434,6 @@ GameObject:
   - component: {fileID: 1228830380}
   - component: {fileID: 1228830383}
   - component: {fileID: 1228830382}
-  - component: {fileID: 1228830381}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6442,52 +6456,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1542714749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1228830381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228830379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 820eed88ad33e1a4d8122a2cf08f1244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FruitSelector
-  fruitGroups:
-  - fruitSprites: {fileID: 21300000, guid: c42f7f656cfec414c93936f13d0daf50, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: 6746d25b5cf825f40a7c01a8ced74046, type: 3}
-    noPhysicsFruits: {fileID: 6295810406795563352, guid: 1bfe3999838ccfd43aa3769154bd68ac, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: e1f64d6b8df565549925ec7424ed591e, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: 5271f67e8733cee42a07767010191d97, type: 3}
-    noPhysicsFruits: {fileID: 3101456402836904343, guid: dda2d09c612d7d84e8818bc1f32dabdf, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: 89e5ac3b97a44e3419f922755e77c585, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: e2eab755c5f4bba439398298d7945af5, type: 3}
-    noPhysicsFruits: {fileID: 425489816838676623, guid: 86563b9da3bffd64cb70cb6a050fbf8b, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: 8eb1167a28293e5448dea1f1755a94db, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: d7ccef90a5ce6474cac05fe1e599cc1a, type: 3}
-    noPhysicsFruits: {fileID: 9207576042361091020, guid: b6911d36a40bb254aa4f067d1fb3df3a, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: dcc276059a3275a41809e1dfa4a011d3, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: 60a5a4edf26eea34993842e83b143aa4, type: 3}
-    noPhysicsFruits: {fileID: 6434609341491683317, guid: cb6cdaca735ade64e8793665e935d9bd, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: 44508d57c30cd3a429fa17af38d24c07, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: 9234c5fc296f71f4abc9ceecd94ff6e5, type: 3}
-    noPhysicsFruits: {fileID: 2879610384822411533, guid: 8efda5f5c144fc94789148640c42e180, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: b6e442c284363d6478988893805b8d8a, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: c2723ecb0e3bd1f4bac7a7b37282fc0f, type: 3}
-    noPhysicsFruits: {fileID: 318167723120019042, guid: 828fe21cd392d5645b46223651741115, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: d14129dce7333b54c8a66258a4a2d551, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: 0c898e61f52202e44a547a05ac5487a8, type: 3}
-    noPhysicsFruits: {fileID: 1969209940713659365, guid: 5d21cec582c48a04a8d3208105943b29, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: dcbfd3a0297051243addbf44764d7f04, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: c4c330e4d281ce84e97fea2de5239f13, type: 3}
-    noPhysicsFruits: {fileID: 6781539216450566087, guid: a15f862c9fb390c43a90149ca22d10c9, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: a576dded398351744912795f4a358238, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: c37db34805f30d247b4d154520ea5389, type: 3}
-    noPhysicsFruits: {fileID: 2426259654436406577, guid: cd2d86c7b4dfec44a96afbfb9613ee51, type: 3}
-  - fruitSprites: {fileID: 21300000, guid: 493e558feb71c224294bceef81194f2d, type: 3}
-    fruits: {fileID: 2328687092217355811, guid: d54effdf5709fa24192fdefcedfc5683, type: 3}
-    noPhysicsFruits: {fileID: 5852153309685536202, guid: fc5ae4b60847d614099d0ee77d83fada, type: 3}
 --- !u!114 &1228830382
 MonoBehaviour:
   m_ObjectHideFlags: 0

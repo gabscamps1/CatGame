@@ -1,7 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
-using CatGame.Features.CharacterSelection;
 using CatGame.Services.Register;
 using Unity.Netcode;
 using UnityEngine;
@@ -50,6 +49,13 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         playerInputController.OnThrow += PlayerInputController_OnThrow;
     }
 
+    public override void OnNetworkPreDespawn()
+    {
+        playerRegistry.UnregisterController(playerId.Value, this);
+
+        base.OnNetworkPreDespawn();
+    }
+
     public override void OnNetworkSpawn()
     {
         playerId.OnValueChanged += Init;
@@ -57,6 +63,7 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         if (IsServer)
         {
             playerId.Value = previewPlayerId;
+            
 
             if (GameManager.Instance.Boundaries.Length == 0 || playerId.Value.Id >= GameManager.Instance.Boundaries.Length)
                 return;
@@ -67,20 +74,9 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         if (IsClient)
         {
             SetPlayerId(playerId.Value);
-        }      
+        }
 
-        /*for (int i = 0; i < MatchSetup.Players.Count; i++)
-        {
-            if (MatchSetup.Players[i].OwnerId != OwnerClientId)
-                continue;
-
-            int playerIndex = i;
-
-            if (GameManager.Instance.Boundaries.Length == 0 || playerIndex >= GameManager.Instance.Boundaries.Length)
-                return;
-
-            SetAreaToMoveRpc((byte)playerIndex);
-        }*/
+        playerRegistry.RegisterController(playerId.Value, this);
     }
 
     public override void OnNetworkDespawn()

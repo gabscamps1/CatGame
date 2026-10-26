@@ -48,8 +48,8 @@ namespace CatGame.Features.Gameplay
                 if (playerObj.TryGetComponent(out IPlayerIdConfig playerIdConfig))
                     playerIdConfig.SetPlayerId(playerId);
 
-                // Coloca quem escolheu o personagem como dono do objeto
-                playerObj.SpawnAsPlayerObject(slot.OwnerId);
+                // Coloca inicialmente o server como dono de cada objeto.
+                playerObj.SpawnAsPlayerObject(NetworkManager.ServerClientId);
             }
         }
     }

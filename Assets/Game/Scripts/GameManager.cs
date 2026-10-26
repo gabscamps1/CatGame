@@ -3,15 +3,21 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using CatGame.Core.Data;
-using CatGame.Services.Register;
 using Unity.Netcode;
+using System;
+using CatGame.Core;
+using CatGame.Core.Interfaces;
+using CatGame.Core.Data;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private TextMeshProUGUI _scoreText;
+    public enum GameState { NotInit, Playing }
+    private GameState currentGameState = GameState.NotInit;
+    public event Action OnGameStateChanged;
+
+
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private float _fadeTime = 2f;
 
@@ -34,6 +40,45 @@ public class GameManager : NetworkBehaviour
         //SceneManager.sceneLoaded -= FadeGame;
     }
 
+
+
+    public void SetGameState(GameState gameState)
+    {
+        if (currentGameState == gameState || !NetworkManager.IsServer) return;
+        currentGameState = gameState;
+
+        switch (gameState)
+        {  
+            case GameState.NotInit: 
+                break; 
+
+            case GameState.Playing:
+
+                IPlayerRegistry playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
+                
+                // Muda o Ownership para o client dono do player.
+                foreach (PlayerInfo player in playerRegistry.Players)
+                {
+                    if (!playerRegistry.TryGetController(player.playerId, out PlayerController playerController))
+                        continue;
+
+                    if (!playerController.TryGetComponent(out NetworkObject obj))
+                        continue;
+
+                    obj.ChangeOwnership(player.clientId);
+                }
+
+                break;
+        }
+
+        OnGameStateChanged?.Invoke();
+    }
+
+    public GameState GetGameState()
+    {
+        return currentGameState;
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -46,15 +91,6 @@ public class GameManager : NetworkBehaviour
             Destroy(this);
             return;
         }
-
-        //_scoreText.text = currentScore.ToString("D8");
-    }
-
-    public void IncreaseScore(int amount)
-    {
-           //CRIA PREFAB DE PONTO
-        currentScore += amount;
-        //_scoreText.text = currentScore.ToString("D8");
     }
 
     public void ShowScore(Vector3 position, int score)
