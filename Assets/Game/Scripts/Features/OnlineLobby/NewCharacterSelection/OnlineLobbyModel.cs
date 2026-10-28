@@ -149,9 +149,9 @@ namespace CatGame.Features.CharacterSelection
         public void SetReady(int slotIndex, bool ready)
         {
             var networkManager = NetworkManager.Singleton;
-            Debug.Log($"[Lobby] id={GetInstanceID()} spawned={IsSpawned} " +
+            Core.Logger.Log($"[Lobby] id={GetInstanceID()} spawned={IsSpawned} " +
                       $"listening={(networkManager != null && networkManager.IsListening)} " +
-                      $"scene={gameObject.scene.name}", this);
+                      $"scene={gameObject.scene.name}");
 
             if (clientPhase != LobbyPhase.Selecting) return;
             if (!CanControl(slotIndex)) return;
@@ -219,7 +219,7 @@ namespace CatGame.Features.CharacterSelection
         [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
         private void ChangeStateRpc()
         {
-            Debug.Log("Alterando o estado");
+            Core.Logger.Log("Alterando o estado");
             ServiceLocator.Get<IGameStateService>().SetState(GameState.Playing);
         }
 
@@ -247,8 +247,9 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
-            unityTransport.SetConnectionData(ip, (ushort)port);
-            Socket = ip + ":" + port;
+            string genericIp = "0.0.0.0";
+            unityTransport.SetConnectionData(ip, (ushort)port, genericIp);
+            Socket = $"Port: {port}";
 
             NetworkManager.Singleton.StartHost();
 
@@ -261,7 +262,7 @@ namespace CatGame.Features.CharacterSelection
             string localIPAddress = "127.0.0.1";
 
             // Pega todos os endereços de IPs presentes no PC.
-            IPAddress[] ipsAddress = Dns.GetHostAddresses(Dns.GetHostName());
+            /*IPAddress[] ipsAddress = Dns.GetHostAddresses(Dns.GetHostName());
 
             if (ipsAddress == null || ipsAddress.Length == 0)
                 return localIPAddress;
@@ -274,7 +275,7 @@ namespace CatGame.Features.CharacterSelection
                     localIPAddress = ip.ToString();
                     break;
                 }
-            }
+            }*/
 
             return localIPAddress;
         }

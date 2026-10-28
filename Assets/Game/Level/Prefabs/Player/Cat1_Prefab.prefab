@@ -339,10 +339,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e5ad388e177339e449c9fed4172b005d, type: 3}
-    - target: {fileID: 3713799488612486688, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.55
-      objectReference: {fileID: 0}
     - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -387,10 +383,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 77f4489e698d2a442a9845bbdc6ada92, type: 2}
-    - target: {fileID: 7539249220003311426, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -17.27
-      objectReference: {fileID: 0}
     - target: {fileID: 7907947089808159002, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_BoneTransforms.Array.size
       value: 7

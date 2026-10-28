@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 2361044375083839244}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: -19.28, z: 0}
+  m_LocalPosition: {x: 0, y: -17.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -541,7 +541,7 @@ Transform:
   m_GameObject: {fileID: 6000156379612518154}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.262, z: -0.47}
+  m_LocalPosition: {x: 0, y: -1.55, z: -0.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -828,8 +828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12dd2a2ba3083446a48f9bab88c6a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimLineController
-  _fruitThrowTransform: {fileID: 3713799488612486688}
-  _bottomTransform: {fileID: 7539249220003311426}
+  fruitThrowTransform: {fileID: 3713799488612486688}
+  bottomTransform: {fileID: 7539249220003311426}
 --- !u!1 &7595637371329068278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1054,6 @@ GameObject:
   - component: {fileID: 4862043868688485828}
   - component: {fileID: 540485754993951030}
   - component: {fileID: 3857370782398570059}
-  - component: {fileID: 1841354754644045592}
   - component: {fileID: 575219961662467873}
   - component: {fileID: 2345620544802535961}
   m_Layer: 0
@@ -1123,23 +1122,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
   fruitThrowTransform: {fileID: 3713799488612486688}
-  throwFruitController: {fileID: 1841354754644045592}
   playerFruitHand: {fileID: 0}
-  teste: {fileID: 0}
-  playerIndex: 0
---- !u!114 &1841354754644045592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8452811411989202556}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f095fe68045b4b14c97d7e3e3b93af7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ThrowFruitController
-  fruitTransform: {fileID: 3713799488612486688}
 --- !u!114 &575219961662467873
 MonoBehaviour:
   m_ObjectHideFlags: 0

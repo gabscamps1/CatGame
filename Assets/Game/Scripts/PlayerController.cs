@@ -1,7 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
-using CatGame.Services.Register;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,7 +8,6 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform fruitThrowTransform;
-    [SerializeField] private ThrowFruitController throwFruitController;
     [SerializeField] private PlayerFruitHand playerFruitHand;
     private BoxCollider2D boundary;
 

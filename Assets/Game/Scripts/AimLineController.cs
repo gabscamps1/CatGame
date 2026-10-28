@@ -2,41 +2,28 @@ using UnityEngine;
 
 public class AimLineController : MonoBehaviour
 {
-    [SerializeField] private Transform _fruitThrowTransform;
-    [SerializeField] private Transform _bottomTransform;
+    [SerializeField] private Transform fruitThrowTransform;
+    [SerializeField] private Transform bottomTransform;
 
-    private LineRenderer _lineRenderer;
+    private LineRenderer lineRenderer;
 
-    private float _topPos;
-    private float _bottomPos;
-    private float _x;
+    private float topPos;
+    private float bottomPos;
+    private float x;
 
     private void Awake()
     {
-        _lineRenderer = GetComponent<LineRenderer>();    
+        lineRenderer = GetComponent<LineRenderer>();    
     }
 
     private void Update()
     {
-        _x = _fruitThrowTransform.position.x;
-        _topPos = _fruitThrowTransform.position.y;
-        _bottomPos = _bottomTransform.position.y;
+        x = fruitThrowTransform.position.x;
+        topPos = fruitThrowTransform.position.y;
+        bottomPos = bottomTransform.position.y;
 
-        _lineRenderer.SetPosition(0, new Vector3(_x, _topPos));
-        _lineRenderer.SetPosition(1, new Vector3(_x, _bottomPos));
+        lineRenderer.SetPosition(0, new Vector3(x, topPos));
+        lineRenderer.SetPosition(1, new Vector3(x, bottomPos));
 
     }
-
-    /*private void OnValidate()
-    {
-        _lineRenderer = GetComponent<LineRenderer>();
-
-        _x = _fruitThrowTransform.position.x;
-        _topPos = _fruitThrowTransform.position.y;
-        _bottomPos = _bottomTransform.position.y;
-
-        _lineRenderer.SetPosition(0, new Vector3(_x, _topPos));
-        _lineRenderer.SetPosition(1, new Vector3(_x, _bottomPos));
-
-}*/
 }

@@ -2202,7 +2202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 604149604}
   m_Layer: 0
-  m_Name: UI
+  m_Name: MainMenu_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4491,7 +4491,7 @@ GameObject:
   - component: {fileID: 1031861926}
   - component: {fileID: 1031861927}
   m_Layer: 0
-  m_Name: ----------MANAGERS----------
+  m_Name: MainMenu_Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
