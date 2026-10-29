@@ -134,6 +134,7 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
     {
         HandState handState = state.Value;
 
+        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing) return;
         if (handState.tier == 0) return; // Mão vazia
         if (Time.time - lastDropTime < dropCooldown) return;
         if (!float.IsFinite(requestedX)) return;

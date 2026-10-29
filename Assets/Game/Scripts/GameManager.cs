@@ -13,7 +13,7 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public enum GameState { NotInit, Playing }
+    public enum GameState { NotInit, Playing, Finished }
     private GameState currentGameState = GameState.NotInit;
     public event Action OnGameStateChanged;
 

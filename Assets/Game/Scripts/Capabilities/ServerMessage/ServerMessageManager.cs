@@ -1,7 +1,9 @@
 using TMPro;
+using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ServerMessageManager : MonoBehaviour
+public class ServerMessageManager : NetworkBehaviour
 {
     public static ServerMessageManager Instance;
 
@@ -30,5 +32,17 @@ public class ServerMessageManager : MonoBehaviour
     public void HideMessage()
     {
         serverMessageGameObject.SetActive(false);
+    }
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+    public void ShowClientMessageRpc(FixedString32Bytes text)
+    {
+        ShowMessage(text.ToString());
+    }
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+    public void HideClientMessageRpc()
+    {
+        HideMessage();
     }
 }

@@ -46,9 +46,8 @@ namespace CatGame.Features.Cutscene
             if (canSkip)
                 SkipCutscene();
 
-            return;
-
-            if (playerInput.SkipCutscene.IsPressed())
+            // Implementação futura
+            /*if (playerInput.SkipCutscene.IsPressed())
             {
                 countTimeHoldToSkip += Time.deltaTime;
 
@@ -59,7 +58,7 @@ namespace CatGame.Features.Cutscene
             {
                 countTimeHoldToSkip -= Time.deltaTime;
                 countTimeHoldToSkip = Mathf.Max(0, countTimeHoldToSkip);
-            }
+            }*/
         }
 
         private void SkipCutscene()

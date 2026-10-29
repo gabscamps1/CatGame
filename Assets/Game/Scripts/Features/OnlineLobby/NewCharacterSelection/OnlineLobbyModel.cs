@@ -174,12 +174,10 @@ namespace CatGame.Features.CharacterSelection
 
             int slotIndex = FindSlot(sender); // Slot ligado ao client
             if (slotIndex < 0) return;
-            Core.Logger.Log("TENTA DAR O CYCLE 5");
 
             var slots = Snapshot();
             ushort next = LobbyRules.NextAvailable(slots, slotIndex, direction, catalog, allowDuplicateCharacters, id => IsUnlocked(sender, id));
             if (next == 0 || next == slots[slotIndex].CharacterId) return;
-            Core.Logger.Log("TENTA DAR O CYCLE 6: " + next);
 
             LobbySlot slot = this.slots[slotIndex];
             slot.CharacterId = next;

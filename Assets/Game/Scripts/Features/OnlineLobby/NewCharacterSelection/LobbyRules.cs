@@ -58,9 +58,7 @@ namespace CatGame.Features.CharacterSelection
                 int i = ((start + direction * step) % n + n) % n;
                 ushort id = entries[i].Id;
 
-                Core.Logger.Log("ANTES DO SELECT");
                 if (!CanSelect(slots, slot, id, catalog, allowDuplicates)) continue;
-                Core.Logger.Log("DEPOIS DO SELECT");
                 if (isUnlocked != null && !isUnlocked(id)) continue;
                 return id;
             }

@@ -118,11 +118,8 @@ namespace CatGame.Features.CharacterSelection
 
         private int FindControlledSlot()
         {
-            Debug.Log("Lobby Slot Count: " + lobbyService.SlotCount);
-
             for (int i = 0; i < lobbyService.SlotCount; i++)
             {
-                Debug.Log($"SlotIndex: {i} & OwnerId: {lobbyService.GetSlot(i).OwnerId} & LocalClientID: {NetworkManager.Singleton.LocalClientId}");
                 if (lobbyService.CanControl(i))
                     return i;
             }

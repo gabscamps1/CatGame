@@ -2,6 +2,7 @@ using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using Unity.Netcode;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour, IPlayerIdConfig
@@ -31,20 +32,23 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
     private void Awake()
     {
         playerFruitHand = GetComponent<PlayerFruitHand>();
+        
+        inputService = ServiceLocator.Get<IInputService>();
+        playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
     }
 
     private void Start()
     {
-        inputService = ServiceLocator.Get<IInputService>();
-        playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
-
         if (playerRegistry.TryGetPlayerInfo(playerId.Value, out PlayerInfo playerInfo))
         {
             PlayerId playerInputId = new PlayerId(playerInfo.localIndex);
             playerInputController = inputService.GetInputFromPlayer(playerInputId);
+            playerInputController.OnThrow += PlayerInputController_OnThrow;
         }
-
-        playerInputController.OnThrow += PlayerInputController_OnThrow;
+        else
+        {
+            CatGame.Core.Logger.LogError($"Não foi encontrado o player. PlayerId: {playerId.Value}");
+        }
     }
 
     public override void OnNetworkPreDespawn()
@@ -105,6 +109,9 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 
     private void UpdateMovement()
     {
+        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)
+            return;
+
         Vector2 move = playerInputController.Move.ReadValue<Vector2>();
 
         float newPositionX = transform.position.x + (move.x * moveSpeed * Time.deltaTime);

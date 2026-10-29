@@ -75,7 +75,6 @@ namespace CatGame.Features.CharacterSelection
 
         private void LobbyView_CyclePressed(int slotIndex, int direction)
         {
-            Core.Logger.Log("TENTA DAR O CYCLE");
             lobbyModel.CycleCharacter(slotIndex, direction);
         }
 
@@ -85,8 +84,6 @@ namespace CatGame.Features.CharacterSelection
                 lobbyModel.SetReady(slotIndex, true);
             else
                 lobbyModel.RequestStart();
-
-                Core.Logger.Log("PRONTOOOOOOO");
         }
 
         private void LobbyView_CancelPressed(int slotIndex)
