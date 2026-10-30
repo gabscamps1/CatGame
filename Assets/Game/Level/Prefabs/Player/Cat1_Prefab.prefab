@@ -339,14 +339,6 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1314526017
       objectReference: {fileID: 0}
-    - target: {fileID: 575219961662467873, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: SyncPositionY
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 575219961662467873, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: SyncRotAngleZ
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1864905484675193876, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -391,34 +383,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5396668602611373513, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Size.x
-      value: 9.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396668602611373513, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Size.y
-      value: 9.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396668602611373513, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b435d9dfe0c4648429885217bc71fd71, type: 3}
-    - target: {fileID: 5396668602611373513, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5935018773482983452, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.09
-      objectReference: {fileID: 0}
     - target: {fileID: 6842652136487235128, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 77f4489e698d2a442a9845bbdc6ada92, type: 2}
-    - target: {fileID: 7539249220003311426, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.2
-      objectReference: {fileID: 0}
     - target: {fileID: 7907947089808159002, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_BoneTransforms.Array.size
       value: 7
