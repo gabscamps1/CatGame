@@ -9,6 +9,9 @@ public class LanguageDownloaderEditor : EditorWindow
     private readonly string pt = "Portuguese";
     private readonly string en = "English";
     private readonly string jp = "Japanese";
+    private readonly string es = "Spanish";
+    private readonly string cn = "Chinese";
+    private readonly string kr = "Korean";
 
     [MenuItem("Tools/Language Downloader")]
     public static void ShowWindow()
@@ -33,6 +36,21 @@ public class LanguageDownloaderEditor : EditorWindow
         if (GUILayout.Button("Download JSON to Japanese"))
         {
             DownloadJson(jp, "jp.json");
+        }
+
+         if (GUILayout.Button("Download JSON to Spanish"))
+        {
+            DownloadJson(es, "es.json");
+        }
+
+         if (GUILayout.Button("Download JSON to Chinese"))
+        {
+            DownloadJson(cn, "cn.json");
+        }
+
+         if (GUILayout.Button("Download JSON to Korean"))
+        {
+            DownloadJson(kr, "kr.json");
         }
     }
 

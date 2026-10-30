@@ -11,7 +11,7 @@ namespace CatGame.Features.Gameplay
 {
     public class GameInit : MonoBehaviour
     {
-        [Header("Configuração")]
+        [Header("Configuraï¿½ï¿½o")]
         [SerializeField] private string targetSceneName = "MainScene";
         [SerializeField] private int timeToInit;
 
@@ -33,7 +33,7 @@ namespace CatGame.Features.Gameplay
             if (!NetworkManager.Singleton.IsServer || sceneName != targetSceneName)
                 return;
 
-            // Não libera a partida se algum cliente não terminou.
+            // Nï¿½o libera a partida se algum cliente nï¿½o terminou.
             if (clientsTimedOut.Count > 0)
             {
                 sceneReady = false;
@@ -61,9 +61,9 @@ namespace CatGame.Features.Gameplay
                 yield return null;
             }
 
-            Core.Logger.Log("Já chegou no start");
+            Core.Logger.Log("Jï¿½ chegou no start");
 
-            ServerMessageManager.Instance.ShowClientMessageRpc("Start");
+            ServerMessageManager.Instance.ShowClientMessageRpc("Comecem!");
             yield return new WaitForSeconds(0.5f);
             ServerMessageManager.Instance.HideClientMessageRpc();
 

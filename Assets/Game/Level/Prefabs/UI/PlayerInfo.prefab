@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b435d9dfe0c4648429885217bc71fd71, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -249,7 +249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: -2.600006}
+  m_AnchoredPosition: {x: 0.00012207031, y: 5}
   m_SizeDelta: {x: 586, y: 123.60938}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5022773508728707190
@@ -666,6 +666,7 @@ MonoBehaviour:
   score: {fileID: 5011337358856091730}
   ping: {fileID: 7855995576078551832}
   crowObject: {fileID: 2767684617440895160}
+  baseTextColor: {r: 1, g: 1, b: 1, a: 1}
   playerIndex: 0
 --- !u!1 &4428789388846777845
 GameObject:

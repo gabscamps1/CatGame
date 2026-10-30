@@ -1,0 +1,365 @@
+{
+  "text": [
+    {
+      "key": "Teste",
+      "value": "Test2"
+    },
+    {
+      "key": "MENU_PLAY",
+      "value": "开始游戏"
+    },
+    {
+      "key": "MENU_OPTIONS",
+      "value": "选项"
+    },
+    {
+      "key": "MENU_QUIT",
+      "value": "退出"
+    },
+    {
+      "key": "MENU_CREATE_ROOM",
+      "value": "创建房间"
+    },
+    {
+      "key": "MENU_SEARCH_ROOM",
+      "value": "搜索房间"
+    },
+    {
+      "key": "MENU_BACK",
+      "value": "返回"
+    },
+    {
+      "key": "OPTIONS_BUTTON_VIDEO",
+      "value": "视频"
+    },
+    {
+      "key": "OPTIONS_BUTTON_SOUND",
+      "value": "音效"
+    },
+    {
+      "key": "OPTIONS_BUTTON_CREDITS",
+      "value": "制作人员"
+    },
+    {
+      "key": "HEADER_OPTIONS",
+      "value": "选项"
+    },
+    {
+      "key": "OPTIONS_VIDEO_RESOLUTION",
+      "value": "分辨率"
+    },
+    {
+      "key": "OPTIONS_VIDEO_WINDOW_MODE",
+      "value": "窗口模式"
+    },
+    {
+      "key": "WINDOW_TYPE",
+      "value": "窗口类型"
+    },
+    {
+      "key": "WINDOW_TYPE_FULLSCREEN",
+      "value": "全屏"
+    },
+    {
+      "key": "WINDOW_TYPE_EX_FULLSCREEN",
+      "value": "独占全屏"
+    },
+    {
+      "key": "WINDOW_TYPE_WINDOW",
+      "value": "窗口化"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC",
+      "value": "垂直同步"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_ON",
+      "value": "开启"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_OFF",
+      "value": "关闭"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS",
+      "value": "视觉效果"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_ON",
+      "value": "开启"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_OFF",
+      "value": "关闭"
+    },
+    {
+      "key": "OPTIONS_SOUND_GENERAL",
+      "value": "常规"
+    },
+    {
+      "key": "OPTIONS_SOUND_MUSIC",
+      "value": "音乐"
+    },
+    {
+      "key": "OPTIONS_SOUND_SFX",
+      "value": "音效"
+    },
+    {
+      "key": "OPTIONS_SOUND_VOICE",
+      "value": "语音"
+    },
+    {
+      "key": "CREDITS_ALEXANDRE",
+      "value": "背景音乐"
+    },
+    {
+      "key": "CREDITS_ANDREY",
+      "value": "程序设计"
+    },
+    {
+      "key": "CREDITS_ELLEN",
+      "value": "动画"
+    },
+    {
+      "key": "CREDITS_GABRIEL",
+      "value": "UI/UX | 开场动画 | 美术"
+    },
+    {
+      "key": "CREDITS_LUCAS",
+      "value": "音效 | 语音"
+    },
+    {
+      "key": "CREDITS_RODRIGO",
+      "value": "游戏设计 | 视觉特效"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_INSERT",
+      "value": "请输入房间代码。"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_WAITING",
+      "value": "等待玩家加入 (currentPlayers/maxPlayers)。房间代码：roomCode"
+    },
+    {
+      "key": "MULTIPLAYER_HEADER",
+      "value": "多人游戏"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT",
+      "value": "下一步"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_HOST",
+      "value": "等待房主..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
+      "value": "等待玩家..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_READY",
+      "value": "准备就绪"
+    },
+    {
+      "key": "INPUT_BACK",
+      "value": "返回"
+    },
+    {
+      "key": "INPUT_MOVE",
+      "value": "移动"
+    },
+    {
+      "key": "INPUT_RELEASE",
+      "value": "放下"
+    },
+    {
+      "key": "POPUP_HEADER",
+      "value": "HEADER"
+    },
+    {
+      "key": "POPUP_HEADER_ALERT",
+      "value": "警告"
+    },
+    {
+      "key": "POPUP_HEADER_ERROR",
+      "value": "错误"
+    },
+    {
+      "key": "POPUP_HEADER_WAIT",
+      "value": "请稍候"
+    },
+    {
+      "key": "POPUP_HEADER_EXIT",
+      "value": "退出？"
+    },
+    {
+      "key": "POPUP_TEXT",
+      "value": "确定要退出 NEKOPAN Mix! 吗？"
+    },
+    {
+      "key": "POPUP_TEXT_EXIT",
+      "value": "连接错误。"
+    },
+    {
+      "key": "POPUP_TEXT_ERROR",
+      "value": "确定要退出当前对局吗？"
+    },
+    {
+      "key": "POPUP_TEXT_LEAVE_MATCH",
+      "value": "确定要返回主菜单吗？"
+    },
+    {
+      "key": "POPUP_TEXT_MAIN_MENU",
+      "value": "正在等待连接..."
+    },
+    {
+      "key": "POPUP_TEXT_WAITING",
+      "value": "你已被房主踢出。"
+    },
+    {
+      "key": "NEXT_ITEM",
+      "value": "下一个"
+    },
+    {
+      "key": "SERVER_MSG",
+      "value": "服务器消息"
+    },
+    {
+      "key": "SERVER_MSG_DOMINATING",
+      "value": "playerName 正在大显身手！"
+    },
+    {
+      "key": "SERVER_MSG_ELIMINATED",
+      "value": "playerName 已被淘汰！"
+    },
+    {
+      "key": "SERVER_MSG_TIMES_UP",
+      "value": "时间快到了！"
+    },
+    {
+      "key": "SERVER_MSG_TOO_LONG",
+      "value": "你们太慢了！"
+    },
+    {
+      "key": "SERVER_MSG_REMAINS",
+      "value": "剩余 X 名玩家！"
+    },
+    {
+      "key": "SERVER_MSG_EVENT_INCOMING",
+      "value": "即将开始一场活动！"
+    },
+    {
+      "key": "CAT_NAME",
+      "value": "猫咪名称"
+    },
+    {
+      "key": "CAT_NAME_BARISTA",
+      "value": "Jojo"
+    },
+    {
+      "key": "CAT_NAME_BAKER",
+      "value": "Rami"
+    },
+    {
+      "key": "CAT_NAME_FARMER",
+      "value": "Remy"
+    },
+    {
+      "key": "CAT_NAME_PASTRY",
+      "value": "Cap"
+    },
+    {
+      "key": "PLAYER_VICTORY",
+      "value": "playerID 获胜了！"
+    },
+    {
+      "key": "PLAYER_DEFEAT",
+      "value": "变质了……"
+    },
+    {
+      "key": "EVENT_NAME",
+      "value": "活动名称"
+    },
+    {
+      "key": "EVENT_NAME_LIGHTS_OUT",
+      "value": "停电"
+    },
+    {
+      "key": "EVENT_NAME_LOW_GRAVITY",
+      "value": "低重力"
+    },
+    {
+      "key": "EVENT_NAME_FOG",
+      "value": "浓雾"
+    },
+    {
+      "key": "EVENT_NAME_SALES",
+      "value": "销售大成功"
+    },
+    {
+      "key": "EVENT_NAME_CONFUSION",
+      "value": "摊位大混乱"
+    },
+    {
+      "key": "MATCH_START",
+      "value": "准备好了吗？"
+    },
+    {
+      "key": "MATCH_START_COOK",
+      "value": "开 始 烹 饪！"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "准备中..."
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "准备好了！"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "语言"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "葡萄牙语"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "英语"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "日语"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "继续游戏"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "选项"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "退出对局"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "按下 [skipButton] 跳过。"
+    },
+    {
+      "key": "SERVER_MSG_BIG",
+      "value": "MSG BIG"
+    }
+  ],
+  "dialogues": []
+}

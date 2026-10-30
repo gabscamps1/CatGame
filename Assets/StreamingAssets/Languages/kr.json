@@ -1,0 +1,365 @@
+{
+  "text": [
+    {
+      "key": "Teste",
+      "value": "Test2"
+    },
+    {
+      "key": "MENU_PLAY",
+      "value": "플레이"
+    },
+    {
+      "key": "MENU_OPTIONS",
+      "value": "옵션"
+    },
+    {
+      "key": "MENU_QUIT",
+      "value": "종료"
+    },
+    {
+      "key": "MENU_CREATE_ROOM",
+      "value": "방 만들기"
+    },
+    {
+      "key": "MENU_SEARCH_ROOM",
+      "value": "방 찾기"
+    },
+    {
+      "key": "MENU_BACK",
+      "value": "뒤로"
+    },
+    {
+      "key": "OPTIONS_BUTTON_VIDEO",
+      "value": "비디오"
+    },
+    {
+      "key": "OPTIONS_BUTTON_SOUND",
+      "value": "사운드"
+    },
+    {
+      "key": "OPTIONS_BUTTON_CREDITS",
+      "value": "제작진"
+    },
+    {
+      "key": "HEADER_OPTIONS",
+      "value": "옵션"
+    },
+    {
+      "key": "OPTIONS_VIDEO_RESOLUTION",
+      "value": "해상도"
+    },
+    {
+      "key": "OPTIONS_VIDEO_WINDOW_MODE",
+      "value": "창 모드"
+    },
+    {
+      "key": "WINDOW_TYPE",
+      "value": "창 유형"
+    },
+    {
+      "key": "WINDOW_TYPE_FULLSCREEN",
+      "value": "전체 화면"
+    },
+    {
+      "key": "WINDOW_TYPE_EX_FULLSCREEN",
+      "value": "독점 전체 화면"
+    },
+    {
+      "key": "WINDOW_TYPE_WINDOW",
+      "value": "창 모드"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC",
+      "value": "수직 동기화"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_ON",
+      "value": "켜기"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_OFF",
+      "value": "끄기"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS",
+      "value": "시각 효과"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_ON",
+      "value": "켜기"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_OFF",
+      "value": "끄기"
+    },
+    {
+      "key": "OPTIONS_SOUND_GENERAL",
+      "value": "일반"
+    },
+    {
+      "key": "OPTIONS_SOUND_MUSIC",
+      "value": "음악"
+    },
+    {
+      "key": "OPTIONS_SOUND_SFX",
+      "value": "효과음"
+    },
+    {
+      "key": "OPTIONS_SOUND_VOICE",
+      "value": "음성"
+    },
+    {
+      "key": "CREDITS_ALEXANDRE",
+      "value": "배경 음악"
+    },
+    {
+      "key": "CREDITS_ANDREY",
+      "value": "프로그래밍"
+    },
+    {
+      "key": "CREDITS_ELLEN",
+      "value": "애니메이션"
+    },
+    {
+      "key": "CREDITS_GABRIEL",
+      "value": "UI/UX | 오프닝 | 아트"
+    },
+    {
+      "key": "CREDITS_LUCAS",
+      "value": "효과음 | 음성"
+    },
+    {
+      "key": "CREDITS_RODRIGO",
+      "value": "게임 디자인 | 시각 효과"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_INSERT",
+      "value": "방 코드를 입력하세요."
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_WAITING",
+      "value": "플레이어 대기 중 (currentPlayers/maxPlayers). 방 코드: roomCode"
+    },
+    {
+      "key": "MULTIPLAYER_HEADER",
+      "value": "멀티플레이어"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT",
+      "value": "다음"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_HOST",
+      "value": "방장 대기 중..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
+      "value": "플레이어 대기 중..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_READY",
+      "value": "준비 완료"
+    },
+    {
+      "key": "INPUT_BACK",
+      "value": "뒤로"
+    },
+    {
+      "key": "INPUT_MOVE",
+      "value": "이동"
+    },
+    {
+      "key": "INPUT_RELEASE",
+      "value": "놓기"
+    },
+    {
+      "key": "POPUP_HEADER",
+      "value": "HEADER"
+    },
+    {
+      "key": "POPUP_HEADER_ALERT",
+      "value": "경고"
+    },
+    {
+      "key": "POPUP_HEADER_ERROR",
+      "value": "오류"
+    },
+    {
+      "key": "POPUP_HEADER_WAIT",
+      "value": "잠시 기다려 주세요"
+    },
+    {
+      "key": "POPUP_HEADER_EXIT",
+      "value": "종료하시겠습니까?"
+    },
+    {
+      "key": "POPUP_TEXT",
+      "value": "NEKOPAN Mix!에서 나가시겠습니까?"
+    },
+    {
+      "key": "POPUP_TEXT_EXIT",
+      "value": "연결 오류."
+    },
+    {
+      "key": "POPUP_TEXT_ERROR",
+      "value": "게임에서 나가시겠습니까?"
+    },
+    {
+      "key": "POPUP_TEXT_LEAVE_MATCH",
+      "value": "메인 메뉴로 돌아가시겠습니까?"
+    },
+    {
+      "key": "POPUP_TEXT_MAIN_MENU",
+      "value": "연결 대기 중..."
+    },
+    {
+      "key": "POPUP_TEXT_WAITING",
+      "value": "방장에 의해 추방되었습니다."
+    },
+    {
+      "key": "NEXT_ITEM",
+      "value": "다음"
+    },
+    {
+      "key": "SERVER_MSG",
+      "value": "서버 메시지"
+    },
+    {
+      "key": "SERVER_MSG_DOMINATING",
+      "value": "playerName 님이 압도적인 활약을 펼치고 있습니다!"
+    },
+    {
+      "key": "SERVER_MSG_ELIMINATED",
+      "value": "playerName 님이 탈락했습니다!"
+    },
+    {
+      "key": "SERVER_MSG_TIMES_UP",
+      "value": "시간이 얼마 남지 않았습니다!"
+    },
+    {
+      "key": "SERVER_MSG_TOO_LONG",
+      "value": "너무 오래 걸리고 있어요!"
+    },
+    {
+      "key": "SERVER_MSG_REMAINS",
+      "value": "남은 플레이어: X명!"
+    },
+    {
+      "key": "SERVER_MSG_EVENT_INCOMING",
+      "value": "곧 이벤트가 시작됩니다!"
+    },
+    {
+      "key": "CAT_NAME",
+      "value": "고양이 이름"
+    },
+    {
+      "key": "CAT_NAME_BARISTA",
+      "value": "Jojo"
+    },
+    {
+      "key": "CAT_NAME_BAKER",
+      "value": "Rami"
+    },
+    {
+      "key": "CAT_NAME_FARMER",
+      "value": "Remy"
+    },
+    {
+      "key": "CAT_NAME_PASTRY",
+      "value": "Cap"
+    },
+    {
+      "key": "PLAYER_VICTORY",
+      "value": "playerID 님이 승리했습니다!"
+    },
+    {
+      "key": "PLAYER_DEFEAT",
+      "value": "상했어..."
+    },
+    {
+      "key": "EVENT_NAME",
+      "value": "이벤트 이름"
+    },
+    {
+      "key": "EVENT_NAME_LIGHTS_OUT",
+      "value": "정전"
+    },
+    {
+      "key": "EVENT_NAME_LOW_GRAVITY",
+      "value": "저중력"
+    },
+    {
+      "key": "EVENT_NAME_FOG",
+      "value": "안개"
+    },
+    {
+      "key": "EVENT_NAME_SALES",
+      "value": "판매 대성공"
+    },
+    {
+      "key": "EVENT_NAME_CONFUSION",
+      "value": "노점 대혼란"
+    },
+    {
+      "key": "MATCH_START",
+      "value": "준비됐나요?"
+    },
+    {
+      "key": "MATCH_START_COOK",
+      "value": "요리 시작!"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "준비 중..."
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "준비 완료!"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "언어"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "포르투갈어"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "영어"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "일본어"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "게임 재개"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "옵션"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "게임 나가기"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "[skipButton] 키를 눌러 건너뛰세요."
+    },
+    {
+      "key": "SERVER_MSG_BIG",
+      "value": "MSG BIG"
+    }
+  ],
+  "dialogues": []
+}

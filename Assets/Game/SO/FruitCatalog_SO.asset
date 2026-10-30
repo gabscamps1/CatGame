@@ -13,48 +13,48 @@ MonoBehaviour:
   m_Name: FruitCatalog_SO
   m_EditorClassIdentifier: Assembly-CSharp::FruitCatalog
   tiers:
-  - sprite: {fileID: 21300000, guid: c42f7f656cfec414c93936f13d0daf50, type: 3}
+  - sprite: {fileID: 21300000, guid: b435d9dfe0c4648429885217bc71fd71, type: 3}
     diameter: 0.05
     mass: 1
     score: 10
-  - sprite: {fileID: 21300000, guid: e1f64d6b8df565549925ec7424ed591e, type: 3}
-    diameter: 0.05
+  - sprite: {fileID: 21300000, guid: a185a4c20615a6146bc22bb3224f3107, type: 3}
+    diameter: 0.06
     mass: 1
     score: 10
-  - sprite: {fileID: 21300000, guid: 89e5ac3b97a44e3419f922755e77c585, type: 3}
-    diameter: 0.05
+  - sprite: {fileID: 21300000, guid: 1ab097174603dd1478f633ee6635d070, type: 3}
+    diameter: 0.07
     mass: 1
     score: 10
-  - sprite: {fileID: 21300000, guid: 8eb1167a28293e5448dea1f1755a94db, type: 3}
-    diameter: 0.05
+  - sprite: {fileID: 21300000, guid: 889985308cf1d6f47a76220e9b6c294f, type: 3}
+    diameter: 0.08
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: dcc276059a3275a41809e1dfa4a011d3, type: 3}
-    diameter: 0.05
+    diameter: 0.09
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: 44508d57c30cd3a429fa17af38d24c07, type: 3}
-    diameter: 0.05
+    diameter: 0.1
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: b6e442c284363d6478988893805b8d8a, type: 3}
-    diameter: 0.05
+    diameter: 0.11
     mass: 1
     score: 10
-  - sprite: {fileID: 21300000, guid: d14129dce7333b54c8a66258a4a2d551, type: 3}
-    diameter: 0.05
+  - sprite: {fileID: 21300000, guid: f300fd0570d51424eb05cfaab6d11c45, type: 3}
+    diameter: 0.12
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: dcbfd3a0297051243addbf44764d7f04, type: 3}
-    diameter: 0.05
+    diameter: 0.13
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: 81e66161699acd548ab06a4203d690ab, type: 3}
-    diameter: 0.05
+    diameter: 0.14
     mass: 1
     score: 10
   - sprite: {fileID: 21300000, guid: 04c60e250130eb54db78030ce1a3e012, type: 3}
-    diameter: 0.05
+    diameter: 0.15
     mass: 1
     score: 10
-  maxStartTier: 4
+  maxStartTier: 3

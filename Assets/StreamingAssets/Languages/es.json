@@ -1,0 +1,365 @@
+{
+  "text": [
+    {
+      "key": "Teste",
+      "value": "Test2"
+    },
+    {
+      "key": "MENU_PLAY",
+      "value": "JUGAR"
+    },
+    {
+      "key": "MENU_OPTIONS",
+      "value": "OPCIONES"
+    },
+    {
+      "key": "MENU_QUIT",
+      "value": "SALIR"
+    },
+    {
+      "key": "MENU_CREATE_ROOM",
+      "value": "CREAR SALA"
+    },
+    {
+      "key": "MENU_SEARCH_ROOM",
+      "value": "BUSCAR SALA"
+    },
+    {
+      "key": "MENU_BACK",
+      "value": "VOLVER"
+    },
+    {
+      "key": "OPTIONS_BUTTON_VIDEO",
+      "value": "Vídeo"
+    },
+    {
+      "key": "OPTIONS_BUTTON_SOUND",
+      "value": "Sonido"
+    },
+    {
+      "key": "OPTIONS_BUTTON_CREDITS",
+      "value": "Créditos"
+    },
+    {
+      "key": "HEADER_OPTIONS",
+      "value": "OPCIONES"
+    },
+    {
+      "key": "OPTIONS_VIDEO_RESOLUTION",
+      "value": "Resolución"
+    },
+    {
+      "key": "OPTIONS_VIDEO_WINDOW_MODE",
+      "value": "Modo de ventana"
+    },
+    {
+      "key": "WINDOW_TYPE",
+      "value": "TIPO DE VENTANA"
+    },
+    {
+      "key": "WINDOW_TYPE_FULLSCREEN",
+      "value": "Pantalla completa"
+    },
+    {
+      "key": "WINDOW_TYPE_EX_FULLSCREEN",
+      "value": "Pantalla completa exclusiva"
+    },
+    {
+      "key": "WINDOW_TYPE_WINDOW",
+      "value": "Ventana"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC",
+      "value": "Sincronización vertical"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_ON",
+      "value": "Activado"
+    },
+    {
+      "key": "OPTIONS_VIDEO_VSYNC_OFF",
+      "value": "Desactivado"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS",
+      "value": "Efectos visuales"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_ON",
+      "value": "Activado"
+    },
+    {
+      "key": "OPTIONS_VIDEO_EFFECTS_OFF",
+      "value": "Desactivado"
+    },
+    {
+      "key": "OPTIONS_SOUND_GENERAL",
+      "value": "General"
+    },
+    {
+      "key": "OPTIONS_SOUND_MUSIC",
+      "value": "Música"
+    },
+    {
+      "key": "OPTIONS_SOUND_SFX",
+      "value": "Efectos de sonido"
+    },
+    {
+      "key": "OPTIONS_SOUND_VOICE",
+      "value": "Voces"
+    },
+    {
+      "key": "CREDITS_ALEXANDRE",
+      "value": "Banda sonora"
+    },
+    {
+      "key": "CREDITS_ANDREY",
+      "value": "Programación"
+    },
+    {
+      "key": "CREDITS_ELLEN",
+      "value": "Animación"
+    },
+    {
+      "key": "CREDITS_GABRIEL",
+      "value": "UI/UX | Apertura | Arte"
+    },
+    {
+      "key": "CREDITS_LUCAS",
+      "value": "Efectos de sonido | Voces"
+    },
+    {
+      "key": "CREDITS_RODRIGO",
+      "value": "Diseño del juego | Efectos visuales"
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_INSERT",
+      "value": "Introduce el código de la sala."
+    },
+    {
+      "key": "MULTIPLAYER_CONTEXT_WAITING",
+      "value": "Esperando jugadores (currentPlayers/maxPlayers). Código de la sala: roomCode"
+    },
+    {
+      "key": "MULTIPLAYER_HEADER",
+      "value": "MULTIJUGADOR"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT",
+      "value": "CONTINUAR"
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_HOST",
+      "value": "Esperando al anfitrión..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
+      "value": "Esperando jugadores..."
+    },
+    {
+      "key": "MULTIPLAYER_NEXT_READY",
+      "value": "LISTO"
+    },
+    {
+      "key": "INPUT_BACK",
+      "value": "Volver"
+    },
+    {
+      "key": "INPUT_MOVE",
+      "value": "Mover"
+    },
+    {
+      "key": "INPUT_RELEASE",
+      "value": "Soltar"
+    },
+    {
+      "key": "POPUP_HEADER",
+      "value": "HEADER"
+    },
+    {
+      "key": "POPUP_HEADER_ALERT",
+      "value": "ALERTA"
+    },
+    {
+      "key": "POPUP_HEADER_ERROR",
+      "value": "ERROR"
+    },
+    {
+      "key": "POPUP_HEADER_WAIT",
+      "value": "ESPERA"
+    },
+    {
+      "key": "POPUP_HEADER_EXIT",
+      "value": "¿SALIR?"
+    },
+    {
+      "key": "POPUP_TEXT",
+      "value": "¿Quieres salir de NEKOPAN Mix!?"
+    },
+    {
+      "key": "POPUP_TEXT_EXIT",
+      "value": "Error de conexión."
+    },
+    {
+      "key": "POPUP_TEXT_ERROR",
+      "value": "¿Quieres abandonar la partida?"
+    },
+    {
+      "key": "POPUP_TEXT_LEAVE_MATCH",
+      "value": "¿Quieres volver al menú principal?"
+    },
+    {
+      "key": "POPUP_TEXT_MAIN_MENU",
+      "value": "Esperando conexión..."
+    },
+    {
+      "key": "POPUP_TEXT_WAITING",
+      "value": "El anfitrión te ha expulsado."
+    },
+    {
+      "key": "NEXT_ITEM",
+      "value": "Siguiente"
+    },
+    {
+      "key": "SERVER_MSG",
+      "value": "MENSAJE DEL SERVIDOR"
+    },
+    {
+      "key": "SERVER_MSG_DOMINATING",
+      "value": "¡playerName está dominando!"
+    },
+    {
+      "key": "SERVER_MSG_ELIMINATED",
+      "value": "¡playerName ha sido eliminado!"
+    },
+    {
+      "key": "SERVER_MSG_TIMES_UP",
+      "value": "¡El tiempo se está acabando!"
+    },
+    {
+      "key": "SERVER_MSG_TOO_LONG",
+      "value": "¡Están tardando demasiado!"
+    },
+    {
+      "key": "SERVER_MSG_REMAINS",
+      "value": "¡Quedan X jugadores!"
+    },
+    {
+      "key": "SERVER_MSG_EVENT_INCOMING",
+      "value": "¡Un evento comenzará pronto!"
+    },
+    {
+      "key": "CAT_NAME",
+      "value": "NOMBRE DEL GATO"
+    },
+    {
+      "key": "CAT_NAME_BARISTA",
+      "value": "Jojo"
+    },
+    {
+      "key": "CAT_NAME_BAKER",
+      "value": "Rami"
+    },
+    {
+      "key": "CAT_NAME_FARMER",
+      "value": "Remy"
+    },
+    {
+      "key": "CAT_NAME_PASTRY",
+      "value": "Cap"
+    },
+    {
+      "key": "PLAYER_VICTORY",
+      "value": "¡playerID HA GANADO!"
+    },
+    {
+      "key": "PLAYER_DEFEAT",
+      "value": "¡SE ESTROPEÓ...!"
+    },
+    {
+      "key": "EVENT_NAME",
+      "value": "NOMBRE DEL EVENTO"
+    },
+    {
+      "key": "EVENT_NAME_LIGHTS_OUT",
+      "value": "Apagón"
+    },
+    {
+      "key": "EVENT_NAME_LOW_GRAVITY",
+      "value": "Baja gravedad"
+    },
+    {
+      "key": "EVENT_NAME_FOG",
+      "value": "Neblina"
+    },
+    {
+      "key": "EVENT_NAME_SALES",
+      "value": "Éxito de ventas"
+    },
+    {
+      "key": "EVENT_NAME_CONFUSION",
+      "value": "Caos en los puestos"
+    },
+    {
+      "key": "MATCH_START",
+      "value": "¿Preparados?"
+    },
+    {
+      "key": "MATCH_START_COOK",
+      "value": "¡A COCINAR!"
+    },
+    {
+      "key": "PLAYER_STATUS",
+      "value": "Preparando..."
+    },
+    {
+      "key": "PLAYER_STATUS_READY",
+      "value": "¡Listo!"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE",
+      "value": "Idioma"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_BR",
+      "value": "Portugués"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_EN",
+      "value": "Inglés"
+    },
+    {
+      "key": "OPTIONS_VIDEO_LANGUAGE_JP",
+      "value": "Japonés"
+    },
+    {
+      "key": "POPUP_OPTION_1",
+      "value": "OPT1"
+    },
+    {
+      "key": "POPUP_OPTION_2",
+      "value": "OPT2"
+    },
+    {
+      "key": "PAUSE_RESUME",
+      "value": "REANUDAR"
+    },
+    {
+      "key": "PAUSE_OPTIONS",
+      "value": "OPCIONES"
+    },
+    {
+      "key": "PAUSE_LEAVE",
+      "value": "ABANDONAR PARTIDA"
+    },
+    {
+      "key": "INTRO_SKIP",
+      "value": "Pulsa [skipButton] para saltar."
+    },
+    {
+      "key": "SERVER_MSG_BIG",
+      "value": "MSG BIG"
+    }
+  ],
+  "dialogues": []
+}

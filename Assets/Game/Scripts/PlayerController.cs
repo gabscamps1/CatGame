@@ -2,7 +2,7 @@ using CatGame.Core;
 using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using Unity.Netcode;
-using UnityEditor.Rendering;
+//using UnityEditor.Renderer;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour, IPlayerIdConfig
@@ -47,7 +47,7 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         }
         else
         {
-            CatGame.Core.Logger.LogError($"Não foi encontrado o player. PlayerId: {playerId.Value}");
+            CatGame.Core.Logger.LogError($"Nï¿½o foi encontrado o player. PlayerId: {playerId.Value}");
         }
     }
 

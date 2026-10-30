@@ -26,7 +26,10 @@ namespace CatGame.Features.Settings
                 "< English >", 
                 "< Português (BR) >", 
                 "< Spanish (ES) >", 
-                "< Japanese >"
+                "< Japanese >",
+                "< Korean>", 
+                "< Chinese >"
+   
                 );
 
             // Carrega o save.
@@ -73,6 +76,8 @@ namespace CatGame.Features.Settings
                 1 => "Portuguese",
                 2 => "Spanish",
                 3 => "Japanese",
+                4 => "Chinese",
+                5 => "Korean",
                 _ => "English"
             };
 
@@ -87,6 +92,8 @@ namespace CatGame.Features.Settings
                 "Portuguese"  => 1,
                 "Spanish"  => 2,
                 "Japanese" => 3,
+                "Chinese" => 4,
+                "Korean" => 5,
                 _ => 0,
             };    
 
