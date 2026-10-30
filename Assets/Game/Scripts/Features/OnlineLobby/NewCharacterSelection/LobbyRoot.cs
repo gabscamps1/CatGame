@@ -80,7 +80,6 @@ namespace CatGame.Features.CharacterSelection
         {
             yield return new WaitUntil(() => onlineLobbyModel.IsSpawned);
 
-            Debug.Log("BindWithOnline Called");
             Bind(onlineLobbyModel);
             onlineLobbyModel.OnOwnerDisconected += OnlineLobbyModel_OnOwnerDisconected;
         }

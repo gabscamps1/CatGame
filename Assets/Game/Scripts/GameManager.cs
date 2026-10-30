@@ -13,8 +13,9 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public enum GameState { NotInit, Playing, Finished }
-    private GameState currentGameState = GameState.NotInit;
+    public enum GameState : byte { NotInit, Playing, Finished }
+    private readonly NetworkVariable<GameState> serverGameState = new(GameState.NotInit);
+    private GameState localGameState = GameState.NotInit;
     public event Action OnGameStateChanged;
 
 
@@ -40,43 +41,34 @@ public class GameManager : NetworkBehaviour
         //SceneManager.sceneLoaded -= FadeGame;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        serverGameState.OnValueChanged += GameManager_OnGameStateChanged;
 
+        // Inicializa o estado local.
+        GameManager_OnGameStateChanged(GameState.NotInit, serverGameState.Value);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        serverGameState.OnValueChanged -= GameManager_OnGameStateChanged;
+    }
+
+    private void GameManager_OnGameStateChanged(GameState previous, GameState current)
+    {
+        localGameState = current;
+        OnGameStateChanged?.Invoke();
+    }
 
     public void SetGameState(GameState gameState)
     {
-        if (currentGameState == gameState || !NetworkManager.IsServer) return;
-        currentGameState = gameState;
-
-        switch (gameState)
-        {  
-            case GameState.NotInit: 
-                break; 
-
-            case GameState.Playing:
-
-                IPlayerRegistry playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
-                
-                // Muda o Ownership para o client dono do player.
-                foreach (PlayerInfo player in playerRegistry.Players)
-                {
-                    if (!playerRegistry.TryGetController(player.playerId, out PlayerController playerController))
-                        continue;
-
-                    if (!playerController.TryGetComponent(out NetworkObject obj))
-                        continue;
-
-                    obj.ChangeOwnership(player.clientId);
-                }
-
-                break;
-        }
-
-        OnGameStateChanged?.Invoke();
+        if (!IsSpawned || !NetworkManager.IsServer || serverGameState.Value == gameState) return;
+        serverGameState.Value = gameState;
     }
 
     public GameState GetGameState()
     {
-        return currentGameState;
+        return localGameState;
     }
 
     private void Awake()

@@ -68,7 +68,7 @@ namespace CatGame.Features.Gameplay
             ServerMessageManager.Instance.HideClientMessageRpc();
 
 
-            switch (GameManager.Instance.GetGameState())
+            /*switch (GameManager.Instance.GetGameState())
             {
                 case GameManager.GameState.NotInit:
                     break;
@@ -90,7 +90,7 @@ namespace CatGame.Features.Gameplay
                     }
 
                     break;
-            }
+            }*/
 
             GameManager.Instance.SetGameState(GameManager.GameState.Playing);
             Debug.Log("Players liberados");

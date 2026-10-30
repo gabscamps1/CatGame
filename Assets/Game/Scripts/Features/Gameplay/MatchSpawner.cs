@@ -49,7 +49,7 @@ namespace CatGame.Features.Gameplay
                     playerIdConfig.SetPlayerId(playerId);
 
                 // Coloca inicialmente o server como dono de cada objeto.
-                playerObj.SpawnAsPlayerObject(NetworkManager.ServerClientId);
+                playerObj.SpawnAsPlayerObject(slot.OwnerId);
             }
         }
     }

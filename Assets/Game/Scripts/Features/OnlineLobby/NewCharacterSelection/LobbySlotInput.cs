@@ -25,9 +25,6 @@ namespace CatGame.Features.CharacterSelection
             playerInput.Navigation.performed += PlayerInput_OnCycle;
             playerInput.OnSubmitted += PlayerInput_OnSubmitted;
             playerInput.OnCancelled += PlayerInput_OnCancelled;
-
-            Debug.Log("TENTA BINDAR O SLOT NOVAMENTE");
-
         }
 
         public void Unbind()

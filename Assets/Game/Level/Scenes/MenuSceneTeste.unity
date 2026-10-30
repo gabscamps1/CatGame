@@ -2158,7 +2158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7629574164077143005, guid: 7ec3fc4342c24eb49b4821a79b088e09, type: 3}
       propertyPath: m_text
-      value: CONTEXTTEXT
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7806305236116807631, guid: 7ec3fc4342c24eb49b4821a79b088e09, type: 3}
       propertyPath: m_Name

@@ -57,7 +57,6 @@ namespace CatGame.Services.Localization
         private void LoadLanguage(string language)
         {
             string path = GetLanguagePath(language);
-            Core.Logger.Log(path);
 
             if (!File.Exists(path))
             {
