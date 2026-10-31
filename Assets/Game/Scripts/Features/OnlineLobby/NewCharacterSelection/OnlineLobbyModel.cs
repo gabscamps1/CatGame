@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -233,7 +232,6 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
-            string ip = GetLocalIpAddress();
             int port = 1000;
 
             while (!IsPortAvaliable(port))
@@ -245,37 +243,12 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
-            string genericIp = "0.0.0.0";
-            unityTransport.SetConnectionData(ip, (ushort)port, genericIp);
-            Socket = $"Port: {port}";
+            string localIPAddress = "127.0.0.1";
+            string genericIp = "::"; // Aceita conexões IPv4 e IPv6.
+            unityTransport.SetConnectionData(localIPAddress, (ushort)port, genericIp);
 
             NetworkManager.Singleton.StartHost();
-
             NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
-        }
-
-
-        private string GetLocalIpAddress()
-        {
-            string localIPAddress = "127.0.0.1";
-
-            // Pega todos os endereços de IPs presentes no PC.
-            /*IPAddress[] ipsAddress = Dns.GetHostAddresses(Dns.GetHostName());
-
-            if (ipsAddress == null || ipsAddress.Length == 0)
-                return localIPAddress;
-
-            foreach (IPAddress ip in ipsAddress)
-            {
-                // Procura pelo IPV4 dentre esses endereços.
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    localIPAddress = ip.ToString();
-                    break;
-                }
-            }*/
-
-            return localIPAddress;
         }
 
         private bool IsPortAvaliable(int port)
