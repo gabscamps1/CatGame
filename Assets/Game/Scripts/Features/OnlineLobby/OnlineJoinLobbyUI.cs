@@ -26,7 +26,6 @@ namespace CatGame.UI
         {
             inputFieldElement.OnValueChanged -= InputFieldElement_OnValueChanged;
             buttonElement.OnSubmittedEvent -= ButtonElement_OnSubmittedEvent;
-
         }
 
         private void Start()
@@ -82,7 +81,6 @@ namespace CatGame.UI
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
             NetworkManager.Singleton.StartClient();
-            Invoke("Teste", 5f);
         }
 
         private void Singleton_OnClientConnectedCallback(ulong obj)

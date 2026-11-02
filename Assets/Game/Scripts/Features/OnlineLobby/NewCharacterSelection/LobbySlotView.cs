@@ -25,7 +25,7 @@ namespace CatGame.Features.CharacterSelection
         {
             this.editable = editable;
 
-            //playerNameText.text = slot.PlayerName.ToString();
+            //playerNameText.text = slotInput.PlayerName.ToString();
             playerBotImage.sprite = gamepadSprite;
             readyBadge.SetActive(slot.Ready);
             arrowsHint.SetActive(editable && !slot.Ready);

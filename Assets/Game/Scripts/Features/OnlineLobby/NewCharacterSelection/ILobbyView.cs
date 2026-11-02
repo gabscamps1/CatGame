@@ -13,8 +13,8 @@ namespace CatGame.Features.CharacterSelection
         public void SetStartInteractable(bool interactable);
         public LobbySlotView GetSlotView(int slotIndex);
         public event Action<int, int> CyclePressed;
-        public event Action<int> ConfirmPressed; // (slot)
-        public event Action<int> CancelPressed; // (slot)
+        public event Action<int> ConfirmPressed; // (slotInput)
+        public event Action<int> CancelPressed; // (slotInput)
         public event Action StartPressed;
         public event Action OnCloseLobbyPressed;
     }

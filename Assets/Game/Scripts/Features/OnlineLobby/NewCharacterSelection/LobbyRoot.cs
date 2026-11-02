@@ -36,24 +36,31 @@ namespace CatGame.Features.CharacterSelection
 
         private void OnDestroy()
         {
-            createOnlineRoomBtn.OnSubmittedEvent -= CreateOnlineRoomBtn_OnSubmittedEvent;
             lobbyPresenter?.Dispose();
-            if (lobbyService != null) lobbyService.Changed -= RefreshOnlineBinding;
             ReleaseAllInputs();
+
+            createOnlineRoomBtn.OnSubmittedEvent -= CreateOnlineRoomBtn_OnSubmittedEvent;
             onlineLobbyModel.OnOwnerDisconected -= OnlineLobbyModel_OnOwnerDisconected;
+            if (lobbyService != null) lobbyService.Changed -= RefreshOnlineBinding;
         }
-
-        private void OpenLocal()
-        {
-            isOnline = false;
-            // TODO - Abrir local
-        }
-
+     
 
         #region Online
 
         private void OpenOnlineHost()
         {
+            if (NetworkManager.Singleton.ShutdownInProgress)
+            {
+                Core.Logger.LogWarning("A sessão anterior ainda está sendo encerrada");
+                return;
+            }
+
+            if (NetworkManager.Singleton.IsListening)
+            {
+                Core.Logger.LogWarning("Server já estava criado");
+                return;
+            }
+
             isOnline = true;
          
             BeginOnline();
@@ -80,7 +87,7 @@ namespace CatGame.Features.CharacterSelection
         {
             yield return new WaitUntil(() => onlineLobbyModel.IsSpawned);
 
-            Bind(onlineLobbyModel);
+            CreatePresenter(onlineLobbyModel);
             onlineLobbyModel.OnOwnerDisconected += OnlineLobbyModel_OnOwnerDisconected;
         }
 
@@ -93,7 +100,7 @@ namespace CatGame.Features.CharacterSelection
 
         private void RefreshOnlineBinding()
         {
-           /* lobbySlotInput.Unbind();
+           /*lobbySlotInput.Unbind();
 
             Debug.Log("PlayerJoined");
             if (lobbyService == null)
@@ -105,7 +112,7 @@ namespace CatGame.Features.CharacterSelection
             if (slotIndex < 0)
                 return;
 
-            lobbySlotInput.Bind(lobbyView.GetSlotView(slotIndex));*/
+            lobbySlotInput.CreatePresenter(lobbyView.GetSlotView(slotIndex));*/
 
             int slot = FindControlledSlot();
             if (slot < 0 || slot == onlineSlot) return;
@@ -128,8 +135,6 @@ namespace CatGame.Features.CharacterSelection
 
         #endregion
 
-
-
         private void BindSlot(int slot)
         {
             UnbindSlot(slot);
@@ -137,6 +142,7 @@ namespace CatGame.Features.CharacterSelection
             LobbySlotInput slotInput = new LobbySlotInput();
             slotInput.Bind(lobbyView.GetSlotView(slot));
 
+            lobbyService?.SetSlotInput(slotInput);
             bindings[slot] = slotInput;
         }
 
@@ -149,7 +155,7 @@ namespace CatGame.Features.CharacterSelection
             }
         }
 
-        // Chamar ao sair do lobby (ex.: ao iniciar a partida) para bloquear os inputs do lobby.
+        // Chamar ao sair do lobby (ex: ao iniciar a partida) para bloquear os inputs do lobby.
         public void ReleaseAllInputs()
         {
             foreach (var bind in bindings.Values) 
@@ -159,7 +165,7 @@ namespace CatGame.Features.CharacterSelection
             onlineSlot = -1;
         }
 
-        private void Bind(ILobbyService lobbyModel)
+        private void CreatePresenter(ILobbyService lobbyModel)
         {
             if (lobbyService != null) lobbyService.Changed -= RefreshOnlineBinding;
             lobbyPresenter?.Dispose();
@@ -173,5 +179,18 @@ namespace CatGame.Features.CharacterSelection
                 RefreshOnlineBinding();
             }
         }
+
+
+
+
+        #region NotImplemented
+
+        private void OpenLocal()
+        {
+            isOnline = false;
+            // TODO - Abrir local
+        }
+
+        #endregion
     }
 }

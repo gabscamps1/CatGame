@@ -8,7 +8,7 @@ namespace CatGame.Core.Interfaces
     {
         public void Register(INavigableElement element, bool isDefault = false);
         public void SetDefaultForPlayer(PlayerId player, INavigableElement element);
-        
+        public void ResetFocusToDefault(PlayerId player);
         public void Enter(PlayerId player);
         public void Exit(PlayerId player);
         public void SetElementFocus(PlayerId player, INavigableElement element);

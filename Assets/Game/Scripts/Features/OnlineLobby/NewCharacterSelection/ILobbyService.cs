@@ -9,13 +9,14 @@ namespace CatGame.Features.CharacterSelection
         public event Action OnOwnerDisconected;
         public int SlotCount { get; }
         public LobbySlot GetSlot(int index);
-        public bool CanControl(int slotIndex);             // esta máquina pode mexer neste slot?
+        public bool CanControl(int slotIndex);             // esta máquina pode mexer neste slotInput?
 
         public void CycleCharacter(int slotIndex, int direction);   // -1 ou +1
         public void SetReady(int slotIndex, bool ready);
         public void RequestStart();
 
         public void RequestCloseLobby();
+        public void SetSlotInput(LobbySlotInput slotInput);
 
         public string Socket {  get; }
     }

@@ -15,45 +15,77 @@ namespace CatGame.Features.OnlineLobby
 
         public event Action OnConfirmed;
         public event Action OnCancelled;
+        public event Action OnHidedPopup;
 
+        private readonly PlayerId playerId = new PlayerId(0);
         INavigationGroup navigationGroup;
 
         private void Awake()
         {
             navigationGroup = new NavigationGroup(NavigationMode.Shared);
-            navigationGroup.Register(confirmButton);
+            navigationGroup.Register(confirmButton, true);
             navigationGroup.Register(cancelButton);
 
             confirmButton.OnSubmittedEvent += ConfirmButton_OnSubmittedEvent;
             cancelButton.OnSubmittedEvent += CancelButton_OnSubmittedEvent;
+            navigationGroup.OnCancelRequested += NavigationGroup_OnCancelRequested;
         }
+
+        
 
         protected override void OnDestroy()
         {
             confirmButton.OnSubmittedEvent -= ConfirmButton_OnSubmittedEvent;
             cancelButton.OnSubmittedEvent -= CancelButton_OnSubmittedEvent;
+            navigationGroup.OnCancelRequested -= NavigationGroup_OnCancelRequested;
         }
 
         private void ConfirmButton_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
         {
+            // Se não for o player 1, não navega.
+            if (e.PlayerId.Id != 0)
+                return;
+
             OnConfirmed?.Invoke();
         }
 
         private void CancelButton_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
         {
+            // Se não for o player 1, não navega.
+            if (e.PlayerId.Id != 0)
+                return;
+
+            OnCancelled?.Invoke();
+        }
+
+        private void NavigationGroup_OnCancelRequested(object sender, PlayerId e)
+        {
+            // Se não for o player 1, não navega.
+            if (e.Id != 0)
+                return;
+
             OnCancelled?.Invoke();
         }
 
         protected override void OnAfterShow()
         {
             IUINavigationService uiNavigationService = ServiceLocator.Get<IUINavigationService>();
-            uiNavigationService.PushGroup(new PlayerId(0), navigationGroup, false); // Somente o jogador 1 navega.
+            uiNavigationService.PushGroup(playerId, navigationGroup, false); // Somente o jogador 1 navega.
         }
 
         protected override void OnAfterHide()
         {
             IUINavigationService uiNavigationService = ServiceLocator.Get<IUINavigationService>();
-            uiNavigationService.PopGroup(new PlayerId(0), navigationGroup); // Somente o jogador 1 navega.
+            INavigationGroup activeGroup = uiNavigationService.GetActiveGroup(playerId);
+
+            // Garante que somente esse grupo seja fechado.
+            if (activeGroup != null && activeGroup == navigationGroup)
+            {
+                uiNavigationService.PopGroup(playerId, navigationGroup);
+                activeGroup.ResetFocusToDefault(playerId);
+
+                OnHidedPopup?.Invoke();
+            }            
         }
     }
 }

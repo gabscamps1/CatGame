@@ -237,7 +237,7 @@ namespace CatGame.Capabilities.UISystem
                 navigationService.PushGroup(player, menuPresenter.navigationGroups[menuPresenter.navigationSystem.CurrentMenu]);*/
         }
 
-        private async void ReturnMenu()
+        public async void ReturnMenu(bool forceReturn = false)
         {
             GroupMenu currentMenu = CurrentGroupMenu;
             int currentMenuIndex = CurrentMenuIndex;
@@ -248,7 +248,7 @@ namespace CatGame.Capabilities.UISystem
             if (isSubMenu && currentMenuIndex == 0)
             {
                 // Confere se pode fechar o menu atual
-                if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
+                if (!forceReturn && (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide())))
                     return;
 
                 // Voltar pro menuPresenter principal.
@@ -262,7 +262,7 @@ namespace CatGame.Capabilities.UISystem
             }
 
             // Confere se pode fechar o menu atual
-            if (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide()))
+            if (!forceReturn && (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide())))
                 return;
 
             bool shouldReset = currentMenu.ResetOnBackwardTransition;

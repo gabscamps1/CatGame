@@ -36,7 +36,7 @@ namespace CatGame.Features.CharacterSelection
 
         public override bool CanHide()
         {
-            //OnCloseLobbyPressed?.Invoke();
+            OnCloseLobbyPressed?.Invoke();
             return false;
         }
 
@@ -59,7 +59,7 @@ namespace CatGame.Features.CharacterSelection
 
         public void CloseMenu()
         {
-            menuController.ChangeMenu(1, true);
+            menuController.ReturnMenu(true);
         }
 
         public void ShotSocket(string socket)

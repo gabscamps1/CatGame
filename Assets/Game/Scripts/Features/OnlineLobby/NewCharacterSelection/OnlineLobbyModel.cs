@@ -3,6 +3,7 @@ using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 using CatGame.Features.OnlineLobby;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -24,8 +25,7 @@ namespace CatGame.Features.CharacterSelection
 
         readonly NetworkList<LobbySlot> slots = new();
         readonly NetworkVariable<LobbyPhase> phase = new(LobbyPhase.Selecting);
-        private LobbyPhase clientPhase = LobbyPhase.Selecting;
-        readonly Dictionary<ulong, float> lastCommandTime = new();   // só no server
+        readonly Dictionary<ulong, float> lastCommandTime = new(); // Só no server
 
         public event Action Changed;
         public event Action OnNetworkSpawned;
@@ -37,7 +37,11 @@ namespace CatGame.Features.CharacterSelection
         private IUIService uiService;
         private CloseQuitLobbyPopUp popUp;
 
+        private LobbySlotInput slotInput;
+
         public string Socket { get; private set; }
+
+        #region Unity
 
         private void Awake()
         {
@@ -50,23 +54,25 @@ namespace CatGame.Features.CharacterSelection
             uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
             base.OnDestroy();
         }
-
-        public bool CanControl(int slotIndex) 
-        {
-            return slotIndex >= 0 && slotIndex < slots.Count &&
-                   slots[slotIndex].OwnerId == NetworkManager.LocalClientId;
-        }
-
-
         public override void OnNetworkSpawn()
         {
-            slots.OnListChanged += _ => Changed?.Invoke();
-            phase.OnValueChanged += (_, _) => Changed?.Invoke();
+            // Sessão nova reseta informações anteriores que podem ter sido mantidas.
+            if (IsServer)
+            {             
+                slots.Clear();
+                phase.Value = LobbyPhase.Selecting;
+                lastCommandTime.Clear();
+            }
+
+            slots.OnListChanged += OnSlotsChanged;
+            phase.OnValueChanged += OnPhaseChanged;
+            NetworkManager.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
 
             if (IsServer)
             {
                 NetworkManager.OnClientConnectedCallback += AddSlotFor;
-                NetworkManager.OnClientDisconnectCallback += RemoveSlotFor;
+                NetworkManager.OnClientDisconnectCallback += RemoveSlotFor;              
+
                 foreach (var id in NetworkManager.ConnectedClientsIds) AddSlotFor(id);
             }
 
@@ -76,20 +82,35 @@ namespace CatGame.Features.CharacterSelection
 
         public override void OnNetworkDespawn()
         {
-            if (IsServer && NetworkManager != null)
+            slots.OnListChanged -= OnSlotsChanged;
+            phase.OnValueChanged -= OnPhaseChanged;
+
+            if (NetworkManager != null)
             {
                 NetworkManager.OnClientConnectedCallback -= AddSlotFor;
                 NetworkManager.OnClientDisconnectCallback -= RemoveSlotFor;
+                NetworkManager.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
             }
         }
 
+        private void OnSlotsChanged(NetworkListEvent<LobbySlot> change) => Changed?.Invoke();
+        private void OnPhaseChanged(LobbyPhase previous, LobbyPhase current) => Changed?.Invoke();
+
+        #endregion
+
+        public bool CanControl(int slotIndex)
+        {
+            return slotIndex >= 0 && slotIndex < slots.Count &&
+                   slots[slotIndex].OwnerId == NetworkManager.LocalClientId;
+        }
+
         #region ServerSlots
-       
+
         private void AddSlotFor(ulong clientId)
         {
             if (FindSlot(clientId) >= 0) return;
 
-            ushort currentSlotNumber = (ushort)(slots.Count + 1); // Pega o slot que está sendo adicionado. Exemplo: Vai entrar um segundo player agora, ou seja, o slot ainda é igual a 1. slot[1] 
+            ushort currentSlotNumber = (ushort)(slots.Count + 1); // Pega o slotInput que está sendo adicionado. Exemplo: Vai entrar um segundo player agora, ou seja, o slotInput ainda é igual a 1. slotInput[1] 
             ushort characterId = catalog.TryGet(currentSlotNumber, out var entry) ? entry.Id : (ushort)0;
 
             slots.Add(new LobbySlot
@@ -139,7 +160,6 @@ namespace CatGame.Features.CharacterSelection
 
         public void CycleCharacter(int slotIndex, int direction)
         {
-            if (clientPhase != LobbyPhase.Selecting) return;
             if (!CanControl(slotIndex)) return;
             if (direction != -1 && direction != 1) return;
             CycleCharacterRpc((sbyte)direction);
@@ -152,7 +172,6 @@ namespace CatGame.Features.CharacterSelection
                       $"listening={(networkManager != null && networkManager.IsListening)} " +
                       $"scene={gameObject.scene.name}");
 
-            if (clientPhase != LobbyPhase.Selecting) return;
             if (!CanControl(slotIndex)) return;
             SetReadyRpc(ready);
         }
@@ -228,7 +247,7 @@ namespace CatGame.Features.CharacterSelection
         {
             if (NetworkManager.Singleton.IsListening)
             {
-                Debug.Log("Server já estava criado");
+                Core.Logger.LogWarning("Server já estava criado");
                 return;
             }
 
@@ -244,11 +263,10 @@ namespace CatGame.Features.CharacterSelection
             }
 
             string localIPAddress = "127.0.0.1";
-            string genericIp = "::"; // Aceita conexões IPv4 e IPv6.
+            string genericIp = "0.0.0.0"; // Aceita conexões IPv4 e IPv6.
             unityTransport.SetConnectionData(localIPAddress, (ushort)port, genericIp);
 
             NetworkManager.Singleton.StartHost();
-            NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
         }
 
         private bool IsPortAvaliable(int port)
@@ -293,7 +311,8 @@ namespace CatGame.Features.CharacterSelection
             // Quando a popup é aberta, se inscreve nos eventos da popup
             popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
             popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
-            clientPhase = LobbyPhase.None;
+            popUp.OnHidedPopup += CloseQuitLobbyPopUp_OnHidedPopup;
+            slotInput?.DisableInputsToThisSlot(); // Desabilita o input do lobby.
         }
 
         private void CloseQuitLobbyPopUp_OnConfirmed()
@@ -304,15 +323,42 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
-            CloseLobby();
+            // Popup não for o foco atual, então ignora o código.
+            if (uiService.CurrentPanelType.Value != PanelType.QuitLobbyPopup)
+                return;
+
             uiService.Pop();
-            //clientPhase = LobbyPhase.Selecting;
+            CloseLobby();
+            DisposePopupEvents();
         }
 
         private void CloseQuitLobbyPopUp_OnCancelled()
         {
-            uiService.Pop();
-            //clientPhase = LobbyPhase.Selecting;
+            // Popup não for o foco atual, então ignora o código.
+            if (uiService.CurrentPanelType.Value != PanelType.QuitLobbyPopup)
+                return;
+
+            uiService.Pop();          
+        }
+
+         
+        private void CloseQuitLobbyPopUp_OnHidedPopup()
+        {
+            DisposePopupEvents();
+            StartCoroutine(RestoreInput());
+        }
+
+        private IEnumerator RestoreInput()
+        {
+            yield return null;
+            slotInput?.EnableInputToThisSlot();          
+        }
+
+        private void DisposePopupEvents()
+        {
+            popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
+            popUp.OnCancelled -= CloseQuitLobbyPopUp_OnCancelled;
+            popUp.OnHidedPopup -= CloseQuitLobbyPopUp_OnHidedPopup;
         }
 
         /// <summary>
@@ -324,6 +370,11 @@ namespace CatGame.Features.CharacterSelection
         }
 
         #endregion
+
+        public void SetSlotInput(LobbySlotInput slotInput)
+        {
+            this.slotInput = slotInput;
+        }
 
         private void UiService_OnCurrentUIChanged(PanelType? obj)
         {
@@ -338,13 +389,12 @@ namespace CatGame.Features.CharacterSelection
 
         private void Singleton_OnClientDisconnectCallback(ulong clientID)
         {
-            // Volta pro menu anterior quando o próprio Owner é desconectado.
-            if (clientID == NetworkManager.Singleton.LocalClientId)
-            {
-                OnOwnerDisconected?.Invoke();
-                NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
+            if (clientID != NetworkManager.ServerClientId && clientID != NetworkManager.LocalClientId)
                 return;
-            }
+
+            OnOwnerDisconected?.Invoke();
+            NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
+            return;
         }
     }
 }

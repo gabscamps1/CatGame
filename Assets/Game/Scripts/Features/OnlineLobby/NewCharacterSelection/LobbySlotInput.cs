@@ -42,8 +42,10 @@ namespace CatGame.Features.CharacterSelection
 
         private void PlayerInput_OnCycle(InputAction.CallbackContext ctx) 
         {
+            Debug.Log("Será que o input está desativado?");
             if (view == null || !inputEnabled) return;
 
+            Debug.Log("Enviando input de cycle");
             int direction = (int)ctx.ReadValue<Vector2>().x;
             view.Cycle(direction);
         }
@@ -60,7 +62,7 @@ namespace CatGame.Features.CharacterSelection
 
         private void PlayerInput_OnSubmitted() { if (view != null && inputEnabled) view.Confirm(); }
         private void PlayerInput_OnCancelled() { if (view != null && inputEnabled) view.Cancel(); }
-
+        
         public void Dispose()
         {
             Unbind();
