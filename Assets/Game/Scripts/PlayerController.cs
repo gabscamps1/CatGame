@@ -88,14 +88,11 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         if (!inputHandler.IsInitialized)
             InitializePlayer(playerId.Value);
 
-        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)
-        {
-            Debug.Log("Não pode mover");
+        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)     
             return;
-        }
+        
 
         Vector2 move = inputHandler.ReadMove();
-        Debug.Log($"Move: {move}");
         playerMovement.Move(move, Time.deltaTime);
     }
 

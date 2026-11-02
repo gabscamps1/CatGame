@@ -62,6 +62,7 @@ namespace CatGame.Features.CharacterSelection
                 slots.Clear();
                 phase.Value = LobbyPhase.Selecting;
                 lastCommandTime.Clear();
+                ConnectionManager.Instance.OpenConnections();
             }
 
             slots.OnListChanged += OnSlotsChanged;
@@ -226,6 +227,7 @@ namespace CatGame.Features.CharacterSelection
             if (phase.Value != LobbyPhase.Selecting) return;
             if (!LobbyRules.CanStart(Snapshot())) return;
 
+            ConnectionManager.Instance.CloseConnections();
             MatchSetup.Capture(Snapshot());
             phase.Value = LobbyPhase.Starting;
             ChangeStateRpc();
