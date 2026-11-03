@@ -21,6 +21,7 @@ public class ScoreManager : NetworkBehaviour
 
     public static ScoreManager Instance;
 
+    public readonly List<ScoreEntry> ScoreEntrys = new();
     private readonly NetworkList<ScoreEntry> scoreEntrys = new();
 
     private void Awake()
