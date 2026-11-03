@@ -1,75 +1,44 @@
-using System.Collections;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using Unity.Netcode;
-using System;
 using CatGame.Core;
-using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
+using CatGame.Core.Interfaces;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public enum GameState : byte { NotInit, Playing, Finished }
-    private readonly NetworkVariable<GameState> serverGameState = new(GameState.NotInit);
-    private GameState localGameState = GameState.NotInit;
-    public event Action OnGameStateChanged;
-
-
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private float _fadeTime = 2f;
 
+    public GameObject ScoreWhenCombined;
+
+    public float TimeTillGameOver = 1.5f;
+
+    // Player Settings
     [Header("ToPlayer")]
     public BoxCollider2D[] Boundaries => boundaries;
     [SerializeField] private BoxCollider2D[] boundaries; // Na ordem. Boundary Player 1, Player2, ...
+    private readonly NetworkList<PlayerId> playerLost = new();
 
-    public GameObject ScoreWhenCombined;
+    // Player
+    public List<PlayerId> PlayerLost { get; private set; } = new();
+    public event Action<PlayerId> OnPlayerLost;
 
-    private int currentScore;
-    public float TimeTillGameOver = 1.5f;
+    // Game State Settings
+    public enum GameState : byte { NotInit, Playing, GameOver }
+    private readonly NetworkVariable<GameState> serverGameState = new(GameState.NotInit);
+    private GameState localGameState = GameState.NotInit;
+    public event Action<GameState> OnGameStateChanged;
 
-    private void OnEnable()
-    {
-        //SceneManager.sceneLoaded += FadeGame;
-    }
 
-    private void OnDisable()
-    {
-        //SceneManager.sceneLoaded -= FadeGame;
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        serverGameState.OnValueChanged += GameManager_OnGameStateChanged;
-
-        // Inicializa o estado local.
-        GameManager_OnGameStateChanged(GameState.NotInit, serverGameState.Value);
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        serverGameState.OnValueChanged -= GameManager_OnGameStateChanged;
-    }
-
-    private void GameManager_OnGameStateChanged(GameState previous, GameState current)
-    {
-        localGameState = current;
-        OnGameStateChanged?.Invoke();
-    }
-
-    public void SetGameState(GameState gameState)
-    {
-        if (!IsSpawned || !NetworkManager.IsServer || serverGameState.Value == gameState) return;
-        serverGameState.Value = gameState;
-    }
-
-    public GameState GetGameState()
-    {
-        return localGameState;
-    }
+    
 
     private void Awake()
     {
@@ -85,6 +54,90 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        //SceneManager.sceneLoaded += FadeGame;
+    }
+
+    private void OnDisable()
+    {
+        //SceneManager.sceneLoaded -= FadeGame;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        serverGameState.OnValueChanged += GameManager_OnGameStateChanged;
+        playerLost.OnListChanged += PlayerLostList_OnListChanged;
+
+        // Inicializa o estado local.
+        GameManager_OnGameStateChanged(GameState.NotInit, serverGameState.Value);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        serverGameState.OnValueChanged -= GameManager_OnGameStateChanged;
+        playerLost.OnListChanged -= PlayerLostList_OnListChanged;
+    }
+
+    #region Player
+
+    private void PlayerLostList_OnListChanged(NetworkListEvent<PlayerId> changeEvent)
+    {
+        PlayerLost.Add(changeEvent.Value);           
+        OnPlayerLost?.Invoke(changeEvent.Value);
+    }
+
+    #endregion
+
+    #region Game State
+
+    private void GameManager_OnGameStateChanged(GameState previous, GameState current)
+    {
+        localGameState = current;
+        OnGameStateChanged?.Invoke(current);
+    }
+
+    public void SetGameState(GameState gameState)
+    {
+        if (!IsSpawned || !NetworkManager.IsServer || serverGameState.Value == gameState) return;
+        serverGameState.Value = gameState;
+    }
+
+    public GameState GetGameState()
+    {
+        return localGameState;
+    }
+
+    #endregion
+
+    #region Game
+
+    public void StartGame()
+    {
+        if (!IsSpawned || !NetworkManager.IsServer || serverGameState.Value == GameState.Playing) return;
+        serverGameState.Value = GameState.Playing;
+    }
+
+    public void PlayerGameOver(PlayerId player)
+    {
+        if (!IsSpawned || !IsServer || playerLost.Contains(player) || player == PlayerId.None) return;
+        playerLost.Add(player);
+    }
+
+    public void GameOver()
+    {
+        if (!IsSpawned || !NetworkManager.IsServer || serverGameState.Value == GameState.GameOver) return;        
+        serverGameState.Value = GameState.GameOver;
+    }
+
+    #endregion
+
+
+
+
+
+    
+
     public void ShowScore(Vector3 position, int score)
     {
         Debug.Log(position + " " + score);
@@ -97,11 +150,6 @@ public class GameManager : NetworkBehaviour
 
         TextMeshPro text = scoreText.GetComponent<TextMeshPro>();
         text.text = score.ToString();
-    }
-
-    public void GameOver()
-    {
-        StartCoroutine(ResetGame());
     }
 
     private IEnumerator ResetGame()
@@ -156,4 +204,7 @@ public class GameManager : NetworkBehaviour
 
         _gameOverPanel.gameObject.SetActive(false);
     }
+
+
+   
 }

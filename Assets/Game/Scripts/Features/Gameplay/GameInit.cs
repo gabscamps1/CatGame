@@ -11,9 +11,10 @@ namespace CatGame.Features.Gameplay
 {
     public class GameInit : MonoBehaviour
     {
-        [Header("Configura��o")]
+        [Header("Settings")]
         [SerializeField] private string targetSceneName = "MainScene";
         [SerializeField] private int timeToInit;
+
         private void Awake()
         {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
@@ -87,7 +88,7 @@ namespace CatGame.Features.Gameplay
                     break;
             }*/
 
-            GameManager.Instance.SetGameState(GameManager.GameState.Playing);
+            GameManager.Instance.StartGame();
             Debug.Log("Players liberados");
         }
     }
