@@ -1,0 +1,21 @@
+SISTEMA DE SOM DA UI - CatGame (nenhum script existente foi alterado)
+
+1) Copie a pasta UISound para Assets/Game/Scripts/Capabilities/UISystem/Sound
+   (e os sons de Sounds/ para Assets/Game/Audio, por exemplo).
+2) Para cada som: botão direito > Create > Sound > Audio Asset e arraste o clip.
+   Crie: Hover, Next, Back, Pause, Popup, StartGame.
+
+ONDE COLOCAR
+- UIElementSound -> em cada botão/toggle/dropdown.
+    Hover Sound = Hover
+    Click Sound Type = Next (avançar) ou Back (voltar)
+    Next Sound = Next / Back Sound = Back
+  IMPORTANTE: deixe vazios os campos "On Click Sound" e "On Select Sound" do ButtonElement
+  nesses botões, senão tocam dois sons.
+  O hover precisa de EventSystem na cena e do Image do botão com Raycast Target ligado.
+- PopupSound -> no objeto da mensagem (serverMessageGameObject do ServerMessageManager)
+  ou em qualquer popup. Show Sound = Popup.
+- GameStateSound -> um só, em um objeto da MainScene.
+    Pause Sound = Pause, Start Match Sound = StartGame.
+  O pause toca ao entrar em GameState.Paused; o início toca ao entrar em Playing
+  (não toca ao voltar do pause).
