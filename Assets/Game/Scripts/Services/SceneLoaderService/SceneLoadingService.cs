@@ -28,9 +28,18 @@ namespace CatGame.Services.SceneManagement
             public GameState gameState;
         }
 
+        
+
         [Header("Loading Map")]
         [SerializeField] private ScenesGroup[] scenesGroup;
 
+        public bool IsLoading { get; private set; }
+        public Scenes CurrentSceneGroup { get; private set; }
+
+        public event EventHandler<LoadingChangedEvent> OnLoadingChanged;
+
+        #region Public Methods
+       
         public void LoadAsyncScene(Scenes sceneID)
         {
             for (int i = 0; i < scenesGroup.Length; i++)
@@ -66,8 +75,19 @@ namespace CatGame.Services.SceneManagement
             
         }
 
+        #endregion
+
+        #region Controller
+       
         private IEnumerator LoadSceneGroup(ScenesGroup sceneGroup, bool isOnline)
         {
+            IsLoading = true;
+            CurrentSceneGroup = sceneGroup.sceneID;
+
+            OnLoadingChanged?.Invoke(this, new LoadingChangedEvent(
+                true, 
+                sceneGroup.sceneID));
+
             ServiceLocator.Get<IGameStateService>().SetState(GameState.Loading);
             
             List<string> scenesToKeepActivated = new();
@@ -166,7 +186,18 @@ namespace CatGame.Services.SceneManagement
             }
 
             ServiceLocator.Get<IGameStateService>().SetState(sceneGroup.gameState);
+
+            IsLoading = false;
+            CurrentSceneGroup = Scenes.Cutscene;
+
+            OnLoadingChanged?.Invoke(this, new LoadingChangedEvent(
+                false,
+                Scenes.Cutscene));
         }
+
+        #endregion
+
+        #region Local
 
         private IEnumerator LoadScene(string scene, float progressPerOperation, float previousOperationsProgress)
         {            
@@ -174,17 +205,9 @@ namespace CatGame.Services.SceneManagement
             operation.allowSceneActivation = false;
 
             // Espera até a cena carregar 90%
-            while (operation.progress < 0.9f)
-            {           
-                EventBus.Publish(new LoadingBarChangedEvent()
-                {
-                    LoadingBarValue = previousOperationsProgress + progressPerOperation * operation.progress,
-                    LoadingBarMaxValue = 1,
-                    IsLoading = true
-                });
-
+            while (operation.progress < 0.9f)                      
                 yield return null;
-            }
+            
 
             // Ativa a cena
             operation.allowSceneActivation = true;
@@ -199,45 +222,26 @@ namespace CatGame.Services.SceneManagement
             AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(scene);
 
             while (unloadOperation.progress < 0.9f)
-            {
-                EventBus.Publish(new LoadingBarChangedEvent()
-                {
-                    LoadingBarValue = previousOperationsProgress + progressPerOperation * unloadOperation.progress,
-                    LoadingBarMaxValue = 1,
-                    IsLoading = true
-                });
-
-                yield return null;
-            }
+                yield return null;           
 
             while (!unloadOperation.isDone)
                 yield return null;
         }
 
+        #endregion
 
         #region Online
-    
+
         private void LoadOnlineScene(string scene)
         {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
             NetworkManager.Singleton.SceneManager.LoadScene(scene, LoadSceneMode.Additive);
-
-            EventBus.Publish(new LoadingBarChangedEvent()
-            {
-                IsLoading = true
-            });
-
         }
 
         private void UnloadOnlineScene(Scene scene)
         {
             NetworkManager.Singleton.SceneManager.OnUnloadEventCompleted += NetworkManager_OnUnloadEventCompleted;
             NetworkManager.Singleton.SceneManager.UnloadScene(scene);
-
-            EventBus.Publish(new LoadingBarChangedEvent()
-            {
-                IsLoading = true
-            });
         }
 
         private void NetworkManager_OnUnloadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)

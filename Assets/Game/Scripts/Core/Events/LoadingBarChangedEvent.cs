@@ -1,3 +1,4 @@
+using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 
 namespace CatGame.Core.Events
@@ -6,6 +7,7 @@ namespace CatGame.Core.Events
     {
         public float LoadingBarMaxValue { get; set; }
         public float LoadingBarValue { get; set; }
+        public Scenes SceneGroup { get; set; } 
         public bool IsLoading { get; set; }
     }
 }

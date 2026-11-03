@@ -14,9 +14,6 @@ namespace CatGame.Features.Gameplay
         [Header("Configura��o")]
         [SerializeField] private string targetSceneName = "MainScene";
         [SerializeField] private int timeToInit;
-
-        private bool sceneReady;
-
         private void Awake()
         {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
@@ -36,12 +33,10 @@ namespace CatGame.Features.Gameplay
             // N�o libera a partida se algum cliente n�o terminou.
             if (clientsTimedOut.Count > 0)
             {
-                sceneReady = false;
                 Core.Logger.LogWarning("Nem todos os clientes terminaram de carregar a cena.");
                 return;
             }
 
-            sceneReady = true;
             Core.Logger.Log("Todos os clientes terminaram o carregamento da cena.");
             StartCoroutine(AllowPlayers());
         }

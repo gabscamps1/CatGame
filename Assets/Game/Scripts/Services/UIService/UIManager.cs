@@ -195,6 +195,14 @@ namespace CatGame.Services.UISystem
         {
             switch (nextState)
             {
+                case GameState.Boot:
+                    CloseAll();
+                    break;
+
+                case GameState.Cutscene: 
+                    CloseAll(); 
+                    break;
+
                 case GameState.MainMenu:
                     SwitchTo(PanelType.MainMenu);
                     break;
@@ -217,6 +225,7 @@ namespace CatGame.Services.UISystem
                     break;
 
                 default:
+                    CloseAll();
                     Logger.LogWarning($"[UIManager] Estado '{nextState}' não foi adicionado");
                     break;
             }

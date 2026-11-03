@@ -45,7 +45,10 @@ namespace CatGame.Capabilities.UISystem
 
         #region Subclass Override
 
-        /// <summary> Chamado ao mudar o estado do jogo. </summary>
+        /// <summary> 
+        /// Chamado ao mudar o estado do jogo. 
+        /// Chamado no Start para garantir que o código reconheça o evento atual. 
+        /// </summary>
         protected virtual void GameStateService_OnStateChanged(GameState previousState, GameState currentState) { }
 
         /// <summary> Chamado ao mudar a UI de foco. </summary>

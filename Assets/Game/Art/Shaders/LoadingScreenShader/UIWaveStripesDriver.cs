@@ -14,27 +14,33 @@ public class UIWaveStripesDriver : MonoBehaviour
     static readonly int CustomTimeId = Shader.PropertyToID("_CustomTime");
     static readonly int UseCustomTimeId = Shader.PropertyToID("_UseCustomTime");
 
-    [SerializeField] bool autoAspect = true;
-    [SerializeField] bool useUnscaledTime = true;
+    [SerializeField] private bool autoAspect = true;
+    [SerializeField] private bool useUnscaledTime = true;
 
-    RawImage image;
-    RectTransform rect;
-    Material instance;
+    private RawImage image;
+    private RectTransform rect;
+    private Material instance;
+    private Material materialPrefab;
 
-    void OnEnable()
+    private void Awake()
     {
         image = GetComponent<RawImage>();
+        materialPrefab = image.material;
+    }
+
+    private void OnEnable()
+    {
         rect = (RectTransform)transform;
 
         if (Application.isPlaying && image.material != null)
         {
             // Instância própria para não alterar o asset do material
-            instance = new Material(image.material);
+            instance = new Material(materialPrefab);
             image.material = instance;
         }
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         if (instance != null)
         {
@@ -43,7 +49,7 @@ public class UIWaveStripesDriver : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         Material m = instance != null ? instance : image.materialForRendering;
         if (m == null) return;
