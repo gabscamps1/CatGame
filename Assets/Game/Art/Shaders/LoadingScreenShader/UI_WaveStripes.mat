@@ -30,9 +30,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Aspect: 1.7777778
+    - _Aspect: 1.7777779
     - _ColorMask: 15
-    - _CustomTime: 516.0686
+    - _CustomTime: 109.03547
     - _Rotation: -4
     - _Shade: 0.25
     - _Softness: 0
@@ -54,7 +54,7 @@ Material:
     - _WaveSpeed: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.3018868, g: 0.1723033, b: 0.20911354, a: 1}
-    - _ColorB: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorA: {r: 0.6509434, g: 0.5250534, b: 0.5593871, a: 1}
+    - _ColorB: {r: 0.1509434, g: 0.09611962, b: 0.09611962, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
