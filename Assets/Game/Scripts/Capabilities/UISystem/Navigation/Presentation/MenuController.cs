@@ -30,10 +30,17 @@ namespace CatGame.Capabilities.UISystem
         [Header("Menus")]
         [SerializeField] private GroupMenu[] menus;    
 
+        [Header("Sounds")]
+        [SerializeField] private AudioData UI_HOVER;
+        [SerializeField] private AudioData UI_CLICK;
+
+        [SerializeField] private AudioData UI_BACK;
+
+        private IAudioService audioService;
+
         private NavigationGroup[] navigationGroups;
         private NavigationTabSystem[] navigationTabSystem;
         private NavigationMenuSystem navigationMenuSystem;
-
         private readonly HashSet<PlayerId> activePlayers = new();
 
         private IUINavigationService navigationService;
@@ -63,6 +70,7 @@ namespace CatGame.Capabilities.UISystem
         {
             navigationService = ServiceLocator.Get<IUINavigationService>();
             inputService = ServiceLocator.Get<IInputService>();
+            audioService = ServiceLocator.Get<IAudioService>();
 
             AttachPlayer(new PlayerId(0)); // REMOVER DEPOIS - ME LEMBRA PFV SALLES
         }
@@ -84,6 +92,7 @@ namespace CatGame.Capabilities.UISystem
         private void MenuController_OnTabNavigation(int tabIncreasement)
         {
             ChangeTab(tabIncreasement);
+            
         }
 
         private void OnDestroy()
@@ -146,6 +155,7 @@ namespace CatGame.Capabilities.UISystem
 
             if (tab != null)
                 await tab.Show();
+                audioService.PlaySFXClip(UI_CLICK);
 
             SetInteractionElements(CurrentMenuIndex, true);
         }
@@ -169,6 +179,7 @@ namespace CatGame.Capabilities.UISystem
 
             bool isTabChanged = tabIncreasement switch
             {
+                
                 -1 => CurrentNavigationTabSystem.TryPreviousTab(out previousTab),
                 1 => CurrentNavigationTabSystem.TryNextTab(out previousTab),
                 _ => false
@@ -177,6 +188,7 @@ namespace CatGame.Capabilities.UISystem
             if (!isTabChanged)
                 return;
 
+            
             await HideTab(CurrentMenuIndex, previousTab);
             await ShowTab(CurrentTabIndex);
             CurrentNavigationGroup.ResetElement();
@@ -252,6 +264,8 @@ namespace CatGame.Capabilities.UISystem
                     return;
 
                 // Voltar pro menuPresenter principal.
+
+                Debug.Log("TOCAR SOM DE VOLTAR");
                 ChangeMenuController(parentMenuController);
                 return;
             }
@@ -347,12 +361,14 @@ namespace CatGame.Capabilities.UISystem
                             {
                                 // Chama a funlçao de trocar menu.
                                 case GroupSelectable.CallFunction.ChangeMenu:
+                                Debug.Log("TOCAR SOM DE entrar");
                                     int numberOfMenu = currentGroupSelectable.NumberOfMenu;
                                     button.OnSubmittedEvent += (_, _) => ChangeMenu(numberOfMenu);
                                     break;
 
                                 // Chama a função de voltar ao menu anterior.
                                 case GroupSelectable.CallFunction.BackToMenu:
+                                    Debug.Log("TOCAR SOM DE VOLTAR");
                                     button.OnSubmittedEvent += (_, _) => { if (!CurrentGroupMenu.CanReturnMenu) Core.Logger.LogWarning($"Botão para retornar de menu não irá funcionar pois o menu atual está com a opção {nameof(CurrentGroupMenu.CanReturnMenu)} desativada"); ReturnMenu(); };
                                     break;
 
@@ -379,10 +395,12 @@ namespace CatGame.Capabilities.UISystem
         private void SetInteractionElements(int menu, bool isToActive)
         {
             GroupMenu currentMenu = menus[menu];
-
+            
             foreach (var tab in currentMenu.GroupTab)
-                foreach (var groupSelectable in tab.GroupSelectable)
+                foreach (var groupSelectable in tab.GroupSelectable){
+                    
                     groupSelectable.Element?.SetInteractable(isToActive);
+                }
         }
 
         #endregion            

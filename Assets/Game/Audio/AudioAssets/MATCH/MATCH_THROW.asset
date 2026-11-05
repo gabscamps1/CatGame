@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: Alarm
+  m_Name: MATCH_THROW
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: 0e720de93009f924cb960f85f11fcdb7, type: 3}
+  clip: {fileID: 8300000, guid: 052028fce83772a4ea3765ba63179fd9, type: 3}
   volume: 1
-  pitchMin: 1
-  pitchMax: 1
+  pitchMin: 0.71
+  pitchMax: 1.3

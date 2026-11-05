@@ -1633,6 +1633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FruitSpawner
   prefab: {fileID: -6285232683292386006, guid: f17412f470f3cc848a32c83abefe10cd, type: 3}
+  throwSound: {fileID: 11400000, guid: b2567799a28a27844aac7a1ea5ed4946, type: 2}
 --- !u!1 &285659937
 GameObject:
   m_ObjectHideFlags: 0
@@ -3827,6 +3828,9 @@ MonoBehaviour:
         function: 0
         numberOfMenu: 0
         newMenuController: {fileID: 0}
+  navigateSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  backSound: {fileID: 0}
 --- !u!1 &609191480
 GameObject:
   m_ObjectHideFlags: 0

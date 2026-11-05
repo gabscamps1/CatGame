@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: Doce_Juntando
+  m_Name: UI_POPUP
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: 8c836b91407be3142af327df3e7a8381, type: 3}
+  clip: {fileID: 8300000, guid: 01e6e6e577a52df438f32a13361c6bde, type: 3}
   volume: 1
   pitchMin: 1
   pitchMax: 1

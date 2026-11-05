@@ -348,6 +348,7 @@ MonoBehaviour:
   skipTextGameObject: {fileID: 2031614704}
   timeToCanTrySkip: 3
   timeHoldedToSkip: 5
+  skipSound: {fileID: 11400000, guid: 1fa1ab739b374fb4c8199e2c9e0a9950, type: 2}
 --- !u!1 &989769008
 GameObject:
   m_ObjectHideFlags: 0

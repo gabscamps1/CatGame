@@ -93,7 +93,7 @@ public class FruitWorld : NetworkBehaviour
 
         // O player ganha a próxima fruta (antes de qualquer merge)
         NotifyLanded();   
-
+        Debug.Log("som de colisão");
         FruitWorld other = collision.collider.GetComponentInParent<FruitWorld>();
         if (other == null || other == this) return;
         if (other.isMerging || !other.IsSpawned) return;

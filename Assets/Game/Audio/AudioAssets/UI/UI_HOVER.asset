@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: Kitchen_Loading
+  m_Name: UI_HOVER
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: 9285b011af4bc3b43b4396dfaa71a271, type: 3}
+  clip: {fileID: 8300000, guid: 6b97c40a1557e4143b08d6123c9f0dab, type: 3}
   volume: 1
-  pitchMin: 1
-  pitchMax: 1
+  pitchMin: 0.47
+  pitchMax: 1.21

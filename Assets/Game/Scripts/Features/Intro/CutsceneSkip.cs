@@ -17,6 +17,10 @@ namespace CatGame.Features.Cutscene
         [SerializeField] private GameObject skipTextGameObject;
         [SerializeField, Min(1)] private float timeToCanTrySkip;
         [SerializeField] private float timeHoldedToSkip;
+
+        [Header("Sounds")]
+        [SerializeField] private AudioData skipSound;
+
         private bool canTrySkip;
 
         private bool isLoading;
@@ -26,6 +30,7 @@ namespace CatGame.Features.Cutscene
         private IPlayerInputController playerInput;
 
         private IGameStateService gameStateService;
+        private IAudioService audioService;
 
         private void Awake()
         {
@@ -39,6 +44,8 @@ namespace CatGame.Features.Cutscene
 
             gameStateService = ServiceLocator.Get<IGameStateService>();
             gameStateService.OnStateChanged += GameStateService_OnStateChanged;
+
+            audioService = ServiceLocator.Get<IAudioService>();
 
             GameStateService_OnStateChanged(gameStateService.CurrentState, gameStateService.CurrentState);
         }
@@ -97,14 +104,16 @@ namespace CatGame.Features.Cutscene
         private void Update()
         {
             bool canSkip =
-                videoPlayer.time > 1.0 // Se o vídeo ja reproduziu ao menos 1 segundo.
-                && !videoPlayer.isPlaying // Se o vídeo não estiver tocando.
-                && !isLoading; // Já iniciou o loading da próxima cena.
+                videoPlayer.time > 1.0 // Se o vï¿½deo ja reproduziu ao menos 1 segundo.
+                && !videoPlayer.isPlaying // Se o vï¿½deo nï¿½o estiver tocando.
+                && !isLoading; // Jï¿½ iniciou o loading da prï¿½xima cena.
 
             if (canSkip)
+            
+                
                 SkipCutscene();
 
-            // Implementação futura
+            // Implementaï¿½ï¿½o futura
             /*if (playerInput.SkipCutscene.IsPressed())
             {
                 countTimeHoldToSkip += Time.deltaTime;
@@ -125,6 +134,7 @@ namespace CatGame.Features.Cutscene
                 return;
 
             isLoading = true;
+            audioService.PlaySFXClip(skipSound, false);
             videoPlayer.time = videoPlayer.length;
             skipTextGameObject.SetActive(false);
 

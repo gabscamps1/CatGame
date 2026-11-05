@@ -1014,6 +1014,9 @@ MonoBehaviour:
         function: 0
         numberOfMenu: 0
         newMenuController: {fileID: 0}
+  UI_HOVER: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
+  UI_CLICK: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
+  UI_BACK: {fileID: 11400000, guid: b2b68f1627faf714b820728b35a53e41, type: 2}
 --- !u!1 &314712183
 GameObject:
   m_ObjectHideFlags: 0
