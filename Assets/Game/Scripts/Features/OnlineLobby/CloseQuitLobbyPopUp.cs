@@ -17,6 +17,11 @@ namespace CatGame.Features.OnlineLobby
         public event Action OnCancelled;
         public event Action OnHidedPopup;
 
+        [Header("Sounds")]
+        [SerializeField] private AudioData UI_POPUP;
+
+        private IAudioService audioService;
+
         private readonly PlayerId playerId = new PlayerId(0);
         INavigationGroup navigationGroup;
 
@@ -30,6 +35,13 @@ namespace CatGame.Features.OnlineLobby
             cancelButton.OnSubmittedEvent += CancelButton_OnSubmittedEvent;
             navigationGroup.OnCancelRequested += NavigationGroup_OnCancelRequested;
         }
+
+        private void Start(){
+	        audioService = ServiceLocator.Get<IAudioService>();
+
+            audioService.PlaySFXClip(UI_POPUP);
+        }
+
 
         
 

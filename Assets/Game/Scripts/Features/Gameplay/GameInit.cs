@@ -52,7 +52,7 @@ namespace CatGame.Features.Gameplay
             {
                 ServerMessageManager.Instance.ShowClientMessageRpc(regressiveCount.ToString());
                 regressiveCount--;
-
+                ///tocar som de inicio aq
                 yield return new WaitForSeconds(1);
                 yield return null;
             }

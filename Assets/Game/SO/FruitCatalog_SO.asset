@@ -16,19 +16,19 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: b435d9dfe0c4648429885217bc71fd71, type: 3}
     diameter: 0.05
     mass: 1
-    score: 10
+    score: 12
   - sprite: {fileID: 21300000, guid: a185a4c20615a6146bc22bb3224f3107, type: 3}
     diameter: 0.06
     mass: 1
-    score: 10
+    score: 25
   - sprite: {fileID: 21300000, guid: 1ab097174603dd1478f633ee6635d070, type: 3}
     diameter: 0.07
     mass: 1
-    score: 10
+    score: 50
   - sprite: {fileID: 21300000, guid: 889985308cf1d6f47a76220e9b6c294f, type: 3}
     diameter: 0.08
     mass: 1
-    score: 10
+    score: 100
   - sprite: {fileID: 21300000, guid: b2f503e5f82395c43b049558e3423c0a, type: 3}
     diameter: 0.09
     mass: 1
@@ -36,25 +36,25 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: 775456b62997c114392b977644c707ec, type: 3}
     diameter: 0.1
     mass: 1
-    score: 10
+    score: 200
   - sprite: {fileID: 21300000, guid: 9a75fc4683b35d7449c83f4fb22a2dd6, type: 3}
     diameter: 0.11
     mass: 1
-    score: 10
+    score: 400
   - sprite: {fileID: 21300000, guid: f300fd0570d51424eb05cfaab6d11c45, type: 3}
     diameter: 0.12
     mass: 1
-    score: 10
+    score: 650
   - sprite: {fileID: 21300000, guid: dcbfd3a0297051243addbf44764d7f04, type: 3}
     diameter: 0.13
     mass: 1
-    score: 10
+    score: 800
   - sprite: {fileID: 21300000, guid: 81e66161699acd548ab06a4203d690ab, type: 3}
     diameter: 0.14
     mass: 1
-    score: 10
+    score: 950
   - sprite: {fileID: 21300000, guid: 04c60e250130eb54db78030ce1a3e012, type: 3}
     diameter: 0.15
     mass: 1
-    score: 10
+    score: 1250
   maxStartTier: 3

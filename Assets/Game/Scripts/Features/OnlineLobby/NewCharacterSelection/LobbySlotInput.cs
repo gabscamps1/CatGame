@@ -42,10 +42,11 @@ namespace CatGame.Features.CharacterSelection
 
         private void PlayerInput_OnCycle(InputAction.CallbackContext ctx) 
         {
-            Debug.Log("Será que o input está desativado?");
+            Debug.Log("Serï¿½ que o input estï¿½ desativado?");
             if (view == null || !inputEnabled) return;
 
             Debug.Log("Enviando input de cycle");
+            Debug.Log("TOCAR SOM DE SELEÃ‡ÃƒO");
             int direction = (int)ctx.ReadValue<Vector2>().x;
             view.Cycle(direction);
         }

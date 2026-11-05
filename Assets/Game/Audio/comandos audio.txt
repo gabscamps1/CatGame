@@ -1,0 +1,14 @@
+using CatGame.Core;
+using CatGame.Core.Data;
+using CatGame.Core.Interfaces;
+
+[Header("Sounds")]
+[SerializeField] private AudioData skipSound;
+
+private IAudioService audioService;
+
+private void Start(){
+	audioService = ServiceLocator.Get<IAudioService>();
+}
+
+audioService.PlaySFXClip(audio, loop);

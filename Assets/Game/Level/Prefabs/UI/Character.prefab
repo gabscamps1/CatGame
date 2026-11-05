@@ -751,6 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3726081733883626025}
+  - component: {fileID: 5639321449210560740}
   m_Layer: 0
   m_Name: Arrows
   m_TagString: Untagged
@@ -779,6 +780,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00024414062, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &5639321449210560740
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5993078695873204480}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f9602ae1a4a7404abf9f172ce24f039, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7238501341636465361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1126,9 @@ MonoBehaviour:
   characterNameText: {fileID: 1512369244340223837}
   readyBadge: {fileID: 4570466386889252505}
   arrowsHint: {fileID: 5993078695873204480}
+  UI_READY: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
+  UI_UNREADY: {fileID: 11400000, guid: b2b68f1627faf714b820728b35a53e41, type: 2}
+  UI_SELECT_PLAYER: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
 --- !u!1 &9062283465542753092
 GameObject:
   m_ObjectHideFlags: 0
