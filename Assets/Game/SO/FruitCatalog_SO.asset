@@ -45,7 +45,7 @@ MonoBehaviour:
     diameter: 0.12
     mass: 1
     score: 650
-  - sprite: {fileID: 21300000, guid: dcbfd3a0297051243addbf44764d7f04, type: 3}
+  - sprite: {fileID: 21300000, guid: 9a989fbb7a5406841b2481688c97addc, type: 3}
     diameter: 0.13
     mass: 1
     score: 800

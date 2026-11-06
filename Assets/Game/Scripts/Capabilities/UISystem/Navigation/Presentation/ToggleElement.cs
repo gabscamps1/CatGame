@@ -2,6 +2,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using CatGame.Core;
+using CatGame.Core.Interfaces;
+
 
 namespace CatGame.Capabilities.UISystem
 {
@@ -25,9 +28,19 @@ namespace CatGame.Capabilities.UISystem
         [Header("Toggle UI")]
         [SerializeField] private Image graphic;
 
+        [Header("Sounds")]
+        [SerializeField] private AudioData UI_TOGGLE;
+
+        private IAudioService audioService;
+
         private void Awake()
         {
             UpdateUI();
+        }
+
+        private void Start()
+        {
+            audioService = ServiceLocator.Get<IAudioService>();
         }
 
         public void SetActivate(bool active)
@@ -42,13 +55,15 @@ namespace CatGame.Capabilities.UISystem
         {
             isOn = !IsOn;
             OnValueChanged?.Invoke(this, new ValueChangedEvent(isOn));
-
+            audioService.PlaySFXClip(UI_TOGGLE, false);
             UpdateUI();
         }
 
         private void UpdateUI()
         {
             if (graphic) graphic.enabled = isOn;
+            
+
         }
 
         protected override void OnSubmitByPlayer(PlayerId player)

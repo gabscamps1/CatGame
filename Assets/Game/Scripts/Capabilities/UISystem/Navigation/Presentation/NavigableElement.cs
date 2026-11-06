@@ -76,6 +76,7 @@ namespace CatGame.Capabilities.UISystem
             if (!FocusingPlayer.Add(player)) return;
             OnFocusedByPlayer(player, navigationMode);
             OnFocusedEvent?.Invoke(this, new FocussedEvent(player));
+            //ADICIONA SOM AQUI!!!!!!!!!!!
         }
 
         public void OnUnfocused(PlayerId player, NavigationMode navigationMode = NavigationMode.Shared)

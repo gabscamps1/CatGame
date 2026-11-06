@@ -119,6 +119,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &16304014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2990066457569224230, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+  m_PrefabInstance: {fileID: 1442681369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &16304018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16304014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70248a9b3ac47a340b6fe9cd062c1edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.PanelElementAnimator
+  panelAnimationShowSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
+  panelAnimationHideSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
 --- !u!1 &54691302
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +647,17 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -156.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &260117924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5968056425806930594, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+  m_PrefabInstance: {fileID: 1442681369}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da29d7653421584d96bb6b36bea4429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.DropdownElement
 --- !u!1 &264339229
 GameObject:
   m_ObjectHideFlags: 0
@@ -6037,6 +6067,134 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 296721681}
     m_Modifications:
+    - target: {fileID: 26741880098640354, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_CLICK
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 435327061034626205, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 852016481638379906, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 1899284131}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<Element>k__BackingField
+      value: 
+      objectReference: {fileID: 16304018}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToHide.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[0].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642316202457928313, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: animationStepsToShow.Array.data[1].<PlayInParallel>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530280121354161544, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_TOGGLE
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
     - target: {fileID: 3521186044362401340, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
       propertyPath: m_Transition
       value: 2
@@ -6061,6 +6219,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4813731052108188883, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: up
+      value: 
+      objectReference: {fileID: 260117924}
+    - target: {fileID: 4813731052108188883, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_TOGGLE
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
+    - target: {fileID: 5968056425806930594, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: down
+      value: 
+      objectReference: {fileID: 1442681379}
+    - target: {fileID: 5968056425806930594, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_TOGGLE
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
     - target: {fileID: 6068915382014607726, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
       propertyPath: m_Transition
       value: 2
@@ -6077,10 +6251,22 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.745283
       objectReference: {fileID: 0}
+    - target: {fileID: 6633289368756150725, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_CLICK
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
+    - target: {fileID: 6897633686291999659, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_TOGGLE
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
     - target: {fileID: 7726696144671299132, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -80.22
       objectReference: {fileID: 0}
+    - target: {fileID: 7964514056958743601, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_CLICK
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
     - target: {fileID: 8094888135761579224, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6161,6 +6347,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8726978253818379247, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      propertyPath: UI_TOGGLE
+      value: 
+      objectReference: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
     - target: {fileID: 8881625503144814792, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
       propertyPath: m_Transition
       value: 2
@@ -6196,7 +6386,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5876876280407083300, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899284131}
+    - targetCorrespondingSourceObject: {fileID: 2990066457569224230, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 16304018}
   m_SourcePrefab: {fileID: 100100000, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
 --- !u!114 &1442681370 stripped
 MonoBehaviour:
@@ -8713,6 +8909,25 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 3c033e0d10ebe1c48861c3f88b876bc2, type: 2}
+--- !u!1 &1899284127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5876876280407083300, guid: 11871b0523886a0418fbcdc17c505a9d, type: 3}
+  m_PrefabInstance: {fileID: 1442681369}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1899284131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899284127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70248a9b3ac47a340b6fe9cd062c1edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.PanelElementAnimator
+  panelAnimationShowSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
+  panelAnimationHideSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
 --- !u!1 &1929209576
 GameObject:
   m_ObjectHideFlags: 0
