@@ -1,4 +1,7 @@
 ﻿using CatGame.Capabilities.UISystem;
+using CatGame.Core;
+using CatGame.Core.Interfaces;
+using CatGame.Core.Enums;
 using System;
 using TMPro;
 using UnityEngine;
@@ -38,6 +41,17 @@ namespace CatGame.Features.CharacterSelection
         {
             OnCloseLobbyPressed?.Invoke();
             return false;
+        }
+
+        protected override void OnBeforeHide()
+        {
+            IUIService uiService = ServiceLocator.Get<IUIService>();
+
+            // Garante que a pop de fechar o lobby esteja fechada quando o lobby for finalizado.
+            if (uiService.IsVisible(PanelType.QuitLobbyPopup))
+            {
+                uiService.Close(PanelType.QuitLobbyPopup);   
+            }
         }
 
         public void SetStartInteractable(bool interactable)
