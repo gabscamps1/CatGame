@@ -26,6 +26,13 @@ public class FruitWorld : NetworkBehaviour
 
     public const ulong NoPlayer = ulong.MaxValue;
 
+    public PlayerId PlayerOwner => IsSpawned 
+        ? playerOwner.Value 
+        : PlayerId.None;
+   
+    public float TimeInCollision { get; private set; }
+    private bool stayInCollision = false;
+
     [SerializeField] private FruitCatalog catalog;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D body;
@@ -35,6 +42,7 @@ public class FruitWorld : NetworkBehaviour
     // Escritas só pelo server, ANTES do Spawn: chegam junto com a mensagem de spawn.
     private readonly NetworkVariable<byte> tier = new();
     private readonly NetworkVariable<ulong> droppedByClientId = new(NoPlayer);
+    private readonly NetworkVariable<PlayerId> playerOwner = new();
     private readonly NetworkVariable<uint> sourceDrop = new();
 
     private bool hasLanded; // Colidiu com um objeto.
@@ -43,10 +51,11 @@ public class FruitWorld : NetworkBehaviour
 
     //public static event EventHandler<ServerMergedArgs> OnFruitMergedServer;    
 
-    public void ServerInit(byte newTier, ulong droppedBy, uint drop)
+    public void ServerInit(byte newTier, ulong droppedBy, PlayerId playerOwner, uint drop)
     {
         tier.Value = newTier;
         droppedByClientId.Value = droppedBy;
+        this.playerOwner.Value = playerOwner;
         sourceDrop.Value = drop;
     }
 
@@ -61,8 +70,11 @@ public class FruitWorld : NetworkBehaviour
         spriteRenderer.sprite = data.sprite;
         transform.localScale = Vector3.one * data.diameter;
         
-        if (IsServer) 
+        if (IsServer)
+        {
             body.mass = data.mass;
+            GameManager.Instance.OnPlayerLost += GameManager_OnPlayerLost;
+        }
 
         fruitCollider.enabled = IsServer; // Colisão só é ativada no server
         spawnTime = Time.time;
@@ -78,7 +90,8 @@ public class FruitWorld : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         // Se for destruida, garante que o jogador seja avisado.
-        if (IsServer) NotifyLanded(); 
+        if (IsServer) NotifyLanded();
+        GameManager.Instance.OnPlayerLost -= GameManager_OnPlayerLost;
     }
 
     private void FixedUpdate()
@@ -87,14 +100,22 @@ public class FruitWorld : NetworkBehaviour
         if (Time.time - spawnTime > maxAirTime) NotifyLanded();
     }
 
+    private void Update()
+    {
+        IncressTimer();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsServer || !IsSpawned || isMerging) return;
 
+        if (!collision.collider.TryGetComponent(out FruitCollider fruitCollider))
+            return;
+
         // O player ganha a próxima fruta (antes de qualquer merge)
         NotifyLanded();   
-        Debug.Log("som de colisão");
-        FruitWorld other = collision.collider.GetComponentInParent<FruitWorld>();
+
+        if (!collision.collider.TryGetComponent(out FruitWorld other)) return;
         if (other == null || other == this) return;
         if (other.isMerging || !other.IsSpawned) return;
         if (other.tier.Value != tier.Value) return;
@@ -117,7 +138,7 @@ public class FruitWorld : NetworkBehaviour
         other.NetworkObject.Despawn();
         NetworkObject.Despawn();
 
-        FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, 0);
+        FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, playerOwner.Value, 0);
         //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
 
         // ScoreEntry ao dar merge.
@@ -148,5 +169,47 @@ public class FruitWorld : NetworkBehaviour
         return playerObject != null ? playerObject.GetComponent<PlayerFruitHand>() : null;
     }
 
-    
+    #region Trigger
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.TryGetComponent(out GlassMaxHeight glass))
+            return;
+
+        stayInCollision = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.TryGetComponent(out GlassMaxHeight glass))
+            return;
+
+        stayInCollision = false;
+        ResetTimer();
+    }
+
+    private void IncressTimer()
+    {
+        if (!stayInCollision)
+            return;
+
+        TimeInCollision += Time.deltaTime;
+    }
+
+    public void ResetTimer()
+    {
+        TimeInCollision = 0;
+    }
+
+    #endregion
+
+
+    private void GameManager_OnPlayerLost(PlayerId playerId)
+    {
+        if (playerId != playerOwner.Value)
+            return;
+
+        NetworkObject.Despawn();
+    }
+
 }

@@ -1,7 +1,6 @@
 using CatGame.Core.Data;
 using CatGame.Core.Events;
 using CatGame.Core.Interfaces;
-using CatGame.Features.CharacterSelection;
 using System;
 using Unity.Netcode;
 using UnityEngine;
@@ -122,7 +121,7 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
     /// </summary>
     public void RequestDrop()
     {
-        if (!IsOwner || !IsSpawned) return;
+        if (!IsOwner || !IsSpawned || !playerId.IsValid) return;
         DropRpc(dropPoint.position.x);
     }
 
@@ -135,6 +134,7 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
         HandState handState = state.Value;
 
         if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing) return;
+        if (!playerId.IsValid) return;
         if (handState.tier == 0) return; // Mão vazia
         if (Time.time - lastDropTime < dropCooldown) return;
         if (!float.IsFinite(requestedX)) return;
@@ -148,7 +148,7 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
         x = Mathf.Clamp(x, arenaMinX, arenaMaxX);
 
         uint drop = handState.dropCount + 1;
-        FruitSpawner.Instance.ServerSpawn(handState.tier, new Vector2(x, dropPoint.position.y), Vector2.zero, OwnerClientId, drop);
+        FruitSpawner.Instance.ServerSpawn(handState.tier, new Vector2(x, dropPoint.position.y), Vector2.zero, OwnerClientId, playerId, drop);
 
         state.Value = new HandState 
         { 

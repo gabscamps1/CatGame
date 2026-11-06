@@ -38,7 +38,7 @@ public class GameManager : NetworkBehaviour
     public event Action<GameState> OnGameStateChanged;
 
 
-    
+    private IPlayerRegistry playerRegistry;
 
     private void Awake()
     {
@@ -52,6 +52,11 @@ public class GameManager : NetworkBehaviour
             Destroy(this);
             return;
         }
+    }
+
+    private void Start()
+    {
+        playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
     }
 
     private void OnEnable()
@@ -122,6 +127,17 @@ public class GameManager : NetworkBehaviour
     {
         if (!IsSpawned || !IsServer || playerLost.Contains(player) || player == PlayerId.None) return;
         playerLost.Add(player);
+
+        // Confere se o jogo acabou.
+        int playerLostCount = 0;
+        foreach (PlayerInfo playerInfo in playerRegistry.Players)
+        {
+            if (playerLost.Contains(playerInfo.playerId))
+                playerLostCount++;
+        }
+
+        if (playerRegistry.Players.Count > 0 && playerLostCount >= playerRegistry.Players.Count - 1)    
+            GameOver();      
     }
 
     public void GameOver()

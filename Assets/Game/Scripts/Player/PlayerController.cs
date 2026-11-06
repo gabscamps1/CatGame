@@ -3,6 +3,8 @@ using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
+using CatGame.Capabilities.Movement;
+using CatGame.Capabilities.Health;
 
 public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 {
@@ -10,7 +12,8 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
     [SerializeField] private Transform fruitThrowTransform;
 
     private PlayerInputHandler inputHandler;
-    private PlayerMovement playerMovement;
+    private CharacterMovement characterMovement;
+    private HealthController healthController;
     private PlayerFruitHand playerFruitHand;
 
     private IInputService inputService;
@@ -21,13 +24,32 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 
     private void Awake()
     {
+        characterMovement = GetComponent<CharacterMovement>();
+        healthController = GetComponent<HealthController>();
         inputHandler = GetComponent<PlayerInputHandler>();
-        playerMovement = GetComponent<PlayerMovement>();
         playerFruitHand = GetComponent<PlayerFruitHand>();
 
         inputService = ServiceLocator.Get<IInputService>();
         playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
+
+        healthController.OnDead += HealthController_OnDead;
     }
+  
+    public override void OnDestroy()
+    {
+        healthController.OnDead -= HealthController_OnDead;
+    }
+
+    private void HealthController_OnDead()
+    {
+        // Anuncia que o jogador morreu.
+        if (IsSpawned && IsServer)
+            GameManager.Instance.PlayerGameOver(playerId.Value);
+
+        Debug.Log("Player perdeu");
+    }
+
+    #region Unity Network
 
     public override void OnNetworkSpawn()
     {
@@ -46,6 +68,27 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
 
         playerRegistry.RegisterController(playerId.Value, this);
     }
+
+    public override void OnNetworkPreDespawn()
+    {
+        playerRegistry.UnregisterController(playerId.Value, this);
+
+        base.OnNetworkPreDespawn();
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        playerId.OnValueChanged -= OnPlayerIdChanged;
+
+        inputHandler.OnThrow -= HandleThrow;
+        inputHandler.Dispose();
+
+        base.OnNetworkDespawn();
+    }
+
+    #endregion
+
+
 
     private void OnPlayerIdChanged(PlayerId previous, PlayerId current)
     {
@@ -91,9 +134,8 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)     
             return;
         
-
         Vector2 move = inputHandler.ReadMove();
-        playerMovement.Move(move, Time.deltaTime);
+        characterMovement.Move(move, Time.deltaTime);
     }
 
     private void HandleThrow()
@@ -122,7 +164,7 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
         if (boundary == null)
             return;
 
-        playerMovement.SetMovementBounds(boundary, fruitThrowTransform);
+        characterMovement.SetMovementBounds(boundary, fruitThrowTransform);
     }
 
     public void SetPlayerId(PlayerId newPlayerId)
@@ -136,20 +178,5 @@ public class PlayerController : NetworkBehaviour, IPlayerIdConfig
     }
 
 
-    public override void OnNetworkPreDespawn()
-    {
-        playerRegistry.UnregisterController(playerId.Value, this);
-
-        base.OnNetworkPreDespawn();
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        playerId.OnValueChanged -= OnPlayerIdChanged;
-
-        inputHandler.OnThrow -= HandleThrow;
-        inputHandler.Dispose();
-
-        base.OnNetworkDespawn();
-    }
+    
 }

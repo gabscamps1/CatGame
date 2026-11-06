@@ -1088,6 +1088,7 @@ GameObject:
   - component: {fileID: 3857370782398570059}
   - component: {fileID: 6074084320780894106}
   - component: {fileID: 1701328583533344647}
+  - component: {fileID: 6993661332976521733}
   - component: {fileID: 2345620544802535961}
   m_Layer: 0
   m_Name: Player
@@ -1226,6 +1227,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
+--- !u!114 &6993661332976521733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452811411989202556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9a230e10272c24a9234cddf8a0631a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.Health.HealthController
+  maxHealth: 1
+  damageSound: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!114 &2345620544802535961
 MonoBehaviour:
   m_ObjectHideFlags: 0

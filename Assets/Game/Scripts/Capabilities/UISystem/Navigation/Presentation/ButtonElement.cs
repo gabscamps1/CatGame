@@ -46,7 +46,7 @@ namespace CatGame.Capabilities.UISystem
             base.OnFocusedByPlayer(player, navigationMode);
 
             if (onSelectSound != null)
-                audioService.PlaySFXClip(onSelectSound);
+                audioService?.PlaySFXClip(onSelectSound);
         }
 
         protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
