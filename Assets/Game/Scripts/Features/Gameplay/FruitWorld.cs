@@ -4,6 +4,8 @@ using CatGame.Features.CharacterSelection;
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using CatGame.Core;
+using CatGame.Core.Interfaces;
 
 public class FruitWorld : NetworkBehaviour
 {
@@ -49,7 +51,18 @@ public class FruitWorld : NetworkBehaviour
     private bool isMerging; // Evita que ocorra um merge com 3 ou mais frutas.
     private float spawnTime;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioData MATCH_THROW;
+
+    private IAudioService audioService;
+
+
     //public static event EventHandler<ServerMergedArgs> OnFruitMergedServer;    
+
+    private void Start()
+    {
+        audioService = ServiceLocator.Get<IAudioService>();
+    }
 
     public void ServerInit(byte newTier, ulong droppedBy, PlayerId playerOwner, uint drop)
     {
@@ -140,7 +153,6 @@ public class FruitWorld : NetworkBehaviour
 
         FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, playerOwner.Value, 0);
         //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
-
         // ScoreEntry ao dar merge.
         PlayerId? playerId = MatchSetup.FindPlayerId(credited);
         int score = catalog.Get(newTier).score;

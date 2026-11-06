@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 889608617
+  GlobalObjectIdHash: 3828093277
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -187,6 +187,7 @@ MonoBehaviour:
   body: {fileID: 5470999714867666458}
   fruitCollider: {fileID: 7419145623148458655}
   maxAirTime: 5
+  MATCH_THROW: {fileID: 11400000, guid: b2567799a28a27844aac7a1ea5ed4946, type: 2}
 --- !u!114 &8408155229049753521
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ namespace CatGame.Features.OnlineLobby
 
         private void Awake()
         {
+            audioService = ServiceLocator.Get<IAudioService>();
+
             navigationGroup = new NavigationGroup(NavigationMode.Shared);
             navigationGroup.Register(confirmButton, true);
             navigationGroup.Register(cancelButton);
@@ -36,14 +38,10 @@ namespace CatGame.Features.OnlineLobby
             navigationGroup.OnCancelRequested += NavigationGroup_OnCancelRequested;
         }
 
-        private void Start(){
-	        audioService = ServiceLocator.Get<IAudioService>();
-
+        private void OnEnable()
+        {
             audioService.PlaySFXClip(UI_POPUP);
         }
-
-
-        
 
         protected override void OnDestroy()
         {
