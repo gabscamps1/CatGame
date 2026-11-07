@@ -1633,7 +1633,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FruitSpawner
   prefab: {fileID: -6285232683292386006, guid: f17412f470f3cc848a32c83abefe10cd, type: 3}
-  throwSound: {fileID: 11400000, guid: b2567799a28a27844aac7a1ea5ed4946, type: 2}
 --- !u!1 &285659937
 GameObject:
   m_ObjectHideFlags: 0
@@ -3828,9 +3827,9 @@ MonoBehaviour:
         function: 0
         numberOfMenu: 0
         newMenuController: {fileID: 0}
-  navigateSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  backSound: {fileID: 0}
+  UI_HOVER: {fileID: 0}
+  UI_CLICK: {fileID: 0}
+  UI_BACK: {fileID: 0}
 --- !u!1 &609191480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5738,6 +5737,19 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   serverMessageGameObject: {fileID: 1139150791}
   serverMessageText: {fileID: 1925980023}
+  messagesIDs:
+  - stateMessage: 0
+    ids:
+    - START_3
+    - START_2
+    - START_1
+    - START_MESSAGE
+  - stateMessage: 1
+    ids:
+    - TIME_OVER
+  - stateMessage: 2
+    ids:
+    - Player_WON
 --- !u!114 &1130637095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8649,7 +8661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   ShowTopMostFoldoutHeaderGroup: 1
-  gameTimer: 120
+  gameTimer: 180
 --- !u!114 &1622249485
 MonoBehaviour:
   m_ObjectHideFlags: 0

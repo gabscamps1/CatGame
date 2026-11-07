@@ -47,7 +47,6 @@ public class ConnectionManager : MonoBehaviour
     public void CloseConnections()
     {
         canJoin = false;
-        Debug.Log("nao pode entrar");
     }
 
     /// <summary>
@@ -56,6 +55,5 @@ public class ConnectionManager : MonoBehaviour
     public void OpenConnections()
     {
         canJoin = true;
-        Debug.Log("pode entrar");
     }
 }

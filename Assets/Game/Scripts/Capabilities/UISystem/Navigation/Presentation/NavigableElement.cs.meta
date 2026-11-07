@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: a6cc69bfef3f8d648811b1f72b7868d4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - up: {instanceID: 0}
+  - down: {instanceID: 0}
+  - left: {instanceID: 0}
+  - right: {instanceID: 0}
+  - highlightVisual: {instanceID: 0}
+  - onFocusSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

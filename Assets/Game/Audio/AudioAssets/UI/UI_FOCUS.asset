@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: UI_HOVER
+  m_Name: UI_FOCUS
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
   clip: {fileID: 8300000, guid: 6b97c40a1557e4143b08d6123c9f0dab, type: 3}
   volume: 1

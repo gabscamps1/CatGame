@@ -17,15 +17,16 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private Color pressedColor = Color.gray;
         [SerializeField] private Color disableColor = Color.darkGray;
 
+        [Header("Button Sounds")]
         [SerializeField] private AudioData onClickSound;
-        [SerializeField] private AudioData onSelectSound;
 
         private Image image;
 
         private IAudioService audioService;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             image = GetComponent<Image>();
         }
 
@@ -36,17 +37,13 @@ namespace CatGame.Capabilities.UISystem
 
         protected override void OnSubmitByPlayer(PlayerId player)
         {
-            if (onClickSound != null)
-                audioService.PlaySFXClip(onClickSound);
+            audioService?.PlaySFXClip(onClickSound);
         }
 
         protected override void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)
         {
             image.color = selectedColor;
             base.OnFocusedByPlayer(player, navigationMode);
-
-            if (onSelectSound != null)
-                audioService?.PlaySFXClip(onSelectSound);
         }
 
         protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)

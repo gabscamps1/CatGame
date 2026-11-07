@@ -123,8 +123,10 @@ namespace CatGame.Capabilities.UISystem
 
         #region Unity
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if (selectionHighlight != null)
                 selectionRect = selectionHighlight.GetComponent<RectTransform>();
 

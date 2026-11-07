@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
 using Logger = CatGame.Core.Logger;
+using System.Reflection;
 
 namespace CatGame.Services.AudioManagement
 {

@@ -51,11 +51,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.SliderElement
   ownInteractable: 1
-  up: {fileID: 0}
+  up: {fileID: 3874227815629817677}
   down: {fileID: 7964514056958743601}
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   minValue: 0
   maxValue: 100
   value: 100
@@ -63,6 +64,7 @@ MonoBehaviour:
   valueText: {fileID: 7986299197822313258}
   initialDelay: 0.4
   repeatInterval: 0.03
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &362747593210238225
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,14 +268,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.DropdownElement
   ownInteractable: 1
-  up: {fileID: 0}
+  up: {fileID: 5968056425806930594}
   down: {fileID: 2530280121354161544}
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   valueText: {fileID: 4273613244426524427}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
+  onValueChangeSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &470278272673679096
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,8 +814,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02524de971594fd458590d12e1e728db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UIScreen
-  animationStepsToShow: []
-  animationStepsToHide: []
+  animationStepsToShow:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  animationStepsToHide:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
 --- !u!1 &942051742190897891
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,8 +948,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02524de971594fd458590d12e1e728db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UIScreen
-  animationStepsToShow: []
-  animationStepsToHide: []
+  animationStepsToShow:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  animationStepsToHide:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
 --- !u!1 &1202265583312451814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,9 +1156,11 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   valueText: {fileID: 6511036315836724795}
   normalColor: {r: 0.41960785, g: 0.043137256, b: 0.050980393, a: 1}
   disableColor: {r: 0.6698113, g: 0.3507031, b: 0.35454777, a: 1}
+  onValueChangeSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &1556186609804343131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,6 +1944,7 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   minValue: 0
   maxValue: 100
   value: 100
@@ -1921,6 +1952,7 @@ MonoBehaviour:
   valueText: {fileID: 6970815173295463629}
   initialDelay: 0.4
   repeatInterval: 0.03
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &2856921151701661430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,6 +2268,7 @@ GameObject:
   - component: {fileID: 2613498110717513468}
   - component: {fileID: 1267029625447659769}
   - component: {fileID: 3776291627424752229}
+  - component: {fileID: 8195385446300580662}
   m_Layer: 0
   m_Name: UIButtonChangeTabR_IMG
   m_TagString: Untagged
@@ -2300,6 +2333,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8195385446300580662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990066457569224230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70248a9b3ac47a340b6fe9cd062c1edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.PanelElementAnimator
+  panelAnimationShowSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
+  panelAnimationHideSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
 --- !u!1 &3035016699961567407
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,8 +3158,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02524de971594fd458590d12e1e728db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.UIScreen
-  animationStepsToShow: []
-  animationStepsToHide: []
+  animationStepsToShow:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  animationStepsToHide:
+  - <Element>k__BackingField: {fileID: 14143764274228248}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
+  - <Element>k__BackingField: {fileID: 8195385446300580662}
+    <PlayInParallel>k__BackingField: 1
+    <Delay>k__BackingField: 0
 --- !u!1 &4250117933539702591
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,6 +3228,7 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   minValue: 0
   maxValue: 100
   value: 100
@@ -3176,6 +3236,7 @@ MonoBehaviour:
   valueText: {fileID: 8828374169503457577}
   initialDelay: 0.4
   repeatInterval: 0.03
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &4252066867741242877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4191,8 +4252,10 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   isOn: 0
   graphic: {fileID: 8668058558917880359}
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &5468292322976108295
 GameObject:
   m_ObjectHideFlags: 0
@@ -4473,12 +4536,12 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 0}
+  onFocusSound: {fileID: 0}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
   onClickSound: {fileID: 0}
-  onSelectSound: {fileID: 0}
 --- !u!114 &1505999979119947836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4581,6 +4644,7 @@ GameObject:
   - component: {fileID: 6320933924536488993}
   - component: {fileID: 270676688646247990}
   - component: {fileID: 3976153508518408148}
+  - component: {fileID: 14143764274228248}
   m_Layer: 0
   m_Name: UIButtonChangeTabL_IMG
   m_TagString: Untagged
@@ -4645,6 +4709,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &14143764274228248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876876280407083300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70248a9b3ac47a340b6fe9cd062c1edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.PanelElementAnimator
+  panelAnimationShowSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
+  panelAnimationHideSO: {fileID: 11400000, guid: d2e3c31a35023d14284072b846d034a5, type: 2}
 --- !u!1 &5912314118421769225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,10 +4927,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.SliderElement
   ownInteractable: 1
   up: {fileID: 26741880098640354}
-  down: {fileID: 0}
+  down: {fileID: 6633289368756150725}
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   minValue: 0
   maxValue: 100
   value: 100
@@ -4860,6 +4939,7 @@ MonoBehaviour:
   valueText: {fileID: 4173485033677255135}
   initialDelay: 0.4
   repeatInterval: 0.03
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &6367063468302352761
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,8 +5513,10 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   isOn: 0
   graphic: {fileID: 6422934877562190884}
+  onValueChangedSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &7739089309837055434
 GameObject:
   m_ObjectHideFlags: 0
@@ -6216,13 +6298,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Capabilities.UISystem.DropdownElement
   ownInteractable: 1
   up: {fileID: 6897633686291999659}
-  down: {fileID: 0}
+  down: {fileID: 4813731052108188883}
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db8b391435c5a9840972655f40193065, type: 3}
+  onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   valueText: {fileID: 1803051708875296134}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
+  onValueChangeSound: {fileID: 11400000, guid: 632d9d2cc47eb8f4abefc1418d5050e3, type: 2}
 --- !u!1 &8466148601361073371
 GameObject:
   m_ObjectHideFlags: 0

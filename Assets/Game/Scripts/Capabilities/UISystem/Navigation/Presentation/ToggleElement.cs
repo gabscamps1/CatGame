@@ -28,13 +28,14 @@ namespace CatGame.Capabilities.UISystem
         [Header("Toggle UI")]
         [SerializeField] private Image graphic;
 
-        [Header("Sounds")]
-        [SerializeField] private AudioData UI_TOGGLE;
+        [Header("Toggle Sounds")]
+        [SerializeField] private AudioData onValueChangedSound;
 
         private IAudioService audioService;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             UpdateUI();
         }
 
@@ -55,15 +56,14 @@ namespace CatGame.Capabilities.UISystem
         {
             isOn = !IsOn;
             OnValueChanged?.Invoke(this, new ValueChangedEvent(isOn));
-            audioService.PlaySFXClip(UI_TOGGLE, false);
+            audioService?.PlaySFXClip(onValueChangedSound, false);
             UpdateUI();
         }
 
         private void UpdateUI()
         {
-            if (graphic) graphic.enabled = isOn;
-            
-
+            if (graphic) 
+                graphic.enabled = isOn;         
         }
 
         protected override void OnSubmitByPlayer(PlayerId player)

@@ -31,14 +31,16 @@ namespace CatGame.Features.CharacterSelection
         public event Action Cancelled;
 
         private bool editable;
+        private bool isReady;
 
-        private void Start(){
+        private void Start()
+        {
             audioService = ServiceLocator.Get<IAudioService>();
         }
 
         public void Show(LobbySlot slot, bool editable)
         {
-            this.editable = editable;
+            this.editable = editable && !slot.Ready;
 
             //playerNameText.text = slotInput.PlayerName.ToString();
             playerBotImage.sprite = gamepadSprite;
@@ -66,25 +68,32 @@ namespace CatGame.Features.CharacterSelection
         }
 
         // Chamados por LobbySlotInput
-        public void Cycle(int direction) { if (editable) 
-        
-        Cycled?.Invoke(direction); 
-        audioService.PlaySFXClip(UI_SELECT_PLAYER, false);
+        public void Cycle(int direction)
+        {
+            if (!editable)
+                return;
+
+            Cycled?.Invoke(direction);
+            if (direction != 0)
+                audioService.PlaySFXClip(UI_SELECT_PLAYER, false);
         }
 
-        public void Confirm() { if (editable) 
-        audioService.PlaySFXClip(UI_READY, false);
-        
-        Confirmed?.Invoke(); 
-        Debug.Log("2");
-        
-        }
-        public void Cancel() { if (editable) 
-        
-        Cancelled?.Invoke(); 
-        audioService.PlaySFXClip(UI_UNREADY, false);
+        public void Confirm()
+        {
+            if (editable)
+            {
+                audioService.PlaySFXClip(UI_READY, false);
+            }
 
-        
+            Confirmed?.Invoke();
+        }
+        public void Cancel()
+        {
+            if (editable)
+                return;
+
+            Cancelled?.Invoke();
+            audioService.PlaySFXClip(UI_UNREADY, false);
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using CatGame.Core;
 
 namespace CatGame.Capabilities.UISystem
 {
@@ -30,6 +31,9 @@ namespace CatGame.Capabilities.UISystem
             }
         }
 
+        public event EventHandler<SubmittedEvent> OnSubmittedEvent;
+        public event EventHandler<FocussedEvent> OnFocusedEvent;
+
         [Header("Settings")]
         [SerializeField] private bool ownInteractable = true;
 
@@ -42,22 +46,28 @@ namespace CatGame.Capabilities.UISystem
         [Header("Visual")]
         [SerializeField] private HighlightVisual highlightVisual;
 
-        private readonly Dictionary<PlayerId, IHighlightVisual> attachedHighlights = new();
+        [Header("Sounds")]
+        [SerializeField] private AudioData onFocusSound;
 
-        protected readonly HashSet<PlayerId> FocusingPlayer = new();
+        public IReadOnlyList<PlayerId> FocusingPlayerList => FocusingPlayer.ToList();
+        public bool IsFocused => FocusingPlayer.Count > 0;
+        public bool IsInteractable => ownInteractable && heirInteractable && isActiveAndEnabled;
+
 
         protected bool heirInteractable = true;
 
-        public IReadOnlyList<PlayerId> FocusingPlayerList => FocusingPlayer.ToList();
+        protected readonly HashSet<PlayerId> FocusingPlayer = new();
 
-        public bool IsFocused => FocusingPlayer.Count > 0;
+        private readonly Dictionary<PlayerId, IHighlightVisual> attachedHighlights = new();
 
-        public bool IsInteractable => ownInteractable && heirInteractable && isActiveAndEnabled;
+        private IAudioService audioService;
+
+        protected virtual void Awake()
+        {
+            audioService = ServiceLocator.Get<IAudioService>();
+        }
 
         public void SetInteractable(bool value) => ownInteractable = value;
-
-        public event EventHandler<SubmittedEvent> OnSubmittedEvent;
-        public event EventHandler<FocussedEvent> OnFocusedEvent;
 
         public INavigableElement GetNeightbor(NavigationDirection direction)
         {
@@ -76,7 +86,7 @@ namespace CatGame.Capabilities.UISystem
             if (!FocusingPlayer.Add(player)) return;
             OnFocusedByPlayer(player, navigationMode);
             OnFocusedEvent?.Invoke(this, new FocussedEvent(player));
-            //ADICIONA SOM AQUI!!!!!!!!!!!
+            audioService?.PlaySFXClip(onFocusSound);
         }
 
         public void OnUnfocused(PlayerId player, NavigationMode navigationMode = NavigationMode.Shared)

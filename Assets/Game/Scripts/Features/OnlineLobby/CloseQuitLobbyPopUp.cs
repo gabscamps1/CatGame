@@ -25,6 +25,8 @@ namespace CatGame.Features.OnlineLobby
         private readonly PlayerId playerId = new PlayerId(0);
         INavigationGroup navigationGroup;
 
+        private bool firstTime = true;
+
         private void Awake()
         {
             audioService = ServiceLocator.Get<IAudioService>();
@@ -40,6 +42,13 @@ namespace CatGame.Features.OnlineLobby
 
         private void OnEnable()
         {
+            // Interrompe na primeira vez que é chamado, pois a primeira vez é apenas para rodar o Start da class BasePanel.
+            if (firstTime)
+            {
+                firstTime = false;
+                return;
+            }
+
             audioService.PlaySFXClip(UI_POPUP);
         }
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using System.Buffers.Text;
 
 namespace CatGame.Capabilities.UISystem
 {
@@ -31,10 +30,8 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private GroupMenu[] menus;    
 
         [Header("Sounds")]
-        [SerializeField] private AudioData UI_HOVER;
-        [SerializeField] private AudioData UI_CLICK;
-
-        [SerializeField] private AudioData UI_BACK;
+        [SerializeField] private AudioData changeTabSound;
+        [SerializeField] private AudioData backMenuSound;
 
         private IAudioService audioService;
 
@@ -155,7 +152,7 @@ namespace CatGame.Capabilities.UISystem
 
             if (tab != null)
                 await tab.Show();
-                audioService.PlaySFXClip(UI_CLICK);
+                audioService.PlaySFXClip(changeTabSound);
 
             SetInteractionElements(CurrentMenuIndex, true);
         }
@@ -259,14 +256,14 @@ namespace CatGame.Capabilities.UISystem
 
             if (isSubMenu && currentMenuIndex == 0)
             {
-                // Confere se pode fechar o menu atual
+                // Confere se pode menuPresenter o menu atual
                 if (!forceReturn && (!mainCurrentScreen.CanHide() || (mainCurrentTab != null && !mainCurrentTab.CanHide())))
                     return;
 
-                // Voltar pro menuPresenter principal.
-
-                Debug.Log("TOCAR SOM DE VOLTAR");
+                // Volta pro menuPresenter principal.
                 ChangeMenuController(parentMenuController);
+
+                audioService.PlaySFXClip(backMenuSound);
                 return;
             }
             else if (isCloseableMenu && currentMenuIndex == 0)
@@ -292,16 +289,17 @@ namespace CatGame.Capabilities.UISystem
                 navigationService.PopGroup(player, navigationGroups[currentMenuIndex]);
             }
 
+            audioService.PlaySFXClip(backMenuSound);
+
             await HideTab(currentMenuIndex, navigationTabSystem[currentMenuIndex].CurrentTab);
             navigationTabSystem[currentMenuIndex].Reset();
-
             await HideGroup(currentMenuIndex);
+
             await ShowGroup(newMenu);
             await ShowTab(navigationTabSystem[newMenu].CurrentTab);
 
             foreach (PlayerId player in activePlayers)
                 navigationService.PushGroup(player, navigationGroups[newMenu]);
-
         }
 
         private async void CloseMenu()
@@ -361,14 +359,12 @@ namespace CatGame.Capabilities.UISystem
                             {
                                 // Chama a funlçao de trocar menu.
                                 case GroupSelectable.CallFunction.ChangeMenu:
-                                Debug.Log("TOCAR SOM DE entrar");
                                     int numberOfMenu = currentGroupSelectable.NumberOfMenu;
                                     button.OnSubmittedEvent += (_, _) => ChangeMenu(numberOfMenu);
                                     break;
 
                                 // Chama a função de voltar ao menu anterior.
                                 case GroupSelectable.CallFunction.BackToMenu:
-                                    Debug.Log("TOCAR SOM DE VOLTAR");
                                     button.OnSubmittedEvent += (_, _) => { if (!CurrentGroupMenu.CanReturnMenu) Core.Logger.LogWarning($"Botão para retornar de menu não irá funcionar pois o menu atual está com a opção {nameof(CurrentGroupMenu.CanReturnMenu)} desativada"); ReturnMenu(); };
                                     break;
 

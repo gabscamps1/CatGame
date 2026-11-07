@@ -56,7 +56,6 @@ namespace CatGame.Capabilities.UISystem
         private void PlayerInputController_OnCancelled()
         {
             uiNavigationService.Cancel(playerId);
-            Core.Logger.Log("TryCancel");
         }
 
         private void HandleDirectionalInput()

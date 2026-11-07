@@ -29,16 +29,17 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private Color normalColor = Color.white;
         [SerializeField] private Color disableColor = Color.white;
 
-        [Header("Sounds")]
-        [SerializeField] private AudioData UI_TOGGLE;
+        [Header("Dropdown Sounds")]
+        [SerializeField] private AudioData onValueChangeSound;
 
         private IAudioService audioService;
 
         private readonly List<string> valueList = new();
         private int selectedValue;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             TryChangeValue(selectedValue);
         }
 
@@ -106,14 +107,15 @@ namespace CatGame.Capabilities.UISystem
         }
 
         private bool TryChangeValue(int newValue)
-        {
-           
-
+        {        
             if (valueList == null || valueList.Count == 0)
                 return false;
 
             selectedValue = newValue;
             valueText.text = valueList[selectedValue];
+
+            // Dispara o som de mudança de valor
+            audioService?.PlaySFXClip(onValueChangeSound, false);
             return true;
         }
 
@@ -150,7 +152,6 @@ namespace CatGame.Capabilities.UISystem
         private void Navigation_performed(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             Vector2 navigationValue = context.ReadValue<Vector2>();
-            audioService.PlaySFXClip(UI_TOGGLE, false);
 
             switch (navigationValue.x)
             {

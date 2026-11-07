@@ -1,14 +1,41 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
+public enum StateMessage
+{
+    StartMessage,
+    TimeOver,
+    PlayersOver
+}
+
+[Serializable]
+public class MessagesIDs
+{
+    public StateMessage stateMessage;
+    public string[] ids;
+}
+
 public class ServerMessageManager : NetworkBehaviour
 {
     public static ServerMessageManager Instance;
 
+    public Dictionary<StateMessage, string[]> messages = new()
+    {
+        { StateMessage.StartMessage, new string [1] { ""} },
+        { StateMessage.TimeOver, new string[1] {""} } ,
+        { StateMessage.PlayersOver, new string[] {"d"} } ,
+    };
+
+    [Header("Components")]
     [SerializeField] private GameObject serverMessageGameObject;
     [SerializeField] private TextMeshProUGUI serverMessageText;
+
+    [Header("Message IDs")]
+    [SerializeField] private MessagesIDs[] messagesIDs;
 
     private void Awake()
     {

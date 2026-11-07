@@ -38,8 +38,8 @@ namespace CatGame.Capabilities.UISystem
         [SerializeField] private float initialDelay = 0.4f;
         [SerializeField] private float repeatInterval = 0.12f;
 
-        [Header("Sounds")]
-        [SerializeField] private AudioData UI_CLICK;
+        [Header("Slider Sounds")]
+        [SerializeField] private AudioData onValueChangedSound;
 
         private IAudioService audioService;
 
@@ -48,14 +48,15 @@ namespace CatGame.Capabilities.UISystem
 
         private IInputService inputService;
 
-        private void Awake()
+        protected override void Awake()
         {
-            audioService = ServiceLocator.Get<IAudioService>();
+            base.Awake();
             UpdateUI();
         }
 
         private void Start()
         {
+            audioService = ServiceLocator.Get<IAudioService>();
             inputService = ServiceLocator.Get<IInputService>();
         }
 
@@ -120,21 +121,23 @@ namespace CatGame.Capabilities.UISystem
         private void IncressValue()
         {
             if (value == maxValue) return;
-            audioService?.PlaySFXClip(UI_CLICK, false);
             value += changeValue;
             value = Mathf.Clamp(value, minValue, maxValue);
             OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
             UpdateUI();
+
+            audioService?.PlaySFXClip(onValueChangedSound, false);
         }
 
         private void DecreaseValue()
         {
             if (value == minValue) return;
-            audioService?.PlaySFXClip(UI_CLICK, false);
             value -= changeValue;
             value = Mathf.Clamp(value, minValue, maxValue);
             OnValueChanged?.Invoke(this, new ValueChangedEvent(value));
             UpdateUI();
+
+            audioService?.PlaySFXClip(onValueChangedSound, false);
         }
 
         public void SetValue(float amount)
