@@ -37,6 +37,8 @@ namespace CatGame.Capabilities.UISystem
         private readonly List<string> valueList = new();
         private int selectedValue;
 
+
+        private bool isHolding;
         protected override void Awake()
         {
             base.Awake();
@@ -133,7 +135,10 @@ namespace CatGame.Capabilities.UISystem
             
             IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
             inputController.Navigation.performed += Navigation_performed;
+            inputController.Navigation.canceled += Navigation_canceled;
         }
+
+        
 
         protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
         {
@@ -141,6 +146,7 @@ namespace CatGame.Capabilities.UISystem
 
             IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
             inputController.Navigation.performed -= Navigation_performed;
+            inputController.Navigation.canceled -= Navigation_performed;
         }
 
         public void SetOptionInteractable(bool value)
@@ -151,6 +157,8 @@ namespace CatGame.Capabilities.UISystem
 
         private void Navigation_performed(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
+            if (isHolding) return;
+
             Vector2 navigationValue = context.ReadValue<Vector2>();
 
             switch (navigationValue.x)
@@ -158,6 +166,13 @@ namespace CatGame.Capabilities.UISystem
                 case 1: NextOption(); break;
                 case -1: PreviousOption(); break;
             }
+
+            isHolding = true;
+        }
+
+        private void Navigation_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            isHolding = false;
         }
     }
 }
