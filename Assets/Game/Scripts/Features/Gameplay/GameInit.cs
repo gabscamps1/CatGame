@@ -47,23 +47,10 @@ namespace CatGame.Features.Gameplay
             if (!NetworkManager.Singleton.IsServer) 
                 yield break;
 
-            int regressiveCount = timeToInit;
-            while (regressiveCount > 0)
-            {
-                ServerMessageManager.Instance.ShowClientMessageRpc(regressiveCount.ToString());
-                regressiveCount--;
-                ///tocar som de inicio aq
-                yield return new WaitForSeconds(1);
-                yield return null;
-            }
+            ServerMessageManager.Instance.ShowClientMessageRpc(MessageID.StartGame);
+            yield return new WaitForSeconds(timeToInit);
 
-            Core.Logger.Log("J� chegou no start");
-
-            ServerMessageManager.Instance.ShowClientMessageRpc("Comecem!");
-            yield return new WaitForSeconds(0.5f);
-            ServerMessageManager.Instance.HideClientMessageRpc();
-
-
+            // Planejamento futuro caso a movimentação do player seja alterada para Server.
             /*switch (GameManager.Instance.GetGameState())
             {
                 case GameManager.GameState.NotInit:
@@ -89,7 +76,6 @@ namespace CatGame.Features.Gameplay
             }*/
 
             GameManager.Instance.StartGame();
-            Debug.Log("Players liberados");
         }
     }
 }

@@ -98,6 +98,6 @@ public class Timer : NetworkBehaviour
             return;
 
         GameManager.Instance.GameOver();
-        ServerMessageManager.Instance.ShowClientMessageRpc("Tempo esgotado");
+        ServerMessageManager.Instance.ShowClientMessageRpc(MessageID.TimeOver);
     }
 }

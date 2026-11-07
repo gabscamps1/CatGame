@@ -1,41 +1,46 @@
+using CatGame.Core;
+using CatGame.Core.Interfaces;
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
-using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public enum StateMessage
+public enum MessageID : byte
 {
-    StartMessage,
+    StartGame,
     TimeOver,
     PlayersOver
 }
 
 [Serializable]
-public class MessagesIDs
+public class MessageInfo
 {
-    public StateMessage stateMessage;
-    public string[] ids;
+    public string textID;
+    [Min(0)] public float timeToShow;
+    [Min(0)] public float timeToHide;
+}
+
+[Serializable]
+public class Message
+{
+    public MessageID messageID;
+    public MessageInfo[] messageInfos;
 }
 
 public class ServerMessageManager : NetworkBehaviour
 {
     public static ServerMessageManager Instance;
 
-    public Dictionary<StateMessage, string[]> messages = new()
-    {
-        { StateMessage.StartMessage, new string [1] { ""} },
-        { StateMessage.TimeOver, new string[1] {""} } ,
-        { StateMessage.PlayersOver, new string[] {"d"} } ,
-    };
-
     [Header("Components")]
     [SerializeField] private GameObject serverMessageGameObject;
     [SerializeField] private TextMeshProUGUI serverMessageText;
 
     [Header("Message IDs")]
-    [SerializeField] private MessagesIDs[] messagesIDs;
+    [SerializeField] private Message[] messages;
+
+    private ILocalizationService localizationService;
 
     private void Awake()
     {
@@ -48,28 +53,79 @@ public class ServerMessageManager : NetworkBehaviour
             Destroy(gameObject);
             return;
         }
+
+        localizationService = ServiceLocator.Get<ILocalizationService>();
     }
 
-    public void ShowMessage(string text)
+    #region Client
+
+    private async void ShowMessage(MessageID messageID)
     {
+        Message message = GetMessage(messageID);
+
+        if (message == null)
+        {
+            CatGame.Core.Logger.LogWarning($"[{nameof(ServerMessageManager)}] Mensagem não foi adicionada ao array.");
+            return;
+        }
+
+        int messageCount = message.messageInfos.Length;
+
+        for (int i = 0; i < messageCount; i++)
+        {
+            MessageInfo messageInfo = message.messageInfos[i];
+            await ShowText(messageInfo);
+        }
+    }
+
+    private async Task ShowText(MessageInfo messageInfo)
+    {
+        string textId = messageInfo.textID;
+        float timeToShow = messageInfo.timeToShow;
+        float timeToHide = messageInfo.timeToHide;
+
+        int millisecondsDelayToShow = (int)(timeToShow * 1000);
+        int millisecondsDelayToHide = (int)(timeToHide * 1000);
+
+        await Task.Delay(millisecondsDelayToShow);
+
+        string text = localizationService.GetTextByID(textId);
         serverMessageText.text = text;
         serverMessageGameObject.SetActive(true);
-    }
 
-    public void HideMessage()
-    {
+        await Task.Delay(millisecondsDelayToHide);
         serverMessageGameObject.SetActive(false);
     }
 
-    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
-    public void ShowClientMessageRpc(FixedString32Bytes text)
+    private Message GetMessage(MessageID messageID)
     {
-        ShowMessage(text.ToString());
+        return messages.Where(x => x.messageID == messageID).FirstOrDefault();
     }
 
+    #endregion
+
+    #region Server
+
     [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
+    public void ShowClientMessageRpc(MessageID messageID)
+    {
+        ShowMessage(messageID);
+    }
+
+    #endregion
+
+    #region Not-Implemented
+
+    /*public void HideMessage()
+    {
+        serverMessageGameObject.SetActive(false);
+    }*/
+
+    /*[Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
     public void HideClientMessageRpc()
     {
         HideMessage();
-    }
+    }*/
+
+    #endregion
 }

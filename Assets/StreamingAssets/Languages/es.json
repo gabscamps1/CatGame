@@ -334,11 +334,11 @@
     },
     {
       "key": "POPUP_OPTION_1",
-      "value": "OPT1"
+      "value": ""
     },
     {
       "key": "POPUP_OPTION_2",
-      "value": "OPT2"
+      "value": ""
     },
     {
       "key": "PAUSE_RESUME",
@@ -357,8 +357,20 @@
       "value": "Pulsa [skipButton] para saltar."
     },
     {
-      "key": "SERVER_MSG_BIG",
-      "value": "MSG BIG"
+      "key": "SERVER_MSG_START_3",
+      "value": ""
+    },
+    {
+      "key": "SERVER_MSG_START_2",
+      "value": ""
+    },
+    {
+      "key": "SERVER_MSG_START_1",
+      "value": ""
+    },
+    {
+      "key": "SERVER_MSG_START",
+      "value": ""
     }
   ],
   "dialogues": []

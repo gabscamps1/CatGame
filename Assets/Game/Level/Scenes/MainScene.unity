@@ -2180,12 +2180,12 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  onFocusSound: {fileID: 0}
   baseColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
   onClickSound: {fileID: 0}
-  onSelectSound: {fileID: 0}
 --- !u!114 &385530951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2691,12 +2691,12 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  onFocusSound: {fileID: 0}
   baseColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
   onClickSound: {fileID: 0}
-  onSelectSound: {fileID: 0}
 --- !u!114 &443614097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3573,12 +3573,12 @@ MonoBehaviour:
   left: {fileID: 0}
   right: {fileID: 0}
   highlightVisual: {fileID: 7467663919649671148, guid: db4a352a8f80c0f42a9164eff85a0ed0, type: 3}
+  onFocusSound: {fileID: 0}
   baseColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   selectedColor: {r: 0.8274511, g: 0.8274511, b: 0.8274511, a: 1}
   pressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   disableColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
   onClickSound: {fileID: 0}
-  onSelectSound: {fileID: 0}
 --- !u!114 &594755799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3827,9 +3827,8 @@ MonoBehaviour:
         function: 0
         numberOfMenu: 0
         newMenuController: {fileID: 0}
-  UI_HOVER: {fileID: 0}
-  UI_CLICK: {fileID: 0}
-  UI_BACK: {fileID: 0}
+  changeTabSound: {fileID: 0}
+  backMenuSound: {fileID: 0}
 --- !u!1 &609191480
 GameObject:
   m_ObjectHideFlags: 0
@@ -5737,19 +5736,31 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   serverMessageGameObject: {fileID: 1139150791}
   serverMessageText: {fileID: 1925980023}
-  messagesIDs:
-  - stateMessage: 0
-    ids:
-    - START_3
-    - START_2
-    - START_1
-    - START_MESSAGE
-  - stateMessage: 1
-    ids:
-    - TIME_OVER
-  - stateMessage: 2
-    ids:
-    - Player_WON
+  messages:
+  - messageID: 0
+    messageInfos:
+    - textID: SERVER_MSG_START_3
+      timeToShow: 0
+      timeToHide: 1
+    - textID: SERVER_MSG_START_2
+      timeToShow: 0
+      timeToHide: 1
+    - textID: SERVER_MSG_START_1
+      timeToShow: 0
+      timeToHide: 1
+    - textID: SERVER_MSG_START
+      timeToShow: 0
+      timeToHide: 1
+  - messageID: 1
+    messageInfos:
+    - textID: SERVER_MSG_TIME_OVER
+      timeToShow: 0
+      timeToHide: 1
+  - messageID: 2
+    messageInfos:
+    - textID: SERVER_MSG_PLAYER_WON
+      timeToShow: 0
+      timeToHide: 1
 --- !u!114 &1130637095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8733,7 +8744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Gameplay.GameInit
   targetSceneName: MainScene
-  timeToInit: 5
+  timeToInit: 4
 --- !u!1 &1641532466
 GameObject:
   m_ObjectHideFlags: 0
