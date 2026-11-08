@@ -2,7 +2,10 @@
 using CatGame.Core.Events;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
+using UnityEngine.SocialPlatforms.Impl;
+using static ScoreManager;
 
 public class ScoreManager : NetworkBehaviour
 {
@@ -10,6 +13,7 @@ public class ScoreManager : NetworkBehaviour
     {
         public PlayerId playerId;
         public uint score; 
+
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref playerId);
@@ -17,12 +21,23 @@ public class ScoreManager : NetworkBehaviour
         }
 
         public bool Equals(ScoreEntry other) => playerId == other.playerId && score == other.score;
+        public override bool Equals(object obj) => obj is ScoreEntry other && Equals(other);
+
+        public static bool operator ==(ScoreEntry left, ScoreEntry right) => left.Equals(right);
+        public static bool operator !=(ScoreEntry left, ScoreEntry right) => !left.Equals(right);
+
+        public override int GetHashCode()
+        {
+            return playerId.Id;
+        }
     }
 
     public static ScoreManager Instance;
 
     public readonly List<ScoreEntry> ScoreEntrys = new();
     private readonly NetworkList<ScoreEntry> scoreEntrys = new();
+
+    public event Action<ScoreEntry> OnScoreChanged;
 
     private void Awake()
     {
@@ -80,6 +95,21 @@ public class ScoreManager : NetworkBehaviour
 
     private void Scores_OnListChanged(NetworkListEvent<ScoreEntry> changeEvent)
     {
+        int index = -1;
+
+        for (int i = 0; i < ScoreEntrys.Count; i++)
+        {
+            if (ScoreEntrys[i].playerId == changeEvent.Value.playerId)            
+                index = i;        
+        }
+
+        if (index < 0)       
+            ScoreEntrys.Add(changeEvent.Value);      
+        else
+            ScoreEntrys[index] = changeEvent.Value;
+
+        OnScoreChanged?.Invoke(changeEvent.Value);
+
         // Envia o scoreEntry.
         EventBus.Publish(new ScoreChangedEvent()
         {

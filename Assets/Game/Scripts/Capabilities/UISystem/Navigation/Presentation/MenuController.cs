@@ -225,7 +225,7 @@ namespace CatGame.Capabilities.UISystem
                 navigationService.PushGroup(player, navigationGroups[menuIndex]);
         }
 
-        private async void ChangeMenuController(MenuController menuPresenter)
+        private void ChangeMenuController(MenuController menuPresenter)
         {
             /*if (menuPresenter == null)
                 return;

@@ -168,11 +168,6 @@ namespace CatGame.Features.CharacterSelection
 
         public void SetReady(int slotIndex, bool ready)
         {
-            var networkManager = NetworkManager.Singleton;
-            Core.Logger.Log($"[Lobby] id={GetInstanceID()} spawned={IsSpawned} " +
-                      $"listening={(networkManager != null && networkManager.IsListening)} " +
-                      $"scene={gameObject.scene.name}");
-
             if (!CanControl(slotIndex)) return;
             SetReadyRpc(ready);
         }
@@ -237,7 +232,6 @@ namespace CatGame.Features.CharacterSelection
         [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
         private void ChangeStateRpc()
         {
-            Core.Logger.Log("Alterando o estado");
             ServiceLocator.Get<IGameStateService>().SetState(GameState.Playing);
         }
 
@@ -297,7 +291,7 @@ namespace CatGame.Features.CharacterSelection
         public void RequestCloseLobby()
         {
             // Popup já está aberta, então ignora o código.
-            if (uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
+            if (uiService.CurrentPanelType.HasValue && uiService.CurrentPanelType.Value == PanelType.QuitLobbyPopup)
                 return;
 
             uiService.Push(PanelType.QuitLobbyPopup);

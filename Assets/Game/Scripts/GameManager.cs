@@ -25,11 +25,11 @@ public class GameManager : NetworkBehaviour
     [Header("ToPlayer")]
     public BoxCollider2D[] Boundaries => boundaries;
     [SerializeField] private BoxCollider2D[] boundaries; // Na ordem. Boundary Player 1, Player2, ...
-    private readonly NetworkList<PlayerId> playerLost = new();
 
     // Player
     public List<PlayerId> PlayerLost { get; private set; } = new();
     public event Action<PlayerId> OnPlayerLost;
+    private readonly NetworkList<PlayerId> playerLost = new();
 
     // Game State Settings
     public enum GameState : byte { NotInit, Playing, GameOver }

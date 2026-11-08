@@ -42,6 +42,8 @@ public class ServerMessageManager : NetworkBehaviour
 
     private ILocalizationService localizationService;
 
+    public bool IsShowing { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,6 +63,8 @@ public class ServerMessageManager : NetworkBehaviour
 
     private async void ShowMessage(MessageID messageID)
     {
+        IsShowing = true;
+
         Message message = GetMessage(messageID);
 
         if (message == null)
@@ -76,6 +80,8 @@ public class ServerMessageManager : NetworkBehaviour
             MessageInfo messageInfo = message.messageInfos[i];
             await ShowText(messageInfo);
         }
+
+        IsShowing = false;
     }
 
     private async Task ShowText(MessageInfo messageInfo)
@@ -109,6 +115,12 @@ public class ServerMessageManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
     public void ShowClientMessageRpc(MessageID messageID)
     {
+        if (IsShowing)
+        {
+            CatGame.Core.Logger.LogWarning("[ServerMessageManager] Tentou reproduzir a mensagem do server enquanto uma mensagem está sendo exibida.");
+            return;
+        }
+
         ShowMessage(messageID);
     }
 

@@ -15,9 +15,6 @@ namespace CatGame.Core.Enums
         // Menu principal
         MainMenu = 4,
 
-        // Play
-        HUD = 5,
-
         // Popups
         QuitLobbyPopup = 6
     }

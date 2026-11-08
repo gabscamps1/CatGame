@@ -1,10 +1,9 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Timer : NetworkBehaviour
 {
-    public float CurrentTimer => timerCountInt.Value;
+    public static float CurrentTimer { get; private set; }
     
     [Tooltip("Tempo limite em segundos de duração da partida")]
     [SerializeField] private float gameTimer;
@@ -20,7 +19,9 @@ public class Timer : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer) return;
+        CurrentTimer = timerCountInt.Value;
+
+        if (!IsServer || timerCountInt.Value <= 0) return;
         UpdateTimer();
         UpdateServerTimer();
         CheckTimeOver();
@@ -31,7 +32,7 @@ public class Timer : NetworkBehaviour
         if (!IsServer) return;
         if (timerCountInt.Value == Mathf.RoundToInt(timerCounFloat)) return;
         
-        timerCountInt.Value = (int)timerCounFloat;
+        timerCountInt.Value = Mathf.Max((int)timerCounFloat, 0);
     }
 
     private void FixedUpdate()
@@ -46,6 +47,8 @@ public class Timer : NetworkBehaviour
 
         if (!IsServer) return;
         timerCounFloat = gameTimer;
+
+        UpdateServerTimer();
     }
 
     private void GameManager_OnGameStateChanged(GameManager.GameState current)

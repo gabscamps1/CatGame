@@ -18,7 +18,11 @@ public class GlassMaxHeight : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D collision)
-    {     
+    {
+        // Ignora se não estiver na partida.
+        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)
+            return;
+
         if (!collision.TryGetComponent(out FruitWorld fruitWorld))
             return;
 

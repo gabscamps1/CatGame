@@ -8,7 +8,7 @@ namespace CatGame.Features.Localization
     public class LocalizedText : MonoBehaviour
     {
         [SerializeField] private string id;
-        [SerializeField] TextMeshProUGUI text;
+        [SerializeField] TMP_Text text;
 
         private ILocalizationService localizationService;
 

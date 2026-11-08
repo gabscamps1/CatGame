@@ -8,7 +8,8 @@ namespace CatGame.Features.CharacterSelection
 
     public struct LobbySlot : INetworkSerializable, IEquatable<LobbySlot>
     {
-        public ulong OwnerId; // online: clientId | local: índice do jogador
+        public ulong OwnerId; // online: clientId
+        public ulong LocalId; // local: índice do jogador
         public ushort CharacterId; // 0 = nenhum escolhido
         public bool Ready;
         public FixedString32Bytes PlayerName;
@@ -16,6 +17,7 @@ namespace CatGame.Features.CharacterSelection
         public void NetworkSerialize<T>(BufferSerializer<T> s) where T : IReaderWriter
         {
             s.SerializeValue(ref OwnerId);
+            s.SerializeValue(ref LocalId);
             s.SerializeValue(ref CharacterId);
             s.SerializeValue(ref Ready);
             s.SerializeValue(ref PlayerName);
@@ -24,6 +26,7 @@ namespace CatGame.Features.CharacterSelection
         public bool Equals(LobbySlot slot)
         {
             return OwnerId == slot.OwnerId 
+                && LocalId == slot.LocalId
                 && CharacterId == slot.CharacterId 
                 && Ready == slot.Ready 
                 && PlayerName.Equals(slot.PlayerName);
