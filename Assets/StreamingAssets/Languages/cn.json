@@ -270,7 +270,7 @@
     },
     {
       "key": "PLAYER_VICTORY",
-      "value": "playerID 获胜了！"
+      "value": "获胜了！"
     },
     {
       "key": "PLAYER_DEFEAT",
@@ -370,6 +370,10 @@
     },
     {
       "key": "SERVER_MSG_START",
+      "value": ""
+    },
+    {
+      "key": "SERVER_MSG_TIME_OVER",
       "value": ""
     }
   ],

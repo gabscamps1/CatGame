@@ -270,7 +270,7 @@
     },
     {
       "key": "PLAYER_VICTORY",
-      "value": "playerIDの勝利！"
+      "value": "の勝利！"
     },
     {
       "key": "PLAYER_DEFEAT",
@@ -358,19 +358,23 @@
     },
     {
       "key": "SERVER_MSG_START_3",
-      "value": ""
+      "value": 3
     },
     {
       "key": "SERVER_MSG_START_2",
-      "value": ""
+      "value": 2
     },
     {
       "key": "SERVER_MSG_START_1",
-      "value": ""
+      "value": 1
     },
     {
       "key": "SERVER_MSG_START",
-      "value": ""
+      "value": "START!!"
+    },
+    {
+      "key": "SERVER_MSG_TIME_OVER",
+      "value": "TIME'S UP!"
     }
   ],
   "dialogues": []

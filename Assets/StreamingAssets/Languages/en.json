@@ -174,7 +174,7 @@
     },
     {
       "key": "POPUP_HEADER",
-      "value": "HEADER"
+      "value": "ALERT"
     },
     {
       "key": "POPUP_HEADER_ALERT",
@@ -270,7 +270,7 @@
     },
     {
       "key": "PLAYER_VICTORY",
-      "value": "playerID WINS!"
+      "value": "WINS!"
     },
     {
       "key": "PLAYER_DEFEAT",
@@ -358,7 +358,7 @@
     },
     {
       "key": "SERVER_MSG_START_3",
-      "value": 3
+      "value": "3!"
     },
     {
       "key": "SERVER_MSG_START_2",
@@ -370,7 +370,11 @@
     },
     {
       "key": "SERVER_MSG_START",
-      "value": "Go"
+      "value": "START!!"
+    },
+    {
+      "key": "SERVER_MSG_TIME_OVER",
+      "value": "TIME'S UP!"
     }
   ],
   "dialogues": []
