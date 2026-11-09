@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MATCH_MUSIC
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
   clip: {fileID: 8300000, guid: 9da41bf75003fd44d85d329e9f1c86fe, type: 3}
-  volume: 1
+  volume: 0.648
   pitchMin: 1
   pitchMax: 1

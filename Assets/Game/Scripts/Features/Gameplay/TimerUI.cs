@@ -61,6 +61,15 @@ public class TimerUI : MonoBehaviour
                 is20SecondsRemaining = true;
                 timerText.color = Color.red;
                 audioService.PlaySFXClip(UI_REMAINING, false);
+
+                // Efeito de pulso.
+                LeanTween.scale(timerText.gameObject, toLocalSize, timePulseDefeatText).setOnComplete(
+                    () =>
+                    {
+                        LeanTween.scale(timerText.gameObject, initialLocalSize, timePulseDefeatText);
+                    });
+
+                
             }
         }
 

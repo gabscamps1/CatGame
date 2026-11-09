@@ -4,6 +4,9 @@ using CatGame.Core.Enums;
 using CatGame.Core.Events;
 using CatGame.Core.Interfaces;
 using UnityEngine;
+using CatGame.Core.Data;
+using CatGame.Services.AudioManagement;
+
 
 namespace CatGame.UI
 {
@@ -15,6 +18,11 @@ namespace CatGame.UI
         private IUIService uiService;
         private ISceneLoadingService sceneLoadingService;
 
+        [Header("Sounds")]
+        [SerializeField] private AudioData LOADING_SOUND;
+
+        private IAudioService audioService;
+
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -22,6 +30,7 @@ namespace CatGame.UI
 
         protected override void Start()
         {
+            audioService = ServiceLocator.Get<IAudioService>();
             uiService = ServiceLocator.Get<IUIService>();
             sceneLoadingService = ServiceLocator.Get<ISceneLoadingService>();
 
@@ -33,12 +42,17 @@ namespace CatGame.UI
                 sceneLoadingService.CurrentSceneGroup));
 
             base.Start();
+
+            
         }      
 
         protected override void OnDestroy()
         {
+            
             sceneLoadingService.OnLoadingChanged -= SceneLoadingService_OnLoadingChanged;
             base.OnDestroy();
+
+            
         }
 
         private void SceneLoadingService_OnLoadingChanged(object sender, LoadingChangedEvent e)
@@ -50,10 +64,17 @@ namespace CatGame.UI
                 case Scenes.Splashs:
                 case Scenes.Cutscene:
                     sceneLoadingCanvas.gameObject.SetActive(false);
+
                     break;
 
                 case Scenes.MainMenu:
                 case Scenes.Playing:
+
+                     if (!audioService.IsPlayingThisMusic(LOADING_SOUND))
+                    {
+                        //audioService.PlayMusic(LOADING_SOUND, true);
+                    }
+
                     sceneLoadingCanvas.gameObject.SetActive(e.IsLoading);
                     break;
             }

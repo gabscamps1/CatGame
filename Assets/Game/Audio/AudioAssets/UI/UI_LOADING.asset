@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: UI_LOADING
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
   clip: {fileID: 8300000, guid: 9285b011af4bc3b43b4396dfaa71a271, type: 3}
-  volume: 1
+  volume: 0.337
   pitchMin: 1
   pitchMax: 1
