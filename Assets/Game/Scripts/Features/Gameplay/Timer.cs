@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Timer : NetworkBehaviour
 {
-    public static float CurrentTimer { get; private set; }
+    public static int CurrentTimer { get; private set; }
     
     [Tooltip("Tempo limite em segundos de duração da partida")]
     [SerializeField] private float gameTimer;

@@ -863,7 +863,7 @@ MonoBehaviour:
   rolloffMode: 1
   sfxMixerGroup: {fileID: 4869373756424710013, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}
   voiceMixerGroup: {fileID: -3095656911299989734, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}
-  fadeOutDuration: 5
+  fadeOutDuration: 1
   musicVolume: 0.6
   musicSource: {fileID: 1223549523}
   musicMixerGroup: {fileID: -6994392405391165214, guid: 72793344b65a47b4797528c1a049b7c3, type: 2}

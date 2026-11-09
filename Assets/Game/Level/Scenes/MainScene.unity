@@ -644,6 +644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInfo_4
       objectReference: {fileID: 0}
+    - target: {fileID: 4025864960447583760, guid: 46556a9d388d25d44ae15055a906b8d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4586143544580935792, guid: 46556a9d388d25d44ae15055a906b8d4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -995,6 +999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 174619224}
+  - component: {fileID: 174619225}
   m_Layer: 5
   m_Name: Victory_Root
   m_TagString: Untagged
@@ -1025,6 +1030,28 @@ RectTransform:
   m_AnchoredPosition: {x: 254.00006, y: -613}
   m_SizeDelta: {x: 4046.3604, y: 3766.12}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &174619225
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174619223}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0a195d983a8da34f8969bf19755f86a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &201745604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,6 +2461,10 @@ PrefabInstance:
     - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_Name
       value: Glass_Spr (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4004,6 +4035,52 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.4745098}
   m_EffectDistance: {x: 0, y: -6.22}
   m_UseGraphicAlpha: 1
+--- !u!1 &613728893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613728894}
+  - component: {fileID: 613728895}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613728894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613728893}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1208300771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613728895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613728893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0918918021921a343a12f64e598f78eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  MATCH_MUSIC: {fileID: 11400000, guid: 99836c0be905f2d45960bbc9e00f6b6d, type: 2}
+  MATCH_LOSE: {fileID: 11400000, guid: 1fa1ab739b374fb4c8199e2c9e0a9950, type: 2}
 --- !u!1 &654911576
 GameObject:
   m_ObjectHideFlags: 0
@@ -5905,7 +5982,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerUI
   timerText: {fileID: 1260321879}
-  timer: {fileID: 1622249484}
+  textColor: {r: 1, g: 0, b: 0, a: 0}
+  timePulseDefeatText: 0.2
+  UI_REMAINING: {fileID: 11400000, guid: 3bc3e805b1d945642a7a2b3dea1ac9e2, type: 2}
+  UI_BEEP: {fileID: 11400000, guid: 3bc3e805b1d945642a7a2b3dea1ac9e2, type: 2}
 --- !u!1 &1135980507
 GameObject:
   m_ObjectHideFlags: 0
@@ -6092,6 +6172,10 @@ PrefabInstance:
     - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_Name
       value: Glass_Spr (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6629,6 +6713,7 @@ Transform:
   - {fileID: 39752729}
   - {fileID: 1931435054}
   - {fileID: 1627605658}
+  - {fileID: 613728894}
   - {fileID: 1622249483}
   - {fileID: 985874897}
   - {fileID: 707421763}
@@ -8191,6 +8276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Glass_Spr (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8475,7 +8564,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -8777,7 +8866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   ShowTopMostFoldoutHeaderGroup: 1
-  gameTimer: 120
+  gameTimer: 21
 --- !u!114 &1622249485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12601,6 +12690,10 @@ PrefabInstance:
     - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_Name
       value: Glass_Spr
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146462384696076192, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
