@@ -12,16 +12,20 @@ No entanto, administrar uma padaria nem sempre é uma tarefa fácil: eventos ine
 Um barista que não começa o turno sem um café. Energético, preciso e desligado da realidade, sempre tentando ser amigavel com os clientes mesmo que isso signifique puxar os limites e tirar alguém do sério.
 Fun fact: Esse é seu quinto emprego.
 <img width="1000" height="1000" alt="Cat1" src="https://github.com/user-attachments/assets/de5af531-2f76-4fb1-ba3b-2084043c3c4f" />
+
 **Remy**
 Um cientista maluco que decidiu fazer experimentos em doces e por isso se tornou padeiro, sempre fica animado com suas invenções mas desinteressado com qualquer outra coisa, seu tédio já o fez explodir um banco por ter que esperar tempo de mais na fila
 Fun fact: Já trabalhou com um cientista maluco que queria dominar o mundo com robôs
 <img width="1000" height="1000" alt="Cat2" src="https://github.com/user-attachments/assets/18f2a88d-ac86-4738-89a9-698f6f938928" />
+
 **Remi**
+Um fazendeiro que já trabalhou tanto na roça que mal consegue ficar acordado, meio rabugento por sempre estar sonolento, mas suas colheitas sempre são as melhores.
 Fun fact: Já tentou ser streamer, mas não sabia fazer live in real life.
 <img width="1000" height="1000" alt="Cat3" src="https://github.com/user-attachments/assets/bea858a9-cfec-4ccd-bd9d-1eb5bfb2fee5" />
+
 **Cap**
 Um mafioso que decidiu virar confeiteiro para ajudar nos seus trabalhos, mas foi expulso da mafia por ter chamado muita atenção de policiais o que fez a mafia ser descoberta 
-Fun fact: 
+Fun fact: O bandeide em seu rosto esconde uma de suas maiores cicatrizes: um arranhão que ele sofreu quando caiu andando na rua.
 <img width="1000" height="1000" alt="Cat4" src="https://github.com/user-attachments/assets/09408955-8cb8-4021-b839-015c300908d2" />
 
 # Qual o nosso objetivo com Nekopan Mix!?
