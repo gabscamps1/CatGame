@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d8ee89f572a5a84abc211a47220ccba, type: 3}
-  m_Name: Start_Game2
+  m_Name: UI_COUNTDOWN
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Core.Data.AudioData
-  clip: {fileID: 8300000, guid: 5b08bb7f49be01f4197aff1d03d15fd6, type: 3}
+  clip: {fileID: 8300000, guid: 6c2c6c5c85952da41a00635fbc6b4a50, type: 3}
   volume: 1
   pitchMin: 0.71
   pitchMax: 1.3
