@@ -358,7 +358,7 @@
     },
     {
       "key": "SERVER_MSG_START_3",
-      "value": "3!"
+      "value": 3
     },
     {
       "key": "SERVER_MSG_START_2",
@@ -383,6 +383,14 @@
     {
       "key": "MULTIPLAYER_INPUT_PORT",
       "value": "Port"
+    },
+    {
+      "key": "INPUT_CONFIRM",
+      "value": "Confirm"
+    },
+    {
+      "key": "INPUT_NAVIGATE",
+      "value": "Navigate"
     }
   ],
   "dialogues": []

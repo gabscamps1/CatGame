@@ -383,6 +383,14 @@
     {
       "key": "MULTIPLAYER_INPUT_PORT",
       "value": "Porta"
+    },
+    {
+      "key": "INPUT_CONFIRM",
+      "value": "Confirmar"
+    },
+    {
+      "key": "INPUT_NAVIGATE",
+      "value": "Navegar"
     }
   ],
   "dialogues": []

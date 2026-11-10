@@ -12,8 +12,8 @@ namespace CatGame.Features.CharacterSelection
     {
         [SerializeField] private CharacterCatalog catalog;
         [SerializeField] private GameObject activeRoot, emptyRoot;
-        [SerializeField] private Image portrait, playerBotImage;
-        [SerializeField] private Sprite keyboardSprite, gamepadSprite, botSprite;
+        [SerializeField] private Image portrait, playerBotImage, emptyImage;
+        [SerializeField] private Sprite keyboardSprite, gamepadSprite, botSprite, emptySprite;
         [SerializeField] private TextMeshProUGUI playerNameText, characterNameText;
         [SerializeField] private GameObject readyBadge, arrowsHint;
 
@@ -44,8 +44,11 @@ namespace CatGame.Features.CharacterSelection
 
             //playerNameText.text = slotInput.PlayerName.ToString();
             playerBotImage.sprite = gamepadSprite;
+            emptyImage.color = new Color(emptyImage.color.r, emptyImage.color.g, emptyImage.color.b, 0);
             readyBadge.SetActive(slot.Ready);
+            //emptyImage.SetActive(slot.Ready);
             arrowsHint.SetActive(editable && !slot.Ready);
+            emptyImage.sprite = emptySprite;
 
             if (catalog.TryGet(slot.CharacterId, out var entry))
             {
@@ -64,7 +67,8 @@ namespace CatGame.Features.CharacterSelection
         {
             playerBotImage.sprite = botSprite;
             arrowsHint.SetActive(false);
-            readyBadge.SetActive(true); // Se não tiver jogador, deixa como pronto.
+            emptyImage.sprite = emptySprite;
+            readyBadge.SetActive(false); // Se não tiver jogador, deixa como pronto.
         }
 
         // Chamados por LobbySlotInput
