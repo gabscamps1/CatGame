@@ -375,6 +375,14 @@
     {
       "key": "SERVER_MSG_TIME_OVER",
       "value": "TIME'S UP!"
+    },
+    {
+      "key": "MULTIPLAYER_INPUT_IP",
+      "value": ""
+    },
+    {
+      "key": "MULTIPLAYER_INPUT_PORT",
+      "value": ""
     }
   ],
   "dialogues": []

@@ -247,7 +247,7 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
-            int port = 1000;
+            int port = 5058;
 
             while (!IsPortAvaliable(port))
                 port++;

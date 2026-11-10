@@ -370,11 +370,19 @@
     },
     {
       "key": "SERVER_MSG_START",
-      "value": "Começem!"
+      "value": "COZINHEM!"
     },
     {
       "key": "SERVER_MSG_TIME_OVER",
       "value": "Tempo esgotado"
+    },
+    {
+      "key": "MULTIPLAYER_INPUT_IP",
+      "value": "Endereço de IP"
+    },
+    {
+      "key": "MULTIPLAYER_INPUT_PORT",
+      "value": "Porta"
     }
   ],
   "dialogues": []

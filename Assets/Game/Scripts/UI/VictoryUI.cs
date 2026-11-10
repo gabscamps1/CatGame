@@ -62,7 +62,7 @@ public class VictoryUI : MonoBehaviour
         playerImage.sprite = e.PlayerSprite;
 
         playerText.text = $"{player} {victoryText}";
-        playerText.color = playerColor;
+        //playerText.color = playerColor;
 
         playerBG.color = playerColor;
         stripesImage.color = playerColor;
