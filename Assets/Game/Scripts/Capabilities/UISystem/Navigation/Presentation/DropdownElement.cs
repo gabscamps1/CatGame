@@ -149,9 +149,9 @@ namespace CatGame.Capabilities.UISystem
             inputController.Navigation.canceled -= Navigation_performed;
         }
 
-        public void SetOptionInteractable(bool value)
+        public override void SetOptionInteractable(bool value)
         {
-            heirInteractable = value;
+            base.SetOptionInteractable(value);
             valueText.color = value ? normalColor : disableColor;
         }
 

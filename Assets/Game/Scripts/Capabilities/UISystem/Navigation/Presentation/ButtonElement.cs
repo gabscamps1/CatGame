@@ -5,7 +5,6 @@ using CatGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace CatGame.Capabilities.UISystem
 {
     [RequireComponent(typeof(Image))]
@@ -13,7 +12,7 @@ namespace CatGame.Capabilities.UISystem
     {
         [Header("Button Settings")]
         [SerializeField] private Color baseColor = Color.white;
-        [SerializeField] private Color selectedColor = Color.lightGray;
+        [SerializeField] private Color selectedColor = Color.white;
         [SerializeField] private Color pressedColor = Color.gray;
         [SerializeField] private Color disableColor = Color.darkGray;
 
@@ -42,13 +41,13 @@ namespace CatGame.Capabilities.UISystem
 
         protected override void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)
         {
-            image.color = selectedColor;
+            if (image) image.color = selectedColor;
             base.OnFocusedByPlayer(player, navigationMode);
         }
 
         protected override void OnUnfocusedByPlayer(PlayerId player, NavigationMode navigationMode)
         {
-            image.color = baseColor;
+            if (image) image.color = baseColor;
             base.OnUnfocusedByPlayer(player, navigationMode);
         }
     }

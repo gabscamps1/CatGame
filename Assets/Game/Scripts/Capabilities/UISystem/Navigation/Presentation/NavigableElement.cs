@@ -68,6 +68,7 @@ namespace CatGame.Capabilities.UISystem
         }
 
         public void SetInteractable(bool value) => ownInteractable = value;
+        public virtual void SetOptionInteractable(bool value) => heirInteractable = value;
 
         public INavigableElement GetNeightbor(NavigationDirection direction)
         {
