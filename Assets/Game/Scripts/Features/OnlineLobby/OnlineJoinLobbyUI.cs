@@ -9,6 +9,7 @@ namespace CatGame.UI
     public class OnlineJoinLobbyUI : BaseUIScreen
     {
         [SerializeField] private InputFieldElement inputFieldElement;
+        [SerializeField] private InputFieldElement inputFieldElementPort;
         [SerializeField] private ButtonElement buttonElement;
         [SerializeField] private MenuController menuController;
         [SerializeField] private int menuIndexWhenConnectLobby;
