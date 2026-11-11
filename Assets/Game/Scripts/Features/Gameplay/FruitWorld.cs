@@ -154,7 +154,7 @@ public class FruitWorld : NetworkBehaviour
         FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, playerOwner.Value, 0);
         //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
         // ScoreEntry ao dar merge.
-        PlayerId? playerId = MatchSetup.FindPlayerId(credited);
+        PlayerId? playerId = MatchSetup.Instance.FindPlayerId(credited);
         int score = catalog.Get(newTier).score;
 
         if (playerId.HasValue)

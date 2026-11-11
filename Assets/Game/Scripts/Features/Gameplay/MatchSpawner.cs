@@ -32,9 +32,9 @@ namespace CatGame.Features.Gameplay
         {
             NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
             
-            for (int i = 0; i < MatchSetup.Players.Count; i++)
+            for (int i = 0; i < MatchSetup.Instance.Players.Count; i++)
             {
-                LobbySlot slot = MatchSetup.Players[i];
+                LobbySlot slot = MatchSetup.Instance.Players[i];
                 if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) continue;
 
                 PlayerId playerId = new PlayerId(i);

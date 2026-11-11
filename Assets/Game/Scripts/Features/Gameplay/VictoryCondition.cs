@@ -147,10 +147,10 @@ public class VictoryCondition : MonoBehaviour
             }            
         }
 
-        if (mvp.Id >= MatchSetup.Players.Count)
+        if (mvp.Id >= MatchSetup.Instance.Players.Count)
             return;
 
-        ushort characterId = MatchSetup.Players[mvp.Id].CharacterId;
+        ushort characterId = MatchSetup.Instance.Players[mvp.Id].CharacterId;
 
         if (!characterCatalog.TryGet(characterId, out CharacterCatalog.Entry catalogEntry))
             return;

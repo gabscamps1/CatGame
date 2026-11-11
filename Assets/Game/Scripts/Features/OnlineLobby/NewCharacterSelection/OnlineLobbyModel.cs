@@ -223,7 +223,7 @@ namespace CatGame.Features.CharacterSelection
             if (!LobbyRules.CanStart(Snapshot())) return;
 
             ConnectionManager.Instance.CloseConnections();
-            MatchSetup.Capture(Snapshot());
+            MatchSetup.Instance.Capture(Snapshot());
             phase.Value = LobbyPhase.Starting;
             ChangeStateRpc();
             NetworkManager.SceneManager.LoadScene(gameScene, LoadSceneMode.Single);

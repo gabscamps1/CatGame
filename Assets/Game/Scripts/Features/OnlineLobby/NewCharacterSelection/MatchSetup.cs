@@ -1,19 +1,42 @@
 using CatGame.Core.Data;
 using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+
 
 namespace CatGame.Features.CharacterSelection
 {
-    public static class MatchSetup
+    [DisallowMultipleComponent]
+    public class MatchSetup : NetworkBehaviour
     {
-        public static readonly List<LobbySlot> Players = new();
+        public static MatchSetup Instance { get; private set; } 
 
-        public static void Capture(IEnumerable<LobbySlot> slots)
+        public NetworkList<LobbySlot> Players { get; private set; } = new();
+
+        private void Awake()
         {
-            Players.Clear();
-            Players.AddRange(slots);
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
-        public static PlayerId? FindPlayerId(ulong clientId)
+        public void Capture(IEnumerable<LobbySlot> slots)
+        {
+            if (!IsServer)
+              return; 
+
+            Players.Clear();
+            foreach (var slot in slots)
+                Players.Add(slot);
+        }
+
+        public PlayerId? FindPlayerId(ulong clientId)
         {
             for (int i = 0; i < Players.Count; i++)
             {
