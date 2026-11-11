@@ -391,6 +391,10 @@
     {
       "key": "INPUT_NAVIGATE",
       "value": "Navegar"
+    },
+    {
+      "key": "PLAYER_INDICATOR",
+      "value": "Você"
     }
   ],
   "dialogues": []

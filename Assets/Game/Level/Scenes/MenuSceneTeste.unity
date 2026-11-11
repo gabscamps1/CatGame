@@ -5431,7 +5431,7 @@ MonoBehaviour:
   down: {fileID: 0}
   left: {fileID: 0}
   right: {fileID: 0}
-  highlightVisual: {fileID: 0}
+  highlightVisual: {fileID: 7467663919649671148, guid: 4c71e5b762ea51d41ac8a1907c03727e, type: 3}
   onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 1, g: 0.8745098, b: 0.4862745, a: 1}
@@ -7543,7 +7543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -585.49994, y: 0}
+  m_AnchoredPosition: {x: -585.4999, y: 0}
   m_SizeDelta: {x: 1171, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282599962
@@ -12314,7 +12314,7 @@ MonoBehaviour:
   down: {fileID: 1006305950}
   left: {fileID: 0}
   right: {fileID: 1750949122}
-  highlightVisual: {fileID: 7467663919649671148, guid: 4c71e5b762ea51d41ac8a1907c03727e, type: 3}
+  highlightVisual: {fileID: 7467663919649671148, guid: 371ed8db8bfcd9b468d8457d0babcc52, type: 3}
   onFocusSound: {fileID: 11400000, guid: d9929854b655dce4ebf4f649c381c616, type: 2}
   text: 
   characterLimit: 15
