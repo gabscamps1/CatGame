@@ -24,6 +24,8 @@ namespace CatGame.Features.CharacterSelection
                 Destroy(gameObject);
                 return;
             }
+
+            DontDestroyOnLoad(gameObject);
         }
 
         public void Capture(IEnumerable<LobbySlot> slots)
