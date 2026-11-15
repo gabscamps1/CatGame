@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using CatGame.Core.Data;
+using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 
 namespace CatGame.Features.Gameplay
@@ -37,19 +38,25 @@ namespace CatGame.Features.Gameplay
                 LobbySlot slot = MatchSetup.Instance.Players[i];
                 if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) continue;
 
-                PlayerId playerId = new PlayerId(i);
-                byte localIndex = 0; // GABRIEL ME LEMBRA DE CONFIGURAR DEPOIS COM O LOBBY.
+                PlayerId playerId = new PlayerId(i);              
+                byte localIndex = slot.LocalId;
 
-                roaster.ServerAdd(playerId, slot.OwnerId, localIndex);
+                // Registra o player e suas informações no servidor.
+                roaster.ServerAdd(playerId, slot.OwnerId, localIndex, PlayerControlType.Human, slot.CharacterId);
 
+                // Spawna o jogador no server.
                 Transform point = spawnPoints[i];
                 NetworkObject playerObj = Instantiate(entry.Prefab, point.position, point.rotation);  
                 
-                if (playerObj.TryGetComponent(out IPlayerIdConfig playerIdConfig))
-                    playerIdConfig.SetPlayerId(playerId);
+                // Configura o jogador com o seu ID.
+                if (playerObj.TryGetComponent(out IPlayerActor actor))
+                    actor.SetPlayerId(playerId);
 
-                // Coloca inicialmente o server como dono de cada objeto.
-                playerObj.SpawnAsPlayerObject(slot.OwnerId);
+                // Instancia os jogadores para todos os clients.
+                if (localIndex == 0)
+                    playerObj.SpawnAsPlayerObject(slot.OwnerId);
+                else
+                    playerObj.SpawnWithOwnership(slot.OwnerId);
             }
         }
     }

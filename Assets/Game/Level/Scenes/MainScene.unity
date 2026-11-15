@@ -2397,11 +2397,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391581581}
   m_CullTransparentMesh: 1
---- !u!61 &423947609 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9034457469853834734, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
-  m_PrefabInstance: {fileID: 424519749}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &424519749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2410,6 +2405,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1208300771}
     m_Modifications:
+    - target: {fileID: 1535981647888188, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: playerIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2741956087451573586, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3600002
@@ -6306,6 +6305,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1208300771}
     m_Modifications:
+    - target: {fileID: 1535981647888188, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: playerIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2741956087451573586, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.67
@@ -6369,11 +6372,6 @@ PrefabInstance:
 --- !u!4 &1150676369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2741956087451573586, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
-  m_PrefabInstance: {fileID: 1150676368}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1150676370 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9034457469853834734, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
   m_PrefabInstance: {fileID: 1150676368}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1150676371 stripped
@@ -6609,11 +6607,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2.67, y: -3.16}
   m_UseGraphicAlpha: 1
---- !u!61 &1192553304 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9034457469853834734, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
-  m_PrefabInstance: {fileID: 3990986729476797288}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1193746131
 GameObject:
   m_ObjectHideFlags: 0
@@ -7252,11 +7245,6 @@ MonoBehaviour:
   _fadeTime: 2
   ScoreWhenCombined: {fileID: 5526703070993737697, guid: aec87143a6894f14689568a1ffbd292b, type: 3}
   TimeTillGameOver: 1.5
-  boundaries:
-  - {fileID: 1192553304}
-  - {fileID: 423947609}
-  - {fileID: 1150676370}
-  - {fileID: 1483015015}
 --- !u!114 &1228830383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8409,6 +8397,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1208300771}
     m_Modifications:
+    - target: {fileID: 1535981647888188, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
+      propertyPath: playerIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2741956087451573586, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.98
@@ -8472,11 +8464,6 @@ PrefabInstance:
 --- !u!4 &1483015014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2741956087451573586, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
-  m_PrefabInstance: {fileID: 1483015013}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1483015015 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9034457469853834734, guid: c4e150c022b227043b7de7f243ab1be6, type: 3}
   m_PrefabInstance: {fileID: 1483015013}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1483015016 stripped

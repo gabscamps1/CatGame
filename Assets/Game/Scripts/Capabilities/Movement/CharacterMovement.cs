@@ -12,6 +12,19 @@ namespace CatGame.Capabilities.Movement
 
         private bool hasMovementBounds;
 
+        public float MoveSpeed => moveSpeed;
+
+        /// <summary>
+        /// Altera a velocidade.
+        /// </summary>
+        public void SetMoveSpeed(float newMoveSpeed)
+        {
+            moveSpeed = Mathf.Max(0f, newMoveSpeed);
+        }
+
+        /// <summary>
+        /// Define a área onde o personagem pode se mover.
+        /// </summary>
         public void SetMovementBounds(BoxCollider2D boundary, Transform fruitThrowTransform)
         {
             if (boundary == null || fruitThrowTransform == null)
@@ -27,6 +40,9 @@ namespace CatGame.Capabilities.Movement
             hasMovementBounds = true;
         }
 
+        /// <summary>
+        /// Move o personagem no eixo X.
+        /// </summary>
         public void Move(Vector2 direction, float deltaTime)
         {
             if (!hasMovementBounds)

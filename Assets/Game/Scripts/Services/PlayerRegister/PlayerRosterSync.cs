@@ -1,5 +1,6 @@
 ﻿using CatGame.Core;
 using CatGame.Core.Data;
+using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,21 @@ namespace CatGame.Services.Register
         public int playerId;
         public ulong clientId;
         public byte localIndex;
+        public byte controlType;   // PlayerControlType
+        public ushort characterId;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref playerId);
             serializer.SerializeValue(ref clientId);
             serializer.SerializeValue(ref localIndex);
+            serializer.SerializeValue(ref controlType);
+            serializer.SerializeValue(ref characterId);
         }
 
         public bool Equals(PlayerRosterEntry other) =>
-            playerId == other.playerId && clientId == other.clientId && localIndex == other.localIndex;
+            playerId == other.playerId && clientId == other.clientId && localIndex == other.localIndex
+            && controlType == other.controlType && characterId == other.characterId;
     }
 
     public sealed class PlayerRosterSync : NetworkBehaviour
@@ -43,7 +49,7 @@ namespace CatGame.Services.Register
         }
 
         
-        public void ServerAdd(PlayerId playerId, ulong clientId, byte localIndex)
+        public void ServerAdd(PlayerId playerId, ulong clientId, byte localIndex, PlayerControlType controlType, ushort characterId)
         {
             if (!IsServer) return;
 
@@ -54,7 +60,9 @@ namespace CatGame.Services.Register
             {
                 playerId = playerId.Id,
                 clientId = clientId,
-                localIndex = localIndex
+                localIndex = localIndex,
+                controlType = (byte)controlType,
+                characterId = characterId
             });
 
             ApplyToRegistry();
@@ -68,7 +76,7 @@ namespace CatGame.Services.Register
             {
                 if (roster[i].playerId != playerId.Id) continue;
                 roster.RemoveAt(i);
-                return;
+                break; // break, e não return: o registro do server também precisa ser atualizado abaixo.
             }
 
             ApplyToRegistry();
@@ -84,7 +92,7 @@ namespace CatGame.Services.Register
         {
             List<PlayerInfo> snapshot = new(roster.Count);
             foreach (PlayerRosterEntry entry in roster)
-                snapshot.Add(new PlayerInfo(new PlayerId(entry.playerId), entry.clientId, entry.localIndex));
+                snapshot.Add(new PlayerInfo(new PlayerId(entry.playerId), entry.clientId, entry.localIndex, (PlayerControlType)entry.controlType, entry.characterId));
 
             registry.Sync(snapshot);
         }

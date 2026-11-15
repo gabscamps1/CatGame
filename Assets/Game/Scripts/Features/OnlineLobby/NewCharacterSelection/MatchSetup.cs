@@ -37,21 +37,5 @@ namespace CatGame.Features.CharacterSelection
             foreach (var slot in slots)
                 Players.Add(slot);
         }
-
-        public PlayerId? FindPlayerId(ulong clientId)
-        {
-            for (int i = 0; i < Players.Count; i++)
-            {
-                LobbySlot slot = Players[i];
-
-                if (slot.OwnerId != clientId)
-                    continue;
-
-                // Encontrou o PlayerId referente ao client.
-                return new PlayerId(i);
-            }
-
-            return null;
-        }
     }
 }

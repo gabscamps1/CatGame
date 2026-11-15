@@ -8,8 +8,8 @@ namespace CatGame.Features.CharacterSelection
 
     public struct LobbySlot : INetworkSerializable, IEquatable<LobbySlot>
     {
-        public ulong OwnerId; // online: clientId
-        public ulong LocalId; // local: índice do jogador
+        public ulong OwnerId; // Id do client
+        public byte LocalId; // Índice do jogador dentro do mesmo client.
         public ushort CharacterId; // 0 = nenhum escolhido
         public bool Ready;
         public FixedString32Bytes PlayerName;

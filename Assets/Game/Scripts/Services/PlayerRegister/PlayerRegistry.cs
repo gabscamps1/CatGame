@@ -1,4 +1,5 @@
 ﻿using CatGame.Core.Data;
+using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CatGame.Services.Register
     {
         private readonly Dictionary<PlayerId, PlayerInfo> playersById = new();
         private readonly Dictionary<(ulong clientId, byte localIndex), PlayerId> idsByConnection = new();
-        private readonly Dictionary<PlayerId, PlayerController> controllers = new();
+        private readonly Dictionary<PlayerId, IPlayerActor> actors = new();
 
         public IReadOnlyCollection<PlayerInfo> Players => playersById.Values;
 
@@ -21,11 +22,15 @@ namespace CatGame.Services.Register
             if (!info.playerId.IsValid) return false;
             if (playersById.ContainsKey(info.playerId)) return false;
 
+            // Só humanos têm conexão e índice local próprios.
+            bool isHuman = info.controlType == PlayerControlType.Human;
             var connectionKey = (info.clientId, info.localIndex);
-            if (idsByConnection.ContainsKey(connectionKey)) return false;
+            if (isHuman && idsByConnection.ContainsKey(connectionKey)) return false;
 
             playersById.Add(info.playerId, info);
-            idsByConnection.Add(connectionKey, info.playerId);
+
+            if (isHuman)
+                idsByConnection.Add(connectionKey, info.playerId);
 
             PlayerRegistered?.Invoke(info);
             return true;
@@ -35,8 +40,10 @@ namespace CatGame.Services.Register
         {
             if (!playersById.Remove(playerId, out PlayerInfo info)) return false;
 
-            idsByConnection.Remove((info.clientId, info.localIndex));
-            controllers.Remove(playerId);
+            if (info.controlType == PlayerControlType.Human)
+                idsByConnection.Remove((info.clientId, info.localIndex));
+
+            actors.Remove(playerId);
 
             PlayerUnregistered?.Invoke(info);
             return true;
@@ -77,7 +84,7 @@ namespace CatGame.Services.Register
         {
             playersById.Clear();
             idsByConnection.Clear();
-            controllers.Clear();
+            actors.Clear();
         }
 
         public bool TryGetPlayerInfo(PlayerId playerId, out PlayerInfo info)
@@ -93,26 +100,26 @@ namespace CatGame.Services.Register
         public IEnumerable<PlayerInfo> GetPlayersOfClient(ulong clientId)
         {
             foreach (PlayerInfo info in playersById.Values)
-                if (info.clientId == clientId) yield return info;
+                if (info.controlType == PlayerControlType.Human && info.clientId == clientId) yield return info;
         }
 
-        #region PlayerController
+        #region Actors
 
-        public void RegisterController(PlayerId playerId, PlayerController controller)
+        public void RegisterActor(PlayerId playerId, IPlayerActor actor)
         {
-            controllers[playerId] = controller;
+            actors[playerId] = actor;
         }
 
-        public void UnregisterController(PlayerId playerId, PlayerController controller)
+        public void UnregisterActor(PlayerId playerId, IPlayerActor actor)
         {
-            // Só remove se ainda for o mesmo (evita apagar um controller novo registrado depois).
-            if (controllers.TryGetValue(playerId, out PlayerController current) && current == controller)
-                controllers.Remove(playerId);
+            // Só remove se ainda for o mesmo (evita apagar um ator novo registrado depois).
+            if (actors.TryGetValue(playerId, out IPlayerActor current) && current == actor)
+                actors.Remove(playerId);
         }
 
-        public bool TryGetController(PlayerId playerId, out PlayerController controller)
+        public bool TryGetActor(PlayerId playerId, out IPlayerActor actor)
         {
-            return controllers.TryGetValue(playerId, out controller);
+            return actors.TryGetValue(playerId, out actor);
         }
 
         #endregion

@@ -1,7 +1,7 @@
 using CatGame.Core.Data;
 using CatGame.Core.Events;
-using CatGame.Features.CharacterSelection;
 using System;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using CatGame.Core;
@@ -26,26 +26,35 @@ public class FruitWorld : NetworkBehaviour
         }
     }*/
 
-    public const ulong NoPlayer = ulong.MaxValue;
-
     public PlayerId PlayerOwner => IsSpawned 
         ? playerOwner.Value 
         : PlayerId.None;
    
+    // Frutas existentes neste peer. A IA (que roda só no server) filtra por PlayerOwner.
+    private static readonly List<FruitWorld> active = new();
+    public static IReadOnlyList<FruitWorld> Active => active;
+
+    // Informações sobre a fruta (valores de física só fazem sentido no server).
+    public byte Tier => tier.Value;
+    public bool HasLanded => hasLanded; // Já encostou no chão ou em outra fruta. Antes disso, ainda está caindo.
+    public bool IsMerging => isMerging;
+    public Vector2 Position => body.position;
+    public Vector2 Velocity => body.linearVelocity;
+    public float WorldRadius => fruitCollider.radius * Mathf.Abs(transform.lossyScale.x);
+
     public float TimeInCollision { get; private set; }
     private bool stayInCollision = false;
 
     [SerializeField] private FruitCatalog catalog;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D body;
-    [SerializeField] private Collider2D fruitCollider;
-    [SerializeField] private float maxAirTime = 5f;   // Se nunca colidir, devolve a fruta à mão do jogador.
+    [SerializeField] private CircleCollider2D fruitCollider;
+    [SerializeField] private float maxAirTime = 5f; // Se nunca colidir, devolve a fruta à mão do jogador.
 
     // Escritas só pelo server, ANTES do Spawn: chegam junto com a mensagem de spawn.
     private readonly NetworkVariable<byte> tier = new();
-    private readonly NetworkVariable<ulong> droppedByClientId = new(NoPlayer);
     private readonly NetworkVariable<PlayerId> playerOwner = new();
-    private readonly NetworkVariable<uint> sourceDrop = new();
+    private readonly NetworkVariable<uint> sourceDrop = new(); // 0 = fruta de merge. 1 ou mais = número do drop da mão.
 
     private bool hasLanded; // Colidiu com um objeto.
     private bool isMerging; // Evita que ocorra um merge com 3 ou mais frutas.
@@ -54,7 +63,15 @@ public class FruitWorld : NetworkBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioData MATCH_THROW;
 
+
     private IAudioService audioService;
+    private IAudioService AudioService => audioService ??= ServiceLocator.Get<IAudioService>();
+
+    private IPlayerRegistry playerRegistry;
+    private IPlayerRegistry PlayerRegistry => playerRegistry ??= ServiceLocator.Get<IPlayerRegistry>();
+
+    // Veio da mão de um jogador (e não de um merge).
+    private bool IsDroppedByHand => sourceDrop.Value != 0;
 
 
     //public static event EventHandler<ServerMergedArgs> OnFruitMergedServer;    
@@ -64,10 +81,9 @@ public class FruitWorld : NetworkBehaviour
         audioService = ServiceLocator.Get<IAudioService>();
     }
 
-    public void ServerInit(byte newTier, ulong droppedBy, PlayerId playerOwner, uint drop)
+    public void ServerInit(byte newTier, PlayerId playerOwner, uint drop)
     {
         tier.Value = newTier;
-        droppedByClientId.Value = droppedBy;
         this.playerOwner.Value = playerOwner;
         sourceDrop.Value = drop;
     }
@@ -77,8 +93,19 @@ public class FruitWorld : NetworkBehaviour
         if (IsServer) body.linearVelocity = velocity;
     }
 
+    /// <summary>
+    /// Raio em mundo que uma fruta teria em um tier.
+    /// </summary>
+    public float RadiusForTier(byte tierToCheck)
+    {
+        float baseRadius = fruitCollider.radius;
+        return baseRadius * catalog.Get(tierToCheck).diameter;
+    }
+
     public override void OnNetworkSpawn()
     {
+        if (!active.Contains(this)) active.Add(this);
+
         FruitCatalog.TierData data = catalog.Get(tier.Value);
         spriteRenderer.sprite = data.sprite;
         transform.localScale = Vector3.one * data.diameter;
@@ -93,7 +120,7 @@ public class FruitWorld : NetworkBehaviour
         spawnTime = Time.time;
 
         // Avisa ao player dono dessa fruta, que esta fruta já existe aqui.
-        if (droppedByClientId.Value != NoPlayer)
+        if (IsDroppedByHand)
         {
             PlayerFruitHand hand = FindHand();
             if (hand != null) hand.NotifyWorldFruitSpawned(sourceDrop.Value);
@@ -104,12 +131,19 @@ public class FruitWorld : NetworkBehaviour
     {
         // Se for destruida, garante que o jogador seja avisado.
         if (IsServer) NotifyLanded();
+        active.Remove(this);
         GameManager.Instance.OnPlayerLost -= GameManager_OnPlayerLost;
+    }
+
+    public override void OnDestroy()
+    {
+        active.Remove(this);
+        base.OnDestroy();
     }
 
     private void FixedUpdate()
     {
-        if (!IsServer || !IsSpawned || hasLanded || droppedByClientId.Value == NoPlayer) return;
+        if (!IsServer || !IsSpawned || hasLanded || !IsDroppedByHand) return;
         if (Time.time - spawnTime > maxAirTime) NotifyLanded();
     }
 
@@ -146,19 +180,21 @@ public class FruitWorld : NetworkBehaviour
         Vector2 point = (body.position + other.body.position) * 0.5f;
         Vector2 velocity = (body.linearVelocity + other.body.linearVelocity) * 0.5f;
         byte newTier = (byte)(tier.Value + 1);
-        ulong credited = droppedByClientId.Value != NoPlayer ? droppedByClientId.Value : other.droppedByClientId.Value;
+        
+        // Cada pote pertence a um jogador: os pontos vão para o dono do pote.
+        PlayerId scorer = playerOwner.Value;
 
         other.NetworkObject.Despawn();
         NetworkObject.Despawn();
 
-        FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, NoPlayer, playerOwner.Value, 0);
-        //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(credited, newTier, point));
-        // ScoreEntry ao dar merge.
-        PlayerId? playerId = MatchSetup.Instance.FindPlayerId(credited);
+        FruitSpawner.Instance.ServerSpawn(newTier, point, velocity, scorer, 0);
+        //OnFruitMergedServer?.Invoke(this, new ServerMergedArgs(scorer, newTier, point));
+
+        // Score ao dar merge.
         int score = catalog.Get(newTier).score;
 
-        if (playerId.HasValue)
-            ScoreManager.Instance.IncreaseScore(playerId.Value, score);
+        if (scorer.IsValid)
+            ScoreManager.Instance.IncreaseScore(scorer, score);
     }
 
     /// <summary>
@@ -166,19 +202,19 @@ public class FruitWorld : NetworkBehaviour
     /// </summary>
     private void NotifyLanded()
     {
-        if (hasLanded || droppedByClientId.Value == NoPlayer) return;
+        if (hasLanded || !IsDroppedByHand) return;
         hasLanded = true;
 
         PlayerFruitHand hand = FindHand();
         if (hand != null) hand.ServerRefill(sourceDrop.Value);
     }
 
+    /// <summary>
+    /// Acha a mão do dono desta fruta pelo PlayerId (humano ou IA).
+    /// </summary>
     private PlayerFruitHand FindHand()
     {
-        if (NetworkManager == null || NetworkManager.SpawnManager == null) return null;
-
-        NetworkObject playerObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(droppedByClientId.Value);
-        return playerObject != null ? playerObject.GetComponent<PlayerFruitHand>() : null;
+        return PlayerRegistry.TryGetActor(playerOwner.Value, out IPlayerActor actor) ? actor.Hand : null;
     }
 
     #region Trigger

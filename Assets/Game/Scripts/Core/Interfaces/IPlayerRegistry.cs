@@ -1,5 +1,4 @@
 using CatGame.Core.Data;
-using CatGame.Services.Register;
 using System;
 using System.Collections.Generic;
 
@@ -14,16 +13,16 @@ namespace CatGame.Core.Interfaces
 
         public bool Register(PlayerInfo info);
         public bool Unregister(PlayerId playerId);
-        public void Sync(IReadOnlyList<PlayerInfo> snapshot);   // aplica a lista replicada, disparando eventos só do que mudou
+        public void Sync(IReadOnlyList<PlayerInfo> snapshot); // Aplica a lista replicada, disparando eventos só do que mudou.
         public void Clear();
 
         public bool TryGetPlayerInfo(PlayerId playerId, out PlayerInfo info);
-        public bool TryGetPlayerId(ulong clientId, byte localIndex, out PlayerId playerId);
-        public IEnumerable<PlayerInfo> GetPlayersOfClient(ulong clientId);   // local: vários por client
+        public bool TryGetPlayerId(ulong clientId, byte localIndex, out PlayerId playerId); // Só jogadores humanos: a IA não tem conexão nem índice local próprios.
+        public IEnumerable<PlayerInfo> GetPlayersOfClient(ulong clientId); // Jogadores controlados por este client.
 
-        // Controllers (local por peer)
-        public void RegisterController(PlayerId playerId, PlayerController controller);
-        public void UnregisterController(PlayerId playerId, PlayerController controller);
-        public bool TryGetController(PlayerId playerId, out PlayerController controller);
+        // Participantes: jogadores ou IA (local por peer)
+        public void RegisterActor(PlayerId playerId, IPlayerActor actor);
+        public void UnregisterActor(PlayerId playerId, IPlayerActor actor);
+        public bool TryGetActor(PlayerId playerId, out IPlayerActor actor);
     }
 }

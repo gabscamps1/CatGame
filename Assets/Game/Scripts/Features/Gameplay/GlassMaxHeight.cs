@@ -1,5 +1,4 @@
-﻿using CatGame.Capabilities.Health;
-using CatGame.Core;
+﻿using CatGame.Core;
 using CatGame.Core.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
@@ -9,6 +8,17 @@ public class GlassMaxHeight : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Min(1)] private float timeToLose;
     [SerializeField] private int damage = 1;
+
+    private Collider2D zoneCollider;
+
+    public float TimeToLose => timeToLose;
+
+    /// <summary>
+    /// Base da zona de derrota. Uma fruta cuja borda de cima passa daqui começa a contar tempo.
+    /// </summary>
+    public float DangerLineY => ZoneCollider.bounds.min.y;
+
+    private Collider2D ZoneCollider => zoneCollider ??= GetComponent<Collider2D>();
 
     private void OnEnable()
     {
@@ -33,19 +43,19 @@ public class GlassMaxHeight : MonoBehaviour
         Debug.Log("1");
         IPlayerRegistry playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
 
-        // Pega o player dono da fruta.
-        if (!playerRegistry.TryGetController(fruitWorld.PlayerOwner, out PlayerController playerController))
+        // Pega o dono da fruta.
+        if (!playerRegistry.TryGetActor(fruitWorld.PlayerOwner, out IPlayerActor actor))
         {
-            CatGame.Core.Logger.LogError("PlayerController não foi encontrado");
+            CatGame.Core.Logger.LogError("IPlayerActor não foi encontrado");
             return;
         }
 
         Debug.Log("2");
-        if (!playerController.TryGetComponent(out IDamageable damageable))
+        if (actor.Damageable == null)
             return;
 
         // Causa um de dano no jogador quando enche o pote.
-        damageable.TakeDamage(damage);
+        actor.Damageable.TakeDamage(damage);
 
         fruitWorld.ResetTimer();
 

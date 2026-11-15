@@ -21,11 +21,6 @@ public class GameManager : NetworkBehaviour
 
     public float TimeTillGameOver = 1.5f;
 
-    // Player Settings
-    [Header("ToPlayer")]
-    public BoxCollider2D[] Boundaries => boundaries;
-    [SerializeField] private BoxCollider2D[] boundaries; // Na ordem. Boundary Player 1, Player2, ...
-
     // Player
     public List<PlayerId> PlayerLost { get; private set; } = new();
     public event Action<PlayerId> OnPlayerLost;

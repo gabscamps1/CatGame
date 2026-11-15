@@ -39,6 +39,10 @@ namespace CatGame.Capabilities.Health
             audioService = ServiceLocator.Get<IAudioService>();
         }
 
+        /// <summary>
+        /// Causa dano.
+        /// </summary>
+        /// <param name="amount"></param>
         public void TakeDamage(float amount)
         {
             float previousHealth = system.Health;
@@ -60,6 +64,9 @@ namespace CatGame.Capabilities.Health
             }
         }
 
+        /// <summary>
+        /// Cura até o limite da vida máxima.
+        /// </summary>
         public void Heal(float amount)
         {
             float previousHealth = system.Health;
@@ -68,6 +75,22 @@ namespace CatGame.Capabilities.Health
 
             OnHealthChanged?.Invoke(previousHealth, system.Health);
             OnHealed?.Invoke();
+        }
+
+        /// <summary>
+        /// Define a vida máxima e reinicia a vida atual no máximo.
+        /// </summary>
+        public void SetMaxHealth(float newMaxHealth)
+        {
+            if (newMaxHealth <= 0f)
+                return;
+
+            float previousHealth = system != null ? system.Health : newMaxHealth;
+
+            maxHealth = newMaxHealth;
+            system = new HealthSystem(maxHealth);
+
+            OnHealthChanged?.Invoke(previousHealth, system.Health);
         }      
     }
 }

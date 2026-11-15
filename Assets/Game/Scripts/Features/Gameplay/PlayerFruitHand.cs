@@ -30,7 +30,7 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
     [SerializeField] private float arenaMaxX = 4f;
     
     [SerializeField] private float maxDriftX = 1.5f; // Tolerância entre a posição X do dono e o do server.
-    [SerializeField] private float dropCooldown = 0.15f; // Cooldown minimo para o drop.
+    [SerializeField] private float dropCooldown = 0.15f; // Cooldown minimo para o dropCount.
 
     private readonly NetworkVariable<HandState> state = new();
 
@@ -39,6 +39,13 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
     private float lastDropTime;
 
     private PlayerId playerId = PlayerId.None;
+
+    // Informações sobre o estado da mão.
+    public byte CurrentTier => state.Value.tier; // 0 = mão vazia
+    public byte NextTier => state.Value.nextFruitTier;
+    public bool CanDrop => IsSpawned && playerId.IsValid && state.Value.tier != 0 && Time.time - lastDropTime >= dropCooldown;
+    public Vector2 DropPoint => dropPoint.position;
+
     public override void OnNetworkSpawn()
     {
         state.OnValueChanged += OnStateChanged;
@@ -147,14 +154,14 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
         float x = Mathf.Clamp(requestedX, serverX - maxDriftX, serverX + maxDriftX);
         x = Mathf.Clamp(x, arenaMinX, arenaMaxX);
 
-        uint drop = handState.dropCount + 1;
-        FruitSpawner.Instance.ServerSpawn(handState.tier, new Vector2(x, dropPoint.position.y), Vector2.zero, OwnerClientId, playerId, drop);
+        uint dropCount = handState.dropCount + 1;
+        FruitSpawner.Instance.ServerSpawn(handState.tier, new Vector2(x, dropPoint.position.y), Vector2.zero, playerId, dropCount);
 
         state.Value = new HandState 
         { 
             tier = 0, 
             nextFruitTier = state.Value.nextFruitTier, 
-            dropCount = drop 
+            dropCount = dropCount 
         };
     }
 

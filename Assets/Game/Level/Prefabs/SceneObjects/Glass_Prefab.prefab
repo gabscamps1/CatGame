@@ -745,6 +745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2741956087451573586}
+  - component: {fileID: 1535981647888188}
   m_Layer: 0
   m_Name: Glass_Prefab
   m_TagString: Untagged
@@ -770,6 +771,24 @@ Transform:
   - {fileID: 7116074594242682624}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535981647888188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146462384696076192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27226b45aab469b42983364f2b202e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlassArea
+  playerIndex: 0
+  movementBounds: {fileID: 9034457469853834734}
+  floor: {fileID: 3524156685877264384}
+  leftWall: {fileID: 3412494245229646596}
+  rightWall: {fileID: 8286549780999285579}
+  maxHeight: {fileID: 7207706919496840014}
 --- !u!1 &9178250678431099873
 GameObject:
   m_ObjectHideFlags: 0

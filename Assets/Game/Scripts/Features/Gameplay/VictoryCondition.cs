@@ -147,12 +147,11 @@ public class VictoryCondition : MonoBehaviour
             }            
         }
 
-        if (mvp.Id >= MatchSetup.Instance.Players.Count)
+        // Pega o mvp.
+        if (!playerRegistry.TryGetPlayerInfo(mvp, out PlayerInfo mvpInfo))
             return;
 
-        ushort characterId = MatchSetup.Instance.Players[mvp.Id].CharacterId;
-
-        if (!characterCatalog.TryGet(characterId, out CharacterCatalog.Entry catalogEntry))
+        if (!characterCatalog.TryGet(mvpInfo.characterId, out CharacterCatalog.Entry catalogEntry))
             return;
 
         // Anuncia o vencedor.
