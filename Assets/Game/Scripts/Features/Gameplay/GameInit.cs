@@ -17,12 +17,13 @@ namespace CatGame.Features.Gameplay
 
         private void Awake()
         {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
+            if (NetworkManager.Singleton.IsServer) 
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += NetworkManager_OnLoadEventCompleted;
         }
 
         private void OnDestroy()
         {
-            if (NetworkManager.Singleton != null) 
+            if (NetworkManager.Singleton) 
                 NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= NetworkManager_OnLoadEventCompleted;
         }
 

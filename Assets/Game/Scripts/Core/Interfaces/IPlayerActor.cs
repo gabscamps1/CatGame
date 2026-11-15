@@ -10,7 +10,6 @@ namespace CatGame.Core.Interfaces
     public interface IPlayerActor
     {
         public PlayerId PlayerId { get; }
-        public bool IsAI { get; }
 
         /// <summary>
         /// Verdadeiro depois que o participante nasceu na rede e já tem um PlayerId configurado.

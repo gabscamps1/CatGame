@@ -18,7 +18,17 @@ public class GlassMaxHeight : MonoBehaviour
     /// </summary>
     public float DangerLineY => ZoneCollider.bounds.min.y;
 
-    private Collider2D ZoneCollider => zoneCollider ??= GetComponent<Collider2D>();
+    private Collider2D ZoneCollider
+    {
+        get
+        {
+            // Checagem explícita: o ??= ignora a checagem de objeto destruído da Unity.
+            if (zoneCollider == null)
+                zoneCollider = GetComponent<Collider2D>();
+
+            return zoneCollider;
+        }
+    }
 
     private void OnEnable()
     {

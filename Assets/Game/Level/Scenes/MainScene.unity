@@ -11352,6 +11352,10 @@ MonoBehaviour:
   - {fileID: 1150676371}
   - {fileID: 1483015016}
   roaster: {fileID: 1931435057}
+  debugAIPrefab: {fileID: 4885057670874691972, guid: 492557851f2c0954bafb8f5cf32d5b64, type: 3}
+  debugAIProfile: {fileID: 11400000, guid: 211b343c31719ae4fa0b08365a96e354, type: 2}
+  debugAICount: 3
+  debugAICharacterId: 1
 --- !u!114 &1931435056
 MonoBehaviour:
   m_ObjectHideFlags: 0

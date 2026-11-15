@@ -16,9 +16,6 @@ public class PlayerActor : NetworkBehaviour, IPlayerActor
     [Header("References")]
     [SerializeField] private Transform fruitThrowTransform;
 
-    [Header("Settings")]
-    [SerializeField] private bool isAI;
-
     private CharacterMovement characterMovement;
     private HealthController healthController;
     private PlayerFruitHand playerFruitHand;
@@ -30,7 +27,6 @@ public class PlayerActor : NetworkBehaviour, IPlayerActor
 
     public event Action<PlayerId> PlayerIdChanged;
 
-    public bool IsAI => isAI;
     public bool IsReady => isReady;
     public PlayerId PlayerId => isReady ? playerId.Value : previewPlayerId;
     public IDamageable Damageable => healthController;
@@ -75,8 +71,6 @@ public class PlayerActor : NetworkBehaviour, IPlayerActor
         if (IsServer)
         {
             playerId.Value = previewPlayerId;
-
-            ConfigureMovementAreaRpc((byte)playerId.Value.Id);
         }
 
         isReady = true;
@@ -108,22 +102,29 @@ public class PlayerActor : NetworkBehaviour, IPlayerActor
         playerRegistry.UnregisterActor(previous, this);
 
         ApplyPlayerId(current);
-
-        if (IsServer)
-            ConfigureMovementAreaRpc((byte)current.Id);
     }
 
+    /// <summary>
+    /// Aplica o ID em todos os clients.
+    /// </summary>
     private void ApplyPlayerId(PlayerId current)
     {
         // Atualiza a identificação da mão de frutas.
         playerFruitHand.SetPlayerId(current);
 
         if (current.IsValid)
+        {
             playerRegistry.RegisterActor(current, this);
+
+            ConfigureMovementArea(current);
+        }
 
         PlayerIdChanged?.Invoke(current);
     }
 
+    /// <summary>
+    /// Define o ID desse participant no server.
+    /// </summary>
     public void SetPlayerId(PlayerId newPlayerId)
     {
         previewPlayerId = newPlayerId;
@@ -134,12 +135,14 @@ public class PlayerActor : NetworkBehaviour, IPlayerActor
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
-    private void ConfigureMovementAreaRpc(byte playerIndex)
+    /// <summary>
+    /// Define a área de movimento do jogador pelo pote do seu PlayerId.
+    /// </summary>
+    private void ConfigureMovementArea(PlayerId current)
     {
-        if (!GlassArea.TryGet(playerIndex, out GlassArea glassArea) || glassArea.MovementBounds == null)
+        if (!GlassArea.TryGet(current.Id, out GlassArea glassArea) || glassArea.MovementBounds == null)
         {
-            CatGame.Core.Logger.LogError($"Pote (GlassArea) não encontrado para o jogador {playerIndex}");
+            CatGame.Core.Logger.LogError($"Pote (GlassArea) não encontrado para o jogador {current.Id}");
             return;
         }
 

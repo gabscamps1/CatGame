@@ -809,7 +809,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1203,7 +1203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerActor
   ShowTopMostFoldoutHeaderGroup: 1
   fruitThrowTransform: {fileID: 3713799488612486688}
-  isAI: 0
 --- !u!114 &3857370782398570059
 MonoBehaviour:
   m_ObjectHideFlags: 0
