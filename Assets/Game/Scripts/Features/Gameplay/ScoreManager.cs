@@ -1,11 +1,7 @@
 ﻿using CatGame.Core.Data;
-using CatGame.Core.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
-using UnityEngine.SocialPlatforms.Impl;
-using static ScoreManager;
 
 public class ScoreManager : NetworkBehaviour
 {
@@ -95,54 +91,25 @@ public class ScoreManager : NetworkBehaviour
 
     private void Scores_OnListChanged(NetworkListEvent<ScoreEntry> changeEvent)
     {
-        int index = -1;
+        ScoreEntrys.Clear();
 
-        for (int i = 0; i < ScoreEntrys.Count; i++)
+        foreach (ScoreEntry entry in scoreEntrys)
+            ScoreEntrys.Add(entry);
+
+        switch (changeEvent.Type)
         {
-            if (ScoreEntrys[i].playerId == changeEvent.Value.playerId)            
-                index = i;        
-        }
+            // Eventos que trazem o novo score de um jogador.
+            case NetworkListEvent<ScoreEntry>.EventType.Add:
+            case NetworkListEvent<ScoreEntry>.EventType.Insert:
+            case NetworkListEvent<ScoreEntry>.EventType.Value:
+                OnScoreChanged?.Invoke(changeEvent.Value);
+                break;
 
-        if (index < 0)       
-            ScoreEntrys.Add(changeEvent.Value);      
-        else
-            ScoreEntrys[index] = changeEvent.Value;
-
-        OnScoreChanged?.Invoke(changeEvent.Value);
-
-        // Envia o scoreEntry.
-        EventBus.Publish(new ScoreChangedEvent()
-        {
-            PlayerIndex = changeEvent.Value.playerId.Id,
-            ScoreAmount = changeEvent.Value.score,
-        });
-
-        List<int> bestPlayer = new();
-        uint bestScore = 0;
-
-        // Calcula quem está vencendo
-        foreach (var score in scoreEntrys)
-        {      
-            if (score.score > bestScore)
-            {
-                bestScore = score.score;
-                bestPlayer.Clear();
-                bestPlayer.Add(score.playerId.Id);
-            }
-            else if (score.score == bestScore)
-            {
-                bestPlayer.Add(score.playerId.Id);
-            }
-        }
-
-        // Avisa à todos quem está vencendo
-        foreach (ScoreEntry scoreEntry in scoreEntrys)
-        {
-            EventBus.Publish(new LeaderChangedEvent()
-            {
-                PlayerIndex = scoreEntry.playerId.Id,
-                IsLeader = bestPlayer.Contains(scoreEntry.playerId.Id),
-            });
+            // Eventos de remoções e sincronização completa, avisa o score atual de todos.
+            default:
+                foreach (ScoreEntry entry in ScoreEntrys)
+                    OnScoreChanged?.Invoke(entry);
+                break;
         }
     }
 }

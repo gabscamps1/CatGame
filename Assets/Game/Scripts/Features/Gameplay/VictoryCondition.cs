@@ -133,13 +133,13 @@ public class VictoryCondition : MonoBehaviour
             if (GameManager.Instance.PlayerLost.Contains(playerId))
                 continue;
 
-            // Pega o player com a maior pontuação sobre os players restantes.
-            ScoreManager.ScoreEntry scoreEntry = ScoreManager.Instance.ScoreEntrys.Find(x => x.playerId == playerId);
+            int scoreIndex = ScoreManager.Instance.ScoreEntrys.FindIndex(x => x.playerId == playerId);
 
-            int playerScore = scoreEntry != null 
-                ? (int)scoreEntry.score 
+            int playerScore = scoreIndex >= 0
+                ? (int)ScoreManager.Instance.ScoreEntrys[scoreIndex].score
                 : 0; // Se o player não tiver score, deixa ele com 0 para a verificação.
 
+            // Pega o player com a maior pontuação sobre os players restantes.
             if (playerScore > mvpScore)
             {
                 mvpScore = playerScore;
