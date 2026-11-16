@@ -33,11 +33,11 @@ public class AimLineController : MonoBehaviour
         {
             case GameManager.GameState.NotInit:
             case GameManager.GameState.GameOver:
-                enabled = false;
+                gameObject.SetActive(false);
                 break;
 
             case GameManager.GameState.Playing:
-                enabled = true; 
+                gameObject.SetActive(true);
                 break;
         }
     }
