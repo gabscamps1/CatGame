@@ -4,7 +4,7 @@ namespace CatGame.Core.Enums
     /// Enum de todos os grupos de cena do jogo.
     /// Um Grupo é formado por várias cenas (ex: o grupo Level1 é formado pelas cenas (Bootstrap + MainScene + Level1))
     /// </summary>
-    public enum Scenes
+    public enum Scenes : byte
     {
         Bootstrap = 0,
         Splashs = 1,

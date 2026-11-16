@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
 using Logger = CatGame.Core.Logger;
-using System.Reflection;
 
 namespace CatGame.Services.AudioManagement
 {
@@ -141,6 +140,7 @@ namespace CatGame.Services.AudioManagement
                 }
 
                 musicSource.Stop();
+                musicSource.clip = null;
                 musicSource.volume = musicVolume;
                 musicSource.loop = false;
             }
@@ -204,6 +204,7 @@ namespace CatGame.Services.AudioManagement
             yield return new WaitForSecondsRealtime(delay);
 
             audioSource.gameObject.SetActive(false);
+            audioSource.clip = null;
             audioSourceQueue.Enqueue(audioSource);
         }
 

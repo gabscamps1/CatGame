@@ -70,7 +70,7 @@ namespace CatGame.UI
                 case Scenes.MainMenu:
                 case Scenes.Playing:
 
-                     if (!audioService.IsPlayingThisMusic(LOADING_SOUND))
+                    if (!audioService.IsPlayingThisMusic(LOADING_SOUND))
                     {
                         //audioService.PlayMusic(LOADING_SOUND, true);
                     }

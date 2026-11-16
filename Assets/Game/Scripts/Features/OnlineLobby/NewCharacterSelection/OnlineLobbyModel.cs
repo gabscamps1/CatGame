@@ -21,7 +21,6 @@ namespace CatGame.Features.CharacterSelection
 
         [SerializeField] CharacterCatalog catalog;
         [SerializeField] bool allowDuplicateCharacters;
-        [SerializeField] string gameScene = "MainScene";
 
         readonly NetworkList<LobbySlot> slots = new();
         readonly NetworkVariable<LobbyPhase> phase = new(LobbyPhase.Selecting);
@@ -90,7 +89,7 @@ namespace CatGame.Features.CharacterSelection
             {
                 NetworkManager.OnClientConnectedCallback -= AddSlotFor;
                 NetworkManager.OnClientDisconnectCallback -= RemoveSlotFor;
-                NetworkManager.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
+                NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }
         }
 
@@ -225,14 +224,9 @@ namespace CatGame.Features.CharacterSelection
             ConnectionManager.Instance.CloseConnections();
             MatchSetup.Instance.Capture(Snapshot());
             phase.Value = LobbyPhase.Starting;
-            ChangeStateRpc();
-            NetworkManager.SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
-        }
 
-        [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
-        private void ChangeStateRpc()
-        {
-            ServiceLocator.Get<IGameStateService>().SetState(GameState.Playing);
+            // O serviço carrega o grupo para todos os clients.
+            ServiceLocator.Get<ISceneLoadingService>().LoadOnlineAsyncScene(Scenes.Playing);
         }
 
         #endregion
@@ -262,7 +256,11 @@ namespace CatGame.Features.CharacterSelection
             string genericIp = "0.0.0.0"; // Aceita conexões IPv4 e IPv6.
             unityTransport.SetConnectionData(localIPAddress, (ushort)port, genericIp);
 
-            NetworkManager.Singleton.StartHost();
+            if (!NetworkManager.Singleton.StartHost())
+                return;
+
+            // Clientes mantêm as cenas que já abriram localmente (ex: lobby) ao sincronizar com o servidor.
+            NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
         }
 
         private bool IsPortAvaliable(int port)

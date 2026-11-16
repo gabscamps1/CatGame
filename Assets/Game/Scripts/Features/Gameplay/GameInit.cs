@@ -32,12 +32,9 @@ namespace CatGame.Features.Gameplay
             if (!NetworkManager.Singleton.IsServer || sceneName != targetSceneName)
                 return;
 
-            // N�o libera a partida se algum cliente n�o terminou.
+            // Quem estourou o Load Scene Time Out é desconectado pelo SceneLoadingService. A partida começa com quem carregou.
             if (clientsTimedOut.Count > 0)
-            {
-                Core.Logger.LogWarning("Nem todos os clientes terminaram de carregar a cena.");
-                return;
-            }
+                Core.Logger.LogWarning($"{clientsTimedOut.Count} cliente(s) não carregaram a cena a tempo e ficaram fora da partida.");
 
             Core.Logger.Log("Todos os clientes terminaram o carregamento da cena.");
             StartCoroutine(AllowPlayers());

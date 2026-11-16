@@ -7,6 +7,7 @@ namespace CatGame.Core.Interfaces
     public interface ISceneLoadingService
     {
         public void LoadAsyncScene(Scenes scene);
+        public void LoadAsyncScene(Scenes scene, bool forceReload);
         public void LoadOnlineAsyncScene(Scenes scene);
 
         public event EventHandler<LoadingChangedEvent> OnLoadingChanged;
@@ -14,4 +15,3 @@ namespace CatGame.Core.Interfaces
         public Scenes CurrentSceneGroup { get; }
     }
 }
-

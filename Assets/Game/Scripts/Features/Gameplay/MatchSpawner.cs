@@ -43,6 +43,12 @@ namespace CatGame.Features.Gameplay
             for (int i = 0; i < MatchSetup.Instance.Players.Count; i++)
             {
                 LobbySlot slot = MatchSetup.Instance.Players[i];
+
+                // Quem caiu ou não carregou a tempo fica de fora (quem estourou o tempo é desconectado pelo SceneLoadingService).
+                // O índice continua o do lobby, então o pote dele só fica vazio.
+                if (!NetworkManager.ConnectedClients.ContainsKey(slot.OwnerId) || timedOut.Contains(slot.OwnerId))
+                    continue;
+
                 if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) continue;
 
                 PlayerId playerId = new PlayerId(i);              
