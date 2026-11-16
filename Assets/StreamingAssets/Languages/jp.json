@@ -2,7 +2,7 @@
   "text": [
     {
       "key": "Teste",
-      "value": "テスト3"
+      "value": "Test3"
     },
     {
       "key": "MENU_PLAY",
@@ -50,7 +50,7 @@
     },
     {
       "key": "OPTIONS_VIDEO_WINDOW_MODE",
-      "value": "画面モード"
+      "value": "ウィンドウモード"
     },
     {
       "key": "WINDOW_TYPE",
@@ -58,7 +58,7 @@
     },
     {
       "key": "WINDOW_TYPE_FULLSCREEN",
-      "value": "ボーダーレスウィンドウ"
+      "value": "仮想フルスクリーン"
     },
     {
       "key": "WINDOW_TYPE_EX_FULLSCREEN",
@@ -82,7 +82,7 @@
     },
     {
       "key": "OPTIONS_VIDEO_EFFECTS",
-      "value": "視覚効果"
+      "value": "ビジュアルエフェクト"
     },
     {
       "key": "OPTIONS_VIDEO_EFFECTS_ON",
@@ -130,7 +130,7 @@
     },
     {
       "key": "CREDITS_RODRIGO",
-      "value": "ゲームデザイン | 視覚効果"
+      "value": "ゲームデザイン | VFX"
     },
     {
       "key": "MULTIPLAYER_CONTEXT_INSERT",
@@ -138,11 +138,11 @@
     },
     {
       "key": "MULTIPLAYER_CONTEXT_WAITING",
-      "value": "プレイヤーを待っています（currentPlayers/maxPlayers）。ロビーのパスワード：roomCode"
+      "value": "プレイヤーを待っています (currentPlayers/maxPlayers)。ロビーのパスワード：roomCode"
     },
     {
       "key": "MULTIPLAYER_HEADER",
-      "value": "マルチプレイ"
+      "value": "マルチプレイヤー"
     },
     {
       "key": "MULTIPLAYER_NEXT",
@@ -150,11 +150,11 @@
     },
     {
       "key": "MULTIPLAYER_NEXT_WAIT_HOST",
-      "value": "ホストを待っています…"
+      "value": "ホストを待っています..."
     },
     {
       "key": "MULTIPLAYER_NEXT_WAIT_PLAYERS",
-      "value": "プレイヤーを待っています…"
+      "value": "プレイヤーを待っています..."
     },
     {
       "key": "MULTIPLAYER_NEXT_READY",
@@ -174,7 +174,7 @@
     },
     {
       "key": "POPUP_HEADER",
-      "value": "ヘッダー"
+      "value": "アラート"
     },
     {
       "key": "POPUP_HEADER_ALERT",
@@ -194,7 +194,7 @@
     },
     {
       "key": "POPUP_TEXT",
-      "value": "NEKOPAN Mixを終了しますか？"
+      "value": "NEKOPAN Mix! を終了しますか？"
     },
     {
       "key": "POPUP_TEXT_EXIT",
@@ -202,7 +202,7 @@
     },
     {
       "key": "POPUP_TEXT_ERROR",
-      "value": "マッチを終了しますか？"
+      "value": "試合を終了しますか？"
     },
     {
       "key": "POPUP_TEXT_LEAVE_MATCH",
@@ -210,7 +210,7 @@
     },
     {
       "key": "POPUP_TEXT_MAIN_MENU",
-      "value": "接続中…"
+      "value": "接続中..."
     },
     {
       "key": "POPUP_TEXT_WAITING",
@@ -226,15 +226,15 @@
     },
     {
       "key": "SERVER_MSG_DOMINATING",
-      "value": "playerNameが大活躍中！"
+      "value": "playerName が圧倒しています！"
     },
     {
       "key": "SERVER_MSG_ELIMINATED",
-      "value": "playerNamが脱落しました！"
+      "value": "playerName は脱落しました！"
     },
     {
       "key": "SERVER_MSG_TIMES_UP",
-      "value": "時間切れが迫っています！"
+      "value": "時間がなくなってきた！"
     },
     {
       "key": "SERVER_MSG_TOO_LONG",
@@ -250,31 +250,31 @@
     },
     {
       "key": "CAT_NAME",
-      "value": "ネコの名前"
+      "value": "猫の名前"
     },
     {
       "key": "CAT_NAME_BARISTA",
-      "value": "ジョジョ"
+      "value": "Jojo"
     },
     {
       "key": "CAT_NAME_BAKER",
-      "value": "ラミ"
+      "value": "Rami"
     },
     {
       "key": "CAT_NAME_FARMER",
-      "value": "レミー"
+      "value": "Remy"
     },
     {
       "key": "CAT_NAME_PASTRY",
-      "value": "キャップ"
+      "value": "Cap"
     },
     {
       "key": "PLAYER_VICTORY",
-      "value": "の勝利！"
+      "value": "勝利！"
     },
     {
       "key": "PLAYER_DEFEAT",
-      "value": "酸っぱくなった！"
+      "value": "腐っちゃった！"
     },
     {
       "key": "EVENT_NAME",
@@ -298,7 +298,7 @@
     },
     {
       "key": "EVENT_NAME_CONFUSION",
-      "value": "キッチンの悪夢"
+      "value": "キッチンは大パニック！"
     },
     {
       "key": "MATCH_START",
@@ -306,11 +306,11 @@
     },
     {
       "key": "MATCH_START_COOK",
-      "value": "調理開始！"
+      "value": "料理開始！"
     },
     {
       "key": "PLAYER_STATUS",
-      "value": "準備中…"
+      "value": "準備中..."
     },
     {
       "key": "PLAYER_STATUS_READY",
@@ -334,11 +334,11 @@
     },
     {
       "key": "POPUP_OPTION_1",
-      "value": ""
+      "value": "はい"
     },
     {
       "key": "POPUP_OPTION_2",
-      "value": ""
+      "value": "いいえ"
     },
     {
       "key": "PAUSE_RESUME",
@@ -350,11 +350,11 @@
     },
     {
       "key": "PAUSE_LEAVE",
-      "value": "マッチを退出"
+      "value": "試合を退出"
     },
     {
       "key": "INTRO_SKIP",
-      "value": "[skipButton] を押してスキップ。"
+      "value": "いずれかのボタンを押してスキップ。"
     },
     {
       "key": "SERVER_MSG_START_3",
@@ -370,39 +370,39 @@
     },
     {
       "key": "SERVER_MSG_START",
-      "value": "START!!"
+      "value": "スタート！！"
     },
     {
       "key": "SERVER_MSG_TIME_OVER",
-      "value": "TIME'S UP!"
+      "value": "時間切れ！"
     },
     {
       "key": "MULTIPLAYER_INPUT_IP",
-      "value": ""
+      "value": "IPアドレス"
     },
     {
       "key": "MULTIPLAYER_INPUT_PORT",
-      "value": ""
+      "value": "ポート"
     },
     {
       "key": "INPUT_CONFIRM",
-      "value": ""
+      "value": "決定"
     },
     {
       "key": "INPUT_NAVIGATE",
-      "value": ""
+      "value": "操作"
     },
     {
       "key": "PLAYER_INDICATOR",
-      "value": ""
+      "value": "あなた"
     },
     {
       "key": "LOBBY_TUTORIAL_TITLE",
-      "value": ""
+      "value": "遊び方"
     },
     {
       "key": "LOBBY_TUTORIAL_CONTENT",
-      "value": ""
+      "value": "[MOVE_KEY] でネコを移動し、[THROW_KEY] でカゴの中のお菓子を投げよう！同じ種類のお菓子を合体させて、より大きなお菓子を作り、ポイントを獲得しよう！"
     }
   ],
   "dialogues": []
