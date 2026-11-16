@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca63908a7ab84b42ae5cea1cef363af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Services.Session.SessionEndHandler
+  conectionErrorMessageID: POPUP_TEXT_EXIT
 --- !u!1 &888619396
 GameObject:
   m_ObjectHideFlags: 0

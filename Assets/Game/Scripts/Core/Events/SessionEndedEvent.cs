@@ -1,4 +1,5 @@
 using CatGame.Core.Interfaces;
+using CatGame.Core.Enums;
 
 namespace CatGame.Core.Events
 {
@@ -19,14 +20,20 @@ namespace CatGame.Core.Events
         public bool IsReturningToMenu { get; private set; }
 
         /// <summary>
+        /// Mensagem do motivo enviado pelo servidor. Vazio quando não há.
+        /// </summary>
+        public string ReasonMessage { get; private set; }
+
+        /// <summary>
         /// Motivo enviado pelo servidor. Vazio quando não há.
         /// </summary>
-        public string Reason { get; private set; }
+        public SessionCallbackReason Reason { get; private set; }
 
-        public SessionEndedEvent(bool wasServer, bool isReturningToMenu, string reason)
+        public SessionEndedEvent(bool wasServer, bool isReturningToMenu, string reasonMessage, SessionCallbackReason reason)
         {
             WasServer = wasServer;
             IsReturningToMenu = isReturningToMenu;
+            ReasonMessage = reasonMessage;
             Reason = reason;
         }
     }

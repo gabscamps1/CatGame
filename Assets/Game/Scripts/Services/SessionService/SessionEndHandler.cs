@@ -1,7 +1,9 @@
 using CatGame.Core;
+using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using CatGame.Core.Events;
 using CatGame.Core.Interfaces;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,6 +16,8 @@ namespace CatGame.Services.Session
     [DisallowMultipleComponent]
     public class SessionEndHandler : MonoBehaviour
     {
+        [SerializeField] private string conectionErrorMessageID;
+
         private ISceneLoadingService sceneLoadingService;
         private NetworkManager networkManager;
 
@@ -39,6 +43,7 @@ namespace CatGame.Services.Session
             networkManager.OnClientStarted += NetworkManager_OnSessionStarted;
             networkManager.OnServerStopped += NetworkManager_OnServerStopped;
             networkManager.OnClientStopped += NetworkManager_OnClientStopped;
+            networkManager.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
         }
 
         private void OnDestroy()
@@ -52,6 +57,7 @@ namespace CatGame.Services.Session
                 networkManager.OnClientStarted -= NetworkManager_OnSessionStarted;
                 networkManager.OnServerStopped -= NetworkManager_OnServerStopped;
                 networkManager.OnClientStopped -= NetworkManager_OnClientStopped;
+                networkManager.OnClientDisconnectCallback -= NetworkManager_OnClientDisconnectCallback;
             }
         }
 
@@ -74,9 +80,27 @@ namespace CatGame.Services.Session
             EndSession(wasHost);
         }
 
-        private void NetworkManager_OnServerStopped(bool wasClient)
+        private void NetworkManager_OnServerStopped(bool wasHost)
         {
             EndSession(true);
+        }
+
+        private void NetworkManager_OnClientDisconnectCallback(ulong client)
+        {
+            if (!NetworkManager.Singleton.IsServer)
+                return;
+
+            if (ServiceLocator.Get<IGameStateService>().CurrentState != GameState.Playing)
+                return;
+
+            IEnumerable<PlayerInfo> playersInfo = ServiceLocator.Get<IPlayerRegistry>().GetPlayersOfClient(client);
+
+            // Caso um client seja desconectado, todos os players desse client perdem automaticamente.
+            foreach (PlayerInfo playerInfo in playersInfo)
+            {
+                if (!GameManager.Instance.IsPlayerGameOver(playerInfo.playerId))
+                    GameManager.Instance.PlayerGameOver(playerInfo.playerId);
+            }
         }
 
         private void SceneLoadingService_OnLoadingChanged(object sender, LoadingChangedEvent e)
@@ -95,12 +119,12 @@ namespace CatGame.Services.Session
 
             string reason = networkManager.DisconnectReason;
             bool isReturningToMenu = hasSessionChangedScenes;
-
+            
             // Terminou no lobby: o próprio lobby trata a saída. Fora dele, retorna ao menu principal recarregando a cena.
             if (isReturningToMenu)
                 sceneLoadingService.LoadAsyncScene(Scenes.MainMenu, true);
-
-            EventBus.Publish(new SessionEndedEvent(wasServer, isReturningToMenu, reason));
+                        
+            EventBus.Publish(new SessionEndedEvent(wasServer, isReturningToMenu, reason, SessionCallbackReason.ConnectionError));
         }
 
         #endregion

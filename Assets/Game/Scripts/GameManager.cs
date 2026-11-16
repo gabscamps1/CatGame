@@ -87,6 +87,11 @@ public class GameManager : NetworkBehaviour
         OnPlayerLost?.Invoke(changeEvent.Value);
     }
 
+    public bool IsPlayerGameOver(PlayerId player)
+    {
+        return PlayerLost.Contains(player);
+    }
+
     #endregion
 
     #region Game State

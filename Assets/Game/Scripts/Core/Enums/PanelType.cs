@@ -16,6 +16,7 @@ namespace CatGame.Core.Enums
         MainMenu = 4,
 
         // Popups
-        QuitLobbyPopup = 6
+        QuitLobbyPopup = 6,
+        SessionMessagePopup = 7,
     }
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using CatGame.Core.Interfaces;
 
-namespace Assets.Scripts.Services
+namespace CatGame.Scripts.Services
 {
     public class GameState_WindowEditor : EditorWindow
     {

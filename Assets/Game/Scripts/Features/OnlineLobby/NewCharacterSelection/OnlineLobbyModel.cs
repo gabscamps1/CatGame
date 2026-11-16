@@ -89,7 +89,10 @@ namespace CatGame.Features.CharacterSelection
             {
                 NetworkManager.OnClientConnectedCallback -= AddSlotFor;
                 NetworkManager.OnClientDisconnectCallback -= RemoveSlotFor;
-                NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
+
+                // Por algum motivo o OnNetworkDespawn está sendo chamado antes deste evento, então não me desinscrevo por aqui.
+                // Atualmente se desincreve quando o próprio método é chamado.
+                //NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback; 
             }
         }
 
