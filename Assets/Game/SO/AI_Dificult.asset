@@ -15,17 +15,17 @@ MonoBehaviour:
   moveSpeed: 5
   arriveTolerance: 0.05
   initialHealth: 1
-  minReactionTime: 0.2
-  maxReactionTime: 0.5
+  minReactionTime: 0.5
+  maxReactionTime: 1
   replanInterval: 0.5
   replanThreshold: 0.5
   waitForSettle: 1
   settleSpeed: 0.3
   maxSettleWait: 1.5
   useNextFruit: 1
-  candidateCount: 25
-  aimError: 0
-  mistakeChance: 0
+  candidateCount: 26
+  aimError: 3
+  mistakeChance: 0.274
   topChoices: 1
   mergeWeight: 10
   tierWeight: 0.5
@@ -36,7 +36,7 @@ MonoBehaviour:
   wallWeight: 1
   nextFruitWeight: 0.5
   dangerPenalty: 50
-  useEmergency: 0
+  useEmergency: 1
   emergencyHeight: 0.8
   emergencyTime: 0.3
   emergencyMultiplier: 3
