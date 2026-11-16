@@ -395,6 +395,14 @@
     {
       "key": "PLAYER_INDICATOR",
       "value": "Você"
+    },
+    {
+      "key": "LOBBY_TUTORIAL_TITLE",
+      "value": "Como Jogar"
+    },
+    {
+      "key": "LOBBY_TUTORIAL_CONTENT",
+      "value": "Use as setas para mover seu Gato e espaço para soltar doces em sua cesta. Junte doces iguais para criar maiores e ganhar pontos!"
     }
   ],
   "dialogues": []

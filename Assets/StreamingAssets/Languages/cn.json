@@ -395,6 +395,14 @@
     {
       "key": "PLAYER_INDICATOR",
       "value": ""
+    },
+    {
+      "key": "LOBBY_TUTORIAL_TITLE",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_TUTORIAL_CONTENT",
+      "value": ""
     }
   ],
   "dialogues": []

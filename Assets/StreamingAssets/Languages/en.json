@@ -395,6 +395,14 @@
     {
       "key": "PLAYER_INDICATOR",
       "value": "You"
+    },
+    {
+      "key": "LOBBY_TUTORIAL_TITLE",
+      "value": "How to Play"
+    },
+    {
+      "key": "LOBBY_TUTORIAL_CONTENT",
+      "value": "Use the [MOVE_KEY] to move your Cat and [THROW_KEY] to release sweets in your basket. Combine equal sweet to create bigger ones and earn points!\n"
     }
   ],
   "dialogues": []
