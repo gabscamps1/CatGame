@@ -403,6 +403,10 @@
     {
       "key": "LOBBY_TUTORIAL_CONTENT",
       "value": "[MOVE_KEY] でネコを移動し、[THROW_KEY] でカゴの中のお菓子を投げよう！同じ種類のお菓子を合体させて、より大きなお菓子を作り、ポイントを獲得しよう！"
+    },
+    {
+      "key": "POPUP_OPTION_3",
+      "value": "OK"
     }
   ],
   "dialogues": []

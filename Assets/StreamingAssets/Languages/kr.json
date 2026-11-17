@@ -403,6 +403,10 @@
     {
       "key": "LOBBY_TUTORIAL_CONTENT",
       "value": ""
+    },
+    {
+      "key": "POPUP_OPTION_3",
+      "value": ""
     }
   ],
   "dialogues": []
