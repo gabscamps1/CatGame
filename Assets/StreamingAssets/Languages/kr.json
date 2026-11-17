@@ -407,6 +407,18 @@
     {
       "key": "POPUP_OPTION_3",
       "value": ""
+    },
+    {
+      "key": "POPUP_TEXT_IP_ERROR",
+      "value": ""
+    },
+    {
+      "key": "POPUP_TEXT_PORT_ERROR",
+      "value": ""
+    },
+    {
+      "key": "POPUP_TEXT_FULL_LOBBY",
+      "value": ""
     }
   ],
   "dialogues": []

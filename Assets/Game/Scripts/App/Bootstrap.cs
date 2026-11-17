@@ -67,6 +67,7 @@ namespace CatGame.App
 #else
             sceneLoadingService.LoadAsyncScene(Scenes.Cutscene);
 #endif
+            Cursor.visible = false;
         }
 
         /// <summary>

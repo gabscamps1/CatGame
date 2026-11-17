@@ -1,5 +1,8 @@
 ﻿using CatGame.Capabilities.UISystem;
+using CatGame.Core.Enums;
+using CatGame.Core.Events;
 using CatGame.Features.CharacterSelection;
+using System.Net;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -75,7 +78,7 @@ namespace CatGame.UI
             buttonText.color = isInteractable ? initButtonTextColor : disableButtonTextColor;
         }
 
-        private void ButtonElement_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        private void ButtonElement_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)
         {
             JoinInLobby();
         }
@@ -91,16 +94,39 @@ namespace CatGame.UI
 
             string ip = inputFieldElementIp.Text.Trim();
             string port = inputFieldElementPort.Text.Trim();
+            
+            if (!IsValidIp(ip))
+            {
+                EventBus.Publish(new SessionEndedEvent(false, false, "", SessionCallbackReason.IpError));
+                return;
+            }
+
+            if (!IsValidPort(port))
+            {
+                EventBus.Publish(new SessionEndedEvent(false, false, "", SessionCallbackReason.PortError));
+                return;
+            }
 
             unityTransport.SetConnectionData(ip, ushort.Parse(port));
+
             NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
             NetworkManager.Singleton.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
             NetworkManager.Singleton.StartClient();
         }
 
-        private void Singleton_OnClientConnectedCallback(ulong obj)
+        private bool IsValidIp(string ip)
         {
-            if (NetworkManager.Singleton.LocalClientId == obj)
+            return !string.IsNullOrEmpty(ip) && IPAddress.TryParse(ip, out IPAddress ipAddress);   
+        }
+
+        private bool IsValidPort(string port)
+        {
+            return ushort.TryParse(port, out ushort otherPort) && otherPort != 0;
+        }
+
+        private void Singleton_OnClientConnectedCallback(ulong clientId)
+        {
+            if (NetworkManager.Singleton.LocalClientId == clientId)
             {
                 menuController.ChangeMenu(menuIndexWhenConnectLobby);
                 lobbyRoot.OpenOnlineClient();
@@ -110,11 +136,10 @@ namespace CatGame.UI
             }
         }
 
-        private void Singleton_OnClientDisconnectCallback(ulong obj)
+        private void Singleton_OnClientDisconnectCallback(ulong clientId)
         {
-            if (NetworkManager.Singleton.LocalClientId == obj)
+            if (NetworkManager.Singleton.LocalClientId == clientId)
             {
-                Debug.Log("Nao funfo");
                 NetworkManager.Singleton.OnClientConnectedCallback -= Singleton_OnClientConnectedCallback;
                 NetworkManager.Singleton.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }           

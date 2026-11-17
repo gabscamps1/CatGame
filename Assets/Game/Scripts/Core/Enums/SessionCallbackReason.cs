@@ -4,5 +4,8 @@
     {
         ConnectionError,
         TryingConnnecting,
+        FullLobby,
+        IpError,
+        PortError,
     }
 }

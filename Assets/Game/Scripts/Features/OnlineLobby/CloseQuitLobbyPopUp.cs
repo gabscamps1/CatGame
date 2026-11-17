@@ -59,7 +59,7 @@ namespace CatGame.Features.OnlineLobby
             navigationGroup.OnCancelRequested -= NavigationGroup_OnCancelRequested;
         }
 
-        private void ConfirmButton_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        private void ConfirmButton_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)
         {
             // Se não for o player 1, não navega.
             if (e.PlayerId.Id != 0)
@@ -68,7 +68,7 @@ namespace CatGame.Features.OnlineLobby
             OnConfirmed?.Invoke();
         }
 
-        private void CancelButton_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        private void CancelButton_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)
         {
             // Se não for o player 1, não navega.
             if (e.PlayerId.Id != 0)

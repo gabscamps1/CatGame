@@ -29,7 +29,7 @@ namespace CatGame.Features.CharacterSelection
         }
 
 
-        private void CreateOnlineRoomBtn_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        private void CreateOnlineRoomBtn_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)
         {
             OpenOnlineHost();
         }

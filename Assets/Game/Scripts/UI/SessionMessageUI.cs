@@ -24,6 +24,9 @@ namespace CatGame.UI
         [Header("Text IDs")]
         [SerializeField] private string connectionErrorMessageID;
         [SerializeField] private string tryingConnectMessageID;
+        [SerializeField] private string lobbyFullMessageID;
+        [SerializeField] private string ipErrorMessageID;
+        [SerializeField] private string portErrorMessageID;
 
         // Navegação
         private IUIService uiService;
@@ -47,10 +50,10 @@ namespace CatGame.UI
             confirmButton.OnSubmittedEvent += ConfirmButton_OnSubmittedEvent;
         }
 
-        private void ConfirmButton_OnSubmittedEvent(object sender, NavigableElement.SubmittedEvent e)
+        private void ConfirmButton_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)
         {       
-            uiService.Close(PanelType.SessionMessagePopup);
-            uiNavigationService.PopGroup(playerId, navigationGroup);
+            if (uiService.IsVisible(PanelType.SessionMessagePopup))
+                uiService.Close(PanelType.SessionMessagePopup);
         }
 
         protected override void OnDestroy()
@@ -62,10 +65,12 @@ namespace CatGame.UI
 
         private void SessionEndedEvent(SessionEndedEvent e)
         {
+            bool openPopup = true;
+
             switch (e.Reason)
             {
-                case SessionCallbackReason.ConnectionError:
-                    ConnectionError();
+                case SessionCallbackReason.ConnectionError when e.WasServer == false:
+                    MessageWithConfirm();
                     sessionMessage.text = localizationService.GetTextByID(connectionErrorMessageID);
                     break;
 
@@ -74,23 +79,44 @@ namespace CatGame.UI
                     sessionMessage.text = localizationService.GetTextByID(tryingConnectMessageID);
                     break;
 
+                case SessionCallbackReason.FullLobby:
+                    MessageWithConfirm();
+                    sessionMessage.text = localizationService.GetTextByID(lobbyFullMessageID);
+                    break;
+
+                case SessionCallbackReason.IpError:
+                    MessageWithConfirm();
+                    sessionMessage.text = localizationService.GetTextByID(ipErrorMessageID);
+                    break;
+
+                case SessionCallbackReason.PortError:
+                    MessageWithConfirm();
+                    sessionMessage.text = localizationService.GetTextByID(portErrorMessageID);
+                    break;
+
                 default:
                     sessionMessage.text = null;
                     Core.Logger.LogError($"[{nameof(SessionMessageUI)}] Callback da sessão não foi adicionado a popup");
+                    openPopup = false;
                     break;
             }
+
+            if (openPopup)
+                uiService.Push(PanelType.SessionMessagePopup);
         }
 
         private void TryingConnectingMode()
         {
-            confirmButton.gameObject.SetActive(false);
             sessionMessage.rectTransform.position = withoutInteractionTextPosition.position;
+            confirmButton.gameObject.SetActive(false);
+            confirmButton.SetOptionInteractable(false);
             spinnerObject.SetActive(true);
         }
 
-        private void ConnectionError()
+        private void MessageWithConfirm()
         {
             sessionMessage.rectTransform.position = interactionTextPosition.position;
+            confirmButton.SetOptionInteractable(true);
             confirmButton.gameObject.SetActive(true);
             spinnerObject.SetActive(false);
         }

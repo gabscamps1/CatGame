@@ -39,12 +39,14 @@ namespace CatGame.Services.Session
                 return;
             }
 
-            networkManager.OnServerStarted += NetworkManager_OnSessionStarted;
-            networkManager.OnClientStarted += NetworkManager_OnSessionStarted;
+            networkManager.OnServerStarted += NetworkManager_OnServerStarted;
+            networkManager.OnClientStarted += NetworkManager_OnClientStarted;
             networkManager.OnServerStopped += NetworkManager_OnServerStopped;
             networkManager.OnClientStopped += NetworkManager_OnClientStopped;
             networkManager.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
         }
+
+        
 
         private void OnDestroy()
         {
@@ -53,8 +55,8 @@ namespace CatGame.Services.Session
 
             if (networkManager != null)
             {
-                networkManager.OnServerStarted -= NetworkManager_OnSessionStarted;
-                networkManager.OnClientStarted -= NetworkManager_OnSessionStarted;
+                networkManager.OnServerStarted -= NetworkManager_OnServerStarted;
+                networkManager.OnClientStarted -= NetworkManager_OnClientStarted;
                 networkManager.OnServerStopped -= NetworkManager_OnServerStopped;
                 networkManager.OnClientStopped -= NetworkManager_OnClientStopped;
                 networkManager.OnClientDisconnectCallback -= NetworkManager_OnClientDisconnectCallback;
@@ -65,12 +67,25 @@ namespace CatGame.Services.Session
 
         #region Session
 
-        private void NetworkManager_OnSessionStarted()
+        private void NetworkManager_OnClientStarted()
+        {
+            OnSessionStarted();
+
+            if (networkManager.IsClient && !networkManager.IsHost)
+                EventBus.Publish(new SessionEndedEvent(false, false, "", SessionCallbackReason.TryingConnnecting));
+        }
+
+        private void NetworkManager_OnServerStarted()
+        {
+            OnSessionStarted();
+        }
+
+        private void OnSessionStarted()
         {
             // No host os dois eventos disparam.
             if (isSessionActive)
                 return;
-
+            
             isSessionActive = true;
             hasSessionChangedScenes = false;
         }

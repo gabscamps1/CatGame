@@ -40,4 +40,4 @@ MonoBehaviour:
   emergencyHeight: 0.8
   emergencyTime: 0.3
   emergencyMultiplier: 3
-  drawGizmos: 1
+  drawGizmos: 0

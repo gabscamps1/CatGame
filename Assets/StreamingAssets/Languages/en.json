@@ -407,6 +407,18 @@
     {
       "key": "POPUP_OPTION_3",
       "value": "OK"
+    },
+    {
+      "key": "POPUP_TEXT_IP_ERROR",
+      "value": "The IP Adress was not found."
+    },
+    {
+      "key": "POPUP_TEXT_PORT_ERROR",
+      "value": "The port was not found."
+    },
+    {
+      "key": "POPUP_TEXT_FULL_LOBBY",
+      "value": "The lobby is full."
     }
   ],
   "dialogues": []

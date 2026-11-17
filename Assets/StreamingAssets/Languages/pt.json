@@ -407,6 +407,18 @@
     {
       "key": "POPUP_OPTION_3",
       "value": "OK"
+    },
+    {
+      "key": "POPUP_TEXT_IP_ERROR",
+      "value": "O Endereço de IP não foi encontrado."
+    },
+    {
+      "key": "POPUP_TEXT_PORT_ERROR",
+      "value": "A porta não foi encontrada."
+    },
+    {
+      "key": "POPUP_TEXT_FULL_LOBBY",
+      "value": "A sala está cheia."
     }
   ],
   "dialogues": []

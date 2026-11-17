@@ -21,17 +21,6 @@ namespace CatGame.Capabilities.UISystem
             }
         }
 
-        public class SubmittedEvent : EventArgs
-        {
-            public readonly PlayerId PlayerId;
-
-            public SubmittedEvent(PlayerId playerId)
-            {
-                PlayerId = playerId;
-            }
-        }
-
-        public event EventHandler<SubmittedEvent> OnSubmittedEvent;
         public event EventHandler<FocussedEvent> OnFocusedEvent;
 
         [Header("Settings")]
@@ -99,7 +88,6 @@ namespace CatGame.Capabilities.UISystem
         public void OnSubmit(PlayerId player)
         {
             OnSubmitByPlayer(player);
-            OnSubmittedEvent?.Invoke(this, new SubmittedEvent(player));
         }
 
         protected virtual void OnFocusedByPlayer(PlayerId player, NavigationMode navigationMode)
