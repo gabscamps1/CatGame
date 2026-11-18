@@ -80,6 +80,9 @@ namespace CatGame.Features.CharacterSelection
         private void BeginOnline()
         {
             isOnline = true;
+
+            // Antes do spawn do lobby: o IsFullLobby e o preenchimento de IAs dependem do limite.
+            onlineLobbyModel.Init(maxPlayers);
             StartCoroutine(BindWhenOnline());
         }
 

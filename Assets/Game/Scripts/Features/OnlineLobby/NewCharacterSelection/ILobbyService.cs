@@ -11,6 +11,8 @@ namespace CatGame.Features.CharacterSelection
         public LobbySlot GetSlot(int index);
         public bool CanControl(int slotIndex);             // esta máquina pode mexer neste slotInput?
 
+        public void Init(int maxPlayers);
+
         public void CycleCharacter(int slotIndex, int direction);   // -1 ou +1
         public void SetReady(int slotIndex, bool ready);
         public void RequestStart();
@@ -18,6 +20,6 @@ namespace CatGame.Features.CharacterSelection
         public void RequestCloseLobby();
         public void SetSlotInput(LobbySlotInput slotInput);
 
-        public string Socket {  get; }
+        public string Port {  get; }
     }
 }

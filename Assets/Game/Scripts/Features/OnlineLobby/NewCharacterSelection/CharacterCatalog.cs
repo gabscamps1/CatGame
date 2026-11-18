@@ -22,6 +22,10 @@ namespace CatGame.Features.CharacterSelection
 
             public NetworkObject Prefab => prefab;
             [SerializeField] private NetworkObject prefab;
+
+            public NetworkObject AIPrefab => aiPrefab;
+            [Tooltip("Prefab usado quando o personagem é controlado pela IA. A dificuldade vem do AIProfile do próprio prefab.")]
+            [SerializeField] private NetworkObject aiPrefab;
         }
 
         public IReadOnlyList<Entry> Entries => entries;

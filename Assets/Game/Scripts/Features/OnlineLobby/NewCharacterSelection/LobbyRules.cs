@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CatGame.Core.Enums;
+using System;
 using System.Collections.Generic;
+using Unity.Collections;
 
 namespace CatGame.Features.CharacterSelection
 {
@@ -41,6 +43,44 @@ namespace CatGame.Features.CharacterSelection
             return true;
         }
 
+        /// <summary>
+        /// Completa os participantes com IAs até o limite da sessão, usando os personagens que ninguém escolheu (na ordem do catálogo).
+        /// Conta participantes, não clients: um client com mais de um jogador ocupa mais de uma vaga.
+        /// Retorna quantas IAs foram adicionadas. Temporário até a IA ser escolhida manualmente no lobby.
+        /// </summary>
+        public static int FillWithAI(List<LobbySlot> participants, int maxParticipants, CharacterCatalog catalog, ulong serverClientId)
+        {
+            int freeSlots = maxParticipants - participants.Count;
+            int added = 0;
+
+            var entries = catalog.Entries;
+            for (int i = 0; i < entries.Count && added < freeSlots; i++)
+            {
+                CharacterCatalog.Entry entry = entries[i];
+                if (entry.Id == 0 || entry.AIPrefab == null) continue;
+                if (IsCharacterTaken(participants, entry.Id)) continue;
+
+                added++;
+                participants.Add(new LobbySlot
+                {
+                    OwnerId = serverClientId,
+                    LocalId = 0,
+                    CharacterId = entry.Id,
+                    Ready = true,
+                    PlayerName = new FixedString32Bytes($"IA {added}"),
+                    ControlType = PlayerControlType.AI,
+                });
+            }
+
+            return added;
+        }
+
+        private static bool IsCharacterTaken(IReadOnlyList<LobbySlot> participants, ushort characterId)
+        {
+            for (int i = 0; i < participants.Count; i++)
+                if (participants[i].CharacterId == characterId) return true;
+            return false;
+        }
 
         public static ushort NextAvailable(IReadOnlyList<LobbySlot> slots, int slot, int direction,
                                        CharacterCatalog catalog, bool allowDuplicates,

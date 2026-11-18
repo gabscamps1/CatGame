@@ -19,13 +19,14 @@ namespace CatGame.Features.CharacterSelection
     {
         const float MinCommandInterval = 0.05f;   // throttle por jogador (server)
 
-        [SerializeField] CharacterCatalog catalog;
-        [SerializeField] bool allowDuplicateCharacters;
+        [SerializeField] private CharacterCatalog catalog;
+        [SerializeField] private bool allowDuplicateCharacters;
 
-        readonly NetworkList<LobbySlot> slots = new();
-        readonly NetworkVariable<LobbyPhase> phase = new(LobbyPhase.Selecting);
-        readonly Dictionary<ulong, float> lastCommandTime = new(); // Só no server
+        private readonly NetworkList<LobbySlot> slots = new();
+        private readonly NetworkVariable<LobbyPhase> phase = new(LobbyPhase.Selecting);
+        private readonly Dictionary<ulong, float> lastCommandTime = new(); // Só no server
 
+        // Events.
         public event Action Changed;
         public event Action OnNetworkSpawned;
         public event Action OnOwnerDisconected;
@@ -33,12 +34,21 @@ namespace CatGame.Features.CharacterSelection
         public int SlotCount => slots.Count;
         public LobbySlot GetSlot(int i) => slots[i];
 
+
+        public string Port { get; private set; } = null; // Porta da sessão
+
+        // Server Configs.
+        private int maxPlayers;
+
+
         private IUIService uiService;
         private CloseQuitLobbyPopUp popUp;
-
         private LobbySlotInput slotInput;
 
-        public string Socket { get; private set; }
+        public void Init(int maxPlayers)
+        {
+            this.maxPlayers = maxPlayers;
+        }
 
         #region Unity
 
@@ -46,13 +56,17 @@ namespace CatGame.Features.CharacterSelection
         {
             uiService = ServiceLocator.Get<IUIService>();
             uiService.OnCurrentUIChanged += UiService_OnCurrentUIChanged;
+
+            Changed += OnlineLobbyModel_Changed;
         }
 
         public override void OnDestroy()
         {
             uiService.OnCurrentUIChanged -= UiService_OnCurrentUIChanged;
+            Changed -= OnlineLobbyModel_Changed;
             base.OnDestroy();
         }
+
         public override void OnNetworkSpawn()
         {
             // Sessão nova reseta informações anteriores que podem ter sido mantidas.
@@ -99,13 +113,7 @@ namespace CatGame.Features.CharacterSelection
         private void OnSlotsChanged(NetworkListEvent<LobbySlot> change) => Changed?.Invoke();
         private void OnPhaseChanged(LobbyPhase previous, LobbyPhase current) => Changed?.Invoke();
 
-        #endregion
-
-        public bool CanControl(int slotIndex)
-        {
-            return slotIndex >= 0 && slotIndex < slots.Count &&
-                   slots[slotIndex].OwnerId == NetworkManager.LocalClientId;
-        }
+        #endregion   
 
         #region ServerSlots
 
@@ -132,6 +140,11 @@ namespace CatGame.Features.CharacterSelection
             if (i >= 0) slots.RemoveAt(i);
         }
 
+        private bool IsFullLobby()
+        {
+            return slots.Count >= maxPlayers;
+        }
+
         private int FindSlot(ulong clientId)
         {
             for (int i = 0; i < slots.Count; i++)
@@ -156,6 +169,21 @@ namespace CatGame.Features.CharacterSelection
         }
 
         private bool IsUnlocked(ulong clientId, ushort characterId) => true;
+
+        private void OnlineLobbyModel_Changed()
+        {
+            ConnectionManager.Instance.FullLobby(IsFullLobby());
+        }
+
+        #endregion
+
+        #region ClientValidations
+
+        public bool CanControl(int slotIndex)
+        {
+            return slotIndex >= 0 && slotIndex < slots.Count &&
+                   slots[slotIndex].OwnerId == NetworkManager.LocalClientId;
+        }
 
         #endregion
 
@@ -225,7 +253,16 @@ namespace CatGame.Features.CharacterSelection
             if (!LobbyRules.CanStart(Snapshot())) return;
 
             ConnectionManager.Instance.CloseConnections();
-            MatchSetup.Instance.Capture(Snapshot());
+
+            // As IAs completam as vagas restantes só na hora de iniciar (não entram na lista do lobby).
+            List<LobbySlot> participants = Snapshot();
+            int freeSlots = maxPlayers - participants.Count;
+            int addedAIs = LobbyRules.FillWithAI(participants, maxPlayers, catalog, NetworkManager.ServerClientId);
+
+            if (addedAIs < freeSlots)
+                Core.Logger.LogWarning($"Só {addedAIs} de {freeSlots} IA(s) foram adicionadas: faltam personagens livres com {nameof(CharacterCatalog.Entry.AIPrefab)} no {nameof(CharacterCatalog)}.");
+
+            MatchSetup.Instance.Capture(participants);
             phase.Value = LobbyPhase.Starting;
 
             // O serviço carrega o grupo para todos os clients.
@@ -248,6 +285,8 @@ namespace CatGame.Features.CharacterSelection
 
             while (!IsPortAvaliable(port))
                 port++;
+
+            Port = port.ToString();
 
             if (!NetworkManager.Singleton.TryGetComponent(out UnityTransport unityTransport))
             {
@@ -347,7 +386,7 @@ namespace CatGame.Features.CharacterSelection
 
         private IEnumerator RestoreInput()
         {
-            yield return null;
+            yield return null; // Espera 1 frame para recuperar o input. Garante que duas ações não sejam enviadas ao mesmo tempo.
             slotInput?.EnableInputToThisSlot();          
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CatGame.Core.Enums;
+using System;
 using Unity.Collections;
 using Unity.Netcode;
 
@@ -13,6 +14,9 @@ namespace CatGame.Features.CharacterSelection
         public ushort CharacterId; // 0 = nenhum escolhido
         public bool Ready;
         public FixedString32Bytes PlayerName;
+        public PlayerControlType ControlType; // Human (padrão) ou AI. IA: OwnerId é o server e LocalId não é usado.
+
+        public bool IsAI => ControlType == PlayerControlType.AI;
 
         public void NetworkSerialize<T>(BufferSerializer<T> s) where T : IReaderWriter
         {
@@ -21,6 +25,7 @@ namespace CatGame.Features.CharacterSelection
             s.SerializeValue(ref CharacterId);
             s.SerializeValue(ref Ready);
             s.SerializeValue(ref PlayerName);
+            s.SerializeValue(ref ControlType);
         }
 
         public bool Equals(LobbySlot slot)
@@ -29,7 +34,8 @@ namespace CatGame.Features.CharacterSelection
                 && LocalId == slot.LocalId
                 && CharacterId == slot.CharacterId 
                 && Ready == slot.Ready 
-                && PlayerName.Equals(slot.PlayerName);
+                && PlayerName.Equals(slot.PlayerName)
+                && ControlType == slot.ControlType;
         }
             
     }

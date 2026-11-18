@@ -69,7 +69,7 @@ namespace CatGame.Features.CharacterSelection
                 }
             }
 
-            lobbyView.ShotSocket(lobbyModel.Socket);
+            lobbyView.ShotSocket(lobbyModel.Port);
             lobbyView.SetStartInteractable(LobbyRules.CanStart(slots));
         }
 

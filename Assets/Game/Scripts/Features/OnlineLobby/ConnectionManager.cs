@@ -5,7 +5,8 @@ public class ConnectionManager : MonoBehaviour
 {
     public static ConnectionManager Instance;
 
-    private bool canJoin = true;
+    private bool isMatchStarted = false;
+    private bool isFullLobby = false;
 
     private void Awake()
     {
@@ -33,20 +34,23 @@ public class ConnectionManager : MonoBehaviour
 
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
-        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= 4)
+        if (isFullLobby)
         {
             response.Approved = false;
             response.Reason = "Full Lobby";
-            CatGame.Core.Logger.LogWarning($"[{nameof(ConnectionManager)}] Lembrar de substituir ConnectedClientsIds por números de jogadores presentes na sessão para bloquear a entrada de jogadores");
             return;
         }
 
-        response.Approved = canJoin;
+        if (isMatchStarted)
+        {
+            response.Approved = false;
+            response.Reason = "The match has started.";
+            return;
+        }
+
+        response.Approved = true;
         response.CreatePlayerObject = false;
         response.Pending = false;
-
-        if (!canJoin)
-            response.Reason = "The match has started.";
     }
 
     /// <summary>
@@ -54,7 +58,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void CloseConnections()
     {
-        canJoin = false;
+        isMatchStarted = true;
     }
 
     /// <summary>
@@ -62,6 +66,11 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void OpenConnections()
     {
-        canJoin = true;
+        isMatchStarted = false;
+    }
+
+    public void FullLobby(bool isFullLobby)
+    {
+        this.isFullLobby = isFullLobby;
     }
 }

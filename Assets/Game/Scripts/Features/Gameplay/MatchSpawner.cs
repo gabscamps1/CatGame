@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
-using CatGame.Features.AI;
 
 namespace CatGame.Features.Gameplay
 {
@@ -16,12 +15,6 @@ namespace CatGame.Features.Gameplay
         [SerializeField] private CharacterCatalog catalog;
         [SerializeField] private Transform[] spawnPoints;
         [SerializeField] private PlayerRosterSync roaster;
-
-        [Header("Debug")]
-        [SerializeField] private NetworkObject debugAIPrefab;
-        [SerializeField] private AIProfile debugAIProfile;
-        [SerializeField, Range(0, 4)] private int debugAICount;
-        [SerializeField] private ushort debugAICharacterId; // Personagem da IA no CharacterCatalog (usado na tela de vitória).
 
         public override void OnNetworkSpawn()
         {
@@ -39,71 +32,78 @@ namespace CatGame.Features.Gameplay
         private void OnSceneLoaded(string scene, LoadSceneMode mode, List<ulong> completed, List<ulong> timedOut)
         {
             NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
-            
+
+            Core.Logger.LogWarning(MatchSetup.Instance.Players.Count.ToString());
+
+
             for (int i = 0; i < MatchSetup.Instance.Players.Count; i++)
             {
+                if (i >= spawnPoints.Length)
+                {
+                    Core.Logger.LogWarning($"Há mais participantes ({MatchSetup.Instance.Players.Count}) do que spawn points ({spawnPoints.Length}).");
+                    break;
+                }
+
                 LobbySlot slot = MatchSetup.Instance.Players[i];
 
-                // Quem caiu ou não carregou a tempo fica de fora (quem estourou o tempo é desconectado pelo SceneLoadingService).
-                // O índice continua o do lobby, então o pote dele só fica vazio.
-                if (!NetworkManager.ConnectedClients.ContainsKey(slot.OwnerId) || timedOut.Contains(slot.OwnerId))
+                if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) 
                     continue;
 
-                if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) continue;
-
-                PlayerId playerId = new PlayerId(i);              
-                byte localIndex = slot.LocalId;
-
-                // Registra o player e suas informações no servidor.
-                roaster.ServerAdd(playerId, slot.OwnerId, localIndex, PlayerControlType.Human, slot.CharacterId);
-
-                // Spawna o jogador no server.
+                PlayerId playerId = new PlayerId(i);
                 Transform point = spawnPoints[i];
-                NetworkObject playerObj = Instantiate(entry.Prefab, point.position, point.rotation);  
-                
-                // Configura o jogador com o seu ID.
-                if (playerObj.TryGetComponent(out IPlayerActor actor))
-                    actor.SetPlayerId(playerId);
 
-                // Instancia os jogadores para todos os clients.
-                if (localIndex == 0)
-                    playerObj.SpawnAsPlayerObject(slot.OwnerId);
+                if (slot.IsAI)
+                    SpawnAI(playerId, slot, entry, point);
                 else
-                    playerObj.SpawnWithOwnership(slot.OwnerId);
+                    SpawnHuman(playerId, slot, entry, point, timedOut);
             }
-
-            SpawnDebugAIs(MatchSetup.Instance.Players.Count);
         }
 
-        /// <summary>
-        /// Cria IAs de teste depois dos jogadores do lobby. Temporário até as IAs virem do lobby.
-        /// </summary>
-        private void SpawnDebugAIs(int firstPlayerIndex)
+        private void SpawnHuman(PlayerId playerId, LobbySlot slot, CharacterCatalog.Entry entry, Transform point, List<ulong> timedOut)
         {
-            if (debugAIPrefab == null || debugAICount <= 0)
+            // Quem caiu ou não carregou a tempo fica de fora (quem estourou o tempo é desconectado pelo SceneLoadingService).
+            // O índice continua o do lobby, então o pote dele só fica vazio.
+            if (!NetworkManager.ConnectedClients.ContainsKey(slot.OwnerId) || timedOut.Contains(slot.OwnerId))
                 return;
 
-            int lastPlayerIndex = Mathf.Min(firstPlayerIndex + debugAICount, spawnPoints.Length);
+            byte localIndex = slot.LocalId;
 
-            for (int i = firstPlayerIndex; i < lastPlayerIndex; i++)
+            // Registra o player e suas informações no servidor.
+            roaster.ServerAdd(playerId, slot.OwnerId, localIndex, PlayerControlType.Human, slot.CharacterId);
+
+            // Spawna o jogador no server.
+            NetworkObject playerObj = Instantiate(entry.Prefab, point.position, point.rotation);
+
+            // Configura o jogador com o seu ID.
+            if (playerObj.TryGetComponent(out IPlayerActor actor))
+                actor.SetPlayerId(playerId);
+
+            // Instancia os jogadores para todos os clients.
+            if (localIndex == 0)
+                playerObj.SpawnAsPlayerObject(slot.OwnerId);
+            else
+                playerObj.SpawnWithOwnership(slot.OwnerId);
+        }
+
+        private void SpawnAI(PlayerId playerId, LobbySlot slot, CharacterCatalog.Entry entry, Transform point)
+        {
+            if (entry.AIPrefab == null)
             {
-                PlayerId playerId = new PlayerId(i);
-
-                // A IA roda no server: o clientId é o do server e o localIndex não é usado.
-                roaster.ServerAdd(playerId, NetworkManager.ServerClientId, 0, PlayerControlType.AI, debugAICharacterId);
-
-                Transform point = spawnPoints[i];
-                NetworkObject aiObj = Instantiate(debugAIPrefab, point.position, point.rotation);
-
-                if (aiObj.TryGetComponent(out IPlayerActor actor))
-                    actor.SetPlayerId(playerId);
-
-                if (debugAIProfile != null && aiObj.TryGetComponent(out AIController aiController))
-                    aiController.SetProfile(debugAIProfile);
-
-                // O server é o dono da IA.
-                aiObj.SpawnWithOwnership(NetworkManager.ServerClientId);
+                Core.Logger.LogWarning($"O personagem {entry.Id} não tem {nameof(CharacterCatalog.Entry.AIPrefab)} no {nameof(CharacterCatalog)}.");
+                return;
             }
+
+            // A IA roda no server: o clientId é o do server e o localIndex não é usado.
+            roaster.ServerAdd(playerId, NetworkManager.ServerClientId, 0, PlayerControlType.AI, slot.CharacterId);
+
+            // A dificuldade vem do AIProfile configurado no próprio prefab.
+            NetworkObject aiObj = Instantiate(entry.AIPrefab, point.position, point.rotation);
+
+            if (aiObj.TryGetComponent(out IPlayerActor actor))
+                actor.SetPlayerId(playerId);
+
+            // O server é o dono da IA.
+            aiObj.SpawnWithOwnership(NetworkManager.ServerClientId);
         }
     }
 }

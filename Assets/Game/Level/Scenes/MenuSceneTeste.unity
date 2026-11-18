@@ -6834,7 +6834,7 @@ MonoBehaviour:
   lobbyView: {fileID: 1282599962}
   onlineLobbyModel: {fileID: 1031861927}
   createOnlineRoomBtn: {fileID: 868973737}
-  maxPlayers: 0
+  maxPlayers: 4
 --- !u!114 &1031861926
 MonoBehaviour:
   m_ObjectHideFlags: 0
