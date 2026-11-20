@@ -127,7 +127,7 @@ namespace CatGame.Services.Input
             }
         }
 
-        private static bool WasAnyButtonPressedThisFrame(Gamepad gamepad)
+        private bool WasAnyButtonPressedThisFrame(Gamepad gamepad)
         {
             return gamepad.rightShoulder.wasPressedThisFrame ||
                    gamepad.leftShoulder.wasPressedThisFrame ||

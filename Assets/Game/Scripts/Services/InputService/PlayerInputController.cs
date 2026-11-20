@@ -2,18 +2,25 @@ using System;
 using UnityEngine.InputSystem;
 using CatGame.Core.Interfaces;
 using UnityEngine.InputSystem.Users;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CatGame.Services.Input
 {
     public class PlayerInputController : IPlayerInputController
     {
+        private const string PLAYER_MAP = "Player";
+        private const string UI_MAP = "UI";
+
+        // Input Activation.
         public bool IsGameInputEnabled { get; private set; }
         public bool IsUIInputEnabled { get; private set; }
 
+        // Devices.
+        public event Action<InputDevice> OnCurrentDeviceChanged;     
         public InputDevice CurrentDevice { get; private set; }
+        private readonly HashSet<InputDevice> assignedDevices = new();
 
-        private const string PLAYER_MAP = "Player";
-        private const string UI_MAP = "UI";
 
         // Action Maps.
         private readonly InputActionMap gameMap;
@@ -81,7 +88,51 @@ namespace CatGame.Services.Input
  
         public void Update()
         {
+            if (CheckCurrentDeviceChange(out InputDevice currentDevice))
+                ChangeCurrentDevice(currentDevice);
+        }
+
+        private bool CheckCurrentDeviceChange(out InputDevice newCurrentDevice)
+        {
+            newCurrentDevice = CurrentDevice;
+
+            foreach (var device in assignedDevices)
+            {
+                if (device == CurrentDevice)
+                    continue;
+
+                switch (device)
+                {
+                    case Keyboard keyboard:
+                        if (keyboard.anyKey.wasPressedThisFrame)
+                            newCurrentDevice = device;
+                        break;
+
+                    case Gamepad gamepad:
+                        if (WasAnyButtonPressedThisFrame(gamepad))
+                            newCurrentDevice = device;
+                        break;
+                }
+            }
             
+            return newCurrentDevice != CurrentDevice;
+        }
+
+        private bool WasAnyButtonPressedThisFrame(Gamepad gamepad)
+        {
+            return gamepad.rightShoulder.wasPressedThisFrame ||
+                   gamepad.leftShoulder.wasPressedThisFrame ||
+                   gamepad.rightTrigger.wasPressedThisFrame ||
+                   gamepad.leftTrigger.wasPressedThisFrame ||
+                   gamepad.buttonSouth.wasPressedThisFrame ||
+                   gamepad.buttonNorth.wasPressedThisFrame ||
+                   gamepad.buttonWest.wasPressedThisFrame ||
+                   gamepad.buttonEast.wasPressedThisFrame ||
+                   gamepad.leftStickButton.wasPressedThisFrame ||
+                   gamepad.rightStickButton.wasPressedThisFrame ||
+                   Math.Abs(gamepad.leftStick.magnitude) > 0.3 ||
+                   Math.Abs(gamepad.rightStick.magnitude) > 0.3 ||
+                   Math.Abs(gamepad.dpad.magnitude) > 0.3;
         }
 
         #region Game Inputs
@@ -100,15 +151,54 @@ namespace CatGame.Services.Input
 
         #region Devices
 
-        public void AssignDevice(InputDevice device)
+        /// <summary>
+        /// Altera o currentDevice atual se o currentDevice já estiver conectado.
+        /// </summary>
+        private void ChangeCurrentDevice(InputDevice device)
         {
-            InputUser.PerformPairingWithDevice(device, inputUser);
+            if (!assignedDevices.Contains(device))
+                return;
+
             CurrentDevice = device;
+            OnCurrentDeviceChanged?.Invoke(device);
         }
 
-        public void UnassignDevice()
+        public void AssignDevice(InputDevice device)
+        {
+            if (!assignedDevices.Add(device))
+                return;
+
+            InputUser.PerformPairingWithDevice(device, inputUser);
+            CurrentDevice = device;     
+            OnCurrentDeviceChanged?.Invoke(device);
+        }
+
+        public void UnassignDevice(InputDevice device)
+        {
+            if (!assignedDevices.Remove(device))
+                return;
+
+            if (assignedDevices.Count == 0)
+            {
+                CurrentDevice = null;
+                OnCurrentDeviceChanged?.Invoke(null);
+                return;
+            }
+
+            inputUser.UnpairDevice(device);
+            CurrentDevice = CurrentDevice == device
+                ? assignedDevices.Last() // Se o currentDevice atual foi desconectado, troca o currentDevice atual.
+                : CurrentDevice;
+
+            OnCurrentDeviceChanged?.Invoke(CurrentDevice);
+        }
+
+        public void UnassignDevices()
         {
             inputUser.UnpairDevices();
+            assignedDevices.Clear();
+            CurrentDevice = null;
+            OnCurrentDeviceChanged?.Invoke(CurrentDevice);
         }
 
         public bool HasAssignDevice()

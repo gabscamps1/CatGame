@@ -16,12 +16,19 @@ namespace CatGame.Core.Interfaces
         public InputAction SkipCutscene { get; }
         public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
-        public event Action OnCancelled;
-        public InputDevice CurrentDevice { get; }
+        public event Action OnCancelled; 
+
         public void Update();
+
+        // Device.
+        public event Action<InputDevice> OnCurrentDeviceChanged;
+        public InputDevice CurrentDevice { get; }
         public void AssignDevice(InputDevice device);
-        public void UnassignDevice();
+        public void UnassignDevice(InputDevice device);
+        public void UnassignDevices();
         public bool HasAssignDevice();
+
+        // Input Activation.
         public void SwitchToGame();
         public void SwitchToUI();
         public void DisableAllActions();

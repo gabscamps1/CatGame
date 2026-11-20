@@ -210,6 +210,38 @@ MonoBehaviour:
   playerIndex: 0
   initialDelay: 0.4
   repeatInterval: 0.12
+--- !u!1 &193814326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 193814327}
+  m_Layer: 0
+  m_Name: Features
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &193814327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193814326}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1315689766}
+  m_Father: {fileID: 1542714751}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &284835001
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +761,142 @@ MonoBehaviour:
   playerIndex: 1
   initialDelay: 0.4
   repeatInterval: 0.12
+--- !u!1 &1315689765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315689766}
+  - component: {fileID: 1315689767}
+  m_Layer: 0
+  m_Name: InputIconsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1315689766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315689765}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 193814327}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1315689767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315689765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5172a1a62cde0498d9ab6a6cb8bb48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.InputManagement.InputIconsManager
+  keyboard:
+    defaultKey: {fileID: 0}
+    a: {fileID: 0}
+    b: {fileID: 0}
+    c: {fileID: 0}
+    d: {fileID: 0}
+    e: {fileID: 21300000, guid: 126b60c985ca723458b048bc34e89d84, type: 3}
+    f: {fileID: 0}
+    g: {fileID: 0}
+    h: {fileID: 0}
+    i: {fileID: 0}
+    j: {fileID: 0}
+    k: {fileID: 0}
+    l: {fileID: 0}
+    m: {fileID: 0}
+    n: {fileID: 0}
+    o: {fileID: 0}
+    p: {fileID: 0}
+    q: {fileID: 21300000, guid: afe1475698a14a74c867a19001db9c53, type: 3}
+    r: {fileID: 0}
+    s: {fileID: 0}
+    t: {fileID: 0}
+    u: {fileID: 0}
+    v: {fileID: 0}
+    w: {fileID: 0}
+    x: {fileID: 0}
+    y: {fileID: 0}
+    z: {fileID: 0}
+    space: {fileID: 0}
+    enter: {fileID: 0}
+    tab: {fileID: 0}
+    escape: {fileID: 0}
+    backspace: {fileID: 0}
+    delete: {fileID: 0}
+    upArrow: {fileID: 0}
+    downArrow: {fileID: 0}
+    leftArrow: {fileID: 0}
+    rightArrow: {fileID: 0}
+  xbox:
+    defaultButton: {fileID: 0}
+    buttonSouth: {fileID: 0}
+    buttonEast: {fileID: 0}
+    buttonWest: {fileID: 0}
+    buttonNorth: {fileID: 0}
+    leftBumper: {fileID: 21300000, guid: 580971279bf2b504c8ef7fe04f3aec87, type: 3}
+    rightBumper: {fileID: 21300000, guid: 2a58df74a3bba8740a4ab0518a257905, type: 3}
+    leftTrigger: {fileID: 0}
+    rightTrigger: {fileID: 0}
+    leftStick: {fileID: 0}
+    rightStick: {fileID: 0}
+    dpadUp: {fileID: 0}
+    dpadDown: {fileID: 0}
+    dpadLeft: {fileID: 0}
+    dpadRight: {fileID: 0}
+    start: {fileID: 0}
+    select: {fileID: 0}
+  pS:
+    defaultButton: {fileID: 0}
+    buttonSouth: {fileID: 0}
+    buttonEast: {fileID: 0}
+    buttonWest: {fileID: 0}
+    buttonNorth: {fileID: 0}
+    leftBumper: {fileID: 0}
+    rightBumper: {fileID: 0}
+    leftTrigger: {fileID: 0}
+    rightTrigger: {fileID: 0}
+    leftStick: {fileID: 0}
+    rightStick: {fileID: 0}
+    dpadUp: {fileID: 0}
+    dpadDown: {fileID: 0}
+    dpadLeft: {fileID: 0}
+    dpadRight: {fileID: 0}
+    start: {fileID: 0}
+    select: {fileID: 0}
+  switchGp:
+    defaultButton: {fileID: 0}
+    buttonSouth: {fileID: 0}
+    buttonEast: {fileID: 0}
+    buttonWest: {fileID: 0}
+    buttonNorth: {fileID: 0}
+    leftBumper: {fileID: 0}
+    rightBumper: {fileID: 0}
+    leftTrigger: {fileID: 0}
+    rightTrigger: {fileID: 0}
+    leftStick: {fileID: 0}
+    rightStick: {fileID: 0}
+    dpadUp: {fileID: 0}
+    dpadDown: {fileID: 0}
+    dpadLeft: {fileID: 0}
+    dpadRight: {fileID: 0}
+    start: {fileID: 0}
+    select: {fileID: 0}
 --- !u!1 &1452769358
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,6 +1067,7 @@ Transform:
   m_Children:
   - {fileID: 481446454}
   - {fileID: 1085174862}
+  - {fileID: 193814327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1771029403

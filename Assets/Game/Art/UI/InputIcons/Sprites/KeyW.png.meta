@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f1a20fb24cf899e4e8eef9e4d0d519ed
+guid: baa8483c7cd009d4b8655cea6945dcc3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2496921208220211058
-    second: KeyEsc_0
+      213: -1663556825898452565
+    second: KeyW_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,16 +96,29 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KeyEsc_0
+      name: KeyW_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 127
+        width: 109
         height: 109
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 277da101c98d6a220800000000000000
-      internalID: 2496921208220211058
+      spriteID: ba975a871ebd9e8e0800000000000000
+      internalID: -1663556825898452565
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      KeyEsc_0: 2496921208220211058
+      KeyW_0: -1663556825898452565
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
