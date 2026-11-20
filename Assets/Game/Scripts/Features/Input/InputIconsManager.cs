@@ -42,6 +42,11 @@ namespace CatGame.Features.InputManagement
             public Sprite dpadLeft;
             public Sprite dpadRight;
 
+            // D-pad agrupado (usado pelo InputIconVariant).
+            public Sprite dpad;
+            public Sprite dpadVertical;
+            public Sprite dpadHorizontal;
+
             // Start / Back.
             public Sprite start;   // Start / Options
             public Sprite select;  // Back / Share
@@ -76,6 +81,22 @@ namespace CatGame.Features.InputManagement
                 { "dpadLeft", dpadLeft },
                 { "dpadRight", dpadRight },
 
+                // D-pad (partes de composite: <Gamepad>/dpad/up).
+                { "dpad/up", dpadUp },
+                { "dpad/down", dpadDown },
+                { "dpad/left", dpadLeft },
+                { "dpad/right", dpadRight },
+
+                // Sticks (partes de composite: <Gamepad>/leftStick/up).
+                { "leftStick/up", leftStick },
+                { "leftStick/down", leftStick },
+                { "leftStick/left", leftStick },
+                { "leftStick/right", leftStick },
+                { "rightStick/up", rightStick },
+                { "rightStick/down", rightStick },
+                { "rightStick/left", rightStick },
+                { "rightStick/right", rightStick },
+
                 // Start / Back / System
                 { "start", start },
                 { "select", select },
@@ -83,8 +104,14 @@ namespace CatGame.Features.InputManagement
             }
 
             // Pega o sprite correspondente a bind.
-            public Sprite GetIcon(string controlPath)
+            public Sprite GetIcon(string controlPath, InputIconVariant variant = InputIconVariant.Single)
             {
+                if (variant != InputIconVariant.Single && controlPath.StartsWith("dpad"))
+                {
+                    Sprite group = GetGroup(variant, dpad, dpadVertical, dpadHorizontal);
+                    if (group != null) return group;
+                }
+
                 return gamepadIcons.TryGetValue(controlPath, out var sprite) && sprite != null ? sprite : defaultButton;
             }
         }
@@ -117,6 +144,11 @@ namespace CatGame.Features.InputManagement
             public Sprite downArrow;
             public Sprite leftArrow;
             public Sprite rightArrow;
+
+            // Setas agrupadas (usado pelo InputIconVariant).
+            public Sprite arrows;
+            public Sprite arrowsVertical;
+            public Sprite arrowsHorizontal;
 
             // Modificadores.
             /*public Sprite shift;
@@ -241,10 +273,28 @@ namespace CatGame.Features.InputManagement
             }
 
             // Pega o sprite correspondente a bind.
-            public Sprite GetIcon(string controlPath)
+            public Sprite GetIcon(string controlPath, InputIconVariant variant = InputIconVariant.Single)
             {
+                if (variant != InputIconVariant.Single && controlPath.EndsWith("Arrow"))
+                {
+                    Sprite group = GetGroup(variant, arrows, arrowsVertical, arrowsHorizontal);
+                    if (group != null) return group;
+                }
+
                 return keyboardIcons.TryGetValue(controlPath, out var sprite) && sprite != null ? sprite : defaultKey;
             }
+        }
+
+        // Escolhe o sprite agrupado conforme a variante.
+        private static Sprite GetGroup(InputIconVariant variant, Sprite all, Sprite vertical, Sprite horizontal)
+        {
+            return variant switch
+            {
+                InputIconVariant.All => all,
+                InputIconVariant.Vertical => vertical,
+                InputIconVariant.Horizontal => horizontal,
+                _ => null
+            };
         }
 
         public static InputIconsManager Instance => inputIconsManager;
@@ -311,10 +361,9 @@ namespace CatGame.Features.InputManagement
         /// <summary>
         /// Retorna o ícone correspondente a bind.
         /// </summary>
-        public Sprite GetIcon(string binding)
+        public Sprite GetIcon(string binding, InputIconVariant variant = InputIconVariant.Single)
         {
             string gamepadBindName = binding.Replace("<Gamepad>/", "");
-            Core.Logger.Log(binding);
 
             switch (playerInputController.CurrentDevice)
             {
@@ -322,19 +371,19 @@ namespace CatGame.Features.InputManagement
                 case Keyboard:
                     // Seta o ícone do teclado correspondente a tecla.
                     string bindingName = binding.Replace("<Keyboard>/", "").Replace("<Mouse>/", "");
-                    return keyboard.GetIcon(bindingName);
+                    return keyboard.GetIcon(bindingName, variant);
 
                 case XInputController:
-                    return xbox.GetIcon(gamepadBindName);
+                    return xbox.GetIcon(gamepadBindName, variant);
 
                 case DualSenseGamepadHID:
-                    return pS.GetIcon(gamepadBindName);
+                    return pS.GetIcon(gamepadBindName, variant);
 
                 case DualShockGamepad:
-                    return pS.GetIcon(gamepadBindName);
+                    return pS.GetIcon(gamepadBindName, variant);
 
                 case SwitchProControllerHID: 
-                    return switchGp.GetIcon(gamepadBindName);
+                    return switchGp.GetIcon(gamepadBindName, variant);
 
                 default:
                     Core.Logger.LogError($"[{nameof(InputIconsManager)}] Device não foi reconhecido? {playerInputController.CurrentDevice}");

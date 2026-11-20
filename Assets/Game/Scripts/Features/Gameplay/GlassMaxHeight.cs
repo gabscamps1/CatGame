@@ -46,11 +46,10 @@ public class GlassMaxHeight : MonoBehaviour
         if (!collision.TryGetComponent(out FruitWorld fruitWorld))
             return;
 
-        Debug.Log($"To na colisão matadora há {fruitWorld.TimeInCollision} segundos");
 
         if (fruitWorld.TimeInCollision < timeToLose)
             return;
-        Debug.Log("1");
+        
         IPlayerRegistry playerRegistry = ServiceLocator.Get<IPlayerRegistry>();
 
         // Pega o dono da fruta.
@@ -60,7 +59,6 @@ public class GlassMaxHeight : MonoBehaviour
             return;
         }
 
-        Debug.Log("2");
         if (actor.Damageable == null)
             return;
 
@@ -68,8 +66,6 @@ public class GlassMaxHeight : MonoBehaviour
         actor.Damageable.TakeDamage(damage);
 
         fruitWorld.ResetTimer();
-
-        Debug.Log("Avisei que o player perdeu");
     }
 }
 

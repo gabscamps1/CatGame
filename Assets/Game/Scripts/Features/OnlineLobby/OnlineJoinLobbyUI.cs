@@ -3,6 +3,7 @@ using CatGame.Core.Enums;
 using CatGame.Core.Events;
 using CatGame.Features.CharacterSelection;
 using System.Net;
+using System.Net.Sockets;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -116,7 +117,10 @@ namespace CatGame.UI
 
         private bool IsValidIp(string ip)
         {
-            return !string.IsNullOrEmpty(ip) && IPAddress.TryParse(ip, out IPAddress ipAddress);   
+            return !string.IsNullOrEmpty(ip) 
+                && ip.Split(".").Length == 4
+                && IPAddress.TryParse(ip, out IPAddress ipAddress) 
+                && ipAddress.AddressFamily == AddressFamily.InterNetwork;   
         }
 
         private bool IsValidPort(string port)

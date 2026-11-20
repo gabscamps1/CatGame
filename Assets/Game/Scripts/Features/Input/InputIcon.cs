@@ -13,6 +13,9 @@ namespace CatGame.Features.InputManagement
         [SerializeField]
         private InputActionReference actionReference;
 
+        [SerializeField, Tooltip("Setas e d-pad: mostra a direção sozinha ou o grupo (vertical, horizontal ou as 4).")]
+        private InputIconVariant variant;
+
         [SerializeField]
         private string keyboardBindingID;
         private int keyboardBindingIndex;
@@ -21,7 +24,7 @@ namespace CatGame.Features.InputManagement
         private string gamepadBindingID;
         private int gamepadBindingIndex;
 
-        private void Awake()
+        private void Start()
         {
             if (actionReference == null) return;
 
@@ -46,15 +49,15 @@ namespace CatGame.Features.InputManagement
             switch (currentDevice)
             {
                 case Keyboard:
-                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[keyboardBindingIndex].effectivePath);
+                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[keyboardBindingIndex].effectivePath, variant);
                     break;
 
                 case Gamepad:
-                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[gamepadBindingIndex].effectivePath);
+                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[gamepadBindingIndex].effectivePath, variant);
                     break;
 
                 default:
-                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[keyboardBindingIndex].effectivePath);
+                    inputIconImage.sprite = InputIconsManager.Instance.GetIcon(actionReference.action.bindings[keyboardBindingIndex].effectivePath, variant);
                     break;
             }
         }

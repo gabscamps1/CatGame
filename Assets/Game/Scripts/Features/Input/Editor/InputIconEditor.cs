@@ -8,7 +8,6 @@ namespace CatGame.Features.InputManagement
     [CustomEditor(typeof(InputIcon))]
     public class InputIconEditor : Editor
     {
-        private SerializedProperty inputIconImage;
         private SerializedProperty actionReference;
         private SerializedProperty keyboardBindingID;
         private SerializedProperty gamepadBindingID;
@@ -23,7 +22,6 @@ namespace CatGame.Features.InputManagement
 
         protected void OnEnable()
         {
-            inputIconImage = serializedObject.FindProperty("inputIconImage");
             actionReference = serializedObject.FindProperty("actionReference");
             keyboardBindingID = serializedObject.FindProperty("keyboardBindingID");
             gamepadBindingID = serializedObject.FindProperty("gamepadBindingID");
@@ -34,11 +32,11 @@ namespace CatGame.Features.InputManagement
 
         public override void OnInspectorGUI()
         {
+            serializedObject.Update();
             EditorGUI.BeginChangeCheck();
 
-            // Binding section.
-            EditorGUILayout.PropertyField(inputIconImage);
-            EditorGUILayout.PropertyField(actionReference);
+            // Desenha todos os campos serializados, menos os IDs de bind (que viram dropdown abaixo).
+            DrawPropertiesExcluding(serializedObject, "m_Script", "keyboardBindingID", "gamepadBindingID");
 
             var newKeyboardSelectedBinding = EditorGUILayout.Popup(keyboardBindingLabel, keyboardSelectedBindingOption, bindingOptions);
             if (newKeyboardSelectedBinding != keyboardSelectedBindingOption)

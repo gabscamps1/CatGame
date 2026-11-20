@@ -807,10 +807,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.InputManagement.InputIconsManager
   keyboard:
     defaultKey: {fileID: 0}
-    a: {fileID: 0}
+    a: {fileID: 21300000, guid: 6c88101242c2aeb44a6cea4980e51a66, type: 3}
     b: {fileID: 0}
     c: {fileID: 0}
-    d: {fileID: 0}
+    d: {fileID: 21300000, guid: e89fbe3efe966c8488647e60425aaf94, type: 3}
     e: {fileID: 21300000, guid: 126b60c985ca723458b048bc34e89d84, type: 3}
     f: {fileID: 0}
     g: {fileID: 0}
@@ -825,76 +825,88 @@ MonoBehaviour:
     p: {fileID: 0}
     q: {fileID: 21300000, guid: afe1475698a14a74c867a19001db9c53, type: 3}
     r: {fileID: 0}
-    s: {fileID: 0}
+    s: {fileID: 21300000, guid: 5e63f79235484bd46a4f344bac3d8950, type: 3}
     t: {fileID: 0}
     u: {fileID: 0}
     v: {fileID: 0}
-    w: {fileID: 0}
+    w: {fileID: 21300000, guid: baa8483c7cd009d4b8655cea6945dcc3, type: 3}
     x: {fileID: 0}
     y: {fileID: 0}
     z: {fileID: 0}
-    space: {fileID: 0}
-    enter: {fileID: 0}
+    space: {fileID: 21300000, guid: 13ac34a143737ea4da266c773a2b53f6, type: 3}
+    enter: {fileID: 21300000, guid: aab13bcfe159382478df425aaa480dfc, type: 3}
     tab: {fileID: 0}
-    escape: {fileID: 0}
+    escape: {fileID: 21300000, guid: f1a20fb24cf899e4e8eef9e4d0d519ed, type: 3}
     backspace: {fileID: 0}
     delete: {fileID: 0}
-    upArrow: {fileID: 0}
-    downArrow: {fileID: 0}
-    leftArrow: {fileID: 0}
-    rightArrow: {fileID: 0}
+    upArrow: {fileID: 21300000, guid: a8b77b47de4e44c8b00efcaa3edfc92c, type: 3}
+    downArrow: {fileID: 21300000, guid: ab5085baa132434a9caeb4c36a3137c8, type: 3}
+    leftArrow: {fileID: 21300000, guid: a16ce60a87aeee74cb59a024f70684b1, type: 3}
+    rightArrow: {fileID: 21300000, guid: 1459fde5825dec74b95d02a3ba08c863, type: 3}
+    arrows: {fileID: 21300000, guid: d82f50c773104b368966b3abeb018622, type: 3}
+    arrowsVertical: {fileID: 21300000, guid: 108005dc09154de89a1ab405b5e77559, type: 3}
+    arrowsHorizontal: {fileID: 21300000, guid: 66195e94920b4d84bc6681194cd6341a, type: 3}
   xbox:
     defaultButton: {fileID: 0}
-    buttonSouth: {fileID: 0}
-    buttonEast: {fileID: 0}
-    buttonWest: {fileID: 0}
-    buttonNorth: {fileID: 0}
+    buttonSouth: {fileID: 21300000, guid: 9da76a8204f18404cb3c746ed7cc7f3d, type: 3}
+    buttonEast: {fileID: 21300000, guid: 24dcd01b507840b40b91180a41014e63, type: 3}
+    buttonWest: {fileID: 21300000, guid: a5d24e640f7444547a9da5bc505adddf, type: 3}
+    buttonNorth: {fileID: 21300000, guid: 44861c6116eba154b82b423dda903cf2, type: 3}
     leftBumper: {fileID: 21300000, guid: 580971279bf2b504c8ef7fe04f3aec87, type: 3}
     rightBumper: {fileID: 21300000, guid: 2a58df74a3bba8740a4ab0518a257905, type: 3}
     leftTrigger: {fileID: 0}
     rightTrigger: {fileID: 0}
-    leftStick: {fileID: 0}
+    leftStick: {fileID: 21300000, guid: 3b007f2ddd516c248975131223d25c7d, type: 3}
     rightStick: {fileID: 0}
-    dpadUp: {fileID: 0}
-    dpadDown: {fileID: 0}
-    dpadLeft: {fileID: 0}
-    dpadRight: {fileID: 0}
+    dpadUp: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadDown: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadLeft: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpadRight: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpad: {fileID: 21300000, guid: 30aeba4648554bb1a78c031d4804d338, type: 3}
+    dpadVertical: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadHorizontal: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
     start: {fileID: 0}
     select: {fileID: 0}
   pS:
     defaultButton: {fileID: 0}
-    buttonSouth: {fileID: 0}
-    buttonEast: {fileID: 0}
-    buttonWest: {fileID: 0}
-    buttonNorth: {fileID: 0}
-    leftBumper: {fileID: 0}
-    rightBumper: {fileID: 0}
+    buttonSouth: {fileID: 21300000, guid: 5b07670e98d634a42903e983e36c0de0, type: 3}
+    buttonEast: {fileID: 21300000, guid: 30329b35b46c54846944c75a7782e643, type: 3}
+    buttonWest: {fileID: 21300000, guid: 2923118625045be41b675fa11cfe61f8, type: 3}
+    buttonNorth: {fileID: 21300000, guid: 012ad59392ac0904da900ecdb2c15856, type: 3}
+    leftBumper: {fileID: 21300000, guid: 5965d76beb4f0d64b96d1189041022b7, type: 3}
+    rightBumper: {fileID: 21300000, guid: 79bcc5a9529d17844af9fe32500b8890, type: 3}
     leftTrigger: {fileID: 0}
     rightTrigger: {fileID: 0}
-    leftStick: {fileID: 0}
+    leftStick: {fileID: 21300000, guid: 3b007f2ddd516c248975131223d25c7d, type: 3}
     rightStick: {fileID: 0}
-    dpadUp: {fileID: 0}
-    dpadDown: {fileID: 0}
-    dpadLeft: {fileID: 0}
-    dpadRight: {fileID: 0}
+    dpadUp: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadDown: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadLeft: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpadRight: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpad: {fileID: 21300000, guid: 30aeba4648554bb1a78c031d4804d338, type: 3}
+    dpadVertical: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadHorizontal: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
     start: {fileID: 0}
     select: {fileID: 0}
   switchGp:
     defaultButton: {fileID: 0}
-    buttonSouth: {fileID: 0}
-    buttonEast: {fileID: 0}
-    buttonWest: {fileID: 0}
-    buttonNorth: {fileID: 0}
-    leftBumper: {fileID: 0}
-    rightBumper: {fileID: 0}
+    buttonSouth: {fileID: 21300000, guid: 24dcd01b507840b40b91180a41014e63, type: 3}
+    buttonEast: {fileID: 21300000, guid: 9da76a8204f18404cb3c746ed7cc7f3d, type: 3}
+    buttonWest: {fileID: 21300000, guid: 44861c6116eba154b82b423dda903cf2, type: 3}
+    buttonNorth: {fileID: 21300000, guid: a5d24e640f7444547a9da5bc505adddf, type: 3}
+    leftBumper: {fileID: 21300000, guid: d985420132dc4efaaea8edfbd64bb89c, type: 3}
+    rightBumper: {fileID: 21300000, guid: 1d42a4e1013c467f9b19a8c26f053296, type: 3}
     leftTrigger: {fileID: 0}
     rightTrigger: {fileID: 0}
-    leftStick: {fileID: 0}
+    leftStick: {fileID: 21300000, guid: 3b007f2ddd516c248975131223d25c7d, type: 3}
     rightStick: {fileID: 0}
-    dpadUp: {fileID: 0}
-    dpadDown: {fileID: 0}
-    dpadLeft: {fileID: 0}
-    dpadRight: {fileID: 0}
+    dpadUp: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadDown: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadLeft: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpadRight: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
+    dpad: {fileID: 21300000, guid: 30aeba4648554bb1a78c031d4804d338, type: 3}
+    dpadVertical: {fileID: 21300000, guid: fdc8567fff5b4057a47aa12be1a9c06c, type: 3}
+    dpadHorizontal: {fileID: 21300000, guid: 2c0802f58e094cc99b2296cb8f939859, type: 3}
     start: {fileID: 0}
     select: {fileID: 0}
 --- !u!1 &1452769358
