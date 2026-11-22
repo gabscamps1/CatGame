@@ -335,70 +335,6 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_UseWorldSpace
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.alignment
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.textureMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2603578822df0d947b110f28d7a4ce53, type: 2}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.textureScale.x
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.textureScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.widthMultiplier
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.ctime0
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.b
-      value: 0.4198113
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.4198113
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.b
-      value: 0.2028302
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0.2028302
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -443,6 +379,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 77f4489e698d2a442a9845bbdc6ada92, type: 2}
+    - target: {fileID: 6993661332976521733, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 83c877b0adcf1ad4e9d776106d822a04, type: 2}
     - target: {fileID: 7539249220003311426, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_LocalPosition.y
       value: -5.44
