@@ -19,9 +19,8 @@ public class PlayerInputHandler : MonoBehaviour, IDisposable
         if (!playerRegistry.TryGetPlayerInfo(playerId, out PlayerInfo playerInfo))
             return false;
         
-        PlayerId inputId = new PlayerId(playerInfo.localIndex);
-
-        inputController = inputService.GetInputFromPlayer(inputId);
+        // O input é escolhido pelo índice do jogador dentro do client.
+        inputController = inputService.GetInputFromLocalPlayer(playerInfo.localIndex);
 
         if (inputController == null)
             return false;

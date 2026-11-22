@@ -69,7 +69,7 @@ namespace CatGame.Capabilities.UISystem
         {
             foreach (PlayerId playerId in FocusingPlayerList)
             {
-                if (!inputService.GetInputFromPlayer(playerId).Navigation.IsPressed())
+                if (!inputService.GetInputFromLocalPlayer(playerId.Id).Navigation.IsPressed())
                     continue;
 
                 NavigationDirection? direction = ReadDirection(playerId);
@@ -105,7 +105,7 @@ namespace CatGame.Capabilities.UISystem
 
         private NavigationDirection? ReadDirection(PlayerId playerId)
         {
-            Vector2 navigateDirection = inputService.GetInputFromPlayer(playerId).Navigation.ReadValue<Vector2>();
+            Vector2 navigateDirection = inputService.GetInputFromLocalPlayer(playerId.Id).Navigation.ReadValue<Vector2>();
 
             float horizontal = navigateDirection.x;
             float vertical = navigateDirection.y;

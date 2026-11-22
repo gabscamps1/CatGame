@@ -419,6 +419,30 @@
     {
       "key": "POPUP_TEXT_FULL_LOBBY",
       "value": "A sala está cheia."
+    },
+    {
+      "key": "POPUP_TEXT_MATCH_STARTED",
+      "value": "A partida já começou."
+    },
+    {
+      "key": "LOBBY_JOIN_HINT",
+      "value": "Pressione A ou Enter para entrar"
+    },
+    {
+      "key": "LOBBY_JOINING",
+      "value": "Entrando..."
+    },
+    {
+      "key": "LOBBY_WAITING_DEVICE",
+      "value": "Pressione A ou Enter para em um dispositivo"
+    },
+    {
+      "key": "LOBBY_QUIT_HOST",
+      "value": "Deseja fechar o lobby?"
+    },
+    {
+      "key": "LOBBY_QUIT_CLIENT",
+      "value": "Deseja sair do lobby?"
     }
   ],
   "dialogues": []

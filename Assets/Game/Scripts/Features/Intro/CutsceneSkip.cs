@@ -39,7 +39,7 @@ namespace CatGame.Features.Cutscene
 
         private void Start()
         {
-            playerInput = ServiceLocator.Get<IInputService>().GetInputFromPlayer(new PlayerId(0));
+            playerInput = ServiceLocator.Get<IInputService>().GetInputFromLocalPlayer(0);
             playerInput.SkipCutscene.performed += SkipCutscene_performed;
 
             gameStateService = ServiceLocator.Get<IGameStateService>();

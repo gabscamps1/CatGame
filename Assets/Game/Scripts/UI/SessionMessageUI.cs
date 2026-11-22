@@ -27,14 +27,16 @@ namespace CatGame.UI
         [SerializeField] private string lobbyFullMessageID;
         [SerializeField] private string ipErrorMessageID;
         [SerializeField] private string portErrorMessageID;
+        [SerializeField] private string matchStartedMessageID = "SESSION_MATCH_STARTED";
 
-        // Navegação
+        // Navegação.
         private IUIService uiService;
         private IUINavigationService uiNavigationService;
         private INavigationGroup navigationGroup;
         private readonly PlayerId playerId = new PlayerId(0);
+        private bool isTryingConnecting; // A popup está aberta no modo "conectando".
 
-        // Mensagem
+        // Mensagem.
         private ILocalizationService localizationService;
 
         private void Awake()
@@ -47,6 +49,8 @@ namespace CatGame.UI
             navigationGroup.Register(confirmButton, true);
 
             EventBus.Subscribe<SessionEndedEvent>(SessionEndedEvent);
+            EventBus.Subscribe<LobbyJoinRejectedEvent>(OnLobbyJoinRejected);
+            EventBus.Subscribe<SessionConnectedEvent>(OnSessionConnected);
             confirmButton.OnSubmittedEvent += ConfirmButton_OnSubmittedEvent;
         }
 
@@ -59,17 +63,43 @@ namespace CatGame.UI
         protected override void OnDestroy()
         {
             EventBus.Unsubscribe<SessionEndedEvent>(SessionEndedEvent);
+            EventBus.Unsubscribe<LobbyJoinRejectedEvent>(OnLobbyJoinRejected);
+            EventBus.Unsubscribe<SessionConnectedEvent>(OnSessionConnected);
             confirmButton.OnSubmittedEvent -= ConfirmButton_OnSubmittedEvent;
             base.OnDestroy();
         }
 
+        // Terminou a sessão por algum motivo.
         private void SessionEndedEvent(SessionEndedEvent e)
+        {
+            ShowMessage(e.Reason, e.WasServer);
+        }
+
+        // Um jogador local tentou entrar no lobby e foi recusado. A sessão continua.
+        private void OnLobbyJoinRejected(LobbyJoinRejectedEvent e)
+        {
+            ShowMessage(e.Reason, false);
+        }
+
+        // Conseguiu Conectar. A popup de "conectando" não é mais necessária.
+        private void OnSessionConnected(SessionConnectedEvent e)
+        {
+            if (!isTryingConnecting)
+                return;
+
+            isTryingConnecting = false;
+
+            if (uiService.IsVisible(PanelType.SessionMessagePopup))
+                uiService.Close(PanelType.SessionMessagePopup);
+        }
+
+        private void ShowMessage(SessionCallbackReason reason, bool wasServer)
         {
             bool openPopup = true;
 
-            switch (e.Reason)
+            switch (reason)
             {
-                case SessionCallbackReason.ConnectionError when e.WasServer == false:
+                case SessionCallbackReason.ConnectionError when wasServer == false:
                     MessageWithConfirm();
                     sessionMessage.text = localizationService.GetTextByID(connectionErrorMessageID);
                     break;
@@ -94,6 +124,11 @@ namespace CatGame.UI
                     sessionMessage.text = localizationService.GetTextByID(portErrorMessageID);
                     break;
 
+                case SessionCallbackReason.MatchStarted:
+                    MessageWithConfirm();
+                    sessionMessage.text = localizationService.GetTextByID(matchStartedMessageID);
+                    break;
+
                 default:
                     sessionMessage.text = null;
                     Core.Logger.LogError($"[{nameof(SessionMessageUI)}] Callback da sessão não foi adicionado a popup");
@@ -107,6 +142,7 @@ namespace CatGame.UI
 
         private void TryingConnectingMode()
         {
+            isTryingConnecting = true;
             sessionMessage.rectTransform.position = withoutInteractionTextPosition.position;
             confirmButton.gameObject.SetActive(false);
             confirmButton.SetOptionInteractable(false);
@@ -115,6 +151,7 @@ namespace CatGame.UI
 
         private void MessageWithConfirm()
         {
+            isTryingConnecting = false;
             sessionMessage.rectTransform.position = interactionTextPosition.position;
             confirmButton.SetOptionInteractable(true);
             confirmButton.gameObject.SetActive(true);

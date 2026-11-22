@@ -76,13 +76,13 @@ namespace CatGame.Capabilities.UISystem
         {
             foreach (PlayerId playerToRemove in playersToRemove)
             {
-                inputService.GetInputFromPlayer(playerToRemove).OnTabNavigation -= MenuController_OnTabNavigation;
+                inputService.GetInputFromLocalPlayer(playerToRemove.Id).OnTabNavigation -= MenuController_OnTabNavigation;
             }
 
             foreach (PlayerId player in activePlayers)
             {
-                inputService.GetInputFromPlayer(player).OnTabNavigation -= MenuController_OnTabNavigation;
-                inputService.GetInputFromPlayer(player).OnTabNavigation += MenuController_OnTabNavigation;
+                inputService.GetInputFromLocalPlayer(player.Id).OnTabNavigation -= MenuController_OnTabNavigation;
+                inputService.GetInputFromLocalPlayer(player.Id).OnTabNavigation += MenuController_OnTabNavigation;
             }
         }
 

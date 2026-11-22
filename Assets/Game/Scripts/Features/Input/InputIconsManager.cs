@@ -340,8 +340,7 @@ namespace CatGame.Features.InputManagement
         private void Start()
         {
             // Se inscreve no evento de troca de dispositivo.
-            PlayerId playerId = new PlayerId(0);
-            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(playerId);
+            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromLocalPlayer(0);
             playerInputController.OnCurrentDeviceChanged += PlayerInputController_OnCurrentDeviceChanged;
 
             PlayerInputController_OnCurrentDeviceChanged(playerInputController.CurrentDevice);
@@ -354,6 +353,10 @@ namespace CatGame.Features.InputManagement
 
         private void PlayerInputController_OnCurrentDeviceChanged(InputDevice currentDevice)
         {
+            // Se estiver sem dispositivo, mantém os ícones do último.
+            if (currentDevice == null)
+                return;
+
             CurrentDevice = currentDevice;
             OnIconsChanged?.Invoke(currentDevice);
         }
@@ -365,7 +368,7 @@ namespace CatGame.Features.InputManagement
         {
             string gamepadBindName = binding.Replace("<Gamepad>/", "");
 
-            switch (playerInputController.CurrentDevice)
+            switch (CurrentDevice)
             {
                 case Mouse:
                 case Keyboard:
@@ -385,9 +388,14 @@ namespace CatGame.Features.InputManagement
                 case SwitchProControllerHID: 
                     return switchGp.GetIcon(gamepadBindName, variant);
 
+                case Gamepad:
+                    // Controle genérico usa os ícones do Xbox.
+                    return xbox.GetIcon(gamepadBindName, variant);
+
                 default:
-                    Core.Logger.LogError($"[{nameof(InputIconsManager)}] Device não foi reconhecido? {playerInputController.CurrentDevice}");
-                    return null;
+                    // Sem dispositivo conhecido, usa os ícones do teclado.
+                    string keyName = binding.Replace("<Keyboard>/", "").Replace("<Mouse>/", "");
+                    return keyboard.GetIcon(keyName, variant);
             }
         }
     }

@@ -3,6 +3,7 @@ using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using CatGame.Core.Events;
 using CatGame.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,8 +11,8 @@ using UnityEngine;
 namespace CatGame.Services.Session
 {
     /// <summary>
-    /// Responsável pelo fim da sessão online. Independente do motivo (saída, queda do host, kick, falha no loading),
-    /// a resposta é sempre a mesma: se a sessão saiu do lobby, volta ao menu principal.
+    /// Responsável pelo fim da sessão online. 
+    /// Independente do motivo, a resposta é sempre a mesma: se a sessão saiu do lobby, volta ao menu principal.
     /// </summary>
     [DisallowMultipleComponent]
     public class SessionEndHandler : MonoBehaviour
@@ -44,6 +45,7 @@ namespace CatGame.Services.Session
             networkManager.OnServerStopped += NetworkManager_OnServerStopped;
             networkManager.OnClientStopped += NetworkManager_OnClientStopped;
             networkManager.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+            networkManager.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         }
 
         
@@ -60,6 +62,7 @@ namespace CatGame.Services.Session
                 networkManager.OnServerStopped -= NetworkManager_OnServerStopped;
                 networkManager.OnClientStopped -= NetworkManager_OnClientStopped;
                 networkManager.OnClientDisconnectCallback -= NetworkManager_OnClientDisconnectCallback;
+                networkManager.OnClientConnectedCallback -= NetworkManager_OnClientConnectedCallback;
             }
         }
 
@@ -73,6 +76,15 @@ namespace CatGame.Services.Session
 
             if (networkManager.IsClient && !networkManager.IsHost)
                 EventBus.Publish(new SessionEndedEvent(false, false, "", SessionCallbackReason.TryingConnnecting));
+        }
+
+        private void NetworkManager_OnClientConnectedCallback(ulong clientId)
+        {
+            // Só o client local que acabou de conectar (o host não passa pela tela de "conectando").
+            if (networkManager.IsHost || clientId != networkManager.LocalClientId)
+                return;
+
+            EventBus.Publish(new SessionConnectedEvent());
         }
 
         private void NetworkManager_OnServerStarted()
@@ -134,12 +146,26 @@ namespace CatGame.Services.Session
 
             string reason = networkManager.DisconnectReason;
             bool isReturningToMenu = hasSessionChangedScenes;
+
+            // Os dispositivos voltam ao padrão do menu (o jogador local 0 com o dispositivo em uso, teclado e mouse).
+            ServiceLocator.Get<IInputService>().RestoreMenuDevices();
             
             // Terminou no lobby: o próprio lobby trata a saída. Fora dele, retorna ao menu principal recarregando a cena.
             if (isReturningToMenu)
                 sceneLoadingService.LoadAsyncScene(Scenes.MainMenu, true);
                         
-            EventBus.Publish(new SessionEndedEvent(wasServer, isReturningToMenu, reason, SessionCallbackReason.ConnectionError));
+            EventBus.Publish(new SessionEndedEvent(wasServer, isReturningToMenu, reason, ParseReason(reason)));
+        }
+
+        /// <summary>
+        /// O server envia o motivo como o nome do enum. Sem motivo conhecido, é erro de conexão.
+        /// </summary>
+        private static SessionCallbackReason ParseReason(string reason)
+        {
+            if (!string.IsNullOrEmpty(reason) && Enum.TryParse(reason, out SessionCallbackReason parsed) && Enum.IsDefined(typeof(SessionCallbackReason), parsed))
+                return parsed;
+
+            return SessionCallbackReason.ConnectionError;
         }
 
         #endregion

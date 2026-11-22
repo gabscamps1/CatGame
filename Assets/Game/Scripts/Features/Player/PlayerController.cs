@@ -84,7 +84,7 @@ public class PlayerController : NetworkBehaviour
         if (!inputHandler.IsInitialized)
             InitializeInput(actor.PlayerId);
 
-        if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing)
+        if (!CanPlay())
             return;
 
         Vector2 move = inputHandler.ReadMove();
@@ -93,9 +93,22 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleThrow()
     {
-        if (!IsOwner || !IsSpawned)
+        if (!IsOwner || !IsSpawned || !CanPlay())
             return;
 
         playerFruitHand.RequestDrop();
+    }
+
+    /// <summary>
+    /// Só joga com a partida em andamento e enquanto este jogador não perdeu.
+    /// </summary>
+    private bool CanPlay()
+    {
+        GameManager gameManager = GameManager.Instance;
+
+        if (gameManager == null || gameManager.GetGameState() != GameManager.GameState.Playing)
+            return false;
+
+        return !gameManager.IsPlayerGameOver(actor.PlayerId);
     }
 }

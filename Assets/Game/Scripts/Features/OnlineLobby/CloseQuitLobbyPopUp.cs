@@ -4,6 +4,7 @@ using CatGame.Core.Interfaces;
 using CatGame.Core.Data;
 using CatGame.Core.Enums;
 using System;
+using TMPro;
 using UnityEngine;
 
 namespace CatGame.Features.OnlineLobby
@@ -12,6 +13,11 @@ namespace CatGame.Features.OnlineLobby
     {
         [SerializeField] private ButtonElement confirmButton;
         [SerializeField] private ButtonElement cancelButton;
+
+        [Header("Message")]
+        [SerializeField] private TextMeshProUGUI messageText;
+        [SerializeField] private string hostMessageID = "LOBBY_QUIT_HOST";
+        [SerializeField] private string clientMessageID = "LOBBY_QUIT_CLIENT";
 
         public event Action OnConfirmed;
         public event Action OnCancelled;
@@ -26,10 +32,14 @@ namespace CatGame.Features.OnlineLobby
         INavigationGroup navigationGroup;
 
         private bool firstTime = true;
+        private bool isHostMode;
+        private ILocalizationService localizationService;
 
         private void Awake()
         {
             audioService = ServiceLocator.Get<IAudioService>();
+            localizationService = ServiceLocator.Get<ILocalizationService>();
+            localizationService.OnLocalizationChanged += RefreshMessage;
 
             navigationGroup = new NavigationGroup(NavigationMode.Shared);
             navigationGroup.Register(confirmButton, true);
@@ -54,9 +64,27 @@ namespace CatGame.Features.OnlineLobby
 
         protected override void OnDestroy()
         {
+            if (localizationService != null)
+                localizationService.OnLocalizationChanged -= RefreshMessage;
+
             confirmButton.OnSubmittedEvent -= ConfirmButton_OnSubmittedEvent;
             cancelButton.OnSubmittedEvent -= CancelButton_OnSubmittedEvent;
             navigationGroup.OnCancelRequested -= NavigationGroup_OnCancelRequested;
+        }
+
+        /// <summary>
+        /// Host: o lobby fecha para todos. Client: todos os jogadores desta máquina saem juntos.
+        /// </summary>
+        public void SetMode(bool isHost)
+        {
+            isHostMode = isHost;
+            RefreshMessage();
+        }
+
+        private void RefreshMessage()
+        {
+            if (messageText != null)
+                messageText.text = localizationService.GetTextByID(isHostMode ? hostMessageID : clientMessageID);
         }
 
         private void ConfirmButton_OnSubmittedEvent(object sender, ButtonElement.SubmittedEvent e)

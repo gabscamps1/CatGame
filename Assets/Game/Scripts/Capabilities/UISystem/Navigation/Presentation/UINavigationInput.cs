@@ -31,7 +31,7 @@ namespace CatGame.Capabilities.UISystem
         {
             uiNavigationService = ServiceLocator.Get<IUINavigationService>();
 
-            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(playerId);
+            playerInputController = ServiceLocator.Get<IInputService>().GetInputFromLocalPlayer(playerIndex);
 
             playerInputController.OnSubmitted += PlayerInputController_OnSubmitted;
             playerInputController.OnCancelled += PlayerInputController_OnCancelled;

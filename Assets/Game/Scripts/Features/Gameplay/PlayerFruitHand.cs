@@ -142,8 +142,9 @@ public class PlayerFruitHand : NetworkBehaviour, IPlayerIdConfig
 
         if (GameManager.Instance.GetGameState() != GameManager.GameState.Playing) return;
         if (!playerId.IsValid) return;
+        if (GameManager.Instance.IsPlayerGameOver(playerId)) return;
         if (handState.tier == 0) return; // Mão vazia
-        if (Time.time - lastDropTime < dropCooldown) return;
+        if (Time.time - lastDropTime < dropCooldown) return; // Não terminou o delay para dropar novamente.
         if (!float.IsFinite(requestedX)) return;
 
         lastDropTime = Time.time;

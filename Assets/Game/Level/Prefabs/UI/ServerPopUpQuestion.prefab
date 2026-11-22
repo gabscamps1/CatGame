@@ -455,7 +455,10 @@ MonoBehaviour:
   panelType: 6
   confirmButton: {fileID: 1083564912571800965}
   cancelButton: {fileID: 1187079864582728132}
-  UI_POPUP: {fileID: 0}
+  messageText: {fileID: 3024697345740014616}
+  hostMessageID: LOBBY_QUIT_HOST
+  clientMessageID: LOBBY_QUIT_CLIENT
+  UI_POPUP: {fileID: 11400000, guid: 1fa1ab739b374fb4c8199e2c9e0a9950, type: 2}
 --- !u!1 &6103212369578386469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,7 +1199,6 @@ GameObject:
   - component: {fileID: 2553194325503330314}
   - component: {fileID: 3497327788168823403}
   - component: {fileID: 3024697345740014616}
-  - component: {fileID: 2675040366803672408}
   m_Layer: 0
   m_Name: PopUpText_TMP
   m_TagString: Untagged
@@ -1323,17 +1325,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2675040366803672408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8303986974274500362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd74065490490dc4e80c5bb5fea4fee3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatGame.Features.Localization.LocalizedText
-  id: POPUP_TEXT
-  text: {fileID: 3024697345740014616}

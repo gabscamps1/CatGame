@@ -419,6 +419,30 @@
     {
       "key": "POPUP_TEXT_FULL_LOBBY",
       "value": ""
+    },
+    {
+      "key": "POPUP_TEXT_MATCH_STARTED",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_JOIN_HINT",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_JOINING",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_WAITING_DEVICE",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_QUIT_HOST",
+      "value": ""
+    },
+    {
+      "key": "LOBBY_QUIT_CLIENT",
+      "value": ""
     }
   ],
   "dialogues": []

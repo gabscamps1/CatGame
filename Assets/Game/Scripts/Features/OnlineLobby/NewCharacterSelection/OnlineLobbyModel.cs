@@ -3,7 +3,6 @@ using CatGame.Core.Enums;
 using CatGame.Core.Interfaces;
 using CatGame.Features.OnlineLobby;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -15,35 +14,35 @@ using UnityEngine.SceneManagement;
 
 namespace CatGame.Features.CharacterSelection
 {
+    /// <summary>
+    /// Estado do lobby (local e online).
+    /// </summary>
     public class OnlineLobbyModel : NetworkBehaviour, ILobbyService
     {
-        const float MinCommandInterval = 0.05f;   // throttle por jogador (server)
+        private const float MIN_COMMAND_INTERVAL = 0.05f; // Throttle por jogador (server)
+        private const byte MAIN_LOCAL_ID = 0; // Jogador principal de cada client.
 
         [SerializeField] private CharacterCatalog catalog;
-        [SerializeField] private bool allowDuplicateCharacters;
+        [SerializeField] private bool allowDuplicateCharacters = true;
 
         private readonly NetworkList<LobbySlot> slots = new();
         private readonly NetworkVariable<LobbyPhase> phase = new(LobbyPhase.Selecting);
-        private readonly Dictionary<ulong, float> lastCommandTime = new(); // Só no server
+        private readonly Dictionary<(ulong clientId, byte localId), float> lastCommandTime = new(); // Só no server
 
         // Events.
         public event Action Changed;
         public event Action OnNetworkSpawned;
         public event Action OnOwnerDisconected;
+        public event Action<byte, SessionCallbackReason> OnJoinRejected;
 
         public int SlotCount => slots.Count;
-        public LobbySlot GetSlot(int i) => slots[i];
-
-
         public string Port { get; private set; } = null; // Porta da sessão
 
         // Server Configs.
         private int maxPlayers;
 
-
         private IUIService uiService;
         private CloseQuitLobbyPopUp popUp;
-        private LobbySlotInput slotInput;
 
         public void Init(int maxPlayers)
         {
@@ -71,8 +70,8 @@ namespace CatGame.Features.CharacterSelection
         {
             // Sessão nova reseta informações anteriores que podem ter sido mantidas.
             if (IsServer)
-            {             
-                slots.Clear();
+            {
+                CreateEmptySlots();
                 phase.Value = LobbyPhase.Selecting;
                 lastCommandTime.Clear();
                 ConnectionManager.Instance.OpenConnections();
@@ -83,12 +82,7 @@ namespace CatGame.Features.CharacterSelection
             NetworkManager.OnClientDisconnectCallback += Singleton_OnClientDisconnectCallback;
 
             if (IsServer)
-            {
-                NetworkManager.OnClientConnectedCallback += AddSlotFor;
-                NetworkManager.OnClientDisconnectCallback += RemoveSlotFor;              
-
-                foreach (var id in NetworkManager.ConnectedClientsIds) AddSlotFor(id);
-            }
+                NetworkManager.OnClientDisconnectCallback += RemoveSlotsOf;
 
             Changed?.Invoke();
             OnNetworkSpawned?.Invoke();
@@ -101,55 +95,56 @@ namespace CatGame.Features.CharacterSelection
 
             if (NetworkManager != null)
             {
-                NetworkManager.OnClientConnectedCallback -= AddSlotFor;
-                NetworkManager.OnClientDisconnectCallback -= RemoveSlotFor;
+                NetworkManager.OnClientDisconnectCallback -= RemoveSlotsOf;
 
                 // Por algum motivo o OnNetworkDespawn está sendo chamado antes deste evento, então não me desinscrevo por aqui.
                 // Atualmente se desincreve quando o próprio método é chamado.
-                //NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback; 
+                //NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             }
         }
 
         private void OnSlotsChanged(NetworkListEvent<LobbySlot> change) => Changed?.Invoke();
         private void OnPhaseChanged(LobbyPhase previous, LobbyPhase current) => Changed?.Invoke();
 
-        #endregion   
+        #endregion
 
         #region ServerSlots
 
-        private void AddSlotFor(ulong clientId)
+        private void CreateEmptySlots()
         {
-            if (FindSlot(clientId) >= 0) return;
+            if (maxPlayers <= 0)
+                Core.Logger.LogError($"[{nameof(OnlineLobbyModel)}] {nameof(Init)} não foi chamado antes do spawn: o lobby não tem vagas.");
 
-            ushort currentSlotNumber = (ushort)(slots.Count + 1); // Pega o slotInput que está sendo adicionado. Exemplo: Vai entrar um segundo player agora, ou seja, o slotInput ainda é igual a 1. slotInput[1] 
-            ushort characterId = catalog.TryGet(currentSlotNumber, out var entry) ? entry.Id : (ushort)0;
-
-            slots.Add(new LobbySlot
-            {
-                OwnerId = clientId,
-                PlayerName = new FixedString32Bytes($"Jogador {clientId}"),
-                CharacterId = characterId,
-            });
+            slots.Clear();
+            for (int i = 0; i < maxPlayers; i++)
+                slots.Add(LobbySlot.Empty);
         }
 
-        private void RemoveSlotFor(ulong clientId)
+        /// <summary>
+        /// Se o Client desconectar, todas as vagas dele ficam livres.
+        /// </summary>
+        private void RemoveSlotsOf(ulong clientId)
         {
-            lastCommandTime.Remove(clientId);
+            foreach (var key in new List<(ulong, byte)>(lastCommandTime.Keys))
+                if (key.Item1 == clientId) lastCommandTime.Remove(key);
+
             if (phase.Value != LobbyPhase.Selecting) return;
-            int i = FindSlot(clientId);
-            if (i >= 0) slots.RemoveAt(i);
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].Occupied && !slots[i].IsAI && slots[i].OwnerId == clientId)
+                    slots[i] = LobbySlot.Empty;
+            }
         }
 
         private bool IsFullLobby()
         {
-            return slots.Count >= maxPlayers;
+            return slots.Count > 0 && LobbyRules.IsFull(Snapshot());
         }
 
-        private int FindSlot(ulong clientId)
+        private int FindSlot(ulong clientId, byte localId)
         {
-            for (int i = 0; i < slots.Count; i++)
-                if (slots[i].OwnerId == clientId) return i;
-            return -1;
+            return LobbyRules.FindSlot(Snapshot(), clientId, localId);
         }
 
         private List<LobbySlot> Snapshot()
@@ -159,12 +154,15 @@ namespace CatGame.Features.CharacterSelection
             return list;
         }
 
-        private bool PassesThrottle(ulong sender)
+        private bool PassesThrottle(ulong sender, byte localId)
         {
             float now = Time.unscaledTime;
-            if (lastCommandTime.TryGetValue(sender, out float last) && now - last < MinCommandInterval)
+            var key = (sender, localId);
+
+            if (lastCommandTime.TryGetValue(key, out float last) && now - last < MIN_COMMAND_INTERVAL)
                 return false;
-            lastCommandTime[sender] = now;
+
+            lastCommandTime[key] = now;
             return true;
         }
 
@@ -172,70 +170,201 @@ namespace CatGame.Features.CharacterSelection
 
         private void OnlineLobbyModel_Changed()
         {
-            ConnectionManager.Instance.FullLobby(IsFullLobby());
+            if (IsServer)
+                ConnectionManager.Instance.FullLobby(IsFullLobby());
         }
 
         #endregion
 
         #region ClientValidations
 
-        public bool CanControl(int slotIndex)
+        public LobbySlot GetSlot(SlotId slot)
         {
-            return slotIndex >= 0 && slotIndex < slots.Count &&
-                   slots[slotIndex].OwnerId == NetworkManager.LocalClientId;
+            return IsValidSlot(slot) ? slots[slot.Value] : LobbySlot.Empty;
+        }
+
+        public bool CanControl(SlotId slot)
+        {
+            if (!IsValidSlot(slot)) return false;
+
+            LobbySlot lobbySlot = slots[slot.Value];
+            return lobbySlot.Occupied && !lobbySlot.IsAI && lobbySlot.OwnerId == NetworkManager.LocalClientId;
+        }
+
+        public bool TryGetLocalSlot(byte localId, out SlotId slot)
+        {
+            int index = FindSlot(NetworkManager.LocalClientId, localId);
+            slot = index >= 0 ? new SlotId(index) : SlotId.None;
+            return index >= 0;
+        }
+
+        private bool IsValidSlot(SlotId slot)
+        {
+            return slot.IsValid && slot.Value < slots.Count;
         }
 
         #endregion
 
-        #region ClientRequests     
+        #region ClientRequests
 
-        public void CycleCharacter(int slotIndex, int direction)
+        public void RequestJoin(byte localId, DeviceKind deviceKind)
         {
-            if (!CanControl(slotIndex)) return;
+            RequestJoinRpc(localId, deviceKind);
+        }
+
+        public void LeaveSlot(SlotId slot)
+        {
+            if (!CanControl(slot)) return;
+
+            byte localId = slots[slot.Value].LocalId;
+            if (localId == MAIN_LOCAL_ID) return; // O jogador principal só sai pelo popup.
+
+            LeaveSlotRpc(localId);
+        }
+
+        public void SetWaitingDevice(SlotId slot)
+        {
+            if (!CanControl(slot)) return;
+            SetWaitingDeviceRpc(slots[slot.Value].LocalId, true, default);
+        }
+
+        public void ResumeWithDevice(SlotId slot, DeviceKind deviceKind)
+        {
+            if (!CanControl(slot)) return;
+            SetWaitingDeviceRpc(slots[slot.Value].LocalId, false, deviceKind);
+        }
+
+        public void CycleCharacter(SlotId slot, int direction)
+        {
+            if (!CanControl(slot)) return;
             if (direction != -1 && direction != 1) return;
-            CycleCharacterRpc((sbyte)direction);
+            CycleCharacterRpc(slots[slot.Value].LocalId, (sbyte)direction);
         }
 
-        public void SetReady(int slotIndex, bool ready)
+        public void SetReady(SlotId slot, bool ready)
         {
-            if (!CanControl(slotIndex)) return;
-            SetReadyRpc(ready);
+            if (!CanControl(slot)) return;
+            SetReadyRpc(slots[slot.Value].LocalId, ready);
         }
 
-        public void RequestStart() => RequestStartRpc();
+        public void RequestStart(SlotId slot)
+        {
+            if (!IsServer || !CanControl(slot)) return;
+            if (slots[slot.Value].LocalId != MAIN_LOCAL_ID) return; // Só o jogador local 0 do host inicia.
+
+            RequestStartRpc(MAIN_LOCAL_ID);
+        }
 
         #endregion
 
         #region ServerValidations
 
         [Rpc(SendTo.Server)]
-        private void CycleCharacterRpc(sbyte direction, RpcParams rpc = default)
+        private void RequestJoinRpc(byte localId, DeviceKind deviceKind, RpcParams rpc = default)
         {
             ulong sender = rpc.Receive.SenderClientId;
-            if (!PassesThrottle(sender)) return;
+            if (!PassesThrottle(sender, localId)) return;
             if (phase.Value != LobbyPhase.Selecting) return;
-            if (direction != -1 && direction != 1) return; // Não confia no payload
+            if (FindSlot(sender, localId) >= 0) return; // Pedido repetido: o jogador já tem vaga.
 
-            int slotIndex = FindSlot(sender); // Slot ligado ao client
-            if (slotIndex < 0) return;
+            List<LobbySlot> snapshot = Snapshot();
+            int freeSlot = LobbyRules.FirstFreeSlot(snapshot);
 
-            var slots = Snapshot();
-            ushort next = LobbyRules.NextAvailable(slots, slotIndex, direction, catalog, allowDuplicateCharacters, id => IsUnlocked(sender, id));
-            if (next == 0 || next == slots[slotIndex].CharacterId) return;
+            if (freeSlot < 0)
+            {
+                RejectJoin(sender, localId, SessionCallbackReason.FullLobby);
+                return;
+            }
 
-            LobbySlot slot = this.slots[slotIndex];
-            slot.CharacterId = next;
-            this.slots[slotIndex] = slot; // Replica para todos os clients
+            slots[freeSlot] = new LobbySlot
+            {
+                Occupied = true,
+                OwnerId = sender,
+                LocalId = localId,
+                CharacterId = LobbyRules.FirstFreeCharacter(snapshot, catalog),
+                DeviceKind = deviceKind,
+                PlayerName = new FixedString32Bytes($"Jogador {freeSlot + 1}"),
+                ControlType = PlayerControlType.Human,
+            };
+        }
+
+        /// <summary>
+        /// O jogador principal de um client recusado é desconectado com o motivo.
+        /// Um convidado recusado só recebe o aviso.
+        /// </summary>
+        private void RejectJoin(ulong sender, byte localId, SessionCallbackReason reason)
+        {
+            if (localId == MAIN_LOCAL_ID && sender != NetworkManager.ServerClientId)
+            {
+                NetworkManager.DisconnectClient(sender, reason.ToString());
+                return;
+            }
+
+            JoinRejectedRpc(localId, reason, RpcTarget.Single(sender, RpcTargetUse.Temp));
         }
 
         [Rpc(SendTo.Server)]
-        private void SetReadyRpc(bool ready, RpcParams rpc = default)
+        private void LeaveSlotRpc(byte localId, RpcParams rpc = default)
         {
             ulong sender = rpc.Receive.SenderClientId;
-            if (!PassesThrottle(sender)) return;
+            if (!PassesThrottle(sender, localId)) return;
+            if (phase.Value != LobbyPhase.Selecting) return;
+            if (localId == MAIN_LOCAL_ID) return; // O jogador principal nunca deixa a vaga sozinho.
+
+            int slot = FindSlot(sender, localId);
+            if (slot < 0 || slots[slot].Ready) return;
+
+            slots[slot] = LobbySlot.Empty;
+        }
+
+        [Rpc(SendTo.Server)]
+        private void SetWaitingDeviceRpc(byte localId, bool waiting, DeviceKind deviceKind, RpcParams rpc = default)
+        {
+            ulong sender = rpc.Receive.SenderClientId;
+            if (phase.Value != LobbyPhase.Selecting) return; // Sem throttle: desconexão e reconexão não podem ser perdidas.
+
+            int slot = FindSlot(sender, localId);
+            if (slot < 0) return;
+
+            LobbySlot lobbySlot = slots[slot];
+            lobbySlot.WaitingDevice = waiting;
+
+            if (waiting)
+                lobbySlot.Ready = false; // Quem está sem dispositivo não está pronto.
+            else
+                lobbySlot.DeviceKind = deviceKind;
+
+            slots[slot] = lobbySlot;
+        }
+
+        [Rpc(SendTo.Server)]
+        private void CycleCharacterRpc(byte localId, sbyte direction, RpcParams rpc = default)
+        {
+            ulong sender = rpc.Receive.SenderClientId;
+            if (!PassesThrottle(sender, localId)) return;
+            if (phase.Value != LobbyPhase.Selecting) return;
+            if (direction != -1 && direction != 1) return; // Não confia no payload
+
+            int slotIndex = FindSlot(sender, localId);
+            if (slotIndex < 0) return;
+
+            var snapshot = Snapshot();
+            ushort next = LobbyRules.NextAvailable(snapshot, slotIndex, direction, catalog, allowDuplicateCharacters, id => IsUnlocked(sender, id));
+            if (next == 0 || next == snapshot[slotIndex].CharacterId) return;
+
+            LobbySlot slot = slots[slotIndex];
+            slot.CharacterId = next;
+            slots[slotIndex] = slot; // Replica para todos os clients
+        }
+
+        [Rpc(SendTo.Server)]
+        private void SetReadyRpc(byte localId, bool ready, RpcParams rpc = default)
+        {
+            ulong sender = rpc.Receive.SenderClientId;
+            if (!PassesThrottle(sender, localId)) return;
             if (phase.Value != LobbyPhase.Selecting) return;
 
-            int slot = FindSlot(sender);
+            int slot = FindSlot(sender, localId);
             if (slot < 0) return;
             if (!LobbyRules.CanSetReady(Snapshot(), slot, ready)) return;
 
@@ -245,19 +374,19 @@ namespace CatGame.Features.CharacterSelection
         }
 
         [Rpc(SendTo.Server)]
-        private void RequestStartRpc(RpcParams rpc = default)
+        private void RequestStartRpc(byte localId, RpcParams rpc = default)
         {
-            // Só o host inicia. Com dedicated server: iniciar automático quando todos prontos.
-            if (rpc.Receive.SenderClientId != NetworkManager.ServerClientId) return;
+            // Só o jogador local 0 do host inicia.
+            if (rpc.Receive.SenderClientId != NetworkManager.ServerClientId || localId != MAIN_LOCAL_ID) return;
             if (phase.Value != LobbyPhase.Selecting) return;
             if (!LobbyRules.CanStart(Snapshot())) return;
 
             ConnectionManager.Instance.CloseConnections();
 
-            // As IAs completam as vagas restantes só na hora de iniciar (não entram na lista do lobby).
+            // As IAs ocupam as vagas livres só na hora de iniciar.
             List<LobbySlot> participants = Snapshot();
-            int freeSlots = maxPlayers - participants.Count;
-            int addedAIs = LobbyRules.FillWithAI(participants, maxPlayers, catalog, NetworkManager.ServerClientId);
+            int freeSlots = LobbyRules.CountFreeSlots(participants);
+            int addedAIs = LobbyRules.FillWithAI(participants, catalog, NetworkManager.ServerClientId);
 
             if (addedAIs < freeSlots)
                 Core.Logger.LogWarning($"Só {addedAIs} de {freeSlots} IA(s) foram adicionadas: faltam personagens livres com {nameof(CharacterCatalog.Entry.AIPrefab)} no {nameof(CharacterCatalog)}.");
@@ -267,6 +396,16 @@ namespace CatGame.Features.CharacterSelection
 
             // O serviço carrega o grupo para todos os clients.
             ServiceLocator.Get<ISceneLoadingService>().LoadOnlineAsyncScene(Scenes.Playing);
+        }
+
+        #endregion
+
+        #region ClientResponses
+
+        [Rpc(SendTo.SpecifiedInParams)]
+        private void JoinRejectedRpc(byte localId, SessionCallbackReason reason, RpcParams rpc = default)
+        {
+            OnJoinRejected?.Invoke(localId, reason);
         }
 
         #endregion
@@ -328,6 +467,9 @@ namespace CatGame.Features.CharacterSelection
 
         #region CloseLobby
 
+        /// <summary>
+        /// Abre o popup de saída. Quem chama garante que é o jogador local 0 e que ele não está pronto.
+        /// </summary>
         public void RequestCloseLobby()
         {
             // Popup já está aberta, então ignora o código.
@@ -344,11 +486,12 @@ namespace CatGame.Features.CharacterSelection
                 return;
             }
 
+            popUp.SetMode(IsServer); // Texto diferente no host (fecha para todos) e no client (sai com todos os jogadores da máquina).
+
             // Quando a popup é aberta, se inscreve nos eventos da popup
             popUp.OnConfirmed += CloseQuitLobbyPopUp_OnConfirmed;
             popUp.OnCancelled += CloseQuitLobbyPopUp_OnCancelled;
             popUp.OnHidedPopup += CloseQuitLobbyPopUp_OnHidedPopup;
-            slotInput?.DisableInputsToThisSlot(); // Desabilita o input do lobby.
         }
 
         private void CloseQuitLobbyPopUp_OnConfirmed()
@@ -374,31 +517,26 @@ namespace CatGame.Features.CharacterSelection
             if (uiService.CurrentPanelType.Value != PanelType.QuitLobbyPopup)
                 return;
 
-            uiService.Pop();          
+            uiService.Pop();
         }
 
-         
         private void CloseQuitLobbyPopUp_OnHidedPopup()
         {
             DisposePopupEvents();
-            StartCoroutine(RestoreInput());
-        }
-
-        private IEnumerator RestoreInput()
-        {
-            yield return null; // Espera 1 frame para recuperar o input. Garante que duas ações não sejam enviadas ao mesmo tempo.
-            slotInput?.EnableInputToThisSlot();          
         }
 
         private void DisposePopupEvents()
         {
+            if (popUp == null)
+                return;
+
             popUp.OnConfirmed -= CloseQuitLobbyPopUp_OnConfirmed;
             popUp.OnCancelled -= CloseQuitLobbyPopUp_OnCancelled;
             popUp.OnHidedPopup -= CloseQuitLobbyPopUp_OnHidedPopup;
         }
 
         /// <summary>
-        /// Fechar/Sair do lobby
+        /// Fechar/Sair do lobby. No client, todos os jogadores desta máquina saem juntos (o server libera as vagas na desconexão).
         /// </summary>
         private void CloseLobby()
         {
@@ -407,10 +545,7 @@ namespace CatGame.Features.CharacterSelection
 
         #endregion
 
-        public void SetSlotInput(LobbySlotInput slotInput)
-        {
-            this.slotInput = slotInput;
-        }
+        #region Session
 
         private void UiService_OnCurrentUIChanged(PanelType? obj)
         {
@@ -432,5 +567,7 @@ namespace CatGame.Features.CharacterSelection
             NetworkManager.OnClientDisconnectCallback -= Singleton_OnClientDisconnectCallback;
             return;
         }
+
+        #endregion
     }
 }

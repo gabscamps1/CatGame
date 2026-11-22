@@ -33,9 +33,7 @@ namespace CatGame.Features.Gameplay
         {
             NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
 
-            Core.Logger.LogWarning(MatchSetup.Instance.Players.Count.ToString());
-
-
+            // A lista tem uma entrada por vaga do lobby.
             for (int i = 0; i < MatchSetup.Instance.Players.Count; i++)
             {
                 if (i >= spawnPoints.Length)
@@ -46,10 +44,15 @@ namespace CatGame.Features.Gameplay
 
                 LobbySlot slot = MatchSetup.Instance.Players[i];
 
+                if (!slot.Occupied)
+                    continue;
+
                 if (!catalog.TryGet(slot.CharacterId, out CharacterCatalog.Entry entry)) 
                     continue;
 
-                PlayerId playerId = new PlayerId(i);
+                // o PlayerId do participante é o número da vaga.
+                SlotId slotId = new SlotId(i);
+                PlayerId playerId = new PlayerId(slotId.Value);
                 Transform point = spawnPoints[i];
 
                 if (slot.IsAI)

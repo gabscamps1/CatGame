@@ -59,9 +59,9 @@ namespace CatGame.Features.CharacterSelection
             startButton.SetInteractable(interactable);
         }
 
-        public void ShowEmptySlot(int index)
+        public void ShowEmptySlot(int index, bool isJoining)
         {
-            slotViews[index].ShowEmpty();
+            slotViews[index].ShowEmpty(isJoining);
         }
 
         public void ShowSlot(int index, LobbySlot slot, bool editable)

@@ -1,3 +1,4 @@
+using CatGame.Core.Enums;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -37,14 +38,14 @@ public class ConnectionManager : MonoBehaviour
         if (isFullLobby)
         {
             response.Approved = false;
-            response.Reason = "Full Lobby";
+            response.Reason = SessionCallbackReason.FullLobby.ToString(); // O client converte de volta para o enum (SessionEndHandler).
             return;
         }
 
         if (isMatchStarted)
         {
             response.Approved = false;
-            response.Reason = "The match has started.";
+            response.Reason = SessionCallbackReason.MatchStarted.ToString();
             return;
         }
 

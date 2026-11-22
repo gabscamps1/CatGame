@@ -60,7 +60,7 @@ MonoBehaviour:
   minValue: 0
   maxValue: 100
   value: 100
-  changeValue: 1
+  changeValue: 5
   valueText: {fileID: 7986299197822313258}
   initialDelay: 0.4
   repeatInterval: 0.03
@@ -2105,7 +2105,7 @@ MonoBehaviour:
   minValue: 0
   maxValue: 100
   value: 100
-  changeValue: 1
+  changeValue: 5
   valueText: {fileID: 6970815173295463629}
   initialDelay: 0.4
   repeatInterval: 0.03
@@ -3467,7 +3467,7 @@ MonoBehaviour:
   minValue: 0
   maxValue: 100
   value: 100
-  changeValue: 1
+  changeValue: 5
   valueText: {fileID: 8828374169503457577}
   initialDelay: 0.4
   repeatInterval: 0.03
@@ -5159,7 +5159,7 @@ MonoBehaviour:
   minValue: 0
   maxValue: 100
   value: 100
-  changeValue: 1
+  changeValue: 5
   valueText: {fileID: 4173485033677255135}
   initialDelay: 0.4
   repeatInterval: 0.03
@@ -7819,6 +7819,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3762171628649424939, guid: edb4c4401b89def4188de3f76978b37e, type: 3}
+      propertyPath: variant
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3762171628649424939, guid: edb4c4401b89def4188de3f76978b37e, type: 3}
       propertyPath: actionReference
       value: 
       objectReference: {fileID: -2611373256397951487, guid: 496f900626af9304cbefc70101c490aa, type: 3}
@@ -7837,10 +7841,6 @@ PrefabInstance:
     - target: {fileID: 4465769826884454254, guid: edb4c4401b89def4188de3f76978b37e, type: 3}
       propertyPath: m_Layer
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3762171628649424939, guid: edb4c4401b89def4188de3f76978b37e, type: 3}
-      propertyPath: variant
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

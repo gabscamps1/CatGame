@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace CatGame.Core.Interfaces
@@ -14,19 +15,23 @@ namespace CatGame.Core.Interfaces
         // UI Inputs.
         public InputAction Navigation { get;}
         public InputAction SkipCutscene { get; }
+        public InputAction Cancel { get; }
+        public InputAction SwapDevice { get; }
         public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
-        public event Action OnCancelled; 
+        public event Action OnCancelled;
 
         public void Update();
 
         // Device.
         public event Action<InputDevice> OnCurrentDeviceChanged;
         public InputDevice CurrentDevice { get; }
+        public IReadOnlyCollection<InputDevice> AssignedDevices { get; }
         public void AssignDevice(InputDevice device);
         public void UnassignDevice(InputDevice device);
         public void UnassignDevices();
         public bool HasAssignDevice();
+        public bool HasDevice(InputDevice device);
 
         // Input Activation.
         public void SwitchToGame();

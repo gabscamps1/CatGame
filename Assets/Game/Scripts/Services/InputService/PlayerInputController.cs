@@ -19,6 +19,7 @@ namespace CatGame.Services.Input
         // Devices.
         public event Action<InputDevice> OnCurrentDeviceChanged;     
         public InputDevice CurrentDevice { get; private set; }
+        public IReadOnlyCollection<InputDevice> AssignedDevices => assignedDevices;
         private readonly HashSet<InputDevice> assignedDevices = new();
 
 
@@ -36,6 +37,8 @@ namespace CatGame.Services.Input
         // UI Inputs.
         public InputAction Navigation => navigateAction;
         public InputAction SkipCutscene => skipCutsceneAction;
+        public InputAction Cancel => cancelAction;
+        public InputAction SwapDevice => swapDeviceAction;
         public event Action<int> OnTabNavigation;
         public event Action OnSubmitted;
         public event Action OnCancelled;
@@ -45,6 +48,7 @@ namespace CatGame.Services.Input
         private readonly InputAction cancelAction;      
         private readonly InputAction tabNavigationAction;      
         private readonly InputAction skipCutsceneAction;      
+        private readonly InputAction swapDeviceAction;
 
      
         private readonly InputUser inputUser;
@@ -69,6 +73,7 @@ namespace CatGame.Services.Input
             cancelAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("Cancel");
             tabNavigationAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("TabNavigation");
             skipCutsceneAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("SkipCutscene");
+            swapDeviceAction = inputActionsAsset.FindActionMap(UI_MAP).FindAction("SwapDevice");
 
             submitAction.started += SubmitAction_Started;
             cancelAction.started += CancelAction_Started;
@@ -178,6 +183,8 @@ namespace CatGame.Services.Input
             if (!assignedDevices.Remove(device))
                 return;
 
+            inputUser.UnpairDevice(device);
+
             if (assignedDevices.Count == 0)
             {
                 CurrentDevice = null;
@@ -185,7 +192,6 @@ namespace CatGame.Services.Input
                 return;
             }
 
-            inputUser.UnpairDevice(device);
             CurrentDevice = CurrentDevice == device
                 ? assignedDevices.Last() // Se o currentDevice atual foi desconectado, troca o currentDevice atual.
                 : CurrentDevice;
@@ -204,6 +210,11 @@ namespace CatGame.Services.Input
         public bool HasAssignDevice()
         {
             return inputUser.pairedDevices.Count > 0;
+        }
+
+        public bool HasDevice(InputDevice device)
+        {
+            return device != null && assignedDevices.Contains(device);
         }
 
         #endregion

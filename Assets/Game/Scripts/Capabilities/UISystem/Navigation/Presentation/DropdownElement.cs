@@ -133,7 +133,7 @@ namespace CatGame.Capabilities.UISystem
         {
             base.OnFocusedByPlayer(player, navigationMode);
             
-            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
+            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromLocalPlayer(player.Id);
             inputController.Navigation.performed += Navigation_performed;
             inputController.Navigation.canceled += Navigation_canceled;
         }
@@ -144,7 +144,7 @@ namespace CatGame.Capabilities.UISystem
         {
             base.OnUnfocusedByPlayer(player, navigationMode);
 
-            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromPlayer(player);
+            IPlayerInputController inputController = ServiceLocator.Get<IInputService>().GetInputFromLocalPlayer(player.Id);
             inputController.Navigation.performed -= Navigation_performed;
             inputController.Navigation.canceled -= Navigation_performed;
         }
