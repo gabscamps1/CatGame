@@ -16,15 +16,15 @@ MonoBehaviour:
   arriveTolerance: 0.05
   initialHealth: 1
   minReactionTime: 0.5
-  maxReactionTime: 1
+  maxReactionTime: 1.5
   replanInterval: 0.5
   replanThreshold: 0.5
   waitForSettle: 1
   settleSpeed: 0.3
   maxSettleWait: 1.5
   useNextFruit: 1
-  candidateCount: 26
-  aimError: 3
+  candidateCount: 39
+  aimError: 1.5
   mistakeChance: 0.274
   topChoices: 1
   mergeWeight: 10
