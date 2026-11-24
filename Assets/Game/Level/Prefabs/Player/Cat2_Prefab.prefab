@@ -346,7 +346,7 @@ PrefabInstance:
     - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2603578822df0d947b110f28d7a4ce53, type: 2}
+      objectReference: {fileID: 2100000, guid: a68001be2ab5fe0468256d2e49b7c847, type: 2}
     - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_Parameters.textureScale.x
       value: 1.8
@@ -374,6 +374,18 @@ PrefabInstance:
     - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
       value: 0.2028302
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4862043868688485828, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_LocalPosition.x
