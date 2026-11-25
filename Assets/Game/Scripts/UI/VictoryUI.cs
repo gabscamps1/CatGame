@@ -10,6 +10,7 @@ public class VictoryUI : MonoBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private RawImage stripesImage;
     [SerializeField] private Image playerBG;
+    [SerializeField] private Image playerBG2;
     [SerializeField] private TextMeshProUGUI playerText;
     [SerializeField] private GameObject victoryRoot;
     [SerializeField] private string victoryID;
@@ -64,7 +65,8 @@ public class VictoryUI : MonoBehaviour
         playerText.text = $"{player} {victoryText}";
         //playerText.color = playerColor;
 
-        playerBG.color = playerColor;
+        //playerBG.color = playerColor;
+        //playerBG2.color = playerColor;
         stripesImage.color = playerColor;
 
         victoryRoot.SetActive(true);
