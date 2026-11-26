@@ -187,7 +187,8 @@ MonoBehaviour:
   body: {fileID: 5470999714867666458}
   fruitCollider: {fileID: 7419145623148458655}
   maxAirTime: 5
-  MATCH_THROW: {fileID: 11400000, guid: b2567799a28a27844aac7a1ea5ed4946, type: 2}
+  fruitThrow: {fileID: 11400000, guid: b2567799a28a27844aac7a1ea5ed4946, type: 2}
+  fruitMix: {fileID: 11400000, guid: 057154e478700f445b0d722813f4367c, type: 2}
 --- !u!114 &8408155229049753521
 MonoBehaviour:
   m_ObjectHideFlags: 0

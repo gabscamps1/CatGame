@@ -61,7 +61,8 @@ public class FruitWorld : NetworkBehaviour
     private float spawnTime;
 
     [Header("Sounds")]
-    [SerializeField] private AudioData MATCH_THROW;
+    [SerializeField] private AudioData fruitThrow;
+    [SerializeField] private AudioData fruitMix;
 
 
     private IAudioService audioService;
@@ -124,6 +125,11 @@ public class FruitWorld : NetworkBehaviour
         {
             PlayerFruitHand hand = FindHand();
             if (hand != null) hand.NotifyWorldFruitSpawned(sourceDrop.Value);
+            AudioService.PlaySFXClip(fruitThrow);
+        }
+        else
+        {
+            AudioService.PlaySFXClip(fruitMix);
         }
     }
 
