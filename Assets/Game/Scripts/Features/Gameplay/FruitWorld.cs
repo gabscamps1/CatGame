@@ -64,6 +64,8 @@ public class FruitWorld : NetworkBehaviour
     [SerializeField] private AudioData fruitThrow;
     [SerializeField] private AudioData fruitMix;
 
+    [Header("Part")]
+    [SerializeField] private ParticleSystem fruitMixParticle;
 
     private IAudioService audioService;
     private IAudioService AudioService => audioService ??= ServiceLocator.Get<IAudioService>();
