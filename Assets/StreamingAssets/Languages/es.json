@@ -2,7 +2,7 @@
   "text": [
     {
       "key": "Teste",
-      "value": "Test2"
+      "value": "Teste2"
     },
     {
       "key": "MENU_PLAY",
@@ -114,7 +114,7 @@
     },
     {
       "key": "CREDITS_ANDREY",
-      "value": "Programación"
+      "value": "Programación | IA"
     },
     {
       "key": "CREDITS_ELLEN",
@@ -174,7 +174,7 @@
     },
     {
       "key": "POPUP_HEADER",
-      "value": "HEADER"
+      "value": "ALERTA"
     },
     {
       "key": "POPUP_HEADER_ALERT",
@@ -202,11 +202,11 @@
     },
     {
       "key": "POPUP_TEXT_ERROR",
-      "value": "¿Quieres abandonar la partida?"
+      "value": "¿Deseas abandonar la partida?"
     },
     {
       "key": "POPUP_TEXT_LEAVE_MATCH",
-      "value": "¿Quieres volver al menú principal?"
+      "value": "¿Deseas volver al menú principal?"
     },
     {
       "key": "POPUP_TEXT_MAIN_MENU",
@@ -222,7 +222,7 @@
     },
     {
       "key": "SERVER_MSG",
-      "value": "MENSAJE DEL SERVIDOR"
+      "value": "PARTIDA EN CURSO"
     },
     {
       "key": "SERVER_MSG_DOMINATING",
@@ -270,7 +270,7 @@
     },
     {
       "key": "PLAYER_VICTORY",
-      "value": "¡playerID HA GANADO!"
+      "value": "¡GANÓ!"
     },
     {
       "key": "PLAYER_DEFEAT",
@@ -334,11 +334,11 @@
     },
     {
       "key": "POPUP_OPTION_1",
-      "value": ""
+      "value": "Sí"
     },
     {
       "key": "POPUP_OPTION_2",
-      "value": ""
+      "value": "No"
     },
     {
       "key": "PAUSE_RESUME",
@@ -354,7 +354,7 @@
     },
     {
       "key": "INTRO_SKIP",
-      "value": "Pulsa [skipButton] para saltar."
+      "value": "Pulsa cualquier botón para saltar."
     },
     {
       "key": "SERVER_MSG_START_3",
@@ -370,79 +370,79 @@
     },
     {
       "key": "SERVER_MSG_START",
-      "value": ""
+      "value": "¡A COCINAR!"
     },
     {
       "key": "SERVER_MSG_TIME_OVER",
-      "value": ""
+      "value": "¡TIEMPO AGOTADO!"
     },
     {
       "key": "MULTIPLAYER_INPUT_IP",
-      "value": ""
+      "value": "Dirección IP"
     },
     {
       "key": "MULTIPLAYER_INPUT_PORT",
-      "value": ""
+      "value": "Puerto"
     },
     {
       "key": "INPUT_CONFIRM",
-      "value": ""
+      "value": "Confirmar"
     },
     {
       "key": "INPUT_NAVIGATE",
-      "value": ""
+      "value": "Navegar"
     },
     {
       "key": "PLAYER_INDICATOR",
-      "value": ""
+      "value": "Tú"
     },
     {
       "key": "LOBBY_TUTORIAL_TITLE",
-      "value": ""
+      "value": "Cómo jugar"
     },
     {
       "key": "LOBBY_TUTORIAL_CONTENT",
-      "value": ""
+      "value": "Usa las flechas para mover a tu gato y la barra espaciadora para lanzar dulces a tu cesta. ¡Combina dulces iguales para crear otros más grandes y ganar puntos!"
     },
     {
       "key": "POPUP_OPTION_3",
-      "value": ""
+      "value": "OK"
     },
     {
       "key": "POPUP_TEXT_IP_ERROR",
-      "value": ""
+      "value": "No se encontró la dirección IP."
     },
     {
       "key": "POPUP_TEXT_PORT_ERROR",
-      "value": ""
+      "value": "No se encontró el puerto."
     },
     {
       "key": "POPUP_TEXT_FULL_LOBBY",
-      "value": ""
+      "value": "La sala está llena."
     },
     {
       "key": "POPUP_TEXT_MATCH_STARTED",
-      "value": ""
+      "value": "La partida ya ha comenzado."
     },
     {
       "key": "LOBBY_JOIN_HINT",
-      "value": ""
+      "value": "Pulsa A o Enter para unirte."
     },
     {
       "key": "LOBBY_JOINING",
-      "value": ""
+      "value": "Entrando..."
     },
     {
       "key": "LOBBY_WAITING_DEVICE",
-      "value": ""
+      "value": "Pulsa A o Enter en un dispositivo."
     },
     {
       "key": "LOBBY_QUIT_HOST",
-      "value": ""
+      "value": "¿Deseas cerrar la sala?"
     },
     {
       "key": "LOBBY_QUIT_CLIENT",
-      "value": ""
+      "value": "¿Deseas salir de la sala?"
     }
   ],
   "dialogues": []

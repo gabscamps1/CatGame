@@ -331,7 +331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1839340665511273654}
   - component: {fileID: 6013971107066949019}
-  - component: {fileID: 2605175883212281464}
   m_Layer: 5
   m_Name: DancingSweets
   m_TagString: Untagged
@@ -397,32 +396,6 @@ MonoBehaviour:
   speed: 0.8
   delayBetweenImages: 0.12
   useUnscaledTime: 1
---- !u!114 &2605175883212281464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836914696039709909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: -28
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &942048737893794581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,7 +1408,6 @@ RectTransform:
   - {fileID: 3492496863046352262}
   - {fileID: 4912004006535462640}
   - {fileID: 5163670224755951404}
-  - {fileID: 3622671612734103723}
   - {fileID: 2879829462787906596}
   - {fileID: 2051175291664506882}
   m_Father: {fileID: 4263368224761377527}
@@ -2074,7 +2046,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3622671612734103723}
   m_Father: {fileID: 4401805212563856989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3199,16 +3172,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8544187279365709865}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4401805212563856989}
+  m_Father: {fileID: 5163670224755951404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -856.4751, y: 172.70001}
+  m_AnchoredPosition: {x: -2.1656494, y: 3.307495}
   m_SizeDelta: {x: 500.8585, y: 74.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4106689177305062226

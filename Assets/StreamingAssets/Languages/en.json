@@ -402,7 +402,7 @@
     },
     {
       "key": "LOBBY_TUTORIAL_CONTENT",
-      "value": "Use the [MOVE_KEY] to move your Cat and [THROW_KEY] to release sweets in your basket. Combine equal sweets to create bigger ones and earn points!\n"
+      "value": "Use the <b>arrow keys</b> to move your Cat and <b>Space</b> to release sweets in your basket. Combine equal sweets to create bigger ones and earn points!\n"
     },
     {
       "key": "POPUP_OPTION_3",
