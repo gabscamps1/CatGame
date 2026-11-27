@@ -1,0 +1,331 @@
+:root {
+    --color-dark: rgb(43, 24, 16);
+    --color-cream: rgb(255, 244, 214);
+    --p1-main: rgb(255, 107, 107);
+    --p1-light: rgb(255, 150, 165);
+    --p2-main: rgb(255, 155, 181);
+    --p2-light: rgb(240, 85, 100);
+    --p3-main: rgb(216, 149, 60);
+    --p3-light: rgb(255, 240, 200);
+    --p4-main: rgb(242, 228, 196);
+    --p4-light: rgb(43, 24, 16);
+}
+
+.hud-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.timer-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 16px;
+    align-items: center;
+}
+
+.timer-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-width: 230px;
+    height: 84px;
+    padding: 0 28px;
+    background-color: var(--color-dark);
+    border-radius: 10px;
+    rotate: -1deg;
+}
+
+.timer-icon {
+    width: 38px;
+    height: 38px;
+    margin-right: 12px;
+    background-color: var(--color-cream);
+    border-radius: 19px;
+}
+
+.timer-label {
+    font-size: 60px;
+    color: var(--color-cream);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.controls {
+    position: absolute;
+    top: 38px;
+    right: 48px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.control-item {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 28px;
+}
+
+.keycap {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    background-color: var(--color-cream);
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.keycap--wide {
+    min-width: 64px;
+}
+
+.keycap-label {
+    font-size: 16px;
+    color: var(--color-dark);
+    -unity-text-align: middle-center;
+}
+
+.control-text {
+    font-size: 24px;
+    color: var(--color-cream);
+    -unity-font-style: bold-and-italic;
+    text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.players-row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 28px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 40px;
+}
+
+.slot {
+    width: 340px;
+    align-items: flex-start;
+}
+
+.score-pill {
+    width: 295px;
+    height: 62px;
+    margin-left: 0;
+    margin-bottom: 14px;
+    border-radius: 31px;
+    border-width: 3px;
+    border-color: rgba(43, 24, 16, 0.35);
+    align-items: center;
+    justify-content: center;
+}
+
+.score-label {
+    font-size: 56px;
+    -unity-font-style: bold-and-italic;
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0;
+}
+
+.info-row {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 14px;
+}
+
+.ping {
+    width: 46px;
+    align-items: flex-start;
+    margin-right: 10px;
+}
+
+.ping-bars {
+    flex-direction: row;
+    align-items: flex-end;
+    height: 34px;
+}
+
+.ping-bar {
+    width: 9px;
+    margin-right: 3px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.ping-bar--1 {
+    height: 12px;
+}
+
+.ping-bar--2 {
+    height: 22px;
+}
+
+.ping-bar--3 {
+    height: 34px;
+}
+
+.ping-bar--on {
+    background-color: rgb(255, 255, 255);
+}
+
+.ping--good .ping-bar--on {
+    background-color: rgb(255, 255, 255);
+}
+
+.ping--ok .ping-bar--on {
+    background-color: rgb(255, 214, 90);
+}
+
+.ping--bad .ping-bar--on {
+    background-color: rgb(255, 90, 90);
+}
+
+.ping-label {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin: 2px 0 0 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.item-frame {
+    width: 124px;
+    height: 124px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 62px;
+    border-width: 6px;
+    border-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.item-icon {
+    width: 66px;
+    height: 66px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.item-tag {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    translate: -50% 0;
+    padding: 2px 14px;
+    background-color: var(--color-dark);
+    border-radius: 4px;
+    rotate: -1.5deg;
+}
+
+.item-label {
+    font-size: 24px;
+    color: var(--color-cream);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+.player-tag {
+    margin-left: 12px;
+}
+
+.player-label {
+    font-size: 68px;
+    -unity-font-style: bold;
+    -unity-text-outline-width: 1.5px;
+    -unity-text-outline-color: rgba(43, 24, 16, 0.55);
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.35);
+    margin: 0;
+    padding: 0;
+}
+
+.crown {
+    position: absolute;
+    top: -31px;
+    right: -26px;
+    width: 46px;
+    height: 45px;
+    background-color: rgba(255, 196, 40, 0);
+    rotate: 12deg;
+    background-image: url("project://database/Assets/Game/Art/UI/Scenes/MainScene/Crown.png?fileID=2800000&guid=b8e75f358d4fdd64b9e6fd0d4cda6c6f&type=3#Crown");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-size: 150% 150%;
+}
+
+.slot--p1 .score-pill {
+    background-color: var(--p1-main);
+    background-image: url("project://database/Assets/Game/Art/UI/Scenes/Lobby/PlayerBG.png?fileID=2800000&guid=e0a859fff3442334a8cb46e6fff7f206&type=3#PlayerBG");
+    -unity-background-image-tint-color: rgb(255, 107, 107);
+    border-top-left-radius: -30px;
+    border-top-right-radius: -30px;
+    border-bottom-right-radius: -30px;
+    border-bottom-left-radius: -30px;
+    border-top-width: -31px;
+    border-right-width: -31px;
+    border-bottom-width: -31px;
+    border-left-width: -31px;
+}
+
+.slot--p1 .score-label {
+    color: var(--p1-light);
+    -unity-font-definition: url("project://database/Assets/Game/Art/UI/Font/Glory-Bold.ttf?fileID=12800000&guid=b636dfbde75113749a198e83c03c13cb&type=3#Glory-Bold");
+}
+
+.slot--p1 .player-label {
+    color: var(--p1-main);
+    -unity-font-definition: url("project://database/Assets/Game/Art/UI/Font/LuckiestGuy-Regular.ttf?fileID=12800000&guid=0f3a9d1c9bed173459c719636ec2eb60&type=3#LuckiestGuy-Regular");
+}
+
+.slot--p2 .score-pill {
+    background-color: var(--p2-main);
+}
+
+.slot--p2 .score-label {
+    color: var(--p2-light);
+}
+
+.slot--p2 .player-label {
+    color: var(--p2-main);
+    -unity-font-definition: url("project://database/Assets/Game/Art/UI/Font/LuckiestGuy-Regular.ttf?fileID=12800000&guid=0f3a9d1c9bed173459c719636ec2eb60&type=3#LuckiestGuy-Regular");
+}
+
+.slot--p3 .score-pill {
+    background-color: var(--p3-main);
+}
+
+.slot--p3 .score-label {
+    color: var(--p3-light);
+}
+
+.slot--p3 .player-label {
+    color: var(--p3-main);
+    -unity-font-definition: url("project://database/Assets/Game/Art/UI/Font/LuckiestGuy-Regular.ttf?fileID=12800000&guid=0f3a9d1c9bed173459c719636ec2eb60&type=3#LuckiestGuy-Regular");
+}
+
+.slot--p4 .score-pill {
+    background-color: var(--p4-main);
+}
+
+.slot--p4 .score-label {
+    color: var(--p4-light);
+}
+
+.slot--p4 .player-label {
+    color: var(--p4-main);
+    -unity-font-definition: url("project://database/Assets/Game/Art/UI/Font/LuckiestGuy-Regular.ttf?fileID=12800000&guid=0f3a9d1c9bed173459c719636ec2eb60&type=3#LuckiestGuy-Regular");
+}
+
+.hidden {
+    display: none;
+}
+
+.crown--hidden {
+    display: none;
+}

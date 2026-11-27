@@ -1,0 +1,32 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="PlayerSlot" src="project://database/Assets/UI%20Toolkit/UserInterfaces/PlayerSlot.uxml?fileID=9197481963319205126&amp;guid=5f1641257abf952429ccdd7963eb7477&amp;type=3#PlayerSlot"/>
+    <Style src="project://database/Assets/UI%20Toolkit/UserInterfaces/HudMultiplayer.uss?fileID=7433441132597879392&amp;guid=ff82bfa5f5aafda47a6e6be91fe8ee31&amp;type=3#HudMultiplayer"/>
+    <ui:VisualElement name="hud-root" class="hud-root">
+        <ui:VisualElement name="timer-wrap" class="timer-wrap">
+            <ui:VisualElement name="timer-box" class="timer-box">
+                <ui:VisualElement name="timer-icon" class="timer-icon" style="background-image: url(&quot;project://database/Assets/Game/Art/UI/Scenes/MainScene/WatchBG.png?fileID=2800000&amp;guid=3bfc291192e076b4e9019fb64af99a65&amp;type=3#WatchBG&quot;); background-color: rgba(255, 244, 214, 0); width: 65px; height: 52px; margin-right: 0;"/>
+                <ui:Label name="timer-label" text="00:00" class="timer-label" style="-unity-font-definition: url(&quot;project://database/Assets/Game/Art/UI/Font/JAPANESE/MochiyPopPOne-Regular.ttf?fileID=12800000&amp;guid=74081af238bf7534f81248542dbac8b5&amp;type=3#MochiyPopPOne-Regular&quot;); font-size: 41px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="controls" class="controls">
+            <ui:VisualElement name="control-move" class="control-item">
+                <ui:VisualElement class="keycap">
+                    <ui:Label name="move-key" text="D" class="keycap-label"/>
+                </ui:VisualElement>
+                <ui:Label name="move-text" text="Mover" class="control-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="control-drop" class="control-item">
+                <ui:VisualElement class="keycap keycap--wide">
+                    <ui:Label name="drop-key" text="Space" class="keycap-label"/>
+                </ui:VisualElement>
+                <ui:Label name="drop-text" text="Soltar Fruta" class="control-text"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="players-row" class="players-row">
+            <ui:Instance template="PlayerSlot" name="player-1" class="slot--p1"/>
+            <ui:Instance template="PlayerSlot" name="player-2" class="slot--p2"/>
+            <ui:Instance template="PlayerSlot" name="player-3" class="slot--p3"/>
+            <ui:Instance template="PlayerSlot" name="player-4" class="slot--p4"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,39 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <!-- Slot reutilizavel de um jogador. A cor vem da classe modificadora aplicada na instancia (p1 a p4) -->
+    <ui:VisualElement name="slot-root" class="slot">
+
+        <!-- Pontuação -->
+        <ui:VisualElement name="score-pill" class="score-pill">
+            <ui:Label name="score-label" text="0" class="score-label" />
+        </ui:VisualElement>
+
+        <!-- Linha inferior: ping | próximo item | tag do jogador -->
+        <ui:VisualElement name="info-row" class="info-row">
+
+            <!-- Ping -->
+            <ui:VisualElement name="ping" class="ping">
+                <ui:VisualElement name="ping-bars" class="ping-bars">
+                    <ui:VisualElement name="bar-1" class="ping-bar ping-bar--1 ping-bar--on" />
+                    <ui:VisualElement name="bar-2" class="ping-bar ping-bar--2 ping-bar--on" />
+                    <ui:VisualElement name="bar-3" class="ping-bar ping-bar--3 ping-bar--on" />
+                </ui:VisualElement>
+                <ui:Label name="ping-label" text="00 ms" class="ping-label" />
+            </ui:VisualElement>
+
+            <!-- Próximo item -->
+            <ui:VisualElement name="item-frame" class="item-frame">
+                <ui:VisualElement name="item-icon" class="item-icon" />
+                <ui:VisualElement name="item-tag" class="item-tag">
+                    <ui:Label name="item-label" text="Próximo" class="item-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Tag do jogador (P1..P4) + coroa -->
+            <ui:VisualElement name="player-tag" class="player-tag">
+                <ui:Label name="player-label" text="P1" class="player-label" />
+                <ui:VisualElement name="crown" class="crown" />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

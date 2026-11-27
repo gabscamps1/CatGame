@@ -25,6 +25,10 @@ public class MessageInfo
 
     [Header("Sounds")]
     public AudioData serverAudio;
+
+    [Header("Animation")]
+    [Tooltip("Se marcado, toca a animação de saída ao fim do tempo de exibição.")]
+    public bool playExitAnimation;
 }
 
 [Serializable]
@@ -42,11 +46,20 @@ public class ServerMessageManager : NetworkBehaviour
     [SerializeField] private GameObject serverMessageGameObject;
     [SerializeField] private TextMeshProUGUI serverMessageText;
 
+    [Header("Exit Animation")]
+    [Tooltip("Animator da mensagem. Se vazio, tenta pegar do serverMessageGameObject.")]
+    [SerializeField] private Animator messageAnimator;
+    [Tooltip("Nome do Trigger no Animator que dispara a animação de saída.")]
+    [SerializeField] private string exitTriggerName = "Exit";
+    [Tooltip("Duração da animação de saída em segundos (use o tamanho do clip).")]
+    [SerializeField, Min(0)] private float exitAnimationDuration = 0.5f;
+
     [Header("Message IDs")]
     [SerializeField] private Message[] messages;
 
     private ILocalizationService localizationService;
     private IAudioService audioService;
+    private int exitTriggerHash;
 
     public bool IsShowing { get; private set; }
 
@@ -63,6 +76,13 @@ public class ServerMessageManager : NetworkBehaviour
         }
 
         localizationService = ServiceLocator.Get<ILocalizationService>();
+
+        if (messageAnimator == null && serverMessageGameObject != null)
+        {
+            messageAnimator = serverMessageGameObject.GetComponent<Animator>();
+        }
+
+        exitTriggerHash = Animator.StringToHash(exitTriggerName);
     }
 
     private void Start()
@@ -96,13 +116,13 @@ public class ServerMessageManager : NetworkBehaviour
 
         if (message == null)
         {
-            CatGame.Core.Logger.LogWarning($"[{nameof(ServerMessageManager)}] Mensagem {messageID} n�o foi adicionada ao array.");
+            CatGame.Core.Logger.LogWarning($"[{nameof(ServerMessageManager)}] Mensagem {messageID} não foi adicionada ao array.");
             return;
         }
 
         if (message.messageInfos == null || message.messageInfos.Length == 0)
         {
-            Debug.LogWarning($"[ServerMessageManager] Mensagem {messageID} n�o tem nenhum MessageInfo.");
+            Debug.LogWarning($"[ServerMessageManager] Mensagem {messageID} não tem nenhum MessageInfo.");
             return;
         }
 
@@ -119,7 +139,7 @@ public class ServerMessageManager : NetworkBehaviour
 
                 await ShowText(messageInfo);
 
-                // Se o objeto foi destru�do durante o await, para por aqui.
+                // Se o objeto foi destruído durante o await, para por aqui.
                 if (this == null) return;
             }
         }
@@ -129,6 +149,8 @@ public class ServerMessageManager : NetworkBehaviour
         }
         finally
         {
+            // IsShowing só volta a false depois da animação de saída terminar,
+            // então quem espera a mensagem (ex.: tela de vitória) também espera a animação.
             IsShowing = false;
             Debug.Log($"[ServerMessageManager] Fim de {messageID}");
         }
@@ -140,7 +162,7 @@ public class ServerMessageManager : NetworkBehaviour
         {
             if (!TryGetAudioService())
             {
-                Debug.LogWarning("[ServerMessageManager] audioService indispon�vel, pulando som.");
+                Debug.LogWarning("[ServerMessageManager] audioService indisponível, pulando som.");
                 return;
             }
 
@@ -154,7 +176,7 @@ public class ServerMessageManager : NetworkBehaviour
         }
         catch (Exception e)
         {
-            // Falha no som n�o pode impedir o texto de aparecer.
+            // Falha no som não pode impedir o texto de aparecer.
             Debug.LogException(e);
         }
     }
@@ -164,22 +186,43 @@ public class ServerMessageManager : NetworkBehaviour
         int millisecondsDelayToShow = (int)(messageInfo.timeToShow * 1000);
         int millisecondsDelayToHide = (int)(messageInfo.timeToHide * 1000);
 
-        Debug.Log($"[ServerMessageManager] textID: {messageInfo.textID} | show: {messageInfo.timeToShow}s | hide: {messageInfo.timeToHide}s");
-
-        float start = Time.realtimeSinceStartup;
-
         await Task.Delay(millisecondsDelayToShow);
         if (this == null) return;
 
         serverMessageText.text = localizationService.GetTextByID(messageInfo.textID);
+
+        // Limpa um trigger de saída que tenha sobrado de uma execução anterior.
+        if (messageAnimator != null)
+        {
+            messageAnimator.ResetTrigger(exitTriggerHash);
+        }
+
         serverMessageGameObject.SetActive(true);
-        Debug.Log($"[ServerMessageManager] Apareceu ap�s {Time.realtimeSinceStartup - start:F2}s");
 
         await Task.Delay(millisecondsDelayToHide);
         if (this == null) return;
 
+        if (messageInfo.playExitAnimation)
+        {
+            await PlayExitAnimation();
+            if (this == null) return;
+        }
+
         serverMessageGameObject.SetActive(false);
-        Debug.Log($"[ServerMessageManager] Escondeu, total {Time.realtimeSinceStartup - start:F2}s");
+    }
+
+    private async Task PlayExitAnimation()
+    {
+        if (messageAnimator == null)
+        {
+            Debug.LogWarning("[ServerMessageManager] playExitAnimation marcado, mas nenhum Animator foi atribuído.");
+            return;
+        }
+
+        messageAnimator.SetTrigger(exitTriggerHash);
+
+        int millisecondsExit = (int)(exitAnimationDuration * 1000);
+        await Task.Delay(millisecondsExit);
     }
 
     private Message GetMessage(MessageID messageID)
@@ -198,7 +241,7 @@ public class ServerMessageManager : NetworkBehaviour
 
         if (IsShowing)
         {
-            CatGame.Core.Logger.LogWarning("[ServerMessageManager] Tentou reproduzir a mensagem do server enquanto uma mensagem est� sendo exibida.");
+            CatGame.Core.Logger.LogWarning("[ServerMessageManager] Tentou reproduzir a mensagem do server enquanto uma mensagem está sendo exibida.");
             return;
         }
 

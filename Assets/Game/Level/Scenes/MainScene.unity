@@ -5534,6 +5534,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   serverMessageGameObject: {fileID: 1139150791}
   serverMessageText: {fileID: 1925980023}
+  messageAnimator: {fileID: 0}
+  exitTriggerName: Exit
+  exitAnimationDuration: 0.5
   messages:
   - messageID: 0
     messageInfos:
@@ -5541,30 +5544,36 @@ MonoBehaviour:
       timeToShow: 0
       timeToHide: 1
       serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
+      playExitAnimation: 0
     - textID: SERVER_MSG_START_2
       timeToShow: 0
       timeToHide: 1
       serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
+      playExitAnimation: 0
     - textID: SERVER_MSG_START_1
       timeToShow: 0
       timeToHide: 1
       serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
+      playExitAnimation: 0
     - textID: SERVER_MSG_START
       timeToShow: 0
       timeToHide: 1
       serverAudio: {fileID: 11400000, guid: b65c945179d24e94cac1971188f3c9a1, type: 2}
+      playExitAnimation: 1
   - messageID: 1
     messageInfos:
     - textID: SERVER_MSG_TIME_OVER
       timeToShow: 0
       timeToHide: 2
       serverAudio: {fileID: 11400000, guid: b65c945179d24e94cac1971188f3c9a1, type: 2}
+      playExitAnimation: 1
   - messageID: 2
     messageInfos:
     - textID: SERVER_MSG_PLAYER_WON
       timeToShow: 0
       timeToHide: 0
       serverAudio: {fileID: 11400000, guid: db7c53358dc91534db87a4a9ee3f021f, type: 2}
+      playExitAnimation: 1
 --- !u!114 &1130637095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5700,7 +5709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1139150792
 Transform:
   m_ObjectHideFlags: 0
@@ -8219,7 +8228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   ShowTopMostFoldoutHeaderGroup: 1
-  gameTimer: 15
+  gameTimer: 120
 --- !u!114 &1622249485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10366,7 +10375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -407.32, y: 226.2}
+  m_AnchoredPosition: {x: -407.32, y: 224.38}
   m_SizeDelta: {x: 2007.91, y: 78.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925980023
