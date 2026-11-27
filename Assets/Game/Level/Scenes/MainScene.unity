@@ -202,7 +202,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.6037736, b: 0.0053921104, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5203,61 +5203,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 968350262}
   m_CullTransparentMesh: 1
---- !u!1 &973476958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 973476960}
-  - component: {fileID: 973476959}
-  m_Layer: 5
-  m_Name: UIDocument
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &973476959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973476958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 11400000, guid: 6431a127cc3847449bd042584d0956eb, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 0}
-  m_SortingOrder: 0
-  m_Position: 0
-  m_WorldSpaceSizeMode: 0
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080
-  m_PivotReferenceSize: 0
-  m_Pivot: 0
-  m_WorldSpaceCollider: {fileID: 0}
---- !u!4 &973476960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973476958}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985874896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5595,25 +5540,31 @@ MonoBehaviour:
     - textID: SERVER_MSG_START_3
       timeToShow: 0
       timeToHide: 1
+      serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
     - textID: SERVER_MSG_START_2
       timeToShow: 0
       timeToHide: 1
+      serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
     - textID: SERVER_MSG_START_1
       timeToShow: 0
       timeToHide: 1
+      serverAudio: {fileID: 11400000, guid: 4dee70827d314634c8a2d3d788452763, type: 2}
     - textID: SERVER_MSG_START
       timeToShow: 0
       timeToHide: 1
+      serverAudio: {fileID: 11400000, guid: b65c945179d24e94cac1971188f3c9a1, type: 2}
   - messageID: 1
     messageInfos:
     - textID: SERVER_MSG_TIME_OVER
       timeToShow: 0
-      timeToHide: 1
+      timeToHide: 2
+      serverAudio: {fileID: 11400000, guid: b65c945179d24e94cac1971188f3c9a1, type: 2}
   - messageID: 2
     messageInfos:
     - textID: SERVER_MSG_PLAYER_WON
       timeToShow: 0
-      timeToHide: 1
+      timeToHide: 0
+      serverAudio: {fileID: 11400000, guid: db7c53358dc91534db87a4a9ee3f021f, type: 2}
 --- !u!114 &1130637095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5749,7 +5700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1139150792
 Transform:
   m_ObjectHideFlags: 0
@@ -5761,7 +5712,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 201124842}
   - {fileID: 1925980022}
@@ -8268,7 +8219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   ShowTopMostFoldoutHeaderGroup: 1
-  gameTimer: 20
+  gameTimer: 15
 --- !u!114 &1622249485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10409,13 +10360,13 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1139150792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -407.32, y: 236.06}
+  m_AnchoredPosition: {x: -407.32, y: 226.2}
   m_SizeDelta: {x: 2007.91, y: 78.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925980023
@@ -13019,4 +12970,3 @@ SceneRoots:
   - {fileID: 1542714749}
   - {fileID: 907433076}
   - {fileID: 1208300771}
-  - {fileID: 973476960}

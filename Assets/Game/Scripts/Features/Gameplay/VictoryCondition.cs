@@ -42,35 +42,26 @@ public class VictoryCondition : MonoBehaviour
     }
 
     private void GameManager_OnGameStateChanged(GameManager.GameState currentState)
+{
+    switch (currentState)
     {
-        switch (currentState)
-        {
-            case GameManager.GameState.GameOver:
-
-                /*// Partida foi encerrada pois o tempo acabou.
-                if (Timer.CurrentTimer <= 0)
-                {
-                    StartCoroutine(WaitToShowVictory());
-                }
-
-                // Partida foi encerrada porque somente sobrou um jogador vivo.
-                else
-                {
-                    GetWinner();
-                }*/
-
-                GetWinner();
-                break;
-        }
+        case GameManager.GameState.GameOver:
+            StartCoroutine(WaitToShowVictory());
+            break;
     }
+}
 
-    private IEnumerator WaitToShowVictory()
-    {
-        // Espera a mensagem do servidor terminar antes de exibir a animação de vitória.
-        yield return new WaitUntil(() => !ServerMessageManager.Instance.IsShowing);
+private IEnumerator WaitToShowVictory()
+{
+    // DÃ¡ tempo do RPC da mensagem do servidor chegar e marcar IsShowing = true.
+    yield return new WaitForSecondsRealtime(0f);
 
-        GetWinner();
-    }
+    // Espera a mensagem do servidor terminar antes de exibir a animaÃ§Ã£o de vitÃ³ria.
+    yield return new WaitUntil(() =>
+        ServerMessageManager.Instance == null || !ServerMessageManager.Instance.IsShowing);
+
+    GetWinner();
+}
 
     private void ScoreManager_OnScoreChanged(ScoreManager.ScoreEntry changeEvent)
     {
@@ -84,10 +75,10 @@ public class VictoryCondition : MonoBehaviour
         List<int> bestPlayer = new();
         uint bestScore = 0;
 
-        // Calcula quem está vencendo.
+        // Calcula quem estï¿½ vencendo.
         foreach (var score in ScoreManager.Instance.ScoreEntrys)
         {
-            // Se o player perdeu antes do jogo terminar, não participa da contagem.
+            // Se o player perdeu antes do jogo terminar, nï¿½o participa da contagem.
             if (GameManager.Instance.PlayerLost.Contains(score.playerId))
                 continue;
 
@@ -103,7 +94,7 @@ public class VictoryCondition : MonoBehaviour
             }
         }
 
-        // Avisa à todos quem está vencendo
+        // Avisa ï¿½ todos quem estï¿½ vencendo
         foreach (ScoreManager.ScoreEntry scoreEntry in ScoreManager.Instance.ScoreEntrys)
         {
             EventBus.Publish(new LeaderChangedEvent()
@@ -124,7 +115,7 @@ public class VictoryCondition : MonoBehaviour
         PlayerId mvp = PlayerId.None;
         int mvpScore = -1;
 
-        // Itera sobre os player que estão dentro do jogo
+        // Itera sobre os player que estï¿½o dentro do jogo
         foreach (PlayerInfo player in playerRegistry.Players)
         {
             PlayerId playerId = player.playerId;
@@ -137,9 +128,9 @@ public class VictoryCondition : MonoBehaviour
 
             int playerScore = scoreIndex >= 0
                 ? (int)ScoreManager.Instance.ScoreEntrys[scoreIndex].score
-                : 0; // Se o player não tiver score, deixa ele com 0 para a verificação.
+                : 0; // Se o player nï¿½o tiver score, deixa ele com 0 para a verificaï¿½ï¿½o.
 
-            // Pega o player com a maior pontuação sobre os players restantes.
+            // Pega o player com a maior pontuaï¿½ï¿½o sobre os players restantes.
             if (playerScore > mvpScore)
             {
                 mvpScore = playerScore;

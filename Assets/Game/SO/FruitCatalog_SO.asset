@@ -57,4 +57,4 @@ MonoBehaviour:
     diameter: 0.19
     mass: 1
     score: 1250
-  maxStartTier: 3
+  maxStartTier: 4

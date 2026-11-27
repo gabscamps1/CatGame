@@ -1,5 +1,7 @@
 using CatGame.Core;
+using CatGame.Core.Data;
 using CatGame.Core.Interfaces;
+using CatGame.Services.AudioManagement;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +22,9 @@ public class MessageInfo
     public string textID;
     [Min(0)] public float timeToShow;
     [Min(0)] public float timeToHide;
+
+    [Header("Sounds")]
+    public AudioData serverAudio;
 }
 
 [Serializable]
@@ -41,6 +46,7 @@ public class ServerMessageManager : NetworkBehaviour
     [SerializeField] private Message[] messages;
 
     private ILocalizationService localizationService;
+    private IAudioService audioService;
 
     public bool IsShowing { get; private set; }
 
@@ -59,53 +65,126 @@ public class ServerMessageManager : NetworkBehaviour
         localizationService = ServiceLocator.Get<ILocalizationService>();
     }
 
+    private void Start()
+    {
+        TryGetAudioService();
+    }
+
+    private bool TryGetAudioService()
+    {
+        if (audioService != null) return true;
+
+        try
+        {
+            audioService = ServiceLocator.Get<IAudioService>();
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+
+        return audioService != null;
+    }
+
     #region Client
 
     private async void ShowMessage(MessageID messageID)
     {
-        IsShowing = true;
+        Debug.Log($"[ServerMessageManager] ShowMessage chamado: {messageID}");
 
         Message message = GetMessage(messageID);
 
         if (message == null)
         {
-            CatGame.Core.Logger.LogWarning($"[{nameof(ServerMessageManager)}] Mensagem não foi adicionada ao array.");
+            CatGame.Core.Logger.LogWarning($"[{nameof(ServerMessageManager)}] Mensagem {messageID} não foi adicionada ao array.");
             return;
         }
 
-        int messageCount = message.messageInfos.Length;
-
-        for (int i = 0; i < messageCount; i++)
+        if (message.messageInfos == null || message.messageInfos.Length == 0)
         {
-            MessageInfo messageInfo = message.messageInfos[i];
-            await ShowText(messageInfo);
+            Debug.LogWarning($"[ServerMessageManager] Mensagem {messageID} não tem nenhum MessageInfo.");
+            return;
         }
 
-        IsShowing = false;
+        IsShowing = true;
+
+        try
+        {
+            for (int i = 0; i < message.messageInfos.Length; i++)
+            {
+                MessageInfo messageInfo = message.messageInfos[i];
+                Debug.Log($"[ServerMessageManager] Item {i} de {messageID} (textID: {messageInfo.textID})");
+
+                PlayAudio(messageInfo, messageID, i);
+
+                await ShowText(messageInfo);
+
+                // Se o objeto foi destruído durante o await, para por aqui.
+                if (this == null) return;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+        finally
+        {
+            IsShowing = false;
+            Debug.Log($"[ServerMessageManager] Fim de {messageID}");
+        }
+    }
+
+    private void PlayAudio(MessageInfo messageInfo, MessageID messageID, int index)
+    {
+        try
+        {
+            if (!TryGetAudioService())
+            {
+                Debug.LogWarning("[ServerMessageManager] audioService indisponível, pulando som.");
+                return;
+            }
+
+            if (messageInfo.serverAudio == null)
+            {
+                Debug.LogWarning($"[ServerMessageManager] serverAudio vazio em {messageID}, item {index}.");
+                return;
+            }
+
+            audioService.PlaySFXClip(messageInfo.serverAudio, false);
+        }
+        catch (Exception e)
+        {
+            // Falha no som não pode impedir o texto de aparecer.
+            Debug.LogException(e);
+        }
     }
 
     private async Task ShowText(MessageInfo messageInfo)
     {
-        string textId = messageInfo.textID;
-        float timeToShow = messageInfo.timeToShow;
-        float timeToHide = messageInfo.timeToHide;
+        int millisecondsDelayToShow = (int)(messageInfo.timeToShow * 1000);
+        int millisecondsDelayToHide = (int)(messageInfo.timeToHide * 1000);
 
-        int millisecondsDelayToShow = (int)(timeToShow * 1000);
-        int millisecondsDelayToHide = (int)(timeToHide * 1000);
+        Debug.Log($"[ServerMessageManager] textID: {messageInfo.textID} | show: {messageInfo.timeToShow}s | hide: {messageInfo.timeToHide}s");
+
+        float start = Time.realtimeSinceStartup;
 
         await Task.Delay(millisecondsDelayToShow);
+        if (this == null) return;
 
-        string text = localizationService.GetTextByID(textId);
-        serverMessageText.text = text;
+        serverMessageText.text = localizationService.GetTextByID(messageInfo.textID);
         serverMessageGameObject.SetActive(true);
+        Debug.Log($"[ServerMessageManager] Apareceu após {Time.realtimeSinceStartup - start:F2}s");
 
         await Task.Delay(millisecondsDelayToHide);
+        if (this == null) return;
+
         serverMessageGameObject.SetActive(false);
+        Debug.Log($"[ServerMessageManager] Escondeu, total {Time.realtimeSinceStartup - start:F2}s");
     }
 
     private Message GetMessage(MessageID messageID)
     {
-        return messages.Where(x => x.messageID == messageID).FirstOrDefault();
+        return messages.FirstOrDefault(x => x.messageID == messageID);
     }
 
     #endregion
@@ -115,6 +194,8 @@ public class ServerMessageManager : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
     public void ShowClientMessageRpc(MessageID messageID)
     {
+        Debug.Log($"[ServerMessageManager] RPC recebido: {messageID}, IsShowing = {IsShowing}");
+
         if (IsShowing)
         {
             CatGame.Core.Logger.LogWarning("[ServerMessageManager] Tentou reproduzir a mensagem do server enquanto uma mensagem está sendo exibida.");
@@ -123,21 +204,6 @@ public class ServerMessageManager : NetworkBehaviour
 
         ShowMessage(messageID);
     }
-
-    #endregion
-
-    #region Not-Implemented
-
-    /*public void HideMessage()
-    {
-        serverMessageGameObject.SetActive(false);
-    }*/
-
-    /*[Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Server)]
-    public void HideClientMessageRpc()
-    {
-        HideMessage();
-    }*/
 
     #endregion
 }
