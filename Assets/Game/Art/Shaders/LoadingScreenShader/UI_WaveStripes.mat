@@ -32,9 +32,9 @@ Material:
     m_Floats:
     - _Aspect: 1.7777779
     - _ColorMask: 15
-    - _CustomTime: 1322.2042
+    - _CustomTime: 25.819304
     - _Rotation: -4
-    - _Shade: 0.25
+    - _Shade: 0.398
     - _Softness: 0
     - _Stencil: 0
     - _StencilComp: 8
@@ -54,7 +54,7 @@ Material:
     - _WaveSpeed: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.6509434, g: 0.5250534, b: 0.5593871, a: 1}
+    - _ColorA: {r: 0.2524475, g: 0.5754717, b: 0.47984204, a: 1}
     - _ColorB: {r: 0.1509434, g: 0.09611962, b: 0.09611962, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

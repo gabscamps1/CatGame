@@ -443,6 +443,10 @@
     {
       "key": "LOBBY_QUIT_CLIENT",
       "value": ""
+    },
+    {
+      "key": "INPUT_RETURN_TO_LOBBY",
+      "value": ""
     }
   ],
   "dialogues": []

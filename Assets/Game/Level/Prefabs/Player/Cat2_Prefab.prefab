@@ -325,12 +325,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 540485754993951030, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 679709429
+      value: 1563829898
       objectReference: {fileID: 0}
     - target: {fileID: 1864905484675193876, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3afbcac1fefa4764fa9d9c1740b5c5f9, type: 3}
+    - target: {fileID: 3713799488612486688, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.397
+      objectReference: {fileID: 0}
     - target: {fileID: 4766812795967267041, guid: e349635e51cd85041b3bb510f4e2568b, type: 3}
       propertyPath: m_CastShadows
       value: 0

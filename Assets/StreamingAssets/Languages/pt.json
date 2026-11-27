@@ -443,6 +443,10 @@
     {
       "key": "LOBBY_QUIT_CLIENT",
       "value": "Deseja sair do lobby?"
+    },
+    {
+      "key": "INPUT_RETURN_TO_LOBBY",
+      "value": "Retornar ao lobby"
     }
   ],
   "dialogues": []
