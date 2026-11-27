@@ -205,6 +205,29 @@ namespace CatGame.Capabilities.UISystem
             if (!navigationMenuSystem.TryChangeMenu(menuIndex, out int previousMenuIndex))
                 return;
 
+            await TransitionToMenu(previousMenuIndex, menuIndex);
+        }
+
+        /// <summary>
+        /// Abre um menu direto, sem passar pelos menus do caminho, e já monta o histórico.
+        /// O voltar desse menu segue o histórico como se o jogador tivesse navegado até ele.
+        /// </summary>
+        public async void OpenMenuWithHistory(int menuIndex, params int[] history)
+        {
+            if (menuIndex == CurrentMenuIndex)
+                return;
+
+            if (!navigationMenuSystem.TrySetMenu(menuIndex, history ?? new int[0], out int previousMenuIndex))
+            {
+                Core.Logger.LogWarning($"[{nameof(MenuController)}] Menu {menuIndex} ou histórico inválido.");
+                return;
+            }
+
+            await TransitionToMenu(previousMenuIndex, menuIndex);
+        }
+
+        private async Task TransitionToMenu(int previousMenuIndex, int menuIndex)
+        {
             bool shouldReset = menus[previousMenuIndex].ResetOnForwardTransition;
 
             foreach (PlayerId player in activePlayers)

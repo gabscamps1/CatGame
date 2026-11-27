@@ -1,4 +1,7 @@
 ﻿using CatGame.Capabilities.UISystem;
+using CatGame.Core;
+using CatGame.Core.Enums;
+using CatGame.Core.Interfaces;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -18,6 +21,13 @@ namespace CatGame.Features.CharacterSelection
         [SerializeField, Min(0), Tooltip("Tempo segurando um determinado botão para trocar de dispositivo.")]
         private float swapDeviceHoldTime = 0f;
 
+        [Header("Return From Match")]
+        [SerializeField] private MenuController menuController;
+        [SerializeField, Tooltip("Índice do menu do lobby no MenuController.")]
+        private int lobbyMenuIndex;
+        [SerializeField, Tooltip("Menus que o voltar percorre a partir do lobby, do primeiro ao último. O último é para onde o voltar leva.")]
+        private int[] lobbyMenuHistory;
+
         private ILobbyService lobbyService;
         private LobbyPresenter lobbyPresenter;
         private LobbyLocalPlayers localPlayers;
@@ -27,6 +37,13 @@ namespace CatGame.Features.CharacterSelection
         private void Awake()
         {
             createOnlineRoomBtn.OnSubmittedEvent += CreateOnlineRoomBtn_OnSubmittedEvent;
+        }
+
+        private void Start()
+        {
+            // A cena só abre com a sessão ativa quando o host trouxe todos de volta da partida.
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+                OpenRestored();
         }
 
         private void Update()
@@ -81,15 +98,40 @@ namespace CatGame.Features.CharacterSelection
         private void BeginOnline()
         {
             onlineLobbyModel.Init(maxPlayers);
-            StartCoroutine(BindWhenOnline());
+            StartCoroutine(BindWhenOnline(false));
         }
 
-        private IEnumerator BindWhenOnline()
+        private IEnumerator BindWhenOnline(bool isRestored)
         {
             yield return new WaitUntil(() => onlineLobbyModel.IsSpawned);
 
-            CreatePresenter(onlineLobbyModel);
+            CreatePresenter(onlineLobbyModel, isRestored);
             onlineLobbyModel.OnOwnerDisconected += OnlineLobbyModel_OnOwnerDisconected;
+        }
+
+        /// <summary>
+        /// Volta da partida. O lobby abre direto, com as vagas da última partida.
+        /// </summary>
+        private void OpenRestored()
+        {
+            onlineLobbyModel.Init(maxPlayers);
+            StartCoroutine(OpenRestoredWhenReady());
+        }
+
+        private IEnumerator OpenRestoredWhenReady()
+        {
+            ISceneLoadingService sceneLoadingService = ServiceLocator.Get<ISceneLoadingService>();
+            IUIService uiService = ServiceLocator.Get<IUIService>();
+
+            // Espera o loading terminar e o menu principal aparecer, igual ao caminho normal até o lobby.
+            yield return new WaitUntil(() => !sceneLoadingService.IsLoading && uiService.IsVisible(PanelType.MainMenu));
+
+            if (menuController != null)
+                menuController.OpenMenuWithHistory(lobbyMenuIndex, lobbyMenuHistory);
+            else
+                Core.Logger.LogWarning($"[{nameof(LobbyRoot)}] {nameof(menuController)} não foi configurado, o lobby restaurado não vai abrir.");
+
+            yield return BindWhenOnline(true);
         }
 
         private void OnlineLobbyModel_OnOwnerDisconected()
@@ -103,7 +145,7 @@ namespace CatGame.Features.CharacterSelection
 
         #region Lobby
 
-        private void CreatePresenter(ILobbyService lobbyModel)
+        private void CreatePresenter(ILobbyService lobbyModel, bool isRestored)
         {
             ReleaseLobby();
 
@@ -112,7 +154,7 @@ namespace CatGame.Features.CharacterSelection
 
             localPlayers = new LobbyLocalPlayers(lobbyService, lobbyView, leaveSlotHoldTime, swapDeviceHoldTime);
             localPlayers.PendingChanged += LocalPlayers_PendingChanged;
-            localPlayers.Begin();
+            localPlayers.Begin(isRestored);
         }
 
         private void LocalPlayers_PendingChanged()

@@ -4111,6 +4111,9 @@ MonoBehaviour:
   maxPlayers: 4
   leaveSlotHoldTime: 0
   swapDeviceHoldTime: 0
+  menuController: {fileID: 296721682}
+  lobbyMenuIndex: 3
+  lobbyMenuHistory: 0000000001000000
 --- !u!114 &1031861926
 MonoBehaviour:
   m_ObjectHideFlags: 0

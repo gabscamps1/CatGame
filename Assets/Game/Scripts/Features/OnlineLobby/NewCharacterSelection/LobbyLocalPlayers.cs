@@ -70,8 +70,9 @@ namespace CatGame.Features.CharacterSelection
 
         /// <summary>
         /// Chamar quando o lobby nasceu na rede. O jogador local 0 entra sozinho, com o dispositivo que navegou o menu.
+        /// Na volta da partida, as vagas desta máquina já existem e cada jogador continua com o dispositivo da partida.
         /// </summary>
-        public void Begin()
+        public void Begin(bool isRestored = false)
         {
             if (isRunning)
                 return;
@@ -85,6 +86,12 @@ namespace CatGame.Features.CharacterSelection
             lobby.Changed += Lobby_Changed;
             lobby.OnJoinRejected += Lobby_OnJoinRejected;
             uiService.OnCurrentUIChanged += UiService_OnCurrentUIChanged;
+
+            if (isRestored)
+            {
+                AdoptRestoredSlots();
+                return;
+            }
 
             InputDevice mainDevice = inputService.GetInputFromLocalPlayer(LobbyLocalPlayerRules.MAIN_LOCAL_ID).CurrentDevice;
             RequestJoin(LobbyLocalPlayerRules.MAIN_LOCAL_ID, mainDevice);
@@ -198,6 +205,63 @@ namespace CatGame.Features.CharacterSelection
         {
             if (uiService.IsVisible(PanelType.SessionMessagePopup))
                 uiService.Close(PanelType.SessionMessagePopup);
+        }
+
+        #endregion
+
+        #region Restore
+
+        /// <summary>
+        /// Liga cada vaga desta máquina ao jogador local dela, sem pedir vaga de novo.
+        /// Quem perdeu o dispositivo durante a partida volta aguardando dispositivo.
+        /// </summary>
+        private void AdoptRestoredSlots()
+        {
+            for (int i = 0; i < inputService.LocalPlayerCount; i++)
+            {
+                byte localId = (byte)i;
+
+                // Um jogador sem vaga não pode segurar um dispositivo.
+                if (!lobby.TryGetLocalSlot(localId, out SlotId slot))
+                {
+                    inputService.UnassignDevices(localId);
+                    continue;
+                }
+
+                InputDevice device = GetMainDevice(inputService.GetInputFromLocalPlayer(localId));
+
+                LocalPlayer player = new LocalPlayer
+                {
+                    LocalId = localId,
+                    Slot = slot,
+                    LastDevice = device,
+                };
+
+                players[localId] = player;
+                CreateInput(player);
+
+                if (device == null)
+                    EnterWaiting(player);
+                else if (lobby.GetSlot(slot).DeviceKind != GetDeviceKind(device))
+                    lobby.ResumeWithDevice(slot, GetDeviceKind(device));
+            }
+        }
+
+        /// <summary>
+        /// O mouse acompanha o teclado, então ele não conta como o dispositivo do jogador.
+        /// </summary>
+        private static InputDevice GetMainDevice(IPlayerInputController controller)
+        {
+            if (controller == null)
+                return null;
+
+            if (controller.CurrentDevice != null && controller.CurrentDevice is not Mouse && controller.HasDevice(controller.CurrentDevice))
+                return controller.CurrentDevice;
+
+            foreach (InputDevice device in controller.AssignedDevices)
+                if (device is not Mouse) return device;
+
+            return null;
         }
 
         #endregion

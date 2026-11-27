@@ -1,5 +1,6 @@
 using CatGame.Core;
 using CatGame.Core.Data;
+using CatGame.Core.Enums;
 using CatGame.Core.Events;
 using CatGame.Core.Interfaces;
 using CatGame.Features.CharacterSelection;
@@ -7,9 +8,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VictoryCondition : MonoBehaviour
+public class VictoryCondition  : MonoBehaviour
 {
     [SerializeField] private CharacterCatalog characterCatalog;
+
+    [Tooltip("Delay depois do final da mensagem de TimeOver para a UI de vitória aparecer.")]
+    [SerializeField] private float delayToShowVictoryUI;
+    
+    [Tooltip("Delay depois da UI de vitória aparecer para a UI de final de partida aparecer.")]
+    [SerializeField] private float delayToShowEndUI;
 
     private IPlayerRegistry playerRegistry;
     
@@ -42,26 +49,39 @@ public class VictoryCondition : MonoBehaviour
     }
 
     private void GameManager_OnGameStateChanged(GameManager.GameState currentState)
-{
-    switch (currentState)
     {
-        case GameManager.GameState.GameOver:
-            StartCoroutine(WaitToShowVictory());
-            break;
+        switch (currentState)
+        {
+            case GameManager.GameState.GameOver:
+                StartCoroutine(WaitToShowVictoryUI());
+                break;
+        }
     }
-}
 
-private IEnumerator WaitToShowVictory()
-{
-    // Dá tempo do RPC da mensagem do servidor chegar e marcar IsShowing = true.
-    yield return new WaitForSecondsRealtime(0f);
+    private IEnumerator WaitToShowVictoryUI()
+    {
+        // Dá tempo do RPC da mensagem do servidor chegar e marcar IsShowing = true.
+        // RESOLVER DEPOIS - VAI DAR RUIM NA APRESENTACAO
+        // PORRA GABRIEL, ME AJUDA A TE AJUDAR, PFVVVVVVVVVVVVVVVVVVVVV
+        yield return new WaitForSecondsRealtime(0f);
 
-    // Espera a mensagem do servidor terminar antes de exibir a animação de vitória.
-    yield return new WaitUntil(() =>
-        ServerMessageManager.Instance == null || !ServerMessageManager.Instance.IsShowing);
+        // Espera a mensagem do servidor terminar antes de exibir a animação de vitória.
+        yield return new WaitUntil(() => ServerMessageManager.Instance == null || !ServerMessageManager.Instance.IsShowing);
 
-    GetWinner();
-}
+        // Delay para a mensagem aparecer.
+        yield return new WaitForSeconds(delayToShowVictoryUI);
+
+        GetWinner();
+        StartCoroutine(WaitToShowEndUI());
+    }
+
+    private IEnumerator WaitToShowEndUI()
+    {
+        yield return new WaitForSeconds(delayToShowEndUI);
+
+        // Cada máquina abre a própria tela de fim de partida.
+        ServiceLocator.Get<IUIService>().Push(PanelType.MatchEnd);
+    }
 
     private void ScoreManager_OnScoreChanged(ScoreManager.ScoreEntry changeEvent)
     {

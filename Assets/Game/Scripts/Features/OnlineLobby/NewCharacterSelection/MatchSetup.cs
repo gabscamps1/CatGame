@@ -13,6 +13,11 @@ namespace CatGame.Features.CharacterSelection
 
         public NetworkList<LobbySlot> Players { get; private set; } = new();
 
+        /// <summary>
+        /// Só no server. O host pediu a volta ao lobby e o próximo lobby deve ser montado a partir desta partida.
+        /// </summary>
+        public bool IsReturningToLobby { get; private set; }
+
         private void Awake()
         {
             if (Instance == null)
@@ -36,6 +41,23 @@ namespace CatGame.Features.CharacterSelection
             Players.Clear();
             foreach (var slot in slots)
                 Players.Add(slot);
+        }
+
+        public void BeginLobbyReturn()
+        {
+            if (IsServer)
+                IsReturningToLobby = true;
+        }
+
+        public void CompleteLobbyReturn()
+        {
+            IsReturningToLobby = false;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            // Uma sessão nova nunca restaura o lobby de uma sessão antiga.
+            IsReturningToLobby = false;
         }
     }
 }

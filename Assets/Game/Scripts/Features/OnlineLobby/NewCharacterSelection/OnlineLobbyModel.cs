@@ -69,9 +69,12 @@ namespace CatGame.Features.CharacterSelection
         public override void OnNetworkSpawn()
         {
             // Sessão nova reseta informações anteriores que podem ter sido mantidas.
+            // Na volta da partida, as vagas são montadas a partir da última partida.
             if (IsServer)
             {
-                CreateEmptySlots();
+                if (!TryRestoreSlotsFromMatch())
+                    CreateEmptySlots();
+
                 phase.Value = LobbyPhase.Selecting;
                 lastCommandTime.Clear();
                 ConnectionManager.Instance.OpenConnections();
@@ -118,6 +121,48 @@ namespace CatGame.Features.CharacterSelection
             slots.Clear();
             for (int i = 0; i < maxPlayers; i++)
                 slots.Add(LobbySlot.Empty);
+        }
+
+        /// <summary>
+        /// Cada vaga mantém o mesmo índice, dono, jogador local, personagem e tipo de dispositivo da última partida.
+        /// Vagas de IA e de quem desconectou voltam a ficar livres. Ninguém volta pronto.
+        /// </summary>
+        private bool TryRestoreSlotsFromMatch()
+        {
+            MatchSetup matchSetup = MatchSetup.Instance;
+
+            if (matchSetup == null || !matchSetup.IsReturningToLobby)
+                return false;
+
+            matchSetup.CompleteLobbyReturn();
+
+            if (matchSetup.Players.Count == 0)
+                return false;
+
+            if (maxPlayers > 0 && matchSetup.Players.Count != maxPlayers)
+                Core.Logger.LogWarning($"[{nameof(OnlineLobbyModel)}] A última partida tinha {matchSetup.Players.Count} vagas e o lobby tem {maxPlayers}.");
+
+            slots.Clear();
+
+            foreach (LobbySlot matchSlot in matchSetup.Players)
+            {
+                bool keepsSlot = matchSlot.Occupied
+                    && !matchSlot.IsAI
+                    && NetworkManager.ConnectedClients.ContainsKey(matchSlot.OwnerId);
+
+                if (!keepsSlot)
+                {
+                    slots.Add(LobbySlot.Empty);
+                    continue;
+                }
+
+                LobbySlot restoredSlot = matchSlot;
+                restoredSlot.Ready = false;
+                restoredSlot.WaitingDevice = false; // Cada máquina confere o dispositivo do jogador ao abrir o lobby.
+                slots.Add(restoredSlot);
+            }
+
+            return true;
         }
 
         /// <summary>

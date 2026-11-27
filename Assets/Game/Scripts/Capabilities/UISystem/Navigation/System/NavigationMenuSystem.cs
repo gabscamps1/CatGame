@@ -24,6 +24,23 @@ namespace CatGame.Capabilities.UISystem
             return true;
         }
 
+        /// <summary>
+        /// Vai direto para um menu e troca o histórico inteiro, como se o jogador tivesse passado pelos menus do histórico.
+        /// </summary>
+        public bool TrySetMenu(int menuIndex, IReadOnlyList<int> history, out int previousMenu)
+        {
+            previousMenu = CurrentMenu;
+            if (!IsValidMenu(menuIndex)) return false;
+
+            foreach (int historyMenu in history)
+                if (!IsValidMenu(historyMenu)) return false;
+
+            menuHistory.Clear();
+            menuHistory.AddRange(history);
+            CurrentMenu = menuIndex;
+            return true;
+        }
+
         public bool TryGoBack(out int menuIndex)
         {
             if (menuHistory.Count == 0)
@@ -44,5 +61,7 @@ namespace CatGame.Capabilities.UISystem
             menuHistory.Clear();
             CurrentMenu = 0;
         }
+
+        private bool IsValidMenu(int menuIndex) => menuIndex >= 0 && menuIndex < menuCount;
     }
 }

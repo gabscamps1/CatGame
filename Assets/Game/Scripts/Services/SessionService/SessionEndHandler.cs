@@ -23,7 +23,7 @@ namespace CatGame.Services.Session
         private NetworkManager networkManager;
 
         private bool isSessionActive;
-        private bool hasSessionChangedScenes; // A sessão carregou algum grupo, ou seja, saiu do lobby.
+        private bool hasSessionChangedScenes; // A sessão está fora do lobby (carregou um grupo que não é o menu principal).
 
         #region Unity
 
@@ -132,8 +132,13 @@ namespace CatGame.Services.Session
 
         private void SceneLoadingService_OnLoadingChanged(object sender, LoadingChangedEvent e)
         {
-            if (isSessionActive && e.IsLoading)
+            if (!isSessionActive)
+                return;
+
+            if (e.IsLoading)
                 hasSessionChangedScenes = true;
+            else if (e.SceneGroup == Scenes.MainMenu)
+                hasSessionChangedScenes = false; // Voltou ao lobby pela partida, então a saída é tratada pelo próprio lobby.
         }
 
         private void EndSession(bool wasServer)

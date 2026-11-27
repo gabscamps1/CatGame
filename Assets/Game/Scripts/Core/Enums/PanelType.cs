@@ -15,8 +15,12 @@ namespace CatGame.Core.Enums
         // Menu principal
         MainMenu = 4,
 
+        // Partida
+        MatchEnd = 8,
+
         // Popups
         QuitLobbyPopup = 6,
         SessionMessagePopup = 7,
+        LeaveMatchPopup = 9,
     }
 }
