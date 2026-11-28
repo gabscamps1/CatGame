@@ -1699,6 +1699,7 @@ GameObject:
   - component: {fileID: 294996329}
   - component: {fileID: 294996331}
   - component: {fileID: 294996330}
+  - component: {fileID: 294996332}
   m_Layer: 0
   m_Name: RawImage
   m_TagString: Untagged
@@ -1760,6 +1761,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294996328}
   m_CullTransparentMesh: 1
+--- !u!114 &294996332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294996328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50163d75d73477847a46ff86c309b41e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIWaveStripesDriver
+  autoAspect: 1
+  useUnscaledTime: 1
 --- !u!1 &309112445
 GameObject:
   m_ObjectHideFlags: 0
