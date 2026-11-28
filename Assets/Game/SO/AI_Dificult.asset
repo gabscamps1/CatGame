@@ -23,21 +23,21 @@ MonoBehaviour:
   settleSpeed: 0.3
   maxSettleWait: 1.5
   useNextFruit: 1
-  candidateCount: 39
-  aimError: 1.5
-  mistakeChance: 0.274
+  candidateCount: 47
+  aimError: 0
+  mistakeChance: 0.085
   topChoices: 1
   mergeWeight: 10
   tierWeight: 0.5
   chainWeight: 4
   heightWeight: 6
-  buryWeight: 2
+  buryWeight: 3
   neighborWeight: 1
   wallWeight: 1
   nextFruitWeight: 0.5
   dangerPenalty: 50
   useEmergency: 1
-  emergencyHeight: 0.8
+  emergencyHeight: 0.484
   emergencyTime: 0.3
   emergencyMultiplier: 3
   drawGizmos: 0
