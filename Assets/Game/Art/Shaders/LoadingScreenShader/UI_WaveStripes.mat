@@ -30,9 +30,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Aspect: 1.6830428
+    - _Aspect: 1.7777779
     - _ColorMask: 15
-    - _CustomTime: 2766.709
+    - _CustomTime: 25.819304
     - _Rotation: -4
     - _Shade: 0.398
     - _Softness: 0
